@@ -26,8 +26,8 @@ class LanguageSwitcherWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: theme.colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(12.0),
-            border:
-                Border.all(color: theme.colorScheme.outline.withOpacity(0.5)),
+            border: Border.all(
+                color: theme.colorScheme.outline.withValues(alpha: 0.5)),
           ),
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(

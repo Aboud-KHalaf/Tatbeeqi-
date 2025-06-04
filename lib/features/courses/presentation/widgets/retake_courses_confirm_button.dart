@@ -38,7 +38,8 @@ class RetakeCoursesConfirmButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              disabledBackgroundColor: theme.primaryColor.withOpacity(0.5),
+              disabledBackgroundColor:
+                  theme.primaryColor.withValues(alpha: 0.5),
             ),
             child: Text(
               'Retake ${selectedCoursesList.length} Course${selectedCoursesList.length == 1 ? '' : 's'}',

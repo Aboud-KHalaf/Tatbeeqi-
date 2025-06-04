@@ -40,7 +40,8 @@ class NewsDetailsView extends StatelessWidget {
                     color: Colors.white,
                     shadows: [
                       Shadow(
-                          blurRadius: 2.0, color: Colors.black.withOpacity(0.5))
+                          blurRadius: 2.0,
+                          color: Colors.black.withValues(alpha: 0.5))
                     ],
                   ),
                   maxLines: 2,
@@ -85,7 +86,7 @@ class NewsDetailsView extends StatelessWidget {
                       Chip(
                         label: Text(newsItem.category),
                         backgroundColor:
-                            colorScheme.primaryContainer.withOpacity(0.7),
+                            colorScheme.primaryContainer.withValues(alpha: 0.7),
                         labelStyle: textTheme.labelSmall
                             ?.copyWith(color: colorScheme.primary),
                         visualDensity: VisualDensity.compact,

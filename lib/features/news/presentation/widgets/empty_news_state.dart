@@ -14,16 +14,16 @@ class EmptyNewsState extends StatelessWidget {
     return Container(
       height: 180,
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest.withOpacity(0.3),
+        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: colorScheme.outline.withOpacity(0.1)),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.1)),
       ),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.newspaper_rounded,
-                size: 48, color: colorScheme.outline.withOpacity(0.7)),
+                size: 48, color: colorScheme.outline.withValues(alpha: 0.7)),
             const SizedBox(height: 12),
             Text(l10n.newsNoNewsAvailable,
                 style: textTheme.bodyLarge?.copyWith(
@@ -33,7 +33,7 @@ class EmptyNewsState extends StatelessWidget {
             const SizedBox(height: 4),
             Text(l10n.newsCheckBackLater,
                 style: textTheme.bodySmall?.copyWith(
-                  color: colorScheme.outline.withOpacity(0.7),
+                  color: colorScheme.outline.withValues(alpha: 0.7),
                 )),
           ],
         ),

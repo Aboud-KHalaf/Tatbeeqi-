@@ -40,12 +40,12 @@ class RecentlyAddedSection extends StatelessWidget {
 
     return Card(
       elevation: 2.0,
-      shadowColor: colorScheme.shadow.withOpacity(0.2),
+      shadowColor: colorScheme.shadow.withValues(alpha: 0.2),
       color: colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
         side: BorderSide(
-          color: colorScheme.outline.withOpacity(0.1),
+          color: colorScheme.outline.withValues(alpha: 0.1),
         ),
       ),
       child: InkWell(
@@ -60,7 +60,7 @@ class RecentlyAddedSection extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: colorScheme.primaryContainer.withOpacity(0.7),
+                  color: colorScheme.primaryContainer.withValues(alpha: 0.7),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(

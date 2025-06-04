@@ -28,8 +28,8 @@ class TodoTitleFieldWidgets extends StatelessWidget {
           borderSide: BorderSide(color: theme.colorScheme.primary, width: 2),
         ),
         prefixIcon: Icon(Icons.title, color: theme.colorScheme.primary),
-        labelStyle:
-            TextStyle(color: theme.colorScheme.onSurface.withOpacity(0.7)),
+        labelStyle: TextStyle(
+            color: theme.colorScheme.onSurface.withValues(alpha: 0.7)),
         filled: true,
         fillColor: theme.colorScheme.surface,
       ),

@@ -22,7 +22,7 @@ class CourseCardHeader extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Theme.of(context).primaryColor.withOpacity(0.1),
+            color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
           ),
           child: Icon(
             iconData,

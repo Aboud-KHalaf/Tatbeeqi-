@@ -21,7 +21,7 @@ class TodoBottomSheetContainerWidget extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: theme.shadowColor.withOpacity(0.1),
+            color: theme.shadowColor.withValues(alpha: 0.1),
             blurRadius: 10,
             offset: const Offset(0, -2),
           ),

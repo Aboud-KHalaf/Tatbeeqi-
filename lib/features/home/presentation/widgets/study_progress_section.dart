@@ -23,10 +23,10 @@ class StudyProgressSection extends StatelessWidget {
             child: Card(
               elevation: 1.0,
               color: course.color
-                  .withOpacity(0.15), // Use course color with opacity
+                  .withValues(alpha: 0.15), // Use course color with opacity
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
-                  side: BorderSide(color: course.color.withOpacity(0.3))),
+                  side: BorderSide(color: course.color.withValues(alpha: 0.3))),
               child: InkWell(
                 // Make card tappable
                 onTap: () {

@@ -22,7 +22,7 @@ class SmoothPageIndicatorWidget extends StatelessWidget {
         dotHeight: 8,
         dotWidth: 8,
         activeDotColor: colorScheme.primary,
-        dotColor: colorScheme.outline.withOpacity(0.3),
+        dotColor: colorScheme.outline.withValues(alpha: 0.3),
         spacing: 6,
       ),
     );

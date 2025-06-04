@@ -14,9 +14,9 @@ class EmptyToDayTasksWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 24.0),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest.withOpacity(0.3),
+        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(12.0),
-        border: Border.all(color: colorScheme.outline.withOpacity(0.1)),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.1)),
       ),
       child: Center(
         child: Column(
@@ -24,7 +24,7 @@ class EmptyToDayTasksWidget extends StatelessWidget {
             Icon(
               Icons.task_alt,
               size: 40,
-              color: colorScheme.outline.withOpacity(0.7),
+              color: colorScheme.outline.withValues(alpha: 0.7),
             ),
             const SizedBox(height: 8),
             Text(

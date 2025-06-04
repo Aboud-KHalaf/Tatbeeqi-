@@ -22,7 +22,7 @@ class AiActionButton extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Theme.of(context).shadowColor.withOpacity(0.2),
+              color: Theme.of(context).shadowColor.withValues(alpha: 0.2),
               blurRadius: 4,
               offset: const Offset(0, 2),
             ),

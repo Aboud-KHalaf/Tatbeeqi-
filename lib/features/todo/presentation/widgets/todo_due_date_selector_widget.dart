@@ -44,7 +44,7 @@ class TodoDueDateSelectorWidget extends StatelessWidget {
                         .format(selectedDueDate!)),
                 style: TextStyle(
                   color: selectedDueDate == null
-                      ? theme.colorScheme.onSurface.withOpacity(0.7)
+                      ? theme.colorScheme.onSurface.withValues(alpha: 0.7)
                       : theme.colorScheme.onSurface,
                 ),
               ),

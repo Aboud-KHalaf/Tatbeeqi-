@@ -26,7 +26,8 @@ class ImportanceOptionWidget extends StatelessWidget {
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(vertical: 12.0),
           decoration: BoxDecoration(
-            color: isSelected ? color.withOpacity(0.2) : Colors.transparent,
+            color:
+                isSelected ? color.withValues(alpha: 0.2) : Colors.transparent,
             border: Border.all(
               color: isSelected ? color : theme.colorScheme.outline,
               width: isSelected ? 2.0 : 1.0,

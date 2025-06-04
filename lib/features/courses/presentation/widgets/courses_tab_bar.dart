@@ -23,11 +23,11 @@ class CoursesTabBar extends StatelessWidget {
         color: Theme.of(context)
             .colorScheme
             .surfaceContainerHighest
-            .withOpacity(0.7),
+            .withValues(alpha: 0.7),
         borderRadius: BorderRadius.circular(30.0),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).shadowColor.withOpacity(0.1),
+            color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -44,14 +44,15 @@ class CoursesTabBar extends StatelessWidget {
               colors: [
                 Theme.of(context).primaryColor,
                 Theme.of(context).primaryColor.withBlue(
-                    (Theme.of(context).primaryColor.blue + 20).clamp(0, 255)),
+                    (Theme.of(context).primaryColor.hashCode + 20)
+                        .clamp(0, 255))
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
             boxShadow: [
               BoxShadow(
-                color: Theme.of(context).primaryColor.withOpacity(0.3),
+                color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
                 blurRadius: 8,
                 offset: const Offset(0, 2),
               ),
@@ -73,10 +74,10 @@ class CoursesTabBar extends StatelessWidget {
           overlayColor: WidgetStateProperty.resolveWith<Color?>(
             (Set<WidgetState> states) {
               if (states.contains(WidgetState.hovered)) {
-                return Theme.of(context).primaryColor.withOpacity(0.1);
+                return Theme.of(context).primaryColor.withValues(alpha: 0.1);
               }
               if (states.contains(WidgetState.pressed)) {
-                return Theme.of(context).primaryColor.withOpacity(0.2);
+                return Theme.of(context).primaryColor.withValues(alpha: 0.2);
               }
               return null;
             },

@@ -15,7 +15,7 @@ class NewsCardDateChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: colorScheme.primaryContainer.withOpacity(0.7),
+        color: colorScheme.primaryContainer.withValues(alpha: 0.7),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(

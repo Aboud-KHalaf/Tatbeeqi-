@@ -38,7 +38,7 @@ class NewsCard extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: isSmallScreen ? 2 : 4),
           child: Card(
             elevation: isCurrentPage ? 4.0 : 2.0,
-            shadowColor: colorScheme.shadow.withOpacity(0.3),
+            shadowColor: colorScheme.shadow.withValues(alpha: 0.3),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.0),
             ),

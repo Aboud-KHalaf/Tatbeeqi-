@@ -37,20 +37,20 @@ class FancyNavBarWidget extends StatelessWidget {
             height: 72, // Increased height to accommodate Arabic text
             decoration: BoxDecoration(
               color: isDarkMode
-                  ? Colors.black.withOpacity(0.7)
-                  : Colors.white.withOpacity(0.8),
+                  ? Colors.black.withValues(alpha: 0.7)
+                  : Colors.white.withValues(alpha: 0.8),
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: Theme.of(context).shadowColor.withOpacity(0.1),
+                  color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
                   blurRadius: 8,
                   offset: const Offset(0, 4),
                 ),
               ],
               border: Border.all(
                 color: isDarkMode
-                    ? Colors.white.withOpacity(0.1)
-                    : Colors.black.withOpacity(0.05),
+                    ? Colors.white.withValues(alpha: 0.1)
+                    : Colors.black.withValues(alpha: 0.05),
                 width: 1,
               ),
             ),

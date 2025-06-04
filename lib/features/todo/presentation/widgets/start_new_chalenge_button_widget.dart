@@ -17,7 +17,7 @@ class StartNewChallengeButtonWidget extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            colorScheme.primary.withOpacity(0.8),
+            colorScheme.primary.withValues(alpha: 0.8),
             colorScheme.primaryContainer,
           ],
           begin: Alignment.topLeft,
@@ -26,7 +26,7 @@ class StartNewChallengeButtonWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withOpacity(0.1),
+            color: colorScheme.shadow.withValues(alpha: 0.1),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),

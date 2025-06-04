@@ -73,12 +73,13 @@ class _CourseCardState extends State<CourseCard>
                   : Matrix4.identity(),
               child: Card(
                 elevation: _isHovering ? 8.0 : 4.0,
-                shadowColor: Theme.of(context).shadowColor.withOpacity(0.3),
+                shadowColor:
+                    Theme.of(context).shadowColor.withValues(alpha: 0.3),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                   side: BorderSide(
                     color: _isHovering
-                        ? Theme.of(context).primaryColor.withOpacity(0.5)
+                        ? Theme.of(context).primaryColor.withValues(alpha: 0.5)
                         : Colors.transparent,
                     width: 1.5,
                   ),
@@ -89,9 +90,10 @@ class _CourseCardState extends State<CourseCard>
                     // TODO: Navigate to course details screen
                   },
                   borderRadius: BorderRadius.circular(16.0),
-                  splashColor: Theme.of(context).primaryColor.withOpacity(0.1),
+                  splashColor:
+                      Theme.of(context).primaryColor.withValues(alpha: 0.1),
                   highlightColor:
-                      Theme.of(context).primaryColor.withOpacity(0.05),
+                      Theme.of(context).primaryColor.withValues(alpha: 0.05),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20.0),
@@ -100,7 +102,7 @@ class _CourseCardState extends State<CourseCard>
                         end: Alignment.bottomRight,
                         colors: [
                           cardColor,
-                          cardColor.withOpacity(0.95),
+                          cardColor.withValues(alpha: 0.95),
                         ],
                       ),
                     ),

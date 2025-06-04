@@ -27,7 +27,8 @@ class ThemeToggleWidget extends StatelessWidget {
           },
           activeColor: theme.colorScheme.primary,
           inactiveThumbColor: theme.colorScheme.surfaceContainerHighest,
-          inactiveTrackColor: theme.colorScheme.onSurface.withOpacity(0.3),
+          inactiveTrackColor:
+              theme.colorScheme.onSurface.withValues(alpha: 0.3),
         ),
         Icon(
           Icons.dark_mode,

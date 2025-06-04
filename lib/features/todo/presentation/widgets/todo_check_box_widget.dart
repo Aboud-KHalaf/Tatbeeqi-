@@ -30,7 +30,7 @@ class ToDoCheckBoxWidget extends StatelessWidget {
       side: BorderSide(
         color: task.isCompleted
             ? colorScheme.primary
-            : colorScheme.outline.withOpacity(0.7),
+            : colorScheme.outline.withValues(alpha: 0.7),
         width: 1.5,
       ),
     );

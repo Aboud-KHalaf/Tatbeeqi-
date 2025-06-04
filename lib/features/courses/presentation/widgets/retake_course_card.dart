@@ -22,8 +22,8 @@ class RetakeCourseCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
           color: isSelected
-              ? theme.primaryColor.withOpacity(0.7)
-              : theme.dividerColor.withOpacity(0.2),
+              ? theme.primaryColor.withValues(alpha: 0.7)
+              : theme.dividerColor.withValues(alpha: 0.2),
           width: isSelected ? 1.5 : 1,
         ),
       ),
@@ -46,7 +46,7 @@ class RetakeCourseCard extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.textTheme.bodySmall?.color?.withOpacity(0.7),
+                color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
               ),
             ),
             const SizedBox(
@@ -57,7 +57,7 @@ class RetakeCourseCard extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: theme.textTheme.bodySmall?.copyWith(
-                color: theme.textTheme.bodySmall?.color?.withOpacity(0.7),
+                color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
               ),
             ),
           ],

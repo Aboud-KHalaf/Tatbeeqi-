@@ -31,11 +31,11 @@ class NewsCardImage extends StatelessWidget {
         width: isSmallScreen ? 70 : 90,
         height: isSmallScreen ? 70 : 90,
         decoration: BoxDecoration(
-          color: colorScheme.primaryContainer.withOpacity(0.2),
+          color: colorScheme.primaryContainer.withValues(alpha: 0.2),
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: colorScheme.shadow.withOpacity(0.1),
+              color: colorScheme.shadow.withValues(alpha: 0.1),
               blurRadius: 4,
               offset: const Offset(0, 2),
             ),

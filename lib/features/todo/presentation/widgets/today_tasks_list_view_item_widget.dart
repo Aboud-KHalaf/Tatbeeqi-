@@ -31,19 +31,19 @@ class ToDayTaskListViewItemWidget extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
             decoration: BoxDecoration(
               color: task.isCompleted
-                  ? colorScheme.surfaceContainerHighest.withOpacity(0.2)
+                  ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.2)
                   : colorScheme.surfaceContainerHighest,
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
                 color: task.isCompleted
-                    ? colorScheme.outline.withOpacity(0.1)
+                    ? colorScheme.outline.withValues(alpha: 0.1)
                     : getColorByImportance(task.importance),
                 width: 1.2,
               ),
               boxShadow: [
                 if (!task.isCompleted)
                   BoxShadow(
-                    color: colorScheme.shadow.withOpacity(0.1),
+                    color: colorScheme.shadow.withValues(alpha: 0.1),
                     blurRadius: 2,
                     offset: const Offset(0, 1),
                   ),
@@ -62,7 +62,7 @@ class ToDayTaskListViewItemWidget extends StatelessWidget {
                               ? TextDecoration.lineThrough
                               : null,
                           color: task.isCompleted
-                              ? colorScheme.onSurface.withOpacity(0.6)
+                              ? colorScheme.onSurface.withValues(alpha: 0.6)
                               : colorScheme.onSurface,
                           fontWeight: task.isCompleted
                               ? FontWeight.normal
@@ -78,7 +78,7 @@ class ToDayTaskListViewItemWidget extends StatelessWidget {
                             task.description,
                             style: textTheme.bodyMedium?.copyWith(
                               color: task.isCompleted
-                                  ? colorScheme.onSurface.withOpacity(0.4)
+                                  ? colorScheme.onSurface.withValues(alpha: 0.4)
                                   : colorScheme.onSurfaceVariant,
                             ),
                             maxLines: 1,

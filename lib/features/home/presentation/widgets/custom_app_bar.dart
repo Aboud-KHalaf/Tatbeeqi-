@@ -74,7 +74,8 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               Material(
                 borderRadius:
                     BorderRadius.circular(isSmallScreen ? 10.0 : 12.0),
-                color: colorScheme.surfaceContainerHighest.withOpacity(0.7),
+                color:
+                    colorScheme.surfaceContainerHighest.withValues(alpha: 0.7),
                 child: InkWell(
                   onTap: () {
                     // TODO: Implement Notification action

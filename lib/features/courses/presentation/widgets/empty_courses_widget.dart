@@ -17,13 +17,14 @@ class EmptyCoursesWidget extends StatelessWidget {
               color: Theme.of(context)
                   .colorScheme
                   .surfaceContainerHighest
-                  .withOpacity(0.3),
+                  .withValues(alpha: 0.3),
               shape: BoxShape.circle,
             ),
             child: Icon(
               Icons.school_outlined,
               size: 64,
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.7),
+              color:
+                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.7),
             ),
           ),
           const SizedBox(height: 24),

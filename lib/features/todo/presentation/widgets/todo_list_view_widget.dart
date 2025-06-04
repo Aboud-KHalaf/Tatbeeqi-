@@ -33,8 +33,10 @@ class ToDoListViewWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color:
-                          Theme.of(context).colorScheme.primary.withOpacity(.3),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withValues(alpha: .3),
                       blurRadius: shadowBlurRadius,
                     ),
                   ],

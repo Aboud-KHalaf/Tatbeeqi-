@@ -41,7 +41,7 @@ class CourseCardProgress extends StatelessWidget {
                   color: Theme.of(context)
                       .colorScheme
                       .surfaceContainerHighest
-                      .withOpacity(0.3),
+                      .withValues(alpha: 0.3),
                 ),
               ),
               FractionallySizedBox(

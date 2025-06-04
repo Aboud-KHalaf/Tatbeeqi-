@@ -58,8 +58,8 @@ class NavBarItemWidget extends StatelessWidget {
                               shape: BoxShape.circle,
                               gradient: LinearGradient(
                                 colors: [
-                                  primaryColor.withOpacity(0.3),
-                                  secondaryColor.withOpacity(0.3),
+                                  primaryColor.withValues(alpha: 0.3),
+                                  secondaryColor.withValues(alpha: 0.3),
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -75,7 +75,7 @@ class NavBarItemWidget extends StatelessWidget {
                     icon,
                     color: isSelected
                         ? primaryColor
-                        : colorScheme.onSurface.withOpacity(0.6),
+                        : colorScheme.onSurface.withValues(alpha: 0.6),
                     size: isSelected ? 22 : 20, // Smaller icons
                   ),
                 ],
@@ -93,7 +93,7 @@ class NavBarItemWidget extends StatelessWidget {
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                   color: isSelected
                       ? primaryColor
-                      : colorScheme.onSurface.withOpacity(0.6),
+                      : colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
                 child: Text(
                   label,
