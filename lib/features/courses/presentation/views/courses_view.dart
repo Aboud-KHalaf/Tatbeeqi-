@@ -123,7 +123,7 @@ class _CoursesViewState extends State<CoursesView>
 
   void _onAddCoursePressed() {
     const int currentUserStudyYear = 3;
-    const int currentUserDepartmentId = 1;
+    const int currentUserDepartmentId = 2;
 
     context.read<RetakeCoursesCubit>().fetchAllCoursesForRetake(
           studyYear: currentUserStudyYear,

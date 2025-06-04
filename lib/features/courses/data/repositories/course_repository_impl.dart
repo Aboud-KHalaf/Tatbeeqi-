@@ -51,7 +51,6 @@ class CourseRepositoryImpl implements CourseRepository {
     } on CacheException catch (e) {
       return Left(CacheFailure(e.message));
     } catch (e) {
-      // General catch-all for unexpected errors
       return Left(
           ServerFailure('An unexpected error occurred: ${e.toString()}'));
     }
@@ -63,8 +62,16 @@ class CourseRepositoryImpl implements CourseRepository {
     try {
       final remoteCourseModels = await remoteDataSource.getAllCoursesForReatake(
           studyYear: studyYear, departmentId: departmentId);
+      final localCourseModels =
+          await localDataSource.getCoursesBysemester(semester: 3);
 
-      return Right(remoteCourseModels.cast<CourseEntity>());
+      final localIds = localCourseModels.map((e) => e.id).toSet();
+
+      final reTakeCourses = remoteCourseModels
+          .where((course) => !localIds.contains(course.id + 500))
+          .toList();
+
+      return Right(reTakeCourses.cast<CourseEntity>());
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } catch (e) {
@@ -72,20 +79,20 @@ class CourseRepositoryImpl implements CourseRepository {
           ServerFailure('An unexpected error occurred: ${e.toString()}'));
     }
   }
+
   @override
   Future<Either<Failure, Unit>> saveSelectedRetakeCourses(
       List<CourseEntity> courses) async {
     try {
-      
-      final courseModels = courses
-          .map((entity) => CourseModel.fromEntity(entity)) 
-          .toList();
+      final courseModels =
+          courses.map((entity) => CourseModel.fromEntity(entity)).toList();
       await localDataSource.cacheSelectedRetakeCourses(courseModels);
-      return const Right(unit); 
+      return const Right(unit);
     } on CacheException catch (e) {
       return Left(CacheFailure(e.message));
     } catch (e) {
-      return Left(CacheFailure('Failed to save retake courses: ${e.toString()}'));
+      return Left(
+          CacheFailure('Failed to save retake courses: ${e.toString()}'));
     }
   }
 }
