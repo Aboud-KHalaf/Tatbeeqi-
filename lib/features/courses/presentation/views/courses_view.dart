@@ -9,7 +9,7 @@ import 'package:tatbeeqi/features/courses/presentation/widgets/courses_app_bar.d
 import 'package:tatbeeqi/features/courses/presentation/widgets/courses_grid_widget.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/courses_tab_bar.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/empty_courses_widget.dart';
-import 'package:tatbeeqi/features/courses/presentation/widgets/retake_courses_bottom_sheet.dart'; // Add this import
+import 'package:tatbeeqi/features/courses/presentation/widgets/retake_courses_bottom_sheet.dart';
 
 class CoursesView extends StatefulWidget {
   const CoursesView({super.key});

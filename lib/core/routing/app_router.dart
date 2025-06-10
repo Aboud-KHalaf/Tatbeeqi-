@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/screens/course_overview_screen.dart';
 import 'package:tatbeeqi/features/home/presentation/views/home_view.dart';
 import 'package:tatbeeqi/features/navigation/presentation/screens/main_navigation_screen.dart';
 import 'package:tatbeeqi/features/news/domain/entities/news_item_entity.dart';
@@ -34,6 +35,12 @@ final GoRouter router = GoRouter(
       path: TodoView.routePath,
       builder: (BuildContext context, GoRouterState state) {
         return const TodoView();
+      },
+    ),
+    GoRoute(
+      path: CourseOverviewScreen.routePath,
+      builder: (BuildContext context, GoRouterState state) {
+        return const CourseOverviewScreen();
       },
     ),
     GoRoute(

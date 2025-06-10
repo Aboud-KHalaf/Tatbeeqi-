@@ -5,6 +5,7 @@ import 'package:tatbeeqi/features/courses/data/datasources/course_local_data_sou
 import 'package:tatbeeqi/features/courses/data/datasources/course_remote_data_source.dart';
 import 'package:tatbeeqi/features/courses/data/repositories/course_repository_impl.dart';
 import 'package:tatbeeqi/features/courses/domain/repositories/course_repository.dart';
+import 'package:tatbeeqi/features/courses/domain/usecases/delete_retake_course_usecase.dart';
 import 'package:tatbeeqi/features/courses/domain/usecases/get_all_courses_for_retake_usecase.dart';
 import 'package:tatbeeqi/features/courses/domain/usecases/get_courses_by_study_year_and_department_id_usecase.dart';
 import 'package:tatbeeqi/features/courses/domain/usecases/save_selected_retake_courses_usecase.dart';
@@ -21,6 +22,7 @@ void initCoursesDependencies(GetIt sl) {
   sl.registerFactory(() => RetakeCoursesCubit(
         getAllCoursesForRetakeUsecase: sl(),
         saveSelectedRetakeCoursesUseCase: sl(), 
+        deleteRetakeCourseUseCase: sl(),
       ));
 
   // Use Cases
@@ -28,6 +30,7 @@ void initCoursesDependencies(GetIt sl) {
       () => GetCoursesByStudyYearAndDepartmentIdUseCase(sl()));
   sl.registerLazySingleton(() => GetAllCoursesForRetakeUsecase(sl()));
    sl.registerLazySingleton(() => SaveSelectedRetakeCoursesUseCase(sl()));
+   sl.registerLazySingleton(()=> DeleteRetakeCourseUseCase(sl()));
   // Repository
   sl.registerLazySingleton<CourseRepository>(() => CourseRepositoryImpl(
         remoteDataSource: sl(),

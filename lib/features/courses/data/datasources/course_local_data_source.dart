@@ -16,6 +16,7 @@ abstract class CourseLocalDataSource {
   Future<void> clearCoursesByStudyYearAndDepartmentId(
       {required int studyYear, required int departmentId});
   Future<void> cacheSelectedRetakeCourses(List<CourseModel> courses);
+  Future<void> deleteRetakeCourse(int courseId);
 }
 
 class CourseLocalDataSourceImpl implements CourseLocalDataSource {
@@ -143,6 +144,20 @@ class CourseLocalDataSourceImpl implements CourseLocalDataSource {
       return [];
     } catch (e) {
       throw CacheException('Failed to get courses from cache: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<void> deleteRetakeCourse(int courseId) async {
+    try {
+      final db = await databaseService.database;
+      await db.delete(
+        coursesTableName,
+        where: '$coursesColId = ? AND $coursesColSemester = ?',
+        whereArgs: [courseId, 3],
+      );
+    } catch (e) {
+      throw CacheException('Failed to delete retake course: ${e.toString()}');
     }
   }
 }

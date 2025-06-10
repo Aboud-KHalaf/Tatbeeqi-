@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
+import 'package:tatbeeqi/core/utils/app_methods.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
+import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_cubit.dart';
+import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cubit/retake_courses_cubit.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/screens/course_overview_screen.dart';
 import 'course_card_header.dart';
 import 'course_card_progress.dart';
 
@@ -52,6 +58,20 @@ class _CourseCardState extends State<CourseCard>
     super.dispose();
   }
 
+  Future<void> _handleLongPress() async {
+    if (widget.course.semester == 3) {
+      bool deleteConfirmation = await showDeleteConfirmation(context);
+      if (deleteConfirmation) {
+        if (mounted) {
+          context
+              .read<RetakeCoursesCubit>()
+              .deleteRetakeCourse(widget.course.id);
+          context.read<FetchCoursesCubit>().fetchCourses(1, 2);
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final cardColor = Theme.of(context).colorScheme.surface;
@@ -84,10 +104,12 @@ class _CourseCardState extends State<CourseCard>
                     width: 1.5,
                   ),
                 ),
-                margin: const EdgeInsets.all(8.0), // Keep margin on Card
+                margin: const EdgeInsets.all(8.0),
                 child: InkWell(
+                  onLongPress: _handleLongPress,
                   onTap: () {
                     // TODO: Navigate to course details screen
+                    context.push(CourseOverviewScreen.routePath);
                   },
                   borderRadius: BorderRadius.circular(16.0),
                   splashColor:

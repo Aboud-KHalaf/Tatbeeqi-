@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
+import 'package:tatbeeqi/core/utils/app_methods.dart';
 import 'package:tatbeeqi/features/todo/domain/entities/todo_entity.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
@@ -44,7 +45,7 @@ class TodoListItem extends StatelessWidget {
       direction: DismissDirection.horizontal,
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.endToStart) {
-          return await _showDeleteConfirmation(context);
+          return await showDeleteConfirmation(context);
         }
         return false;
       },
@@ -153,36 +154,5 @@ class TodoListItem extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Future<bool> _showDeleteConfirmation(BuildContext context) async {
-    final l10n = AppLocalizations.of(context)!;
-
-    return await showDialog<bool>(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(l10n.todoConfirmDelete),
-              content: Text(l10n.todoDeleteConfirmation),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(false),
-                  child: Text(l10n.todoCancel),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: Text(
-                    l10n.todoDelete,
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                ),
-              ],
-            );
-          },
-        ) ??
-        false;
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
-import 'app_text_styles.dart';
+import 'package:tatbeeqi/core/theme/app_colors.dart';
+import 'package:tatbeeqi/core/theme/app_text_styles.dart';
 
-// Defines the ThemeData for light and dark modes.
 class AppTheme {
   AppTheme._(); // Private constructor
 
@@ -13,8 +12,7 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.lightBackground,
       colorScheme: const ColorScheme.light(
         primary: AppColors.lightPrimary,
-        primaryContainer:
-            AppColors.lightPrimaryVariant, // Often used for containers
+        primaryContainer: AppColors.lightPrimaryVariant,
         secondary: AppColors.lightSecondary,
         secondaryContainer: AppColors.lightSecondaryVariant,
         surface: AppColors.lightSurface,
@@ -26,11 +24,9 @@ class AppTheme {
       ),
       textTheme: AppTextStyles.lightTextTheme,
       appBarTheme: AppBarTheme(
-        elevation: 0, // Example customization
+        elevation: 0,
         backgroundColor: AppColors.lightSurface,
-        foregroundColor: AppColors.lightOnPrimary, // Title/icon color
-        titleTextStyle: AppTextStyles.lightTextTheme.titleLarge
-            ?.copyWith(color: AppColors.lightOnPrimary),
+        titleTextStyle: AppTextStyles.lightTextTheme.titleLarge,
       ),
       buttonTheme: const ButtonThemeData(
         buttonColor: AppColors.lightPrimary,
@@ -43,7 +39,6 @@ class AppTheme {
           textStyle: AppTextStyles.lightTextTheme.labelLarge,
         ),
       ),
-      // Add other theme properties like inputDecorationTheme, cardTheme etc.
     );
   }
 
@@ -56,7 +51,6 @@ class AppTheme {
         primary: AppColors.darkPrimary,
         primaryContainer: AppColors.darkPrimaryVariant,
         secondary: AppColors.darkSecondary,
-        // secondaryContainer: AppColors.darkSecondaryVariant, // Often same as secondary in dark
         surface: AppColors.darkSurface,
         error: AppColors.darkError,
         onPrimary: AppColors.darkOnPrimary,
@@ -68,9 +62,7 @@ class AppTheme {
       appBarTheme: AppBarTheme(
         elevation: 0,
         backgroundColor: AppColors.darkBackground,
-        foregroundColor: AppColors.darkOnSurface,
-        titleTextStyle: AppTextStyles.darkTextTheme.titleLarge
-            ?.copyWith(color: AppColors.darkOnSurface),
+        titleTextStyle: AppTextStyles.darkTextTheme.titleLarge,
       ),
       buttonTheme: const ButtonThemeData(
         buttonColor: AppColors.darkPrimary,
@@ -83,7 +75,6 @@ class AppTheme {
           textStyle: AppTextStyles.darkTextTheme.labelLarge,
         ),
       ),
-      // Add other theme properties
     );
   }
 }

@@ -40,3 +40,16 @@ class RetakeCoursesSaveError extends RetakeCoursesState {
   @override
   List<Object> get props => [message];
 }
+
+class RetakeCourseDeleting extends RetakeCoursesState {}
+
+class RetakeCourseDeleted extends RetakeCoursesState {}
+
+class RetakeCourseDeleteError extends RetakeCoursesState {
+  final String message;
+
+  const RetakeCourseDeleteError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}

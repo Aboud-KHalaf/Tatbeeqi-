@@ -10,4 +10,5 @@ abstract class CourseRepository {
       {required int studyYear, required int departmentId});
         Future<Either<Failure, void>> saveSelectedRetakeCourses(
       List<CourseEntity> courses);
+        Future<Either<Failure, void>> deleteRetakeCourse(int courseId); 
 }

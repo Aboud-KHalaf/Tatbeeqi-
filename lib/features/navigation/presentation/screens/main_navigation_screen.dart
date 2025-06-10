@@ -43,7 +43,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
     HomeView(),
     CoursesView(),
     SettingsView(),
-    HomeView(),
+    SettingsView(),
   ];
 
   @override

@@ -95,4 +95,17 @@ class CourseRepositoryImpl implements CourseRepository {
           CacheFailure('Failed to save retake courses: ${e.toString()}'));
     }
   }
+
+  @override
+  Future<Either<Failure, Unit>> deleteRetakeCourse(int courseId) async {
+    try {
+      await localDataSource.deleteRetakeCourse(courseId);
+      return const Right(unit);
+    } on CacheException catch (e) {
+      return Left(CacheFailure(e.message));
+    } catch (e) {
+      return Left(
+          CacheFailure('Failed to delete retake course: ${e.toString()}'));
+    }
+  }
 }
