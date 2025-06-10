@@ -10,7 +10,6 @@ import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cu
 import 'package:tatbeeqi/features/localization/presentation/manager/locale_cubit/locale_cubit.dart';
 import 'package:tatbeeqi/features/localization/presentation/manager/locale_cubit/locale_state.dart';
 import 'package:tatbeeqi/features/news/presentation/manager/news_cubit.dart';
-
 import 'package:tatbeeqi/features/notifications/presentation/manager/notification_cubit/notification_cubit.dart';
 import 'package:tatbeeqi/features/navigation/presentation/manager/navigation_cubit/navigation_cubit.dart';
 import 'package:tatbeeqi/features/theme/presentation/manager/theme_cubit/theme_cubit.dart';
@@ -43,9 +42,6 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (_) => di.sl<NewsCubit>()..fetchNews(),
-          ),
-          BlocProvider(
             create: (_) => di.sl<LocaleCubit>()..getSavedLocale(),
           ),
           BlocProvider(
@@ -60,20 +56,24 @@ class MyApp extends StatelessWidget {
             create: (_) => di.sl<NavigationCubit>(),
           ),
           BlocProvider(
-            create: (_) => di.sl<ToDoCubit>()..fetchToDos(),
-          ),
-          BlocProvider(
             create: (_) => di.sl<FetchCoursesCubit>()..fetchCourses(1, 2),
+          ),
+          // should move from main
+          BlocProvider(
+            create: (_) => di.sl<NewsCubit>()..fetchNews(),
           ),
           BlocProvider(
             create: (_) => di.sl<RetakeCoursesCubit>(),
+          ),
+          BlocProvider(
+            create: (_) => di.sl<ToDoCubit>()..fetchToDos(),
           ),
         ],
         child: BlocBuilder<LocaleCubit, LocaleState>(
           builder: (context, localeState) {
             final currentLocale = (localeState is LocaleLoaded)
                 ? localeState.locale
-                : const Locale('en');
+                : const Locale('ar');
 
             return BlocBuilder<ThemeCubit, ThemeData>(
               builder: (context, currentThemeData) {

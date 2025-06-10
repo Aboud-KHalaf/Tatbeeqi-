@@ -3,7 +3,7 @@ import 'package:tatbeeqi/features/localization/presentation/widgets/language_swi
 import 'package:tatbeeqi/features/theme/presentation/widgets/theme_toggle_widget.dart';
 
 class SettingsView extends StatelessWidget {
-  static String routePath = '/SettingsView';
+  static const String routePath = '/SettingsView';
 
   const SettingsView({super.key});
 

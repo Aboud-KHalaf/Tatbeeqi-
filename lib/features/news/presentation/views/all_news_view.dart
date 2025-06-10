@@ -8,7 +8,7 @@ import 'package:tatbeeqi/features/news/presentation/widgets/all_news_shimmer_loa
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class AllNewsView extends StatelessWidget {
-  static String routeId = '/allNewsView';
+  static const String routeId = '/allNewsView';
 
   const AllNewsView({super.key});
 

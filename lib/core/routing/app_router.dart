@@ -1,57 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
+// Core
+import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes_args.dart';
+
+// Features
 import 'package:tatbeeqi/features/courses_content/presentation/screens/course_overview_screen.dart';
-import 'package:tatbeeqi/features/home/presentation/views/home_view.dart';
 import 'package:tatbeeqi/features/navigation/presentation/screens/main_navigation_screen.dart';
-import 'package:tatbeeqi/features/news/domain/entities/news_item_entity.dart';
 import 'package:tatbeeqi/features/news/presentation/views/all_news_view.dart';
 import 'package:tatbeeqi/features/news/presentation/views/news_details_view.dart';
 import 'package:tatbeeqi/features/settings/presentation/screens/settings_screen.dart';
 import 'package:tatbeeqi/features/todo/presentation/views/todo_view.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: HomeView.routePath,
+  initialLocation: AppRoutes.home,
   debugLogDiagnostics: true,
   routes: <RouteBase>[
     GoRoute(
-      path: HomeView.routePath,
+      path: AppRoutes.home,
       builder: (BuildContext context, GoRouterState state) {
         return const MainNavigationScreen();
       },
     ),
     GoRoute(
-      path: SettingsView.routePath,
+      path: AppRoutes.settingsPath,
       builder: (BuildContext context, GoRouterState state) {
         return const SettingsView();
       },
     ),
     GoRoute(
-      path: AllNewsView.routeId,
+      path: AppRoutes.allNewsPath,
       builder: (BuildContext context, GoRouterState state) {
         return const AllNewsView();
       },
     ),
     GoRoute(
-      path: TodoView.routePath,
+      path: AppRoutes.todoPath,
       builder: (BuildContext context, GoRouterState state) {
         return const TodoView();
       },
     ),
     GoRoute(
-      path: CourseOverviewScreen.routePath,
+      path: AppRoutes.courseOverviewPath,
       builder: (BuildContext context, GoRouterState state) {
         return const CourseOverviewScreen();
       },
     ),
     GoRoute(
-      path: NewsDetailsView.routeId,
+      path: AppRoutes.newsDetailsPath,
       name: 'newsDetails',
       builder: (context, state) {
-        final args = state.extra as Map<String, dynamic>;
-        final newsItem = args['newsItem'] as NewsItemEntity;
-        final heroTag = args['heroTag'] as String;
-
-        return NewsDetailsView(newsItem: newsItem, heroTag: heroTag);
+        final args = state.extra as NewsDetailsArgs;
+        return NewsDetailsView(newsItem: args.newsItem, heroTag: args.heroTag);
       },
     ),
   ],

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes_args.dart';
 import 'package:tatbeeqi/features/news/domain/entities/news_item_entity.dart';
-import 'package:tatbeeqi/features/news/presentation/views/news_details_view.dart';
 import 'package:tatbeeqi/features/news/presentation/widgets/news_card_category_indicator.dart';
 import 'package:tatbeeqi/features/news/presentation/widgets/news_card_content.dart';
 
@@ -24,11 +25,8 @@ class NewsCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.push(
-          NewsDetailsView.routeId,
-          extra: {
-            'newsItem': item,
-            'heroTag': 'news_${item.id}',
-          },
+          AppRoutes.newsDetailsPath,
+          extra: NewsDetailsArgs(newsItem: item, heroTag: 'someTag'),
         );
       },
       child: Hero(

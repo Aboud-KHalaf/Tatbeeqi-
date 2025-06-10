@@ -4,7 +4,7 @@ import 'package:tatbeeqi/features/courses_content/presentation/widgets/custom_co
 
 class CourseOverviewScreen extends StatefulWidget {
   const CourseOverviewScreen({super.key});
-  static String routePath = '/courseOverviewView';
+  static const String routePath = '/courseOverviewView';
 
   @override
   State<CourseOverviewScreen> createState() => _CourseOverviewScreenState();

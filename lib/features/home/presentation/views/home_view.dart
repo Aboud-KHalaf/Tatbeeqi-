@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/constants/constants.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/custom_app_bar.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/recently_added_section.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/study_progress_section.dart';
-import 'package:tatbeeqi/features/news/presentation/views/all_news_view.dart';
 import 'package:tatbeeqi/features/news/presentation/widgets/news_section.dart';
-import 'package:tatbeeqi/features/todo/presentation/views/todo_view.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/today_tasks_section.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class HomeView extends StatelessWidget {
-  static String routePath = '/homeView';
+  static const String routePath = '/homeView';
   const HomeView({super.key});
 
   @override
@@ -26,7 +25,7 @@ class HomeView extends StatelessWidget {
           _SectionTitle(
             title: l10n.homeLatestNewsAndEvents,
             onPressed: () {
-              context.push(AllNewsView.routeId);
+              context.push(AppRoutes.allNewsPath);
             },
           ),
           const SizedBox(height: 12.0),
@@ -35,7 +34,7 @@ class HomeView extends StatelessWidget {
           _SectionTitle(
               title: l10n.homeTodayTasks,
               onPressed: () {
-                context.push(TodoView.routePath);
+                context.push(AppRoutes.todoPath);
               }),
           const SizedBox(height: 12.0),
           const TodayTasksSection(),

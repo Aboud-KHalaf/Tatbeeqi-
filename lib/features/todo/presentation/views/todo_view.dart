@@ -10,7 +10,7 @@ import 'package:tatbeeqi/features/todo/presentation/widgets/todo_no_data_aviable
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class TodoView extends StatefulWidget {
-  static String routePath = '/todoView';
+  static const String routePath = '/todoView';
 
   const TodoView({super.key});
 
