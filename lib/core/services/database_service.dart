@@ -30,6 +30,15 @@ const String coursesColWeeklyHoursPractical = 'weekly_hours_practical';
 const String coursesColWeeklyHoursTotal = 'weekly_hours_total';
 const String coursesColGradeStudentWork = 'grade_student_work';
 
+// Notes Table
+const String notesTableName = 'notes';
+const String notesColId = 'id';
+const String notesColCourseId = 'course_id';
+const String notesColTitle = 'title';
+const String notesColContent = 'content';
+const String notesColLastModified = 'last_modified';
+const String notesColColor = 'color';
+
 class DatabaseService {
   Database? _database;
   bool _isInitializing = false; // Prevent race conditions during init
@@ -65,17 +74,18 @@ class DatabaseService {
     AppLogger.info('Database path: $path'); // Log the path for debugging
     return await openDatabase(
       path,
-      version: 2,
+      version: 3,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
   }
 
   // Define the schema creation logic
-  Future<void> _onCreate(Database db, int version) async {
+    Future<void> _onCreate(Database db, int version) async {
     AppLogger.info('Creating database tables for version $version');
     await _createTodosTable(db);
     await _createCoursesTable(db);
+    await _createNotesTable(db);
     AppLogger.info('All tables created successfully.');
   }
 
@@ -116,12 +126,30 @@ class DatabaseService {
     AppLogger.info('Table $coursesTableName created successfully.');
   }
 
+  Future<void> _createNotesTable(Database db) async {
+    AppLogger.info('Creating database table: $notesTableName');
+    await db.execute('''
+      CREATE TABLE $notesTableName (
+        $notesColId INTEGER PRIMARY KEY AUTOINCREMENT,
+        $notesColCourseId TEXT NOT NULL,
+        $notesColTitle TEXT NOT NULL,
+        $notesColContent TEXT NOT NULL,
+        $notesColLastModified TEXT NOT NULL,
+        $notesColColor INTEGER NOT NULL DEFAULT 0
+      )
+    ''');
+    AppLogger.info('Table $notesTableName created successfully.');
+  }
+
   // Add migration logic for schema changes
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     AppLogger.info(
         'Upgrading database from version $oldVersion to $newVersion');
     if (oldVersion < 2) {
       await _createCoursesTable(db);
+    }
+    if (oldVersion < 3) {
+      await _createNotesTable(db);
     }
     // Add more migration steps for future versions if needed
     // Example: if (oldVersion < 3) { /* changes for version 3 */ }

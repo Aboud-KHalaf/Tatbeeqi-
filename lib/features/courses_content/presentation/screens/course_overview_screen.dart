@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_overview_body.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/custom_course_content_app_bar_widget.dart';
+import 'package:tatbeeqi/features/notes/presentation/views/notes_view.dart';
 
-class CourseOverviewScreen extends StatefulWidget {
-  const CourseOverviewScreen({super.key});
+class CourseOverview extends StatefulWidget {
+  const CourseOverview({super.key});
   static const String routePath = '/courseOverviewView';
 
   @override
-  State<CourseOverviewScreen> createState() => _CourseOverviewScreenState();
+  State<CourseOverview> createState() => _CourseOverviewState();
 }
 
-class _CourseOverviewScreenState extends State<CourseOverviewScreen>
+class _CourseOverviewState extends State<CourseOverview>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -42,7 +43,7 @@ class _CourseOverviewScreenState extends State<CourseOverviewScreen>
           CourseOverviewBody(tabController: _tabController),
           const GradesPage(),
           const ForumsPage(),
-          const NotesPage(),
+          const NotesView(courseId: "1"),
           const ReferencesPage(),
           const AboutCoursePage(),
         ],
@@ -121,46 +122,6 @@ class ForumsPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {},
-      ),
-    );
-  }
-}
-
-// Notes Page Sample
-class NotesPage extends StatelessWidget {
-  const NotesPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Notes'),
-      ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        children: List.generate(6, (index) {
-          return Card(
-              child: InkWell(
-            onTap: () {},
-            child: Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.note,
-                      size: 40,
-                      color: Colors.blue[300],
-                    ),
-                    const SizedBox(height: 10),
-                    Text('Lecture ${index + 1} Notes'),
-                  ]),
-            ),
-          ));
-        }),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),

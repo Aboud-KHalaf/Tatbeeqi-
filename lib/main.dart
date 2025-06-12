@@ -10,6 +10,7 @@ import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cu
 import 'package:tatbeeqi/features/localization/presentation/manager/locale_cubit/locale_cubit.dart';
 import 'package:tatbeeqi/features/localization/presentation/manager/locale_cubit/locale_state.dart';
 import 'package:tatbeeqi/features/news/presentation/manager/news_cubit.dart';
+import 'package:tatbeeqi/features/notes/presentation/bloc/notes_bloc.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/notification_cubit/notification_cubit.dart';
 import 'package:tatbeeqi/features/navigation/presentation/manager/navigation_cubit/navigation_cubit.dart';
 import 'package:tatbeeqi/features/theme/presentation/manager/theme_cubit/theme_cubit.dart';
@@ -64,6 +65,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (_) => di.sl<RetakeCoursesCubit>(),
+          ),
+          BlocProvider(
+            create: (_) => di.sl<NotesBloc>(),
           ),
           BlocProvider(
             create: (_) => di.sl<ToDoCubit>()..fetchToDos(),

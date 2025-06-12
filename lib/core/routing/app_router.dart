@@ -10,6 +10,7 @@ import 'package:tatbeeqi/features/courses_content/presentation/screens/course_ov
 import 'package:tatbeeqi/features/navigation/presentation/screens/main_navigation_screen.dart';
 import 'package:tatbeeqi/features/news/presentation/views/all_news_view.dart';
 import 'package:tatbeeqi/features/news/presentation/views/news_details_view.dart';
+import 'package:tatbeeqi/features/notes/presentation/views/add_update_note_view.dart';
 import 'package:tatbeeqi/features/settings/presentation/screens/settings_screen.dart';
 import 'package:tatbeeqi/features/todo/presentation/views/todo_view.dart';
 
@@ -44,7 +45,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.courseOverviewPath,
       builder: (BuildContext context, GoRouterState state) {
-        return const CourseOverviewScreen();
+        return const CourseOverview();
       },
     ),
     GoRoute(
@@ -53,6 +54,17 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final args = state.extra as NewsDetailsArgs;
         return NewsDetailsView(newsItem: args.newsItem, heroTag: args.heroTag);
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.addUpdateNotePath,
+      builder: (context, state) {
+        final args = state.extra as AddUpdateNoteArgs;
+        if (args.note == null) {
+          return AddOrUpdateNoteView(courseId: args.courseId);
+        } else {
+          return AddOrUpdateNoteView(note: args.note, courseId: args.courseId);
+        }
       },
     ),
   ],

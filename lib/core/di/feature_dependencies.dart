@@ -6,6 +6,7 @@ import 'package:tatbeeqi/core/di/notification_dependencies.dart';
 import 'package:tatbeeqi/core/di/theme_dependencies.dart';
 import 'package:tatbeeqi/core/di/todo_dependencies.dart';
 import 'package:tatbeeqi/core/di/courses_dependencies.dart'; // Add this import
+import 'package:tatbeeqi/core/di/notes_dependencies.dart';
 
 void initFeatureDependencies(GetIt sl) {
   initThemeDependencies(sl);
@@ -15,6 +16,7 @@ void initFeatureDependencies(GetIt sl) {
   initNewsDependencies(sl);
   initTDoDependencies(sl);
   initCoursesDependencies(sl); // Add this line
+  initNotesDependencies(sl);
   // Call other feature dependency initializers here
   // e.g., initAuthDependencies(sl);
 }
