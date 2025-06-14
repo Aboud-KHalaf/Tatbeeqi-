@@ -17,4 +17,8 @@ class AppRoutes {
   static const String notesPath = NotesView.routePath;
   static const String newsDetailsPath = NewsDetailsView.routeId;
   static const String addUpdateNotePath = AddOrUpdateNoteView.routePath;
+  // Auth
+  static const String signInPath = '/auth/signin';
+  static const String signUpPath = '/auth/signup';
+  static const String forgetPasswordPath = '/auth/forget';
 }

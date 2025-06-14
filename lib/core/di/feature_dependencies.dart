@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:tatbeeqi/core/di/auth_dependencies.dart';
 import 'package:tatbeeqi/core/di/localization_dependencies.dart';
 import 'package:tatbeeqi/core/di/navigation_dependencies.dart';
 import 'package:tatbeeqi/core/di/news_dependencies.dart';
@@ -17,6 +18,7 @@ void initFeatureDependencies(GetIt sl) {
   initTDoDependencies(sl);
   initCoursesDependencies(sl); // Add this line
   initNotesDependencies(sl);
+  initAuthDependencies(sl);
   // Call other feature dependency initializers here
   // e.g., initAuthDependencies(sl);
 }

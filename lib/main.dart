@@ -15,6 +15,7 @@ import 'package:tatbeeqi/features/navigation/presentation/manager/navigation_cub
 import 'package:tatbeeqi/features/notifications/presentation/manager/initialize_notifications_cubit/initialize_notifications_cubit.dart';
 import 'package:tatbeeqi/features/theme/presentation/manager/theme_cubit/theme_cubit.dart';
 import 'package:tatbeeqi/features/todo/presentation/manager/todo_cubit.dart';
+import 'package:tatbeeqi/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -55,6 +56,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (_) => di.sl<NavigationCubit>(),
           ),
+          BlocProvider(
+            create: (_) => di.sl<AuthBloc>(),
+          ),
           // should move from main
           BlocProvider(
             // TEMP
@@ -83,22 +87,28 @@ class MyApp extends StatelessWidget {
 
             return BlocBuilder<ThemeCubit, ThemeData>(
               builder: (context, currentThemeData) {
-                return MaterialApp.router(
-                  routerConfig: router,
-                  debugShowCheckedModeBanner: false,
-                  locale: currentLocale,
-                  localizationsDelegates: const [
-                    AppLocalizations.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: AppLocalizations.supportedLocales,
-                  theme: currentThemeData,
+                return Builder(
+                  builder: (context) {
+                    final authBloc = BlocProvider.of<AuthBloc>(context);
+                    final router = createRouter(authBloc);
+                    return MaterialApp.router(
+                      routerConfig: router,
+                      debugShowCheckedModeBanner: false,
+                      locale: currentLocale,
+                      theme: currentThemeData,
+                      localizationsDelegates: const [
+                        AppLocalizations.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
+                    );
+                  },
                 );
               },
             );
           },
-        ));
+        ),
+      );
   }
 }
