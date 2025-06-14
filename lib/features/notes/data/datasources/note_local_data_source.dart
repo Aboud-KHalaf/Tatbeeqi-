@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:tatbeeqi/core/error/exceptions.dart';
-import 'package:tatbeeqi/core/services/database_service.dart';
+import 'package:tatbeeqi/core/services/database/database_service.dart';
 import 'package:tatbeeqi/features/notes/data/models/note_model.dart';
 
 abstract class NoteLocalDataSource {

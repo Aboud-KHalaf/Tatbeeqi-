@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:tatbeeqi/core/error/exceptions.dart';
-import 'package:tatbeeqi/core/services/database_service.dart';
+import 'package:tatbeeqi/core/services/database/database_service.dart';
 import 'package:tatbeeqi/features/courses/data/models/course_data_model.dart';
 
 abstract class CourseLocalDataSource {

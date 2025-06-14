@@ -16,7 +16,7 @@ import 'package:tatbeeqi/features/todo/presentation/views/todo_view.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: AppRoutes.home,
-  debugLogDiagnostics: true,
+  //debugLogDiagnostics: true,
   routes: <RouteBase>[
     GoRoute(
       path: AppRoutes.home,

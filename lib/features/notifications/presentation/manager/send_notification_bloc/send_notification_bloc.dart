@@ -1,0 +1,70 @@
+import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/features/notifications/domain/entities/app_notification.dart';
+import 'package:tatbeeqi/features/notifications/domain/usecases/send_notification_by_topics_usecase.dart';
+import 'package:tatbeeqi/features/notifications/domain/usecases/send_notification_by_users_usecase.dart';
+
+part 'send_notification_event.dart';
+part 'send_notification_state.dart';
+
+class SendNotificationBloc
+    extends Bloc<SendNotificationEvent, SendNotificationState> {
+  final SendNotificationByUsersUsecase _sendNotificationByUsersUsecase;
+  final SendNotificationByTopicsUsecase _sendNotificationByTopicsUsecase;
+
+  SendNotificationBloc({
+    required SendNotificationByUsersUsecase sendNotificationByUsersUsecase,
+    required SendNotificationByTopicsUsecase sendNotificationByTopicsUsecase,
+  })  : _sendNotificationByUsersUsecase = sendNotificationByUsersUsecase,
+        _sendNotificationByTopicsUsecase = sendNotificationByTopicsUsecase,
+        super(SendNotificationInitial()) {
+    on<SendNotificationToUsers>(_onSendNotificationToUsers);
+    on<SendNotificationToTopics>(_onSendNotificationToTopics);
+  }
+
+  Future<void> _onSendNotificationToUsers(
+    SendNotificationToUsers event,
+    Emitter<SendNotificationState> emit,
+  ) async {
+    emit(SendNotificationLoading());
+    final notification = AppNotification(
+      id: DateTime.now().millisecondsSinceEpoch,
+      title: event.title,
+      subtitle: event.body,
+      html: '',
+      date: DateTime.now(),
+      seen: false,
+    );
+    final result = await _sendNotificationByUsersUsecase(
+      userIds: event.userIds,
+      notification: notification,
+    );
+    result.fold(
+      (failure) => emit(SendNotificationFailure(failure.message)),
+      (_) => emit(SendNotificationSuccess()),
+    );
+  }
+
+  Future<void> _onSendNotificationToTopics(
+    SendNotificationToTopics event,
+    Emitter<SendNotificationState> emit,
+  ) async {
+    emit(SendNotificationLoading());
+    final notification = AppNotification(
+      id: DateTime.now().millisecondsSinceEpoch,
+      title: event.title,
+      subtitle: event.body,
+      html: '',
+      date: DateTime.now(),
+      seen: false,
+    );
+    final result = await _sendNotificationByTopicsUsecase(
+      topics: event.topics,
+      notification: notification,
+    );
+    result.fold(
+      (failure) => emit(SendNotificationFailure(failure.message)),
+      (_) => emit(SendNotificationSuccess()),
+    );
+  }
+}

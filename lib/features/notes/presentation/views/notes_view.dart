@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/core/routing/routes_args.dart';
 import 'package:tatbeeqi/features/notes/presentation/bloc/notes_bloc.dart';
-import 'package:tatbeeqi/features/notes/presentation/views/add_update_note_view.dart';
 import 'package:tatbeeqi/features/notes/presentation/widgets/notes_list.dart';
 
 class NotesView extends StatefulWidget {
@@ -48,8 +47,8 @@ class _NotesViewState extends State<NotesView> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await context.push(
+        onPressed: () {
+          context.push(
             AppRoutes.addUpdateNotePath,
             extra: AddUpdateNoteArgs(courseId: widget.courseId),
           );

@@ -25,6 +25,7 @@ class AppTheme {
       textTheme: AppTextStyles.lightTextTheme,
       appBarTheme: AppBarTheme(
         elevation: 0,
+        centerTitle: true,
         backgroundColor: AppColors.lightSurface,
         titleTextStyle: AppTextStyles.lightTextTheme.titleLarge,
       ),
@@ -61,6 +62,7 @@ class AppTheme {
       textTheme: AppTextStyles.darkTextTheme,
       appBarTheme: AppBarTheme(
         elevation: 0,
+        centerTitle: true,
         backgroundColor: AppColors.darkBackground,
         titleTextStyle: AppTextStyles.darkTextTheme.titleLarge,
       ),

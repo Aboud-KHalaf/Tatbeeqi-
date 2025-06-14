@@ -71,7 +71,6 @@ class DatabaseService {
   Future<Database> _initDB() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, _dbName);
-    AppLogger.info('Database path: $path'); // Log the path for debugging
     return await openDatabase(
       path,
       version: 3,
@@ -81,7 +80,7 @@ class DatabaseService {
   }
 
   // Define the schema creation logic
-    Future<void> _onCreate(Database db, int version) async {
+  Future<void> _onCreate(Database db, int version) async {
     AppLogger.info('Creating database tables for version $version');
     await _createTodosTable(db);
     await _createCoursesTable(db);

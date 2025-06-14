@@ -1,18 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:tatbeeqi/core/error/failures.dart';
-import 'package:tatbeeqi/core/usecases/usecase.dart';
-import 'package:tatbeeqi/features/notifications/domain/repositories/notification_repository.dart';
+import 'package:tatbeeqi/features/notifications/domain/repositories/notifications_repository.dart';
 
-class SubscribeToTopicUseCase implements UseCase<Unit, String> {
-  final NotificationRepository repository;
+class SubscribeToTopicUsecase {
+  final NotificationsRepository repository;
 
-  SubscribeToTopicUseCase(this.repository);
-
-  @override
-  Future<Either<Failure, Unit>> call(String topic) async {
-    if (topic.isEmpty) {
-      return const Left(GeneralFailure('Topic cannot be empty'));
-    }
-    return await repository.subscribeToTopic(topic);
+  SubscribeToTopicUsecase({required this.repository});
+  Future<Either<Failure, Unit>> call({required String topic}) async {
+    return await repository.subscribeToTopic(topic: topic);
   }
 }

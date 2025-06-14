@@ -1,4 +1,4 @@
-import 'package:tatbeeqi/core/services/database_service.dart';
+import 'package:tatbeeqi/core/services/database/database_service.dart';
 import 'package:tatbeeqi/features/notes/domain/entities/note.dart';
 
 class NoteModel extends Note {

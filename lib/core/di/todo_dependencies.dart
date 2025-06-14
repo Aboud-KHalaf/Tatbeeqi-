@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:tatbeeqi/core/services/database_service.dart';
+import 'package:tatbeeqi/core/services/database/database_service.dart';
 import 'package:tatbeeqi/features/todo/data/datasources/todo_local_data_source.dart';
 import 'package:tatbeeqi/features/todo/data/repositories/todo_repository_impl.dart';
 import 'package:tatbeeqi/features/todo/domain/repositories/todo_repository.dart';

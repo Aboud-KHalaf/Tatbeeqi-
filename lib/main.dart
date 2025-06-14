@@ -11,8 +11,8 @@ import 'package:tatbeeqi/features/localization/presentation/manager/locale_cubit
 import 'package:tatbeeqi/features/localization/presentation/manager/locale_cubit/locale_state.dart';
 import 'package:tatbeeqi/features/news/presentation/manager/news_cubit.dart';
 import 'package:tatbeeqi/features/notes/presentation/bloc/notes_bloc.dart';
-import 'package:tatbeeqi/features/notifications/presentation/manager/notification_cubit/notification_cubit.dart';
 import 'package:tatbeeqi/features/navigation/presentation/manager/navigation_cubit/navigation_cubit.dart';
+import 'package:tatbeeqi/features/notifications/presentation/manager/initialize_notifications_cubit/initialize_notifications_cubit.dart';
 import 'package:tatbeeqi/features/theme/presentation/manager/theme_cubit/theme_cubit.dart';
 import 'package:tatbeeqi/features/todo/presentation/manager/todo_cubit.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
@@ -42,6 +42,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
+          BlocProvider<InitializeNotificationsCubit>(
+            create: (_) => di.sl<InitializeNotificationsCubit>()..initialize(),
+            lazy: true,
+          ),
           BlocProvider(
             create: (_) => di.sl<LocaleCubit>()..getSavedLocale(),
           ),
@@ -49,19 +53,16 @@ class MyApp extends StatelessWidget {
             create: (_) => di.sl<ThemeCubit>()..loadTheme(),
           ),
           BlocProvider(
-            create: (_) =>
-                di.sl<NotificationCubit>()..initializeNotifications(),
-            lazy: false,
-          ),
-          BlocProvider(
             create: (_) => di.sl<NavigationCubit>(),
-          ),
-          BlocProvider(
-            create: (_) => di.sl<FetchCoursesCubit>()..fetchCourses(1, 2),
           ),
           // should move from main
           BlocProvider(
-            create: (_) => di.sl<NewsCubit>()..fetchNews(),
+            // TEMP
+            create: (_) => di.sl<FetchCoursesCubit>(),
+          ),
+          BlocProvider(
+            // TEMP
+            create: (_) => di.sl<NewsCubit>(),
           ),
           BlocProvider(
             create: (_) => di.sl<RetakeCoursesCubit>(),
@@ -70,7 +71,8 @@ class MyApp extends StatelessWidget {
             create: (_) => di.sl<NotesBloc>(),
           ),
           BlocProvider(
-            create: (_) => di.sl<ToDoCubit>()..fetchToDos(),
+            // TEMP
+            create: (_) => di.sl<ToDoCubit>(),
           ),
         ],
         child: BlocBuilder<LocaleCubit, LocaleState>(

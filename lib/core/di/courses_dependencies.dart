@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:tatbeeqi/core/services/database_service.dart';
+import 'package:tatbeeqi/core/services/database/database_service.dart';
 import 'package:tatbeeqi/features/courses/data/datasources/course_local_data_source.dart';
 import 'package:tatbeeqi/features/courses/data/datasources/course_remote_data_source.dart';
 import 'package:tatbeeqi/features/courses/data/repositories/course_repository_impl.dart';
@@ -21,7 +21,7 @@ void initCoursesDependencies(GetIt sl) {
       ));
   sl.registerFactory(() => RetakeCoursesCubit(
         getAllCoursesForRetakeUsecase: sl(),
-        saveSelectedRetakeCoursesUseCase: sl(), 
+        saveSelectedRetakeCoursesUseCase: sl(),
         deleteRetakeCourseUseCase: sl(),
       ));
 
@@ -29,8 +29,8 @@ void initCoursesDependencies(GetIt sl) {
   sl.registerLazySingleton(
       () => GetCoursesByStudyYearAndDepartmentIdUseCase(sl()));
   sl.registerLazySingleton(() => GetAllCoursesForRetakeUsecase(sl()));
-   sl.registerLazySingleton(() => SaveSelectedRetakeCoursesUseCase(sl()));
-   sl.registerLazySingleton(()=> DeleteRetakeCourseUseCase(sl()));
+  sl.registerLazySingleton(() => SaveSelectedRetakeCoursesUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteRetakeCourseUseCase(sl()));
   // Repository
   sl.registerLazySingleton<CourseRepository>(() => CourseRepositoryImpl(
         remoteDataSource: sl(),

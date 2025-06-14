@@ -3,11 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'; // Add this import
-import 'package:tatbeeqi/core/services/database_service.dart';
-import 'package:tatbeeqi/core/services/notification_service.dart';
-
-// Type definition for the background message handler function
-typedef BackgroundMessageHandler = Future<void> Function(RemoteMessage message);
+import 'package:tatbeeqi/core/services/database/database_service.dart';
 
 Future<void> initCoreDependencies(
     GetIt sl, BackgroundMessageHandler onBackgroundMessage) async {
@@ -23,12 +19,8 @@ Future<void> initCoreDependencies(
   sl.registerLazySingleton(() => FlutterLocalNotificationsPlugin());
 
   // --- Core Services ---
-  sl.registerLazySingleton<NotificationService>(() => NotificationServiceImpl(
-        firebaseMessaging: sl(),
-        localNotificationsPlugin: sl(),
-        onBackgroundMessage: onBackgroundMessage, // Pass the handler
-      ));
-       sl.registerLazySingleton(() => DatabaseService());
+
+  sl.registerLazySingleton(() => DatabaseService());
 
   // Register other core services (e.g., HttpClient, Analytics) here
 }
