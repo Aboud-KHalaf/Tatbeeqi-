@@ -93,6 +93,26 @@
   },
 
   "tryAgain" : "حاول مرة اخرى",
+
+  "quizTitle": "الاختبار",
+  "quizResultsTitle": "نتائج الاختبار",
+  "quizEmptyNoQuestions": "لا توجد أسئلة متاحة لهذا الدرس بعد!",
+  "quizEmptyTryAnotherLesson": "يرجى العودة لاحقًا أو تجربة درس آخر.",
+  "quizErrorTitle": "حدث خطأ!",
+  "quizErrorBody": "تعذر تحميل الاختبار. يرجى المحاولة مرة أخرى لاحقًا.",
+  "quizPrev": "السابق",
+  "quizNext": "السؤال التالي",
+  "quizSubmit": "إرسال الاختبار",
+  "quizProgressBar": "السؤال {current} من {total}",
+  "quizGoHome": "العودة للرئيسية",
+  "quizResultCardQuestion": "السؤال {number}",
+  "quizResultCardYourAnswer": "إجابتك: ",
+  "quizResultCardCorrectAnswer": "الإجابة الصحيحة: ",
+  "quizResultCardNoAnswer": "لم يتم اختيار إجابة",
+  "quizScoreSummaryTitle": "درجتك",
+  "quizScoreSummaryScore": "{score} / {total}",
+  "quizScoreSummaryPassed": "عمل رائع، لقد نجحت!",
+  "quizScoreSummaryTryAgain": "استمر في المحاولة، ستنجح قريبًا!",
   
   "todoTitle": "العنوان",
   "@todoTitle": {

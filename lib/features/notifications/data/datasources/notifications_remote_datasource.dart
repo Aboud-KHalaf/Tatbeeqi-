@@ -34,13 +34,13 @@ abstract class NotificationsRemoteDatasource {
       {required String deviceToken, required String platform});
 
   /// Sends a notification to a list of topics.
-  Future<Unit> sendNotificationByTopics({
+  Future<Unit> sendNotificationToTopics({
     required AppNotification notification,
     required List<String> topics,
   });
 
   /// Sends a notification to a list of user IDs.
-  Future<Unit> sendNotificationByUsers({
+  Future<Unit> sendNotificationToUsers({
     required AppNotification notification,
     required List<String> userIds,
   });
@@ -90,6 +90,7 @@ class NotificationsRemoteDatasourceImpl
       );
 
       FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
       FirebaseMessaging.onMessage
           .listen(onData, onDone: onDone, onError: onError);
       FirebaseMessaging.instance.onTokenRefresh.listen(onTokenRefreshed);
@@ -231,18 +232,94 @@ class NotificationsRemoteDatasourceImpl
   }
 
   @override
-  Future<Unit> sendNotificationByTopics({
+  Future<Unit> sendNotificationToTopics({
     required AppNotification notification,
     required List<String> topics,
   }) async {
-    return unit;
+    print("from noti remote send topic");
+    return _invokeNotificationFunction(
+      functionName: 'send-notifications-to-topics',
+      body: {
+        'topics': topics,
+        'notification': notification.toJson(),
+      },
+      errorContext: 'send notification to topics',
+    );
   }
 
   @override
-  Future<Unit> sendNotificationByUsers({
+  Future<Unit> sendNotificationToUsers({
     required AppNotification notification,
     required List<String> userIds,
   }) async {
-    return unit;
+    return _invokeNotificationFunction(
+      functionName: 'send-fcm-notifications',
+      body: {
+        'userIds': userIds,
+        'notification': notification.toJson(),
+      },
+      errorContext: 'send notification to users',
+    );
+  }
+
+  /// A reusable method for invoking Supabase edge functions.
+  Future<Unit> _invokeNotificationFunction({
+    required String functionName,
+    required Map<String, dynamic> body,
+    required String errorContext,
+  }) async {
+    try {
+      final response = await supabaseClient.functions.invoke(
+        functionName,
+        body: body,
+      );
+
+      if (response.status != 200) {
+        final data = response.data as Map<String, dynamic>?;
+        final errorMessage = data?['error']?['message'] ??
+            data?['message'] ??
+            'Unknown error from function';
+        print('[$functionName] Failed: $errorMessage');
+        throw Exception('Failed to $errorContext: $errorMessage');
+      }
+
+      print('[$functionName] Success: ${response.data}');
+      return unit;
+    } on FunctionException catch (e) {
+      print('[$functionName] FunctionException: ${e.toString()}');
+      print('Details: ${e.details}');
+      throw Exception('Failed to $errorContext: ${e.toString()}');
+    } catch (e) {
+      print('[$functionName] Unexpected error: $e');
+      throw Exception('Unexpected error while trying to $errorContext.');
+    }
   }
 }
+
+
+
+
+/*
+
+select *
+from notifications
+where (type = 'user' and 'abc123' = any(target_user_ids))
+   or (type = 'topic' and target_topics && array['news', 'math', 'science']);
+
+
+------
+
+Future<List<Map<String, dynamic>>> fetchUserNotifications({
+  required String userId,
+  required List<String> subscribedTopics,
+}) async {
+  final response = await supabase.from('notifications')
+      .select()
+      .or('and(type.eq.user,target_user_ids.cs.{$userId}),and(type.eq.topic,target_topics.cs.{${subscribedTopics.join(',')}})');
+      
+  if (response == null) return [];
+
+  return List<Map<String, dynamic>>.from(response);
+}
+
+*/

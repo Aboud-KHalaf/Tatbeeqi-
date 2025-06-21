@@ -24,6 +24,7 @@ class InitializeNotificationsCubit extends Cubit<InitializeNotificationsState> {
     emit(InitializeNotificationsLoading());
     final localResult = await _initializeLocalNotifications.call();
     if (localResult.isLeft()) {
+      AppLogger.warning("local error");
       final failure = localResult.fold((f) => f, (_) => null);
       emit(InitializeNotificationsFailure(failure!.message));
     }

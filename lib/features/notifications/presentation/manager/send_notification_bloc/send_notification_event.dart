@@ -9,30 +9,26 @@ abstract class SendNotificationEvent extends Equatable {
 
 class SendNotificationToUsers extends SendNotificationEvent {
   final List<String> userIds;
-  final String title;
-  final String body;
+  final AppNotification notification;
 
   const SendNotificationToUsers({
     required this.userIds,
-    required this.title,
-    required this.body,
+    required this.notification,
   });
 
   @override
-  List<Object> get props => [userIds, title, body];
+  List<Object> get props => [userIds, notification];
 }
 
 class SendNotificationToTopics extends SendNotificationEvent {
   final List<String> topics;
-  final String title;
-  final String body;
+  final AppNotification notification;
 
   const SendNotificationToTopics({
     required this.topics,
-    required this.title,
-    required this.body,
+    required this.notification,
   });
 
   @override
-  List<Object> get props => [topics, title, body];
+  List<Object> get props => [topics, notification];
 }

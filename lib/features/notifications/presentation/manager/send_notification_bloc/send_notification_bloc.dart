@@ -27,17 +27,10 @@ class SendNotificationBloc
     Emitter<SendNotificationState> emit,
   ) async {
     emit(SendNotificationLoading());
-    final notification = AppNotification(
-      id: DateTime.now().millisecondsSinceEpoch,
-      title: event.title,
-      subtitle: event.body,
-      html: '',
-      date: DateTime.now(),
-      seen: false,
-    );
+
     final result = await _sendNotificationByUsersUsecase(
       userIds: event.userIds,
-      notification: notification,
+      notification: event.notification,
     );
     result.fold(
       (failure) => emit(SendNotificationFailure(failure.message)),
@@ -50,17 +43,10 @@ class SendNotificationBloc
     Emitter<SendNotificationState> emit,
   ) async {
     emit(SendNotificationLoading());
-    final notification = AppNotification(
-      id: DateTime.now().millisecondsSinceEpoch,
-      title: event.title,
-      subtitle: event.body,
-      html: '',
-      date: DateTime.now(),
-      seen: false,
-    );
+
     final result = await _sendNotificationByTopicsUsecase(
       topics: event.topics,
-      notification: notification,
+      notification: event.notification,
     );
     result.fold(
       (failure) => emit(SendNotificationFailure(failure.message)),

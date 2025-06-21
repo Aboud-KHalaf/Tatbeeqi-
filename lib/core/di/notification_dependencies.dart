@@ -9,6 +9,7 @@ import 'package:tatbeeqi/features/notifications/domain/usecases/get_device_token
 import 'package:tatbeeqi/features/notifications/domain/usecases/get_notifications_usecase.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/initialize_firebase_notifications_usecase.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/initialize_local_notifications_usecase.dart';
+import 'package:tatbeeqi/features/notifications/domain/usecases/register_device_token_usecase.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/send_notification_by_topics_usecase.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/send_notification_by_users_usecase.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/subscribe_to_topic_usecase.dart';
@@ -57,6 +58,7 @@ void initNotificationDependencies(GetIt sl) {
   sl.registerLazySingleton(() => GetDeviceTokenUsecase(repository: sl()));
   sl.registerLazySingleton(() => SubscribeToTopicUsecase(repository: sl()));
   sl.registerLazySingleton(() => UnsubscribeToTopicUsecase(repository: sl()));
+  sl.registerLazySingleton(() => RegisterDeviceTokenUseCase(repository: sl()));
 
   // Repository
   sl.registerLazySingleton<NotificationsRepository>(
@@ -72,3 +74,4 @@ void initNotificationDependencies(GetIt sl) {
   sl.registerLazySingleton<NotificationsLocalDatasource>(
       () => NotificationsLocalDatasourceImplements());
 }
+

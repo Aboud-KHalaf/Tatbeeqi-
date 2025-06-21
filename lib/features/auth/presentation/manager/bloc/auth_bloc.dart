@@ -1,15 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/utils/app_logger.dart';
 
-import '../../domain/entities/user.dart';
-import '../../domain/usecases/auth_state_changes_usecase.dart';
-import '../../domain/usecases/forget_password_usecase.dart';
-import '../../domain/usecases/sign_in_usecase.dart';
-import '../../domain/usecases/sign_in_with_google_usecase.dart';
-import '../../domain/usecases/sign_out_usecase.dart';
-import '../../domain/usecases/sign_up_usecase.dart';
-import '../../domain/usecases/update_user_usecase.dart';
+import '../../../domain/entities/user.dart';
+import '../../../domain/usecases/auth_state_changes_usecase.dart';
+import '../../../domain/usecases/forget_password_usecase.dart';
+import '../../../domain/usecases/sign_in_usecase.dart';
+import '../../../domain/usecases/sign_in_with_google_usecase.dart';
+import '../../../domain/usecases/sign_out_usecase.dart';
+import '../../../domain/usecases/sign_up_usecase.dart';
+import '../../../domain/usecases/update_user_usecase.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -65,6 +66,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       );
       emit(AuthAuthenticated(user));
     } catch (e) {
+      AppLogger.error("auth erro :${e.toString()}");
       emit(AuthError(e.toString()));
     }
   }

@@ -11,4 +11,6 @@ class GetDeviceTokenUsecase {
   Future<Either<Failure, String>> call() async {
     return await repository.getDeviceToken();
   }
+
+  void fold(Null Function(dynamic l) param0, Function(dynamic r) param1) {}
 }

@@ -68,16 +68,14 @@ class AppNotification {
     required this.date,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'title': title,
       'subtitle': subtitle,
-      'html': html,
       'imageUrl': imageUrl,
-      'seen': seen,
+      'html': html,
       'date': date.toIso8601String(),
-    };
+    }..removeWhere((key, value) => value == null);
   }
 
   factory AppNotification.fromMap(Map<String, dynamic> map) {

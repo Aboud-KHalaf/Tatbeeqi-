@@ -54,8 +54,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeRecentlyAdded => 'المضافة مؤخرا';
 
   @override
-  String get homeAdvancedSoftwareEngineering =>
-      'هندسة برمجيات متقدمة - الفصل 3';
+  String get homeAdvancedSoftwareEngineering => 'هندسة برمجيات متقدمة - الفصل 3';
 
   @override
   String get seeAll => 'عرض الكل';
@@ -118,6 +117,69 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get tryAgain => 'حاول مرة اخرى';
+
+  @override
+  String get quizTitle => 'الاختبار';
+
+  @override
+  String get quizResultsTitle => 'نتائج الاختبار';
+
+  @override
+  String get quizEmptyNoQuestions => 'لا توجد أسئلة متاحة لهذا الدرس بعد!';
+
+  @override
+  String get quizEmptyTryAnotherLesson => 'يرجى العودة لاحقًا أو تجربة درس آخر.';
+
+  @override
+  String get quizErrorTitle => 'حدث خطأ!';
+
+  @override
+  String get quizErrorBody => 'تعذر تحميل الاختبار. يرجى المحاولة مرة أخرى لاحقًا.';
+
+  @override
+  String get quizPrev => 'السابق';
+
+  @override
+  String get quizNext => 'السؤال التالي';
+
+  @override
+  String get quizSubmit => 'إرسال الاختبار';
+
+  @override
+  String quizProgressBar(Object current, Object total) {
+    return 'السؤال $current من $total';
+  }
+
+  @override
+  String get quizGoHome => 'العودة للرئيسية';
+
+  @override
+  String quizResultCardQuestion(Object number) {
+    return 'السؤال $number';
+  }
+
+  @override
+  String get quizResultCardYourAnswer => 'إجابتك: ';
+
+  @override
+  String get quizResultCardCorrectAnswer => 'الإجابة الصحيحة: ';
+
+  @override
+  String get quizResultCardNoAnswer => 'لم يتم اختيار إجابة';
+
+  @override
+  String get quizScoreSummaryTitle => 'درجتك';
+
+  @override
+  String quizScoreSummaryScore(Object score, Object total) {
+    return '$score / $total';
+  }
+
+  @override
+  String get quizScoreSummaryPassed => 'عمل رائع، لقد نجحت!';
+
+  @override
+  String get quizScoreSummaryTryAgain => 'استمر في المحاولة، ستنجح قريبًا!';
 
   @override
   String get todoTitle => 'العنوان';

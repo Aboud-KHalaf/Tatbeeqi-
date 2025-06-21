@@ -93,6 +93,26 @@
   },
 
   "tryAgain" : "Try Again",
+
+  "quizTitle": "Quiz",
+  "quizResultsTitle": "Quiz Results",
+  "quizEmptyNoQuestions": "No questions found for this lesson yet!",
+  "quizEmptyTryAnotherLesson": "Please check back later or try another lesson.",
+  "quizErrorTitle": "Oops! Something went wrong.",
+  "quizErrorBody": "We couldn't load the quiz. Please try again later.",
+  "quizPrev": "Previous",
+  "quizNext": "Next Question",
+  "quizSubmit": "Submit Quiz",
+  "quizProgressBar": "Question {current} of {total}",
+  "quizGoHome": "Go Home",
+  "quizResultCardQuestion": "Question {number}",
+  "quizResultCardYourAnswer": "Your answer: ",
+  "quizResultCardCorrectAnswer": "Correct answer: ",
+  "quizResultCardNoAnswer": "No answer selected",
+  "quizScoreSummaryTitle": "Your Score",
+  "quizScoreSummaryScore": "{score} / {total}",
+  "quizScoreSummaryPassed": "Great job, you passed!",
+  "quizScoreSummaryTryAgain": "Keep practicing, you'll get there!",
   
   "todoTitle": "Title",
   "@todoTitle": {

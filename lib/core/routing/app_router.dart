@@ -4,8 +4,9 @@ import 'package:go_router/go_router.dart';
 
 // Core
 import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes_args.dart';
 
-import 'package:tatbeeqi/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:tatbeeqi/features/auth/presentation/manager/bloc/auth_bloc.dart';
 import 'package:tatbeeqi/features/auth/presentation/views/forget_password_page.dart';
 import 'package:tatbeeqi/features/auth/presentation/views/sign_in_page.dart';
 import 'package:tatbeeqi/features/auth/presentation/views/sign_up_page.dart';
@@ -14,8 +15,15 @@ import 'package:tatbeeqi/features/auth/presentation/views/sign_up_page.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/screens/course_overview_screen.dart';
 import 'package:tatbeeqi/features/navigation/presentation/screens/main_navigation_screen.dart';
 import 'package:tatbeeqi/features/news/presentation/views/all_news_view.dart';
+import 'package:tatbeeqi/features/news/presentation/views/news_details_view.dart';
+import 'package:tatbeeqi/features/notes/presentation/views/add_update_note_view.dart';
+import 'package:tatbeeqi/features/quiz/presentation/views/result_view.dart';
 
 import 'package:tatbeeqi/features/settings/presentation/screens/settings_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/di/service_locator.dart';
+import 'package:tatbeeqi/features/quiz/presentation/bloc/quiz_bloc.dart';
+import 'package:tatbeeqi/features/quiz/presentation/views/quiz_view.dart';
 import 'package:tatbeeqi/features/todo/presentation/views/todo_view.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
@@ -32,6 +40,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
 }
 
 GoRouter createRouter(AuthBloc authBloc) {
+  
   return GoRouter(
     initialLocation: AppRoutes.home,
     refreshListenable: GoRouterRefreshStream(authBloc.stream),
@@ -43,7 +52,7 @@ GoRouter createRouter(AuthBloc authBloc) {
       return null;
     },
 
-    //debugLogDiagnostics: true,
+
     routes: <RouteBase>[
       GoRoute(
         path: AppRoutes.home,
@@ -91,6 +100,45 @@ GoRouter createRouter(AuthBloc authBloc) {
         path: AppRoutes.courseOverviewPath,
         builder: (BuildContext context, GoRouterState state) {
           return const CourseOverview();
+        },
+      ),
+          GoRoute(
+      path: AppRoutes.newsDetailsPath,
+      name: 'newsDetails',
+      builder: (context, state) {
+        final args = state.extra as NewsDetailsArgs;
+        return NewsDetailsView(newsItem: args.newsItem, heroTag: args.heroTag);
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.addUpdateNotePath,
+      builder: (context, state) {
+        final args = state.extra as AddUpdateNoteArgs;
+        if (args.note == null) {
+          return AddOrUpdateNoteView(courseId: args.courseId);
+        } else {
+          return AddOrUpdateNoteView(note: args.note, courseId: args.courseId);
+        }
+      },
+    ),
+      GoRoute(
+        path: AppRoutes.quizPath,
+        builder: (BuildContext context, GoRouterState state) {
+          final lessonId = state.extra as String; 
+          return  QuizView(lessonId: lessonId);
+        },
+      ),
+   
+      GoRoute(
+        path: AppRoutes.quizResultPath,
+        builder: (BuildContext context, GoRouterState state) {
+                   final args = state.extra as QuizResultArgs;
+          return ResultView(
+            score: args.score,
+            results: args.results,
+            questions: args.questions,
+            userAnswers: args.userAnswers,
+          );
         },
       ),
     ],

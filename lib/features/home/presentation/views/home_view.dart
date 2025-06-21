@@ -9,10 +9,45 @@ import 'package:tatbeeqi/features/news/presentation/widgets/news_section.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/today_tasks_section.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   static const String routePath = '/homeView';
   const HomeView({super.key});
+ 
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
 
+class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
+   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  //  initDeviceToken();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // initDeviceToken(); // Re-register token if needed
+    }
+  }
+
+  // Future<void> initDeviceToken() async {
+  //   final user = Supabase.instance.client.auth.currentUser;
+  //   if (user != null) {
+  //    late String token;
+  //     final tokenOrFailure = await sl<GetDeviceTokenUsecase>().call(); 
+  //     tokenOrFailure.fold((l) => null, (r) => token = r);
+  //    print(token);
+  //     await sl<RegisterDeviceTokenUseCase>().call(RegisterDeviceTokenRequest(deviceToken: token, platform: 'android'));
+  //   }   
+  // }
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;

@@ -207,7 +207,7 @@ class NotificationsRepositoryImplements implements NotificationsRepository {
     required List<String> topics,
   }) async {
     try {
-      final response = await _remoteDatasource.sendNotificationByTopics(
+      final response = await _remoteDatasource.sendNotificationToTopics(
           notification: notification, topics: topics);
       return right(response);
     } on Exception catch (e) {
@@ -222,7 +222,7 @@ class NotificationsRepositoryImplements implements NotificationsRepository {
     required List<String> userIds,
   }) async {
     try {
-      final response = await _remoteDatasource.sendNotificationByUsers(
+      final response = await _remoteDatasource.sendNotificationToUsers(
           notification: notification, userIds: userIds);
       return right(response);
     } on Exception catch (e) {

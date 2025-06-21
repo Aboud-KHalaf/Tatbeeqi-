@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:tatbeeqi/features/notifications/domain/entities/app_notification.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/initialize_notifications_cubit/initialize_notifications_cubit.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/notification_settings_bloc/notification_settings_bloc.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/notifications_bloc/notifications_bloc.dart';
@@ -22,7 +23,8 @@ class NotificationsPage extends StatelessWidget {
           create: (context) => sl<SendNotificationBloc>(),
         ),
         BlocProvider<NotificationSettingsBloc>(
-          create: (context) => sl<NotificationSettingsBloc>()..add(GetDeviceToken()),
+          create: (context) =>
+              sl<NotificationSettingsBloc>()..add(GetDeviceToken()),
         ),
       ],
       child: const NotificationsView(),
@@ -35,7 +37,8 @@ class NotificationsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<InitializeNotificationsCubit, InitializeNotificationsState>(
+    return BlocListener<InitializeNotificationsCubit,
+        InitializeNotificationsState>(
       listener: (context, state) {
         if (state is InitializeNotificationsSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -108,7 +111,8 @@ class NotificationsView extends StatelessWidget {
                 children: [
                   Text('Device Token: ${state.deviceToken}'),
                   const SizedBox(height: 8),
-                  Text('Subscribed Topics: ${state.subscribedTopics.join(', ')}'),
+                  Text(
+                      'Subscribed Topics: ${state.subscribedTopics.join(', ')}'),
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -150,11 +154,16 @@ class NotificationsView extends StatelessWidget {
         const SizedBox(height: 8),
         ElevatedButton(
           onPressed: () {
+            AppNotification notification = AppNotification(
+              id: 125235,
+              title: 'Hello from Tatbeeqi!',
+              subtitle: 'This is a test notification sent to all users.',
+              date: DateTime.now(),
+            );
             context.read<SendNotificationBloc>().add(
-                  const SendNotificationToTopics(
-                    topics: ['all_users'],
-                    title: 'Hello from Tatbeeqi!',
-                    body: 'This is a test notification sent to all users.',
+                  SendNotificationToTopics(
+                    topics: const ['test'],
+                    notification: notification,
                   ),
                 );
           },
@@ -236,4 +245,3 @@ class NotificationsView extends StatelessWidget {
     );
   }
 }
-

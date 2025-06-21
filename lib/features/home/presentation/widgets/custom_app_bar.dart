@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/core/widgets/ai_action_button.dart';
-import 'package:tatbeeqi/features/notifications/presentation/manager/initialize_notifications_cubit/initialize_notifications_cubit.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -80,11 +80,8 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     colorScheme.surfaceContainerHighest.withValues(alpha: 0.7),
                 child: InkWell(
                   onTap: () {
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => const NotificationsPage()));
-                    context.read<InitializeNotificationsCubit>().initialize();
-                    // TODO: Implement Notification action
-                  },
+context.push(AppRoutes.quizPath , extra: "l1");        
+        },
                   borderRadius:
                       BorderRadius.circular(isSmallScreen ? 10.0 : 12.0),
                   child: Container(

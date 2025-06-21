@@ -1,4 +1,5 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tatbeeqi/core/utils/app_logger.dart';
 
 import '../models/user_model.dart';
 
@@ -56,20 +57,40 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
     await _supabase.auth.resetPasswordForEmail(email);
   }
 
-  @override
-  Future<UserModel> signIn({required String email, required String password}) async {
-    final response = await _supabase.auth.signInWithPassword(email: email, password: password);
+@override
+Future<UserModel> signIn({
+  required String email,
+  required String password,
+}) async {
+  try {
+    final response = await _supabase.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
+
     final user = response.user;
-    if (user == null) throw AuthException('Unable to login');
-    final metadata = user.userMetadata;
+    if (user == null) {
+      throw const AuthException('Unable to login: No user returned.');
+    }
+
+    final metadata = user.userMetadata ?? {};
+
     return UserModel(
       id: user.id,
-      name: metadata?['name'] ?? '',
-      studyYear: metadata?['study_year'] ?? 1,
-      department: metadata?['department'] ?? 1,
+      name: metadata['name'] as String? ?? '',
+      studyYear: (metadata['study_year_id'] as int?) ?? 1,
+      department: (metadata['department_id'] as int?) ?? 1,
       email: user.email ?? '',
     );
+  } on AuthException catch (e) {
+    AppLogger.error("in remote auth datasource :${e.message}");
+    rethrow; // Pass through Supabase auth exceptions
+  } catch (e) {
+    AppLogger.error("in remote auth datasource :${e.toString()}");
+    throw AuthException('Login failed: ${e.toString()}');
   }
+}
+
 
   @override
   Future<UserModel> signInWithGoogle() async {
@@ -91,21 +112,32 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
     await _supabase.auth.signOut();
   }
 
-  @override
-  Future<UserModel> signUp({
-    required String name,
-    required int studyYear,
-    required int department,
-    required String email,
-    required String password,
-  }) async {
-    final response = await _supabase.auth.signUp(email: email, password: password, data: {
-      'name': name,
-      'study_year': studyYear,
-      'department': department,
-    });
+@override
+Future<UserModel> signUp({
+  required String name,
+  required int studyYear,
+  required int department,
+  required String email,
+  required String password,
+}) async {
+  try {
+    final response = await _supabase.auth.signUp(
+      email: email,
+      password: password,
+      data: {
+        'name': name,
+        'study_year_id': studyYear,
+        'department_id': department,
+      },
+    );
+
     final user = response.user;
-    if (user == null) throw AuthException('Unable to sign up');
+
+    if (user == null) {
+      AppLogger.error("from remote auth datasource :Unable to sign up. No user returned.");
+      throw const AuthException('Unable to sign up. No user returned.');
+    }
+
     return UserModel(
       id: user.id,
       name: name,
@@ -113,7 +145,17 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
       department: department,
       email: email,
     );
+  } on AuthException catch (e) {
+    // Catch Supabase-specific auth errors
+    AppLogger.error("from remote auth datasource :${e.message}");
+    throw AuthException(e.message);
+  } catch (e) {
+    // Catch any other unexpected error
+    AppLogger.error("from remote auth datasource :${e.toString()}");
+    throw Exception('Sign up failed: $e');
   }
+}
+
 
   @override
   Future<UserModel> updateUser({

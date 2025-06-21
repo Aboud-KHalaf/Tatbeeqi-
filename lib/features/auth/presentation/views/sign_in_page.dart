@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/auth_bloc.dart';
+import '../manager/bloc/auth_bloc.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/google_sign_in_button.dart';
 import '../widgets/primary_button.dart';

@@ -1,0 +1,58 @@
+part of 'quiz_bloc.dart';
+
+abstract class QuizState extends Equatable {
+  const QuizState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class QuizInitial extends QuizState {}
+
+class QuizLoading extends QuizState {}
+
+class QuizLoaded extends QuizState {
+  final List<QuizQuestion> questions;
+  final Map<String, String> userAnswers; // questionId -> answerId
+  final int currentQuestionIndex;
+
+  const QuizLoaded({
+    required this.questions,
+    this.userAnswers = const {},
+    this.currentQuestionIndex = 0,
+  });
+
+  bool get isLastQuestion => currentQuestionIndex == questions.length - 1;
+
+  @override
+  List<Object> get props => [questions, userAnswers, currentQuestionIndex];
+
+  QuizLoaded copyWith({
+    List<QuizQuestion>? questions,
+    Map<String, String>? userAnswers,
+    int? currentQuestionIndex,
+  }) {
+    return QuizLoaded(
+      questions: questions ?? this.questions,
+      userAnswers: userAnswers ?? this.userAnswers,
+      currentQuestionIndex: currentQuestionIndex ?? this.currentQuestionIndex,
+    );
+  }
+}
+
+class QuizCompleted extends QuizState {
+  final int score;
+  final Map<String, bool> results;
+  final List<QuizQuestion> questions;
+  final Map<String, String> userAnswers;
+
+  const QuizCompleted({
+    required this.score,
+    required this.results,
+    required this.questions,
+    required this.userAnswers,
+  });
+
+  @override
+  List<Object> get props => [score, results, questions, userAnswers];
+}
