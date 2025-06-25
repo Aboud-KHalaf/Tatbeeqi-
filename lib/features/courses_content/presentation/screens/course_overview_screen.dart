@@ -4,7 +4,7 @@ import 'package:tatbeeqi/features/courses_details.dart/presentation/about_course
 import 'package:tatbeeqi/features/references/presentation/views/references_view.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_overview_body.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/custom_course_content_app_bar_widget.dart';
-import 'package:tatbeeqi/features/forums/presentation/screens/forums_page.dart';
+import 'package:tatbeeqi/features/forums/presentation/views/forums_view.dart';
 import 'package:tatbeeqi/features/grades/presentation/views/grades_page.dart';
 import 'package:tatbeeqi/features/notes/presentation/views/notes_view.dart';
 
@@ -47,7 +47,7 @@ class _CourseOverviewScreenState extends State<CourseOverviewScreen>
         children: [
           CourseOverviewBody(tabController: _tabController),
           const GradesView(),
-          const ForumsPage(),
+          const ForumsView(),
           const NotesView(courseId: "1"),
           const ReferencesView(),
           const AboutCoursePage(),
