@@ -1,4 +1,4 @@
-import 'package:tatbeeqi/features/courses_content/domain/entities/course_details.dart';
+import 'package:tatbeeqi/features/courses_details.dart/domain/entities/course_details.dart';
 
 class CourseDetailsModel extends CourseDetails {
   const CourseDetailsModel({

@@ -1,4 +1,4 @@
-import 'package:tatbeeqi/features/courses_content/data/models/course_details_model.dart';
+import 'package:tatbeeqi/features/courses_details.dart/data/models/course_details_model.dart';
 
 class MockCourseDetailsDataSource {
   final CourseDetailsModel courseDetails = CourseDetailsModel(

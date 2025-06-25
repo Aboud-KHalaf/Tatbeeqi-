@@ -1,5 +1,5 @@
-import 'package:tatbeeqi/features/courses_content/domain/entities/course_details.dart';
-import 'package:tatbeeqi/features/courses_content/domain/repositories/course_details_repository.dart';
+import 'package:tatbeeqi/features/courses_details.dart/domain/entities/course_details.dart';
+import 'package:tatbeeqi/features/courses_details.dart/domain/repository/course_details_repository.dart';
 
 class FetchCourseDetailsUseCase {
   final CourseDetailsRepository repository;
