@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+import 'package:tatbeeqi/core/error/failures.dart';
 import 'package:tatbeeqi/features/grades/data/datasources/mock_grades_datasource.dart';
 import 'package:tatbeeqi/features/grades/domain/entities/grade.dart';
 import 'package:tatbeeqi/features/grades/domain/repositories/grades_repository.dart';
@@ -8,17 +10,24 @@ class GradesRepositoryImpl implements GradesRepository {
   GradesRepositoryImpl(this.dataSource);
 
   @override
-  Future<void> insertGrade(Grade grade) async {
-    // In a real implementation, you would convert the Grade entity to a GradeModel
-    // and send it to the data source.
-    print('Inserting grade: ${grade.id}');
-    // No actual insertion in mock implementation
+  Future<Either<Failure, void>> insertGrade(Grade grade) async {
+    throw UnimplementedError();
   }
 
   @override
-  Future<List<Grade>> fetchGradesByLessonAndCourseId(String lessonId, String courseId) async {
-    return dataSource.grades
-        .where((grade) => grade.lessonId == lessonId && grade.courseId == courseId)
-        .toList();
+  Future<Either<Failure, List<Grade>>> fetchGradesByLessonAndCourseId(String lessonId, String courseId) async {
+    throw UnimplementedError();
+  
+  }
+
+  @override
+  Future<Either<Failure, List<Grade>>> fetchGradesByCourseId(String courseId) async {
+    throw UnimplementedError();
+  
+  }
+
+  @override
+  Future<Either<Failure, void>> updateGrade(Grade grade) async {
+    throw UnimplementedError();
   }
 }
