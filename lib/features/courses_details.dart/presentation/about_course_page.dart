@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:tatbeeqi/features/courses_details.dart/data/datasources/mock_course_details_datasource.dart';
 import 'package:tatbeeqi/features/courses_details.dart/data/course_details_repository_impl.dart';
 import 'package:tatbeeqi/features/courses_details.dart/domain/entities/course_details.dart';
-import 'package:tatbeeqi/features/courses_details.dart/domain/fetch_course_details_use_case.dart';
+import 'package:tatbeeqi/features/courses_details.dart/domain/use_cases/fetch_course_details_use_case.dart';
 
 class AboutCoursePage extends StatelessWidget {
   const AboutCoursePage({super.key});
@@ -12,7 +12,8 @@ class AboutCoursePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final dataSource = MockCourseDetailsDataSource();
     final repository = CourseDetailsRepositoryImpl(dataSource);
-    final fetchDetailsUseCase = FetchCourseDetailsUseCase(repository);
+
+  final fetchDetailsUseCase = FetchCourseDetailsUseCase(repository);
 
     return Scaffold(
       appBar: AppBar(

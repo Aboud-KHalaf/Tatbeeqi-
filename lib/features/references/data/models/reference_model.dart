@@ -13,7 +13,7 @@ class ReferenceModel extends Reference {
   factory ReferenceModel.fromJson(Map<String, dynamic> json) {
     return ReferenceModel(
       id: json['id'],
-      courseId: json['courseId'],
+      courseId: json['course_id'],
       title: json['title'],
       url: json['url'],
       type: json['type'],
@@ -23,7 +23,7 @@ class ReferenceModel extends Reference {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'courseId': courseId,
+      'course_id': courseId,
       'title': title,
       'url': url,
       'type': type,

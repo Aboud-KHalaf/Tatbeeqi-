@@ -1,22 +1,22 @@
 import 'package:tatbeeqi/features/references/data/models/reference_model.dart';
 
-class MockReferencesDataSource {
+class ReferencesDataSource {
   final List<ReferenceModel> references = [
-    ReferenceModel(
+    const ReferenceModel(
       id: '1',
       courseId: '1',
       title: 'Official Flutter Documentation',
       url: 'https://flutter.dev/docs',
       type: 'documentation',
     ),
-    ReferenceModel(
+    const ReferenceModel(
       id: '2',
       courseId: '1',
       title: 'Dart Language Tour',
       url: 'https://dart.dev/guides/language/language-tour',
       type: 'documentation',
     ),
-    ReferenceModel(
+    const ReferenceModel(
       id: '3',
       courseId: '1',
       title: 'Flutter Crash Course for Beginners',

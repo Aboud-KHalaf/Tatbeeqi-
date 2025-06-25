@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/features/courses_details.dart/presentation/about_course_page.dart';
 
-import 'package:tatbeeqi/features/references/presentation/screens/references_page.dart';
+import 'package:tatbeeqi/features/references/presentation/views/references_view.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_overview_body.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/custom_course_content_app_bar_widget.dart';
 import 'package:tatbeeqi/features/forums/presentation/screens/forums_page.dart';
@@ -49,7 +49,7 @@ class _CourseOverviewScreenState extends State<CourseOverviewScreen>
           const GradesPage(),
           const ForumsPage(),
           const NotesView(courseId: "1"),
-          const ReferencesPage(),
+          const ReferencesView(),
           const AboutCoursePage(),
         ],
       ),

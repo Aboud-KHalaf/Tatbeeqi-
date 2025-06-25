@@ -255,7 +255,7 @@ class NotificationsRemoteDatasourceImpl
     required List<String> userIds,
   }) async {
     return _invokeNotificationFunction(
-      functionName: 'send-fcm-notifications',
+      functionName: 'send-notifications-to-users',
       body: {
         'userIds': userIds,
         'notification': notification.toJson(),
@@ -297,31 +297,3 @@ class NotificationsRemoteDatasourceImpl
     }
   }
 }
-
-
-
-
-/*
-
-select *
-from notifications
-where (type = 'user' and 'abc123' = any(target_user_ids))
-   or (type = 'topic' and target_topics && array['news', 'math', 'science']);
-
-
-------
-
-Future<List<Map<String, dynamic>>> fetchUserNotifications({
-  required String userId,
-  required List<String> subscribedTopics,
-}) async {
-  final response = await supabase.from('notifications')
-      .select()
-      .or('and(type.eq.user,target_user_ids.cs.{$userId}),and(type.eq.topic,target_topics.cs.{${subscribedTopics.join(',')}})');
-      
-  if (response == null) return [];
-
-  return List<Map<String, dynamic>>.from(response);
-}
-
-*/
