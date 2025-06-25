@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/features/quiz/domain/entities/quiz_question.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_score_summary_card.dart';
-import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_result_list.dart' hide QuizScoreSummaryCard;
+import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_result_list.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_result_action_button.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 class ResultView extends StatelessWidget {

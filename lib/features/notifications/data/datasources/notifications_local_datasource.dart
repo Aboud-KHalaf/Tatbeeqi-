@@ -1,10 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:get_it/get_it.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:tatbeeqi/features/notifications/data/mappers/app_notification_mapper.dart';
 
 import '../../domain/entities/app_notification.dart';
-import '../models/app_notification_model.dart';
 
 abstract class NotificationsLocalDatasource {
   ///

@@ -20,9 +20,6 @@ import 'package:tatbeeqi/features/notes/presentation/views/add_update_note_view.
 import 'package:tatbeeqi/features/quiz/presentation/views/result_view.dart';
 
 import 'package:tatbeeqi/features/settings/presentation/screens/settings_screen.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tatbeeqi/core/di/service_locator.dart';
-import 'package:tatbeeqi/features/quiz/presentation/bloc/quiz_bloc.dart';
 import 'package:tatbeeqi/features/quiz/presentation/views/quiz_view.dart';
 import 'package:tatbeeqi/features/todo/presentation/views/todo_view.dart';
 
@@ -99,7 +96,7 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.courseOverviewPath,
         builder: (BuildContext context, GoRouterState state) {
-          return const CourseOverview();
+          return const CourseOverviewScreen();
         },
       ),
           GoRoute(

@@ -77,7 +77,9 @@ class NotificationsRemoteDatasourceImpl
 
   @override
   Future<Unit> initializeFirebaseNotification() async {
+
     try {
+      await _requestNotificationPermission();
       final permission = await firebaseMessaging.requestPermission();
       if (permission.authorizationStatus != AuthorizationStatus.authorized) {
         throw Exception('Notification permissions not granted');

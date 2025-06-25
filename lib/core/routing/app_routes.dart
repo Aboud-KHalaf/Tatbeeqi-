@@ -15,7 +15,7 @@ class AppRoutes {
   static const String settingsPath = SettingsView.routePath;
   static const String allNewsPath = AllNewsView.routeId;
   static const String todoPath = TodoView.routePath;
-  static const String courseOverviewPath = CourseOverview.routePath;
+  static const String courseOverviewPath = CourseOverviewScreen.routePath;
   static const String notesPath = NotesView.routePath;
   static const String newsDetailsPath = NewsDetailsView.routeId;
   static const String addUpdateNotePath = AddOrUpdateNoteView.routePath;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tatbeeqi/features/courses_content/models/course_content_item.dart';
+import 'package:tatbeeqi/features/courses_content/data/models/course_content_item.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_content_card.dart';
 
 class CourseContentList extends StatelessWidget {
