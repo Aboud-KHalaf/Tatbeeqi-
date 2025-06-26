@@ -39,6 +39,17 @@ const String notesColContent = 'content';
 const String notesColLastModified = 'last_modified';
 const String notesColColor = 'color';
 
+// Cached Posts Table
+const String cachedPostsTableName = 'cached_posts';
+const String cachedPostsColId = 'id';
+const String cachedPostsColAuthorId = 'author_id';
+const String cachedPostsColAuthorName = 'author_name';
+const String cachedPostsColAuthorAvatarUrl = 'author_avatar_url';
+const String cachedPostsColText = 'text';
+const String cachedPostsColImageUrl = 'image_url';
+const String cachedPostsColCategories = 'categories'; // Stored as JSON string
+const String cachedPostsColCreatedAt = 'created_at';
+
 class DatabaseService {
   Database? _database;
   bool _isInitializing = false; // Prevent race conditions during init
@@ -73,7 +84,7 @@ class DatabaseService {
     final path = join(dbPath, _dbName);
     return await openDatabase(
       path,
-      version: 3,
+      version: 4,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -85,6 +96,7 @@ class DatabaseService {
     await _createTodosTable(db);
     await _createCoursesTable(db);
     await _createNotesTable(db);
+    await _createCachedPostsTable(db);
     AppLogger.info('All tables created successfully.');
   }
 
@@ -140,6 +152,23 @@ class DatabaseService {
     AppLogger.info('Table $notesTableName created successfully.');
   }
 
+  Future<void> _createCachedPostsTable(Database db) async {
+    AppLogger.info('Creating database table: $cachedPostsTableName');
+    await db.execute('''
+      CREATE TABLE $cachedPostsTableName (
+        $cachedPostsColId TEXT PRIMARY KEY,
+        $cachedPostsColAuthorId TEXT NOT NULL,
+        $cachedPostsColAuthorName TEXT NOT NULL,
+        $cachedPostsColAuthorAvatarUrl TEXT,
+        $cachedPostsColText TEXT NOT NULL,
+        $cachedPostsColImageUrl TEXT,
+        $cachedPostsColCategories TEXT NOT NULL,
+        $cachedPostsColCreatedAt TEXT NOT NULL
+      )
+    ''');
+    AppLogger.info('Table $cachedPostsTableName created successfully.');
+  }
+
   // Add migration logic for schema changes
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     AppLogger.info(
@@ -149,6 +178,9 @@ class DatabaseService {
     }
     if (oldVersion < 3) {
       await _createNotesTable(db);
+    }
+    if (oldVersion < 4) {
+      await _createCachedPostsTable(db);
     }
     // Add more migration steps for future versions if needed
     // Example: if (oldVersion < 3) { /* changes for version 3 */ }

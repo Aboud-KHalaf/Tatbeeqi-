@@ -39,7 +39,9 @@ class InvalidInputFailure extends Failure {
 }
 
 // Add other specific failures corresponding to exceptions if needed
-// class NetworkFailure extends Failure {}
+class NetworkFailure extends Failure {
+  const NetworkFailure([String message = "No Internet Connection"]) : super(message);
+}
 
 class DatabaseFailure extends Failure {
   const DatabaseFailure(super.message);
