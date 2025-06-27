@@ -26,6 +26,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       authorAvatarUrl: 'https://i.pravatar.cc/150?u=current_user_id', // Placeholder
       text: event.text,
       categories: event.categories,
+      topics: event.topics,
       imageUrl: event.imagePath, // This would be an uploaded URL in a real app
       createdAt: DateTime.now(),
     );

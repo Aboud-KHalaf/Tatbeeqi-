@@ -7,6 +7,7 @@ class PostModel extends Post {
     required super.id,
     required super.authorId,
     required super.authorName,
+    required super.topics,
     super.authorAvatarUrl,
     required super.text,
     super.imageUrl,
@@ -23,6 +24,7 @@ class PostModel extends Post {
       text: map['text'] as String,
       imageUrl: map['image_url'] as String?,
       categories: List<String>.from(map['categories'] ?? []),
+      topics: List<String>.from(map['topics'] ?? ["all"]),
       createdAt: DateTime.parse(map['created_at'] as String),
     );
   }
@@ -36,6 +38,7 @@ class PostModel extends Post {
       'text': text,
       'image_url': imageUrl,
       'categories': categories,
+      'topics': topics,
       'created_at': createdAt.toIso8601String(),
     };
   }
@@ -49,6 +52,7 @@ class PostModel extends Post {
       text: map['text'] as String,
       imageUrl: map['image_url'] as String?,
       categories: List<String>.from(jsonDecode(map['categories'] as String)),
+      topics: List<String>.from(map['topics'] ?? ["all"]),
       createdAt: DateTime.parse(map['created_at'] as String),
     );
   }
@@ -62,6 +66,7 @@ class PostModel extends Post {
       'text': text,
       'image_url': imageUrl,
       'categories': jsonEncode(categories),
+      'topics': topics,
       'created_at': createdAt.toIso8601String(),
     };
   }
@@ -74,6 +79,7 @@ class PostModel extends Post {
     String? text,
     String? imageUrl,
     List<String>? categories,
+    List<String>? topics,
     DateTime? createdAt,
   }) {
     return PostModel(
@@ -84,6 +90,7 @@ class PostModel extends Post {
       text: text ?? this.text,
       imageUrl: imageUrl ?? this.imageUrl,
       categories: categories ?? this.categories,
+      topics: topics ?? this.topics,
       createdAt: createdAt ?? this.createdAt,
     );
   }

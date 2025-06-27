@@ -16,7 +16,7 @@ import 'package:tatbeeqi/features/posts/domain/use_cases/unlike_post_use_case.da
 import 'package:tatbeeqi/features/posts/domain/use_cases/update_post_use_case.dart';
 import 'package:tatbeeqi/features/posts/presentation/bloc/comments/comments_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/bloc/create_post/create_post_bloc.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed/post_feed_bloc.dart';
 
 void initPostsDependencies(GetIt sl) {
   // Use Cases

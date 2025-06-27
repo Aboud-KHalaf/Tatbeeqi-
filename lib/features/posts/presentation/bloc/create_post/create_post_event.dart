@@ -10,14 +10,16 @@ abstract class CreatePostEvent extends Equatable {
 class CreatePostSubmitted extends CreatePostEvent {
   final String text;
   final List<String> categories;
+  final List<String> topics;
   final String? imagePath;
 
   const CreatePostSubmitted({
     required this.text,
     required this.categories,
+    required this.topics,
     this.imagePath,
   });
 
   @override
-  List<Object?> get props => [text, categories, imagePath];
+  List<Object?> get props => [text, categories, topics, imagePath];
 }

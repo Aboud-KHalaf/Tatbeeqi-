@@ -8,6 +8,7 @@ class Post extends Equatable {
   final String text;
   final String? imageUrl;
   final List<String> categories;
+  final List<String> topics;
   final DateTime createdAt;
 
   const Post({
@@ -18,6 +19,7 @@ class Post extends Equatable {
     required this.text,
     this.imageUrl,
     required this.categories,
+    required this.topics,
     required this.createdAt,
   });
 
@@ -30,6 +32,7 @@ class Post extends Equatable {
         text,
         imageUrl,
         categories,
+        topics,
         createdAt,
       ];
 }

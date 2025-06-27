@@ -1,10 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:get_it/get_it.dart';
-import 'package:tatbeeqi/core/di/service_locator.dart';
-
 import 'package:tatbeeqi/features/posts/presentation/bloc/create_post/create_post_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/bloc/create_post/create_post_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/bloc/create_post/create_post_state.dart';
@@ -24,6 +20,7 @@ class _CreatePostScreenState extends State<CreatePostScreen>
   final _textController = TextEditingController();
   final _categoryController = TextEditingController();
   final List<String> _categories = [];
+  final List<String> _topics = [];
   File? _image;
 
   @override
@@ -107,6 +104,7 @@ class _CreatePostScreenState extends State<CreatePostScreen>
     if (!_formKey.currentState!.validate()) return;
     context.read<CreatePostBloc>().add(
           CreatePostSubmitted(
+            topics: _topics,
             text: _textController.text.trim(),
             categories: _categories,
             imagePath: _image?.path,
