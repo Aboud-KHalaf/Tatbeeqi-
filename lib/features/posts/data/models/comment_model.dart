@@ -6,7 +6,7 @@ class CommentModel extends Comment {
     required super.postId,
     required super.authorId,
     required super.text,
-    required super.createdAt,
+    required super.createdAt, required super.authorName,
   });
 
   factory CommentModel.fromMap(Map<String, dynamic> map) {
@@ -16,6 +16,7 @@ class CommentModel extends Comment {
       authorId: map['author_id'] as String,
       text: map['text'] as String,
       createdAt: DateTime.parse(map['created_at'] as String),
+      authorName: map['author_name'] as String,
     );
   }
 
@@ -25,6 +26,7 @@ class CommentModel extends Comment {
       'post_id': postId,
       'author_id': authorId,
       'text': text,
+      'author_name': authorName,
       'created_at': createdAt.toIso8601String(),
     };
   }

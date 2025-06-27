@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 class Comment extends Equatable {
   final String id;
   final String postId;
+  final String authorName;
   final String authorId;
   final String text;
   final DateTime createdAt;
@@ -10,6 +11,7 @@ class Comment extends Equatable {
   const Comment({
     required this.id,
     required this.postId,
+    required this.authorName,
     required this.authorId,
     required this.text,
     required this.createdAt,

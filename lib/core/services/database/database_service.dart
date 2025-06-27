@@ -103,7 +103,7 @@ class DatabaseService {
   Future<void> _createTodosTable(Database db) async {
     AppLogger.info('Creating database table: $_todosTableName');
     await db.execute('''
-      CREATE TABLE $_todosTableName (
+       CREATE TABLE IF NOT EXISTS $_todosTableName (
         $_todosColId TEXT PRIMARY KEY,
         $_todosColTitle TEXT NOT NULL,
         $_todosColDescription TEXT,
@@ -119,7 +119,7 @@ class DatabaseService {
   Future<void> _createCoursesTable(Database db) async {
     AppLogger.info('Creating database table: $coursesTableName');
     await db.execute('''
-      CREATE TABLE $coursesTableName (
+       CREATE TABLE IF NOT EXISTS $coursesTableName (
         $coursesColId INTEGER PRIMARY KEY,
         $coursesColCourseCode TEXT NOT NULL,
         $coursesColCourseName TEXT NOT NULL,
@@ -140,7 +140,7 @@ class DatabaseService {
   Future<void> _createNotesTable(Database db) async {
     AppLogger.info('Creating database table: $notesTableName');
     await db.execute('''
-      CREATE TABLE $notesTableName (
+       CREATE TABLE IF NOT EXISTS $notesTableName (
         $notesColId INTEGER PRIMARY KEY AUTOINCREMENT,
         $notesColCourseId TEXT NOT NULL,
         $notesColTitle TEXT NOT NULL,
@@ -155,7 +155,7 @@ class DatabaseService {
   Future<void> _createCachedPostsTable(Database db) async {
     AppLogger.info('Creating database table: $cachedPostsTableName');
     await db.execute('''
-      CREATE TABLE $cachedPostsTableName (
+       CREATE TABLE IF NOT EXISTS $cachedPostsTableName (
         $cachedPostsColId TEXT PRIMARY KEY,
         $cachedPostsColAuthorId TEXT NOT NULL,
         $cachedPostsColAuthorName TEXT NOT NULL,
