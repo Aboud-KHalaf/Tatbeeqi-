@@ -10,11 +10,12 @@ abstract class PostRemoteDataSource {
   Future<void> deletePost(String postId);
 
   // Reads
-  Future<List<PostModel>> fetchPosts({int limit});
+  Future<List<PostModel>> fetchPosts({int start = 0, int limit = 10});
   Future<PostModel> fetchPostById(String postId);
   Future<List<PostModel>> fetchPostsByCategories(
     List<String> categories, {
-    int limit,
+    int start = 0,
+    int limit = 10,
   });
 
   // Likes & Comments
@@ -76,14 +77,30 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   }
 
   @override
-  Future<List<PostModel>> fetchPosts({int limit = 10}) async {
+  Future<List<PostModel>> fetchPosts({int start = 0, int limit = 10}) async {
     try {
       final response = await supabase
           .from('posts')
-          .select()
+          .select('*, likes(count), comments(count)')
           .order('created_at', ascending: false)
-          .limit(limit);
-      return response.map((e) => PostModel.fromMap(e)).toList();
+          .range(start, start + limit);
+
+      return (response as List).map((e) {
+        // Extract likes count
+        final likesCount = (e['likes'] is List && e['likes'].isNotEmpty)
+            ? e['likes'][0]['count'] as int
+            : 0;
+        // Extract comments count
+        final commentsCount =
+            (e['comments'] is List && e['comments'].isNotEmpty)
+                ? e['comments'][0]['count'] as int
+                : 0;
+        // Compose map for PostModel
+        final postMap = Map<String, dynamic>.from(e)
+          ..['likes_count'] = likesCount
+          ..['comments_count'] = commentsCount;
+        return PostModel.fromMap(postMap);
+      }).toList();
     } catch (e) {
       if (e is PostgrestException) {
         throw ServerException(e.message);
@@ -110,15 +127,31 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   Future<List<PostModel>> fetchPostsByCategories(
     List<String> categories, {
     int limit = 10,
+    int start = 0,
   }) async {
     try {
       final response = await supabase
           .from('posts')
-          .select()
+          .select('*, likes(count), comments(count)')
           .contains('categories', categories)
           .order('created_at', ascending: false)
-          .limit(limit);
-      return response.map((e) => PostModel.fromMap(e)).toList();
+          .range(start, start + limit);
+      return (response as List).map((e) {
+        // Extract likes count
+        final likesCount = (e['likes'] is List && e['likes'].isNotEmpty)
+            ? e['likes'][0]['count'] as int
+            : 0;
+        // Extract comments count
+        final commentsCount =
+            (e['comments'] is List && e['comments'].isNotEmpty)
+                ? e['comments'][0]['count'] as int
+                : 0;
+        // Compose map for PostModel
+        final postMap = Map<String, dynamic>.from(e)
+          ..['likes_count'] = likesCount
+          ..['comments_count'] = commentsCount;
+        return PostModel.fromMap(postMap);
+      }).toList();
     } catch (e) {
       if (e is PostgrestException) {
         throw ServerException(e.message);

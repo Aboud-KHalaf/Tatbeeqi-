@@ -57,7 +57,7 @@ class PostRepositoryImpl implements PostRepository {
     if (await networkInfo.isConnected()) {
       try {
         await remoteDataSource.deletePost(postId);
-        await syncLatestPosts(); // Refresh cache
+        await syncLatestPosts();
         return const Right(null);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
@@ -68,10 +68,11 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, List<Post>>> getPosts({int limit = 10}) async {
+  Future<Either<Failure, List<Post>>> getPosts({int start = 0, int limit = 10}) async {
     if (await networkInfo.isConnected()) {
       try {
-        final remotePosts = await remoteDataSource.fetchPosts(limit: limit);
+        final remotePosts = await remoteDataSource.fetchPosts(start: start, limit: limit);
+        print(remotePosts.length);
         // await localDataSource.cachePosts(remotePosts);
         return Right(remotePosts);
       } on ServerException catch (e) {
@@ -97,8 +98,6 @@ class PostRepositoryImpl implements PostRepository {
         return Left(ServerFailure(e.message));
       }
     } else {
-      // Cannot get a single post from cache if offline, as it may not be there.
-      // This could be extended to search the cache, but for now, we require network.
       return const Left(NetworkFailure());
     }
   }
@@ -106,15 +105,16 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Future<Either<Failure, List<Post>>> getPostsByCategories(
     List<String> categories, {
+    int start = 0,
     int limit = 10,
   }) async {
     if (await networkInfo.isConnected()) {
       try {
         final remotePosts = await remoteDataSource.fetchPostsByCategories(
           categories,
+          start: start,
           limit: limit,
         );
-        // We don't cache category-specific results to avoid complex cache management
         return Right(remotePosts);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
@@ -131,13 +131,9 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  @override
   Future<Either<Failure, void>> likePost(String postId) async {
-    // This requires the user's ID, which should be passed from the presentation layer.
-    // For now, we'll simulate a failure until auth is integrated.
     if (await networkInfo.isConnected()) {
       try {
-        // final userId = ... get from an auth service
         await remoteDataSource.likePost(postId);
         return const Left(
             ServerFailure('Authentication error: User ID not available.'));
@@ -150,11 +146,9 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  @override
   Future<Either<Failure, void>> unlikePost(String postId) async {
     if (await networkInfo.isConnected()) {
       try {
-        // final userId = ... get from an auth service
         await remoteDataSource.unlikePost(postId);
         return const Left(
             ServerFailure('Authentication error: User ID not available.'));
