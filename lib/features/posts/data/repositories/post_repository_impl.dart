@@ -138,7 +138,7 @@ class PostRepositoryImpl implements PostRepository {
     if (await networkInfo.isConnected()) {
       try {
         // final userId = ... get from an auth service
-        // await remoteDataSource.likePost(postId, userId);
+        await remoteDataSource.likePost(postId);
         return const Left(
             ServerFailure('Authentication error: User ID not available.'));
       } on ServerException catch (e) {
@@ -155,7 +155,7 @@ class PostRepositoryImpl implements PostRepository {
     if (await networkInfo.isConnected()) {
       try {
         // final userId = ... get from an auth service
-        // await remoteDataSource.unlikePost(postId, userId);
+        await remoteDataSource.unlikePost(postId);
         return const Left(
             ServerFailure('Authentication error: User ID not available.'));
       } on ServerException catch (e) {
