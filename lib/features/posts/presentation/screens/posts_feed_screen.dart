@@ -46,7 +46,7 @@ class _PostsFeedScreenState extends State<PostsFeedScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return BlocProvider(
-      create: (_) => GetIt.instance<PostFeedBloc>()..add(FetchPostsRequested()),
+      create: (_) => GetIt.instance<PostsBloc>()..add(FetchPostsRequested()),
       child: Scaffold(
         backgroundColor: theme.colorScheme.surface.withAlpha(240),
         appBar: AppBar(
@@ -62,14 +62,14 @@ class _PostsFeedScreenState extends State<PostsFeedScreen> {
           child: Stack(
             children: [
               // ---------------- قائمة المنشورات ----------------
-              BlocBuilder<PostFeedBloc, PostFeedState>(
+              BlocBuilder<PostsBloc, PostsState>(
                 builder: (context, state) {
-                  if (state is PostFeedLoading) {
+                  if (state is PostsLoading) {
                     return const Center(child: CircularProgressIndicator());
-                  } else if (state is PostFeedLoaded) {
+                  } else if (state is PostsLoaded) {
                     return RefreshIndicator(
                       onRefresh: () async => context
-                          .read<PostFeedBloc>()
+                          .read<PostsBloc>()
                           .add(RefreshPostsRequested()),
                       child: ListView.builder(
                         controller: _scrollController,
@@ -82,7 +82,7 @@ class _PostsFeedScreenState extends State<PostsFeedScreen> {
                         itemBuilder: (_, i) => PostCard(post: state.posts[i]),
                       ),
                     );
-                  } else if (state is PostFeedError) {
+                  } else if (state is PostsError) {
                     return Center(child: Text(state.message));
                   }
                   return const Center(child: Text('Welcome to the Feed'));

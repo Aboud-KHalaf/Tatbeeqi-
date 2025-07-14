@@ -85,22 +85,43 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
           .order('created_at', ascending: false)
           .range(start, start + limit);
 
-      return (response as List).map((e) {
-        // Extract likes count
+      final posts = <PostModel>[];
+
+      final userId = supabase.auth.currentUser?.id;
+      for (final e in response as List) {
+        final postId = e['id'] as String;
+
+        // Count likes
         final likesCount = (e['likes'] is List && e['likes'].isNotEmpty)
             ? e['likes'][0]['count'] as int
             : 0;
-        // Extract comments count
+
+        // Count comments
         final commentsCount =
             (e['comments'] is List && e['comments'].isNotEmpty)
                 ? e['comments'][0]['count'] as int
                 : 0;
-        // Compose map for PostModel
+
+        // Check if current user liked the post
+        final likeResponse = await supabase
+            .from('likes')
+            .select('id')
+            .eq('post_id', postId)
+            .eq('user_id', userId!)
+            .maybeSingle();
+
+        final isLiked = likeResponse != null;
+
+        // Prepare final map
         final postMap = Map<String, dynamic>.from(e)
           ..['likes_count'] = likesCount
-          ..['comments_count'] = commentsCount;
-        return PostModel.fromMap(postMap);
-      }).toList();
+          ..['comments_count'] = commentsCount
+          ..['is_liked'] = isLiked;
+
+        posts.add(PostModel.fromMap(postMap));
+      }
+
+      return posts;
     } catch (e) {
       if (e is PostgrestException) {
         throw ServerException(e.message);
@@ -136,22 +157,43 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
           .contains('categories', categories)
           .order('created_at', ascending: false)
           .range(start, start + limit);
-      return (response as List).map((e) {
-        // Extract likes count
+      final posts = <PostModel>[];
+
+      final userId = supabase.auth.currentUser?.id;
+      for (final e in response as List) {
+        final postId = e['id'] as String;
+
+        // Count likes
         final likesCount = (e['likes'] is List && e['likes'].isNotEmpty)
             ? e['likes'][0]['count'] as int
             : 0;
-        // Extract comments count
+
+        // Count comments
         final commentsCount =
             (e['comments'] is List && e['comments'].isNotEmpty)
                 ? e['comments'][0]['count'] as int
                 : 0;
-        // Compose map for PostModel
+
+        // Check if current user liked the post
+        final likeResponse = await supabase
+            .from('likes')
+            .select('id')
+            .eq('post_id', postId)
+            .eq('user_id', userId!)
+            .maybeSingle();
+
+        final isLiked = likeResponse != null;
+
+        // Prepare final map
         final postMap = Map<String, dynamic>.from(e)
           ..['likes_count'] = likesCount
-          ..['comments_count'] = commentsCount;
-        return PostModel.fromMap(postMap);
-      }).toList();
+          ..['comments_count'] = commentsCount
+          ..['is_liked'] = isLiked;
+
+        posts.add(PostModel.fromMap(postMap));
+      }
+
+      return posts;
     } catch (e) {
       if (e is PostgrestException) {
         throw ServerException(e.message);

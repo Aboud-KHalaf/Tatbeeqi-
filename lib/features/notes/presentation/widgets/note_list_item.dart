@@ -51,7 +51,7 @@ class NoteListItem extends StatelessWidget {
                 Text(
                   note.content,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.onSurface.withOpacity(0.85),
+                        color: colorScheme.onSurface.withValues(alpha: 0.85),
                       ),
                 ),
               const SizedBox(height: 12),

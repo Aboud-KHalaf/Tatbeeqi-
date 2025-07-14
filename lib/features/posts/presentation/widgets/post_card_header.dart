@@ -21,10 +21,10 @@ class PostCardHeader extends StatelessWidget {
             height: 40,
             fit: BoxFit.cover,
             placeholder: (context, url) => Container(
-              color: colorScheme.surfaceVariant,
+              color: colorScheme.surfaceContainerHighest,
             ),
             errorWidget: (context, url, error) => Container(
-              color: colorScheme.surfaceVariant,
+              color: colorScheme.surfaceContainerHighest,
               child: Icon(Icons.person, color: colorScheme.onSurfaceVariant),
             ),
           ),
@@ -44,7 +44,7 @@ class PostCardHeader extends StatelessWidget {
               Text(
                 timeago.format(post.createdAt, locale: 'en_short'),
                 style: theme.textTheme.bodySmall?.copyWith(
-                  color: colorScheme.onSurfaceVariant.withOpacity(0.8),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                 ),
               ),
             ],

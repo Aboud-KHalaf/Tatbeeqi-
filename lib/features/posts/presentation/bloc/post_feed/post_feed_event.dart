@@ -1,12 +1,21 @@
 import 'package:equatable/equatable.dart';
 
-abstract class PostFeedEvent extends Equatable {
-  const PostFeedEvent();
+abstract class PostsEvent extends Equatable {
+  const PostsEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class FetchPostsRequested extends PostFeedEvent {}
+class FetchPostsRequested extends PostsEvent {}
 
-class RefreshPostsRequested extends PostFeedEvent {}
+class RefreshPostsRequested extends PostsEvent {}
+
+class LikePostToggled extends PostsEvent {
+  final String postId;
+
+  const LikePostToggled(this.postId);
+
+  @override
+  List<Object> get props => [postId];
+}

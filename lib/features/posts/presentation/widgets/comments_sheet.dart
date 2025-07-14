@@ -18,7 +18,8 @@ class CommentsSheet extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return BlocProvider(
-      create: (context) => GetIt.instance<CommentsBloc>()..add(FetchCommentsRequested(postId)),
+      create: (context) =>
+          GetIt.instance<CommentsBloc>()..add(FetchCommentsRequested(postId)),
       child: DraggableScrollableSheet(
         expand: false,
         initialChildSize: 0.7,
@@ -28,8 +29,10 @@ class CommentsSheet extends StatelessWidget {
           return Container(
             decoration: BoxDecoration(
               color: colorScheme.surface,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-              border: Border.all(color: colorScheme.outline.withOpacity(0.2)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(24)),
+              border:
+                  Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
             ),
             child: Column(
               children: [
@@ -39,7 +42,7 @@ class CommentsSheet extends StatelessWidget {
                   height: 4,
                   margin: const EdgeInsets.symmetric(vertical: 10.0),
                   decoration: BoxDecoration(
-                    color: colorScheme.onSurface.withOpacity(0.2),
+                    color: colorScheme.onSurface.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -48,7 +51,8 @@ class CommentsSheet extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child: Text(
                     'Comments',
-                    style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                    style: theme.textTheme.titleLarge
+                        ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
                 const Divider(height: 1),
@@ -60,7 +64,8 @@ class CommentsSheet extends StatelessWidget {
                         return const Center(child: CircularProgressIndicator());
                       } else if (state is CommentsLoaded) {
                         if (state.comments.isEmpty) {
-                          return const Center(child: Text('Be the first to comment!'));
+                          return const Center(
+                              child: Text('Be the first to comment!'));
                         }
                         return ListView.builder(
                           controller: scrollController,
@@ -89,7 +94,9 @@ class CommentsSheet extends StatelessWidget {
                         bottom: MediaQuery.of(context).viewInsets.bottom,
                       ),
                       child: AddCommentBar(onSubmit: (text) {
-                        context.read<CommentsBloc>().add(PostCommentRequested(postId, text));
+                        context
+                            .read<CommentsBloc>()
+                            .add(PostCommentRequested(postId, text));
                       }),
                     ),
                   ],

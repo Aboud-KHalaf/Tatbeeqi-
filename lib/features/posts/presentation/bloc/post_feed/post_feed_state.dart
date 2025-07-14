@@ -1,30 +1,30 @@
 import 'package:equatable/equatable.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 
-abstract class PostFeedState extends Equatable {
-  const PostFeedState();
+abstract class PostsState extends Equatable {
+  const PostsState();
 
   @override
   List<Object> get props => [];
 }
 
-class PostFeedInitial extends PostFeedState {}
+class PostsInitial extends PostsState {}
 
-class PostFeedLoading extends PostFeedState {}
+class PostsLoading extends PostsState {}
 
-class PostFeedLoaded extends PostFeedState {
+class PostsLoaded extends PostsState {
   final List<Post> posts;
 
-  const PostFeedLoaded(this.posts);
+  const PostsLoaded(this.posts);
 
   @override
   List<Object> get props => [posts];
 }
 
-class PostFeedError extends PostFeedState {
+class PostsError extends PostsState {
   final String message;
 
-  const PostFeedError(this.message);
+  const PostsError(this.message);
 
   @override
   List<Object> get props => [message];

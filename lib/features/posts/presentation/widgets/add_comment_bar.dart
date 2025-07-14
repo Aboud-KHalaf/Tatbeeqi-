@@ -42,16 +42,19 @@ class _AddCommentBarState extends State<AddCommentBar> {
                 controller: _controller,
                 decoration: InputDecoration(
                   hintText: 'Add a comment...',
-                  fillColor: colorScheme.surfaceVariant.withOpacity(0.5),
+                  fillColor: colorScheme.surfaceContainerHighest
+                      .withValues(alpha: 0.5),
                   filled: true,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                     borderSide: BorderSide.none,
                   ),
                 ),
                 onSubmitted: (_) => _submitComment(),
-                onChanged: (_) => setState(() {}), // Rebuild to update button state
+                onChanged: (_) =>
+                    setState(() {}), // Rebuild to update button state
               ),
             ),
             const SizedBox(width: 8),
@@ -60,7 +63,9 @@ class _AddCommentBarState extends State<AddCommentBar> {
               builder: (context, value, child) {
                 return IconButton(
                   icon: const Icon(Icons.send_rounded),
-                  color: value.text.isNotEmpty ? colorScheme.primary : colorScheme.onSurface.withOpacity(0.5),
+                  color: value.text.isNotEmpty
+                      ? colorScheme.primary
+                      : colorScheme.onSurface.withValues(alpha: 0.5),
                   onPressed: value.text.isNotEmpty ? _submitComment : null,
                 );
               },

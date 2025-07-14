@@ -22,7 +22,7 @@ class PostCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16.0),
-        border: Border.all(color: colorScheme.outline.withOpacity(0.15)),
+        border: Border.all(color: colorScheme.outline.withValues(alpha:0.15)),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(16.0),
@@ -44,14 +44,14 @@ class PostCard extends StatelessWidget {
                   placeholder: (context, url) => AspectRatio(
                     aspectRatio: 16 / 9,
                     child: Container(
-                      color: colorScheme.surfaceVariant.withOpacity(0.5),
+                      color: colorScheme.surfaceContainerHighest.withValues(alpha:0.5),
                       child: Center(child: CircularProgressIndicator(strokeWidth: 2, color: colorScheme.onSurfaceVariant)),
                     ),
                   ),
                   errorWidget: (context, url, error) => AspectRatio(
                     aspectRatio: 16 / 9,
                     child: Container(
-                      color: colorScheme.errorContainer.withOpacity(0.5),
+                      color: colorScheme.errorContainer.withValues(alpha: 0.5),
                       child: Icon(Icons.broken_image_outlined, color: colorScheme.onErrorContainer),
                     ),
                   ),

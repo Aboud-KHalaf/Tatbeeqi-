@@ -16,6 +16,7 @@ class PostModel extends Post {
     super.likesCount,
     super.commentsCount,
     super.isArticle,
+    super.isLiked,
   });
 
   factory PostModel.fromMap(Map<String, dynamic> map) {
@@ -32,6 +33,7 @@ class PostModel extends Post {
       likesCount: map['likes_count'] as int? ?? 0,
       commentsCount: map['comments_count'] as int? ?? 0,
       isArticle: map['is_article'] as bool? ?? false,
+      isLiked: map['is_liked'] as bool? ?? false,
     );
   }
 
@@ -49,6 +51,7 @@ class PostModel extends Post {
       'likes_count': likesCount,
       'comments_count': commentsCount,
       'is_article': isArticle,
+      'is_liked': isLiked,
     };
   }
 
@@ -66,6 +69,7 @@ class PostModel extends Post {
       likesCount: map['likes_count'] as int? ?? 0,
       commentsCount: map['comments_count'] as int? ?? 0,
       isArticle: map['is_article'] as bool? ?? false,
+      isLiked: map['is_liked'] as bool? ?? false,
     );
   }
 
@@ -83,6 +87,7 @@ class PostModel extends Post {
       'likes_count': likesCount,
       'comments_count': commentsCount,
       'is_article': isArticle,
+      'is_liked': isLiked,
     };
   }
 
@@ -99,6 +104,7 @@ class PostModel extends Post {
     int? likesCount,
     int? commentsCount,
     bool? isArticle,
+    bool? isLiked,
   }) {
     return PostModel(
       id: id ?? this.id,
@@ -113,6 +119,7 @@ class PostModel extends Post {
       likesCount: likesCount ?? this.likesCount,
       commentsCount: commentsCount ?? this.commentsCount,
       isArticle: isArticle ?? this.isArticle,
+      isLiked: isLiked ?? this.isLiked,
     );
   }
 }

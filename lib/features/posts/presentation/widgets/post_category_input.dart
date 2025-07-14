@@ -8,7 +8,6 @@ class PostCategoryInput extends StatelessWidget {
 
   const PostCategoryInput({
     super.key,
-    
     required this.controller,
     required this.categories,
     required this.onAddCategory,
@@ -37,7 +36,8 @@ class PostCategoryInput extends StatelessWidget {
                 decoration: InputDecoration(
                   hintText: 'Add a category...',
                   filled: true,
-                  fillColor: colorScheme.surfaceVariant.withOpacity(0.5),
+                  fillColor: colorScheme.surfaceContainerHighest
+                      .withValues(alpha: 0.5),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide.none,
@@ -68,14 +68,14 @@ class PostCategoryInput extends StatelessWidget {
           children: categories
               .map((cat) => Chip(
                     label: Text(cat),
-                    backgroundColor: colorScheme.primary.withOpacity(0.1),
+                    backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
                     onDeleted: () => onRemoveCategory(cat),
                     deleteIcon:
                         Icon(Icons.close, size: 16, color: colorScheme.primary),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                       side: BorderSide(
-                          color: colorScheme.primary.withOpacity(0.2)),
+                          color: colorScheme.primary.withValues(alpha: 0.2)),
                     ),
                   ))
               .toList(),

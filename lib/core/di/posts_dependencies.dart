@@ -36,7 +36,13 @@ void initPostsDependencies(GetIt sl) {
   sl.registerLazySingleton(() => RemoveCommentUseCase(sl()));
   sl.registerLazySingleton(() => UpdateCommentUseCase(sl()));
   // BLoCs
-  sl.registerFactory(() => PostFeedBloc(sl()));
+  sl.registerFactory(
+    () => PostsBloc(
+      getPostsUseCase: sl(),
+      likePostUseCase: sl(),
+      unlikePostUseCase: sl(),
+    ),
+  );
   sl.registerFactory(() => CreatePostBloc(sl()));
   sl.registerFactory(() => CommentsBloc(sl(), sl(), sl()));
 

@@ -2,8 +2,8 @@
 "[dart]": {
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.fixAll.dart": true
+    "source.fixAll": "explicit",
+    "source.fixAll.dart": "explicit"
   }
 }
 }

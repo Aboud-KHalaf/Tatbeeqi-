@@ -19,14 +19,18 @@ class CommentTile extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 20,
-            backgroundColor: colorScheme.surfaceVariant,
+            backgroundColor: colorScheme.surfaceContainerHighest,
             backgroundImage: comment.authorAvatarUrl != null
                 ? CachedNetworkImageProvider(comment.authorAvatarUrl!)
                 : null,
             child: comment.authorAvatarUrl == null
                 ? Text(
-                    comment.authorName.isNotEmpty ? comment.authorName[0].toUpperCase() : '?',
-                    style: TextStyle(fontWeight: FontWeight.bold, color: colorScheme.onSurfaceVariant),
+                    comment.authorName.isNotEmpty
+                        ? comment.authorName[0].toUpperCase()
+                        : '?',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: colorScheme.onSurfaceVariant),
                   )
                 : null,
           ),
@@ -36,9 +40,11 @@ class CommentTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                   decoration: BoxDecoration(
-                    color: colorScheme.surfaceVariant.withOpacity(0.5),
+                    color: colorScheme.surfaceContainerHighest
+                        .withValues(alpha: 0.5),
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Column(
@@ -67,7 +73,8 @@ class CommentTile extends StatelessWidget {
                   child: Text(
                     timeago.format(comment.createdAt),
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant.withOpacity(0.8),
+                      color:
+                          colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
                     ),
                   ),
                 ),

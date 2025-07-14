@@ -54,7 +54,8 @@ class PostEditorForm extends StatelessWidget {
                   borderSide: BorderSide.none,
                 ),
                 filled: true,
-                fillColor: colorScheme.surfaceVariant.withOpacity(0.5),
+                fillColor:
+                    colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
               ),
               maxLines: 8,
               minLines: 5,

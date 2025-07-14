@@ -22,12 +22,12 @@ class LectureItem extends StatelessWidget {
         ? LinearGradient(
             colors: isActive
                 ? [
-                    colorScheme.primary.withOpacity(0.7),
+                    colorScheme.primary.withValues(alpha: 0.7),
                     colorScheme.primary,
                   ]
                 : [
                     colorScheme.primary,
-                    colorScheme.primary.withOpacity(0.85),
+                    colorScheme.primary.withValues(alpha: 0.85),
                   ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -38,26 +38,26 @@ class LectureItem extends StatelessWidget {
         ? colorScheme.primary
         : isCompleted
             ? Colors.transparent
-            : colorScheme.outline.withOpacity(0.3);
+            : colorScheme.outline.withValues(alpha: 0.3);
 
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
-        splashColor: colorScheme.primary.withOpacity(0.2),
+        splashColor: colorScheme.primary.withValues(alpha: 0.2),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           decoration: BoxDecoration(
             gradient: backgroundGradient,
             color: (!isActive && !isCompleted)
-                ? colorScheme.primary.withOpacity(0.25)
+                ? colorScheme.primary.withValues(alpha: 0.25)
                 : null,
             borderRadius: BorderRadius.circular(12),
             boxShadow: (isActive || isCompleted)
                 ? [
                     BoxShadow(
-                      color: colorScheme.primary.withOpacity(0.25),
+                      color: colorScheme.primary.withValues(alpha: 0.25),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
                     )
@@ -76,7 +76,7 @@ class LectureItem extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 color: isActive
                     ? colorScheme.onPrimary
-                    : colorScheme.onSurface.withOpacity(0.75),
+                    : colorScheme.onSurface.withValues(alpha: 0.75),
               ),
             ),
           ),

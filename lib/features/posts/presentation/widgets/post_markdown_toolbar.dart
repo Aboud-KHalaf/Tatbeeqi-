@@ -11,7 +11,8 @@ class PostMarkdownToolbar extends StatelessWidget {
     final selected = text.substring(selection.start, selection.end);
     final after = text.substring(selection.end);
     controller.text = before + start + selected + end + after;
-    controller.selection = TextSelection.collapsed(offset: (before + start + selected + end).length);
+    controller.selection = TextSelection.collapsed(
+        offset: (before + start + selected + end).length);
   }
 
   @override
@@ -23,17 +24,42 @@ class PostMarkdownToolbar extends StatelessWidget {
         _btn(context, tooltip: 'Header 1', label: 'H1', start: '# '),
         _btn(context, tooltip: 'Header 2', label: 'H2', start: '## '),
         _btn(context, tooltip: 'Header 3', label: 'H3', start: '### '),
-        _btn(context, tooltip: 'Bold', icon: Icons.format_bold, start: '**', end: '**'),
-        _btn(context, tooltip: 'Italic', icon: Icons.format_italic, start: '*', end: '*'),
-        _btn(context, tooltip: 'Strikethrough', icon: Icons.format_strikethrough, start: '~~', end: '~~'),
-        _btn(context, tooltip: 'Inline Code', icon: Icons.code, start: '`', end: '`'),
-        _btn(context, tooltip: 'Code Block', icon: Icons.data_object, start: '```\n', end: '\n```'),
-        _btn(context, tooltip: 'Unordered List', icon: Icons.format_list_bulleted, start: '- '),
-        _btn(context, tooltip: 'Ordered List', icon: Icons.format_list_numbered, start: '1. '),
+        _btn(context,
+            tooltip: 'Bold', icon: Icons.format_bold, start: '**', end: '**'),
+        _btn(context,
+            tooltip: 'Italic', icon: Icons.format_italic, start: '*', end: '*'),
+        _btn(context,
+            tooltip: 'Strikethrough',
+            icon: Icons.format_strikethrough,
+            start: '~~',
+            end: '~~'),
+        _btn(context,
+            tooltip: 'Inline Code', icon: Icons.code, start: '`', end: '`'),
+        _btn(context,
+            tooltip: 'Code Block',
+            icon: Icons.data_object,
+            start: '```\n',
+            end: '\n```'),
+        _btn(context,
+            tooltip: 'Unordered List',
+            icon: Icons.format_list_bulleted,
+            start: '- '),
+        _btn(context,
+            tooltip: 'Ordered List',
+            icon: Icons.format_list_numbered,
+            start: '1. '),
         _btn(context, tooltip: 'Quote', icon: Icons.format_quote, start: '> '),
-        _btn(context, tooltip: 'Link', icon: Icons.link, start: '[', end: '](url)'),
-        _btn(context, tooltip: 'Image', icon: Icons.image_outlined, start: '![', end: '](image-url)'),
-        _btn(context, tooltip: 'Horizontal Rule', icon: Icons.horizontal_rule, start: '---\n'),
+        _btn(context,
+            tooltip: 'Link', icon: Icons.link, start: '[', end: '](url)'),
+        _btn(context,
+            tooltip: 'Image',
+            icon: Icons.image_outlined,
+            start: '![',
+            end: '](image-url)'),
+        _btn(context,
+            tooltip: 'Horizontal Rule',
+            icon: Icons.horizontal_rule,
+            start: '---\n'),
       ],
     );
   }
@@ -52,7 +78,7 @@ class PostMarkdownToolbar extends StatelessWidget {
     return Tooltip(
       message: tooltip,
       child: Material(
-        color: colorScheme.surfaceVariant.withOpacity(0.5),
+        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(8),
         child: InkWell(
           onTap: () => _insert(start, end),

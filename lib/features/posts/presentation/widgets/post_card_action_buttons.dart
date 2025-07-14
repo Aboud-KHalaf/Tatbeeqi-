@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/comments_sheet.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
+import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed/post_feed_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed/post_feed_event.dart';
 
 class PostCardActionButtons extends StatelessWidget {
   final Post post;
@@ -11,7 +13,6 @@ class PostCardActionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final color = theme.colorScheme.onSurfaceVariant;
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -19,10 +20,10 @@ class PostCardActionButtons extends StatelessWidget {
           children: [
             _actionButton(
               context: context,
-              icon: Icons.thumb_up_outlined, // TODO: Use filled icon when liked
+              icon: post.isLiked ? Icons.thumb_up : Icons.thumb_up_outlined,
               label: post.likesCount.toString(),
               onPressed: () {
-                // TODO: Implement like functionality
+                context.read<PostsBloc>().add(LikePostToggled(post.id));
               },
             ),
             const SizedBox(width: 8),
@@ -46,8 +47,7 @@ class PostCardActionButtons extends StatelessWidget {
           child: IconButton(
             icon: Icon(Icons.share_outlined, color: color, size: 22),
             onPressed: () {
-              // TODO: Improve share message with post details
-              Share.share('Check out this post from Tatbeeqi!');
+              //   SharePlus.instance.share('Check out this post from Tatbeeqi!');
             },
           ),
         ),

@@ -16,7 +16,8 @@ class PostImagePicker extends StatelessWidget {
 
   Future<void> _pickImage(BuildContext context) async {
     final picker = ImagePicker();
-    final picked = await picker.pickImage(source: ImageSource.gallery, imageQuality: 70);
+    final picked =
+        await picker.pickImage(source: ImageSource.gallery, imageQuality: 70);
     if (picked != null) {
       onImagePicked(File(picked.path));
     }
@@ -32,7 +33,8 @@ class PostImagePicker extends StatelessWidget {
       children: [
         Text(
           'Cover Image (Optional)',
-          style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+          style: theme.textTheme.titleMedium
+              ?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
         if (image == null)
@@ -47,14 +49,15 @@ class PostImagePicker extends StatelessWidget {
     return Container(
       height: 150,
       decoration: BoxDecoration(
-        color: colorScheme.surfaceVariant.withOpacity(0.5),
+        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.add_photo_alternate_outlined, size: 40, color: colorScheme.onSurfaceVariant),
+            Icon(Icons.add_photo_alternate_outlined,
+                size: 40, color: colorScheme.onSurfaceVariant),
             const SizedBox(height: 8),
             OutlinedButton.icon(
               onPressed: () => _pickImage(context),
@@ -81,7 +84,7 @@ class PostImagePicker extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: Colors.black.withOpacity(0.4),
+            color: Colors.black.withValues(alpha: 0.4),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

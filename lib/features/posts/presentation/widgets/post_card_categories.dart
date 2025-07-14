@@ -21,8 +21,9 @@ class PostCardCategories extends StatelessWidget {
                   color: colorScheme.primary,
                   fontWeight: FontWeight.bold,
                 ),
-                backgroundColor: colorScheme.primary.withOpacity(0.1),
-                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0),
+                backgroundColor: colorScheme.primary.withValues(alpha: 0.1),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0),
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
