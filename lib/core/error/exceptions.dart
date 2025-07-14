@@ -1,4 +1,3 @@
-// Represents errors during data fetching or processing (e.g., from APIs, databases)
 
 class ServerException implements Exception {
   final String message;

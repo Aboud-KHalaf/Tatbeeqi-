@@ -11,8 +11,10 @@ import 'package:tatbeeqi/features/posts/domain/use_cases/get_post_by_id_use_case
 import 'package:tatbeeqi/features/posts/domain/use_cases/get_posts_by_categories_use_case.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/get_posts_use_case.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/like_post_use_case.dart';
+import 'package:tatbeeqi/features/posts/domain/use_cases/remove_comment_use_case.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/sync_latest_posts_use_case.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/unlike_post_use_case.dart';
+import 'package:tatbeeqi/features/posts/domain/use_cases/update_comment_use_case.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/update_post_use_case.dart';
 import 'package:tatbeeqi/features/posts/presentation/bloc/comments/comments_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/bloc/create_post/create_post_bloc.dart';
@@ -31,11 +33,12 @@ void initPostsDependencies(GetIt sl) {
   sl.registerLazySingleton(() => AddCommentUseCase(sl()));
   sl.registerLazySingleton(() => GetCommentsUseCase(sl()));
   sl.registerLazySingleton(() => SyncLatestPostsUseCase(sl()));
-
+  sl.registerLazySingleton(() => RemoveCommentUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateCommentUseCase(sl()));
   // BLoCs
   sl.registerFactory(() => PostFeedBloc(sl()));
   sl.registerFactory(() => CreatePostBloc(sl()));
-  sl.registerFactory(() => CommentsBloc(sl()));
+  sl.registerFactory(() => CommentsBloc(sl(), sl(), sl()));
 
   // Repository
   sl.registerLazySingleton<PostRepository>(

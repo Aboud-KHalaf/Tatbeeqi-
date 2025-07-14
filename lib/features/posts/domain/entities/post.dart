@@ -12,6 +12,7 @@ class Post extends Equatable {
   final DateTime createdAt;
   final int likesCount;
   final int commentsCount;
+  final bool isArticle;
 
   const Post({
     required this.id,
@@ -25,6 +26,7 @@ class Post extends Equatable {
     required this.createdAt,
     this.likesCount = 0,
     this.commentsCount = 0,
+    this.isArticle = false,
   });
 
   @override
@@ -40,5 +42,6 @@ class Post extends Equatable {
         createdAt,
         likesCount,
         commentsCount,
+        isArticle,
       ];
 }

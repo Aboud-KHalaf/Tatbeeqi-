@@ -32,7 +32,7 @@ class PostRepositoryImpl implements PostRepository {
         return Left(ServerFailure(e.message));
       }
     } else {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
   }
 
@@ -48,7 +48,7 @@ class PostRepositoryImpl implements PostRepository {
         return Left(ServerFailure(e.message));
       }
     } else {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
   }
 
@@ -63,7 +63,7 @@ class PostRepositoryImpl implements PostRepository {
         return Left(ServerFailure(e.message));
       }
     } else {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
   }
 
@@ -99,7 +99,7 @@ class PostRepositoryImpl implements PostRepository {
     } else {
       // Cannot get a single post from cache if offline, as it may not be there.
       // This could be extended to search the cache, but for now, we require network.
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
   }
 
@@ -139,13 +139,13 @@ class PostRepositoryImpl implements PostRepository {
       try {
         // final userId = ... get from an auth service
         // await remoteDataSource.likePost(postId, userId);
-        return Left(
+        return const Left(
             ServerFailure('Authentication error: User ID not available.'));
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
       }
     } else {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
   }
 
@@ -156,13 +156,13 @@ class PostRepositoryImpl implements PostRepository {
       try {
         // final userId = ... get from an auth service
         // await remoteDataSource.unlikePost(postId, userId);
-        return Left(
+        return const Left(
             ServerFailure('Authentication error: User ID not available.'));
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
       }
     } else {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
   }
 
@@ -177,7 +177,7 @@ class PostRepositoryImpl implements PostRepository {
         return Left(ServerFailure(e.message));
       }
     } else {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
   }
 
@@ -191,7 +191,7 @@ class PostRepositoryImpl implements PostRepository {
         return Left(ServerFailure(e.message));
       }
     } else {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
     }
   }
 
@@ -206,7 +206,35 @@ class PostRepositoryImpl implements PostRepository {
         return Left(ServerFailure(e.message));
       }
     } else {
-      return Left(NetworkFailure());
+      return const Left(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> removeComment(String commentId) async {
+    if (await networkInfo.isConnected()) {
+      try {
+        await remoteDataSource.removeComment(commentId);
+        return const Right(null);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      }
+    } else {
+      return const Left(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateComment(Comment comment) async {
+    if (await networkInfo.isConnected()) {
+      try {
+        await remoteDataSource.updateComment(comment as CommentModel);
+        return const Right(null);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      }
+    } else {
+      return const Left(NetworkFailure());
     }
   }
 }

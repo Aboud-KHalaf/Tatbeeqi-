@@ -15,6 +15,7 @@ class PostModel extends Post {
     required super.createdAt,
     super.likesCount,
     super.commentsCount,
+    super.isArticle,
   });
 
   factory PostModel.fromMap(Map<String, dynamic> map) {
@@ -30,6 +31,7 @@ class PostModel extends Post {
       createdAt: DateTime.parse(map['created_at'] as String),
       likesCount: map['likes_count'] as int? ?? 0,
       commentsCount: map['comments_count'] as int? ?? 0,
+      isArticle: map['is_article'] as bool? ?? false,
     );
   }
 
@@ -46,6 +48,7 @@ class PostModel extends Post {
       'created_at': createdAt.toIso8601String(),
       'likes_count': likesCount,
       'comments_count': commentsCount,
+      'is_article': isArticle,
     };
   }
 
@@ -62,6 +65,7 @@ class PostModel extends Post {
       createdAt: DateTime.parse(map['created_at'] as String),
       likesCount: map['likes_count'] as int? ?? 0,
       commentsCount: map['comments_count'] as int? ?? 0,
+      isArticle: map['is_article'] as bool? ?? false,
     );
   }
 
@@ -78,6 +82,7 @@ class PostModel extends Post {
       'created_at': createdAt.toIso8601String(),
       'likes_count': likesCount,
       'comments_count': commentsCount,
+      'is_article': isArticle,
     };
   }
 
@@ -93,6 +98,7 @@ class PostModel extends Post {
     DateTime? createdAt,
     int? likesCount,
     int? commentsCount,
+    bool? isArticle,
   }) {
     return PostModel(
       id: id ?? this.id,
@@ -106,6 +112,7 @@ class PostModel extends Post {
       createdAt: createdAt ?? this.createdAt,
       likesCount: likesCount ?? this.likesCount,
       commentsCount: commentsCount ?? this.commentsCount,
+      isArticle: isArticle ?? this.isArticle,
     );
   }
 }

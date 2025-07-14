@@ -49,6 +49,9 @@ const String cachedPostsColText = 'text';
 const String cachedPostsColImageUrl = 'image_url';
 const String cachedPostsColCategories = 'categories'; // Stored as JSON string
 const String cachedPostsColCreatedAt = 'created_at';
+const String cachedPostsColLikesCount = 'likes_count';
+const String cachedPostsColCommentsCount = 'comments_count';
+const String cachedPostsColIsArticle = 'is_article';
 
 class DatabaseService {
   Database? _database;
@@ -163,7 +166,10 @@ class DatabaseService {
         $cachedPostsColText TEXT NOT NULL,
         $cachedPostsColImageUrl TEXT,
         $cachedPostsColCategories TEXT NOT NULL,
-        $cachedPostsColCreatedAt TEXT NOT NULL
+        $cachedPostsColCreatedAt TEXT NOT NULL,
+        $cachedPostsColLikesCount INTEGER NOT NULL DEFAULT 0,
+        $cachedPostsColCommentsCount INTEGER NOT NULL DEFAULT 0,
+        $cachedPostsColIsArticle INTEGER NOT NULL DEFAULT 0
       )
     ''');
     AppLogger.info('Table $cachedPostsTableName created successfully.');
@@ -179,7 +185,7 @@ class DatabaseService {
     if (oldVersion < 3) {
       await _createNotesTable(db);
     }
-    if (oldVersion < 4) {
+    if (oldVersion < 5) {
       await _createCachedPostsTable(db);
     }
     // Add more migration steps for future versions if needed

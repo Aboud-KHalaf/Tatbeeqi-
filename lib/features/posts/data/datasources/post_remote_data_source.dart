@@ -21,6 +21,8 @@ abstract class PostRemoteDataSource {
   Future<void> unlikePost(String postId, String userId);
   Future<CommentModel> addComment(CommentModel comment);
   Future<List<CommentModel>> fetchComments(String postId);
+  Future<void> removeComment(String commentId);
+  Future<void> updateComment(CommentModel comment);
 }
 
 
@@ -182,6 +184,30 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
           .eq('post_id', postId)
           .order('created_at', ascending: true);
       return response.map((e) => CommentModel.fromMap(e)).toList();
+    } catch (e) {
+      if (e is PostgrestException) {
+        throw ServerException(e.message);
+      }
+      throw ServerException('An unexpected error occurred');
+    }
+  }
+
+  @override
+  Future<void> removeComment(String commentId) async {
+    try {
+      await supabase.from('comments').delete().eq('id', commentId);
+    } catch (e) {
+      if (e is PostgrestException) {
+        throw ServerException(e.message);
+      }
+      throw ServerException('An unexpected error occurred');
+    }
+  }
+
+  @override
+  Future<void> updateComment(CommentModel comment) async {
+    try {
+      await supabase.from('comments').update(comment.toMap()).eq('id', comment.id);
     } catch (e) {
       if (e is PostgrestException) {
         throw ServerException(e.message);

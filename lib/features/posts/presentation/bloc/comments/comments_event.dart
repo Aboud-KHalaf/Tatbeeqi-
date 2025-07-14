@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:tatbeeqi/features/posts/domain/entities/comment.dart';
 
 abstract class CommentsEvent extends Equatable {
   const CommentsEvent();
@@ -24,4 +25,22 @@ class PostCommentRequested extends CommentsEvent {
 
   @override
   List<Object> get props => [postId, content];
+}
+
+class DeleteCommentRequested extends CommentsEvent {
+  final String commentId;
+
+  const DeleteCommentRequested(this.commentId);
+
+  @override
+  List<Object> get props => [commentId];
+}
+
+class UpdateCommentRequested extends CommentsEvent {
+  final Comment comment;
+
+  const UpdateCommentRequested(this.comment);
+
+  @override
+  List<Object> get props => [comment];
 }

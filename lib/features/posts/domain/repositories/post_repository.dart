@@ -21,6 +21,8 @@ abstract class PostRepository {
   Future<Either<Failure, void>> likePost(String postId);
   Future<Either<Failure, void>> unlikePost(String postId);
   Future<Either<Failure, Comment>> addComment(Comment comment);
+  Future<Either<Failure, void>> removeComment(String commentId);
+  Future<Either<Failure, void>> updateComment(Comment comment);
   Future<Either<Failure, List<Comment>>> getComments(String postId);
 
   // Sync (remote → local)
