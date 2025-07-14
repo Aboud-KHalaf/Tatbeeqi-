@@ -40,7 +40,8 @@ class PostRepositoryImpl implements PostRepository {
   Future<Either<Failure, Post>> updatePost(Post post) async {
     if (await networkInfo.isConnected()) {
       try {
-        final updatedPost = await remoteDataSource.updatePost(post as PostModel);
+        final updatedPost =
+            await remoteDataSource.updatePost(post as PostModel);
         await syncLatestPosts(); // Refresh cache
         return Right(updatedPost);
       } on ServerException catch (e) {
@@ -67,11 +68,11 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, List<Post>>> getPosts  ({int limit = 10}) async {
+  Future<Either<Failure, List<Post>>> getPosts({int limit = 10}) async {
     if (await networkInfo.isConnected()) {
       try {
         final remotePosts = await remoteDataSource.fetchPosts(limit: limit);
-        await localDataSource.cachePosts(remotePosts);
+        // await localDataSource.cachePosts(remotePosts);
         return Right(remotePosts);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
@@ -138,7 +139,8 @@ class PostRepositoryImpl implements PostRepository {
       try {
         // final userId = ... get from an auth service
         // await remoteDataSource.likePost(postId, userId);
-        return Left(ServerFailure('Authentication error: User ID not available.'));
+        return Left(
+            ServerFailure('Authentication error: User ID not available.'));
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
       }
@@ -154,7 +156,8 @@ class PostRepositoryImpl implements PostRepository {
       try {
         // final userId = ... get from an auth service
         // await remoteDataSource.unlikePost(postId, userId);
-        return Left(ServerFailure('Authentication error: User ID not available.'));
+        return Left(
+            ServerFailure('Authentication error: User ID not available.'));
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
       }

@@ -13,6 +13,8 @@ class PostModel extends Post {
     super.imageUrl,
     required super.categories,
     required super.createdAt,
+    super.likesCount,
+    super.commentsCount,
   });
 
   factory PostModel.fromMap(Map<String, dynamic> map) {
@@ -26,6 +28,8 @@ class PostModel extends Post {
       categories: List<String>.from(map['categories'] ?? []),
       topics: List<String>.from(map['topics'] ?? ["all"]),
       createdAt: DateTime.parse(map['created_at'] as String),
+      likesCount: map['likes_count'] as int? ?? 0,
+      commentsCount: map['comments_count'] as int? ?? 0,
     );
   }
 
@@ -40,6 +44,8 @@ class PostModel extends Post {
       'categories': categories,
       'topics': topics,
       'created_at': createdAt.toIso8601String(),
+      'likes_count': likesCount,
+      'comments_count': commentsCount,
     };
   }
 
@@ -54,6 +60,8 @@ class PostModel extends Post {
       categories: List<String>.from(jsonDecode(map['categories'] as String)),
       topics: List<String>.from(map['topics'] ?? ["all"]),
       createdAt: DateTime.parse(map['created_at'] as String),
+      likesCount: map['likes_count'] as int? ?? 0,
+      commentsCount: map['comments_count'] as int? ?? 0,
     );
   }
 
@@ -68,6 +76,8 @@ class PostModel extends Post {
       'categories': jsonEncode(categories),
       'topics': topics,
       'created_at': createdAt.toIso8601String(),
+      'likes_count': likesCount,
+      'comments_count': commentsCount,
     };
   }
 
@@ -81,6 +91,8 @@ class PostModel extends Post {
     List<String>? categories,
     List<String>? topics,
     DateTime? createdAt,
+    int? likesCount,
+    int? commentsCount,
   }) {
     return PostModel(
       id: id ?? this.id,
@@ -92,6 +104,8 @@ class PostModel extends Post {
       categories: categories ?? this.categories,
       topics: topics ?? this.topics,
       createdAt: createdAt ?? this.createdAt,
+      likesCount: likesCount ?? this.likesCount,
+      commentsCount: commentsCount ?? this.commentsCount,
     );
   }
 }

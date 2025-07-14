@@ -14,6 +14,9 @@ class CommentsSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return BlocProvider(
       create: (context) => GetIt.instance<CommentsBloc>()..add(FetchCommentsRequested(postId)),
       child: DraggableScrollableSheet(
@@ -22,71 +25,76 @@ class CommentsSheet extends StatelessWidget {
         minChildSize: 0.7,
         maxChildSize: 0.9,
         builder: (context, scrollController) {
-          return SafeArea(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-              ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.comment, color: Theme.of(context).colorScheme.primary, size: 26),
-                        const SizedBox(width: 8),
-                        Text(
-                          'التعليقات',
-                          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+          return Container(
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+              border: Border.all(color: colorScheme.outline.withOpacity(0.2)),
+            ),
+            child: Column(
+              children: [
+                // Drag Handle
+                Container(
+                  width: 40,
+                  height: 4,
+                  margin: const EdgeInsets.symmetric(vertical: 10.0),
+                  decoration: BoxDecoration(
+                    color: colorScheme.onSurface.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(2),
                   ),
-                  Divider(height: 1, color: Colors.grey.shade300),
-                  Expanded(
-                    child: BlocBuilder<CommentsBloc, CommentsState>(
-                      builder: (context, state) {
-                        if (state is CommentsLoading) {
-                          return const Center(child: CircularProgressIndicator());
-                        } else if (state is CommentsLoaded) {
-                          if (state.comments.isEmpty) {
-                            return const Center(child: Text('No comments yet.'));
-                          }
-                          return ListView.builder(
-                            controller: scrollController,
-                            itemCount: state.comments.length,
-                            itemBuilder: (context, index) {
-                              final comment = state.comments[index];
-                              return CommentTile(comment: comment);
-                            },
-                          );
-                        } else if (state is CommentsError) {
-                          return Center(child: Text(state.message));
-                        } else {
-                          return const SizedBox.shrink();
+                ),
+                // Header
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8.0),
+                  child: Text(
+                    'Comments',
+                    style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const Divider(height: 1),
+                // Comments List
+                Expanded(
+                  child: BlocBuilder<CommentsBloc, CommentsState>(
+                    builder: (context, state) {
+                      if (state is CommentsLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (state is CommentsLoaded) {
+                        if (state.comments.isEmpty) {
+                          return const Center(child: Text('Be the first to comment!'));
                         }
-                      },
-                    ),
+                        return ListView.builder(
+                          controller: scrollController,
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          itemCount: state.comments.length,
+                          itemBuilder: (context, index) {
+                            final comment = state.comments[index];
+                            return CommentTile(comment: comment);
+                          },
+                        );
+                      } else if (state is CommentsError) {
+                        return Center(child: Text(state.message));
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
                   ),
-                  Divider(height: 1, color: Colors.grey.shade200),
-                  Material(
-                    elevation: 2,
-                    color: Colors.transparent,
-                    child: Padding(
+                ),
+                // Add Comment Input
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Divider(height: 1),
+                    Padding(
                       padding: EdgeInsets.only(
-                        left: 8, right: 8,
-                        bottom: MediaQuery.of(context).viewInsets.bottom + 6,
-                        top: 4,
+                        bottom: MediaQuery.of(context).viewInsets.bottom,
                       ),
                       child: AddCommentBar(onSubmit: (text) {
-                        // TODO: Implement comment submission logic here
+                        context.read<CommentsBloc>().add(PostCommentRequested(postId, text));
                       }),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              ],
             ),
           );
         },

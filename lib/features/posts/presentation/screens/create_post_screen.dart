@@ -39,14 +39,27 @@ class _CreatePostScreenState extends State<CreatePostScreen>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        title: const Text('إنشاء منشور'),
+        title: const Text('Create Post'),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        titleTextStyle: theme.textTheme.headlineSmall?.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
         bottom: TabBar(
           controller: _tabController,
+          indicatorColor: colorScheme.primary,
+          labelColor: colorScheme.primary,
+          unselectedLabelColor: colorScheme.onSurfaceVariant,
           tabs: const [
-            Tab(text: 'المحرّر'),
-            Tab(text: 'المعاينة'),
+            Tab(text: 'Editor'),
+            Tab(text: 'Preview'),
           ],
         ),
       ),
@@ -54,35 +67,31 @@ class _CreatePostScreenState extends State<CreatePostScreen>
         listener: (context, state) {
           if (state is CreatePostSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('تم إنشاء المنشور بنجاح')),
+              const SnackBar(content: Text('Post created successfully!')),
             );
             Navigator.pop(context);
           } else if (state is CreatePostFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('خطأ: ${state.message}')),
+              SnackBar(content: Text('Error: ${state.message}')),
             );
           }
         },
         child: SafeArea(
-          child: Center(
-            child: Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: PostEditorTabs(
-                  tabController: _tabController,
-                  textController: _textController,
-                  categoryController: _categoryController,
-                  categories: _categories,
-                  onAddCategory: _addCategory,
-                  image: _image,
-                  onImagePicked: (file) => setState(() => _image = file),
-                  formKey: _formKey,
-                  onSubmit: () => _submit(context),
-                  isSubmitting: context.watch<CreatePostBloc>().state is CreatePostInProgress,
-                ),
-              ),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+            child: PostEditorTabs(
+              tabController: _tabController,
+              textController: _textController,
+              categoryController: _categoryController,
+              categories: _categories,
+              onAddCategory: _addCategory,
+              onRemoveCategory: _removeCategory, // Pass the new method
+              image: _image,
+              onImagePicked: (file) => setState(() => _image = file),
+              onImageRemoved: _removeImage,
+              formKey: _formKey,
+              onSubmit: () => _submit(context),
+              isSubmitting: context.watch<CreatePostBloc>().state is CreatePostInProgress,
             ),
           ),
         ),
@@ -98,6 +107,20 @@ class _CreatePostScreenState extends State<CreatePostScreen>
       });
       _categoryController.clear();
     }
+  }
+
+  // Helper to remove a category
+  void _removeCategory(String value) {
+    setState(() {
+      _categories.remove(value);
+    });
+  }
+
+  // Helper to remove the image
+  void _removeImage() {
+    setState(() {
+      _image = null;
+    });
   }
 
   void _submit(BuildContext context) {

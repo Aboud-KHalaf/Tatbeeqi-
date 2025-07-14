@@ -15,3 +15,13 @@ class FetchCommentsRequested extends CommentsEvent {
   @override
   List<Object> get props => [postId];
 }
+
+class PostCommentRequested extends CommentsEvent {
+  final String postId;
+  final String content;
+
+  const PostCommentRequested(this.postId, this.content);
+
+  @override
+  List<Object> get props => [postId, content];
+}

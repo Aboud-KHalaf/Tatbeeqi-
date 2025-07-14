@@ -14,34 +14,68 @@ class PostCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-      elevation: 2.0,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(16.0),
+        border: Border.all(color: colorScheme.outline.withOpacity(0.15)),
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16.0),
+        onTap: () {
+          // TODO: Implement post tap, e.g., navigate to post details
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PostCardHeader(post: post),
-            const SizedBox(height: 16.0),
-            MarkdownBody(data: post.text),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+              child: PostCardHeader(post: post),
+            ),
             if (post.imageUrl != null && post.imageUrl!.isNotEmpty)
+              ClipRRect(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(0)), // No rounding if it's in the middle
+                child: CachedNetworkImage(
+                  imageUrl: post.imageUrl!,
+                  placeholder: (context, url) => AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Container(
+                      color: colorScheme.surfaceVariant.withOpacity(0.5),
+                      child: Center(child: CircularProgressIndicator(strokeWidth: 2, color: colorScheme.onSurfaceVariant)),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Container(
+                      color: colorScheme.errorContainer.withOpacity(0.5),
+                      child: Icon(Icons.broken_image_outlined, color: colorScheme.onErrorContainer),
+                    ),
+                  ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            if (post.text.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: CachedNetworkImage(
-                    imageUrl: post.imageUrl!,
-                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                    errorWidget: (context, url, error) => const Icon(Icons.error),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                child: MarkdownBody(
+                  data: post.text,
+                  styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(
+                    p: theme.textTheme.bodyLarge?.copyWith(fontSize: 16, color: colorScheme.onSurfaceVariant),
                   ),
                 ),
               ),
-            const SizedBox(height: 16.0),
-            PostCardCategories(categories: post.categories),
-            const Divider(height: 32.0),
-            PostCardActionButtons(post: post),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: PostCardCategories(categories: post.categories),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+              child: PostCardActionButtons(post: post),
+            ),
           ],
         ),
       ),

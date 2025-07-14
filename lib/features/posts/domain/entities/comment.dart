@@ -5,6 +5,7 @@ class Comment extends Equatable {
   final String postId;
   final String authorName;
   final String authorId;
+  final String? authorAvatarUrl;
   final String text;
   final DateTime createdAt;
 
@@ -13,10 +14,11 @@ class Comment extends Equatable {
     required this.postId,
     required this.authorName,
     required this.authorId,
+    this.authorAvatarUrl,
     required this.text,
     required this.createdAt,
   });
 
   @override
-  List<Object?> get props => [id, postId, authorId, text, createdAt];
+  List<Object?> get props => [id, postId, authorId, authorAvatarUrl, text, createdAt];
 }

@@ -78,9 +78,7 @@ class MyApp extends StatelessWidget {
           // TEMP
           create: (_) => di.sl<NewsCubit>()..fetchNews(),
         ),
-        BlocProvider(
-          create: (_) => di.sl<RetakeCoursesCubit>()
-        ),
+        BlocProvider(create: (_) => di.sl<RetakeCoursesCubit>()),
         BlocProvider(
           create: (_) => di.sl<NotesBloc>(),
         ),
@@ -88,11 +86,12 @@ class MyApp extends StatelessWidget {
           // TEMP
           create: (_) => di.sl<ToDoCubit>()..fetchToDos(),
         ),
-        BlocProvider(      create: (_) => di.sl<CreatePostBloc>(),
-
-),
-        BlocProvider(create: (_) => di.sl<QuizBloc>(),
-)
+        BlocProvider(
+          create: (_) => di.sl<CreatePostBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.sl<QuizBloc>(),
+        )
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(
         builder: (context, localeState) {

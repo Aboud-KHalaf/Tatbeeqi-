@@ -19,7 +19,7 @@ class _PostsFeedScreenState extends State<PostsFeedScreen> {
   final _scrollController = ScrollController();
   static const double _threshold = 120;
   static const double _barHeight = 72;
-  bool _showCreateBar = true;               // مرئيّ افتراضياً
+  bool _showCreateBar = true; // مرئيّ افتراضياً
 
   @override
   void initState() {
@@ -44,51 +44,67 @@ class _PostsFeedScreenState extends State<PostsFeedScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocProvider(
       create: (_) => GetIt.instance<PostFeedBloc>()..add(FetchPostsRequested()),
       child: Scaffold(
-        appBar: AppBar(title: const Text('المنشورات')),
-        body: Stack(
-          children: [
-            // ---------------- قائمة المنشورات ----------------
-            BlocBuilder<PostFeedBloc, PostFeedState>(
-              builder: (context, state) {
-                if (state is PostFeedLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is PostFeedLoaded) {
-                  return RefreshIndicator(
-                    onRefresh: () async =>
-                        context.read<PostFeedBloc>().add(RefreshPostsRequested()),
-                    child: ListView.builder(
-                      controller: _scrollController,
-                      padding: EdgeInsets.only(
-                          top: _showCreateBar ? _barHeight + 8 : 8),
-                      itemCount: state.posts.length,
-                      itemBuilder: (_, i) => PostCard(post: state.posts[i]),
-                    ),
-                  );
-                } else if (state is PostFeedError) {
-                  return Center(child: Text(state.message));
-                }
-                return const Center(child: Text('مرحباً بك في المنشورات'));
-              },
-            ),
+        backgroundColor: theme.colorScheme.surface.withAlpha(240),
+        appBar: AppBar(
+          title: const Text('Feed'),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          centerTitle: true,
+          titleTextStyle: theme.textTheme.headlineSmall?.copyWith(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              // ---------------- قائمة المنشورات ----------------
+              BlocBuilder<PostFeedBloc, PostFeedState>(
+                builder: (context, state) {
+                  if (state is PostFeedLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is PostFeedLoaded) {
+                    return RefreshIndicator(
+                      onRefresh: () async => context
+                          .read<PostFeedBloc>()
+                          .add(RefreshPostsRequested()),
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        padding: EdgeInsets.only(
+                            top: _showCreateBar ? _barHeight + 8 : 8,
+                            bottom: 8,
+                            left: 8,
+                            right: 8),
+                        itemCount: state.posts.length,
+                        itemBuilder: (_, i) => PostCard(post: state.posts[i]),
+                      ),
+                    );
+                  } else if (state is PostFeedError) {
+                    return Center(child: Text(state.message));
+                  }
+                  return const Center(child: Text('Welcome to the Feed'));
+                },
+              ),
 
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 250),
-              curve: Curves.easeInOut,
-              top: _showCreateBar ? 0 : -_barHeight,
-              left: 0,
-              right: 0,
-              height: _barHeight,
-              child: CreatePostBar(onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const CreatePostScreen()),
-                );
-              }),
-            ),
-          ],
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeInOut,
+                top: _showCreateBar ? 0 : -_barHeight,
+                left: 0,
+                right: 0,
+                height: _barHeight,
+                child: CreatePostBar(onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const CreatePostScreen()),
+                  );
+                }),
+              ),
+            ],
+          ),
         ),
       ),
     );

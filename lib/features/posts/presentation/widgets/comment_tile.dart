@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/comment.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -9,33 +10,67 @@ class CommentTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final initials = (comment.authorName.isNotEmpty)
-        ? comment.authorName.trim().split(' ').map((e) => e.isNotEmpty ? e[0] : '').take(2).join().toUpperCase()
-        : '?';
+    final colorScheme = theme.colorScheme;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            backgroundColor: theme.colorScheme.primary.withOpacity(0.15),
-            child: Text(initials, style: theme.textTheme.bodyLarge),
             radius: 20,
+            backgroundColor: colorScheme.surfaceVariant,
+            backgroundImage: comment.authorAvatarUrl != null
+                ? CachedNetworkImageProvider(comment.authorAvatarUrl!)
+                : null,
+            child: comment.authorAvatarUrl == null
+                ? Text(
+                    comment.authorName.isNotEmpty ? comment.authorName[0].toUpperCase() : '?',
+                    style: TextStyle(fontWeight: FontWeight.bold, color: colorScheme.onSurfaceVariant),
+                  )
+                : null,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text(comment.authorName, style: theme.textTheme.titleSmall?.copyWith(fontWeight: FontWeight.bold)),
-                    const SizedBox(width: 8),
-                    Text(timeago.format(comment.createdAt), style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey)),
-                  ],
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  decoration: BoxDecoration(
+                    color: colorScheme.surfaceVariant.withOpacity(0.5),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        comment.authorName,
+                        style: theme.textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: colorScheme.onSurface,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        comment.text,
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 2),
-                Text(comment.text, style: theme.textTheme.bodyMedium),
+                const SizedBox(height: 4),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: Text(
+                    timeago.format(comment.createdAt),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant.withOpacity(0.8),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

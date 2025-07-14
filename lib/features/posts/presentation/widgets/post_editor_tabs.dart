@@ -9,8 +9,10 @@ class PostEditorTabs extends StatelessWidget {
   final TextEditingController categoryController;
   final List<String> categories;
   final void Function(String) onAddCategory;
+  final void Function(String) onRemoveCategory;
   final File? image;
   final void Function(File) onImagePicked;
+  final VoidCallback onImageRemoved;
   final GlobalKey<FormState> formKey;
   final VoidCallback onSubmit;
   final bool isSubmitting;
@@ -22,8 +24,10 @@ class PostEditorTabs extends StatelessWidget {
     required this.categoryController,
     required this.categories,
     required this.onAddCategory,
+    required this.onRemoveCategory,
     required this.image,
     required this.onImagePicked,
+    required this.onImageRemoved,
     required this.formKey,
     required this.onSubmit,
     required this.isSubmitting,
@@ -39,19 +43,24 @@ class PostEditorTabs extends StatelessWidget {
           categoryController: categoryController,
           categories: categories,
           onAddCategory: onAddCategory,
+          onRemoveCategory: onRemoveCategory,
           image: image,
           onImagePicked: onImagePicked,
+          onImageRemoved: onImageRemoved,
           formKey: formKey,
           onSubmit: onSubmit,
           isSubmitting: isSubmitting,
         ),
-        Container(
-          padding: const EdgeInsets.all(8),
-          child: Markdown(
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: MarkdownBody(
             data: textController.text.isEmpty
-                ? '*(لا يوجد محتوى للمعاينة)*'
+                ? '*No content to preview*'
                 : textController.text,
-            styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
+            styleSheet:
+                MarkdownStyleSheet.fromTheme(Theme.of(context)).copyWith(
+              p: Theme.of(context).textTheme.bodyLarge,
+            ),
           ),
         ),
       ],

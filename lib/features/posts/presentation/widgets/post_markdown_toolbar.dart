@@ -16,42 +16,59 @@ class PostMarkdownToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).colorScheme.primary;
     return Wrap(
-      spacing: 4,
+      spacing: 8,
       runSpacing: 4,
       children: [
-        _btn('# ', 'H1', color),
-        _btn('## ', 'H2', color),
-        _btn('### ', 'H3', color),
-        _btn('**', 'B', color, end: '**'),
-        _btn('*', 'I', color, end: '*'),
-        _btn('~~', 'S', color, end: '~~'),
-        _btn('`', '</>', color, end: '`'),
-        _btn('```\n', '{}', color, end: '\n```'),
-        _btn('- ', '•', color),
-        _btn('1. ', '1.', color),
-        _btn('> ', '❝', color),
-        _btn('[', '🔗', color, end: '](url)'),
-        _btn('![', '🖼️', color, end: '](image-url)'),
-        _btn('---\n', '―', color),
+        _btn(context, tooltip: 'Header 1', label: 'H1', start: '# '),
+        _btn(context, tooltip: 'Header 2', label: 'H2', start: '## '),
+        _btn(context, tooltip: 'Header 3', label: 'H3', start: '### '),
+        _btn(context, tooltip: 'Bold', icon: Icons.format_bold, start: '**', end: '**'),
+        _btn(context, tooltip: 'Italic', icon: Icons.format_italic, start: '*', end: '*'),
+        _btn(context, tooltip: 'Strikethrough', icon: Icons.format_strikethrough, start: '~~', end: '~~'),
+        _btn(context, tooltip: 'Inline Code', icon: Icons.code, start: '`', end: '`'),
+        _btn(context, tooltip: 'Code Block', icon: Icons.data_object, start: '```\n', end: '\n```'),
+        _btn(context, tooltip: 'Unordered List', icon: Icons.format_list_bulleted, start: '- '),
+        _btn(context, tooltip: 'Ordered List', icon: Icons.format_list_numbered, start: '1. '),
+        _btn(context, tooltip: 'Quote', icon: Icons.format_quote, start: '> '),
+        _btn(context, tooltip: 'Link', icon: Icons.link, start: '[', end: '](url)'),
+        _btn(context, tooltip: 'Image', icon: Icons.image_outlined, start: '![', end: '](image-url)'),
+        _btn(context, tooltip: 'Horizontal Rule', icon: Icons.horizontal_rule, start: '---\n'),
       ],
     );
   }
 
-  Widget _btn(String start, String label, Color color, {String end = ''}) {
+  Widget _btn(
+    BuildContext context, {
+    required String tooltip,
+    String? label,
+    IconData? icon,
+    required String start,
+    String end = '',
+  }) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Tooltip(
-      message: label,
-      child: InkWell(
-        onTap: () => _insert(start, end),
-        borderRadius: BorderRadius.circular(6),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-          decoration: BoxDecoration(
-            color: color.withOpacity(0.08),
-            borderRadius: BorderRadius.circular(6),
+      message: tooltip,
+      child: Material(
+        color: colorScheme.surfaceVariant.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(8),
+        child: InkWell(
+          onTap: () => _insert(start, end),
+          borderRadius: BorderRadius.circular(8),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            child: icon != null
+                ? Icon(icon, size: 20, color: colorScheme.onSurfaceVariant)
+                : Text(
+                    label!,
+                    style: theme.textTheme.titleSmall?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
           ),
-          child: Text(label, style: TextStyle(color: color, fontWeight: FontWeight.bold)),
         ),
       ),
     );

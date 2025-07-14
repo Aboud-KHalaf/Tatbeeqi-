@@ -9,36 +9,77 @@ class PostCardActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final color = theme.colorScheme.onSurfaceVariant;
+
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _actionButton(context, Icons.thumb_up_outlined, 'Like', () {}),
-        _actionButton(context, Icons.comment_outlined, 'Comment', () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            builder: (_) => CommentsSheet(postId: post.id),
-          );
-        }),
-        _actionButton(context, Icons.share_outlined, 'Share', () {
-          Share.share('Check out this post: ${post.text}');
-        }),
+        Row(
+          children: [
+            _actionButton(
+              context: context,
+              icon: Icons.thumb_up_outlined, // TODO: Use filled icon when liked
+              label: post.likesCount.toString(),
+              onPressed: () {
+                // TODO: Implement like functionality
+              },
+            ),
+            const SizedBox(width: 8),
+            _actionButton(
+              context: context,
+              icon: Icons.mode_comment_outlined,
+              label: post.commentsCount.toString(),
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (_) => CommentsSheet(postId: post.id),
+                );
+              },
+            ),
+          ],
+        ),
+        Tooltip(
+          message: 'Share',
+          child: IconButton(
+            icon: Icon(Icons.share_outlined, color: color, size: 22),
+            onPressed: () {
+              // TODO: Improve share message with post details
+              Share.share('Check out this post from Tatbeeqi!');
+            },
+          ),
+        ),
       ],
     );
   }
 
-  Widget _actionButton(
-    BuildContext context,
-    IconData icon,
-    String label,
-    VoidCallback onPressed,
-  ) {
+  Widget _actionButton({
+    required BuildContext context,
+    required IconData icon,
+    required String label,
+    required VoidCallback onPressed,
+  }) {
     final theme = Theme.of(context);
+    final color = theme.colorScheme.onSurfaceVariant;
+
     return TextButton.icon(
       onPressed: onPressed,
-      icon: Icon(icon, color: Colors.grey[700]),
-      label: Text(label, style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey[700])),
+      icon: Icon(icon, size: 20, color: color),
+      label: Text(
+        label,
+        style: theme.textTheme.labelLarge?.copyWith(
+          color: color,
+          fontWeight: FontWeight.w600,
+          fontSize: 14,
+        ),
+      ),
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      ),
     );
   }
 }

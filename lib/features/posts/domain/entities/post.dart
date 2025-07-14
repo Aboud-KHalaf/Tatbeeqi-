@@ -10,6 +10,8 @@ class Post extends Equatable {
   final List<String> categories;
   final List<String> topics;
   final DateTime createdAt;
+  final int likesCount;
+  final int commentsCount;
 
   const Post({
     required this.id,
@@ -21,6 +23,8 @@ class Post extends Equatable {
     required this.categories,
     required this.topics,
     required this.createdAt,
+    this.likesCount = 0,
+    this.commentsCount = 0,
   });
 
   @override
@@ -34,5 +38,7 @@ class Post extends Equatable {
         categories,
         topics,
         createdAt,
+        likesCount,
+        commentsCount,
       ];
 }
