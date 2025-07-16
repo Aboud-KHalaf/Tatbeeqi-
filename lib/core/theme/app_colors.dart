@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Light theme colors
-  static const Color lightPrimary = Color(0xFF00BCD4); // Cyan 500
+  static const Color lightPrimary =
+      Colors.blue; //Color(0xFF00BCD4); // Cyan 500
   static const Color lightPrimaryContainer = Color(0xFFE0F7FA);
   static const Color lightSecondary = Color(0xFF3F51B5); // Indigo 500
   static const Color lightSecondaryContainer = Color(0xFFC5CAE9);
@@ -12,7 +13,8 @@ class AppColors {
   static const Color lightSurface = Color(0xFFF9FAFB);
   static const Color lightSurfaceContainer = Color(0xFFECEFF1);
   static const Color lightBackground = Color(0xFFFFFFFF);
-  static const Color lightOnBackground = Color(0xFF1C1C1C); // ✅ جديد: لون النصوص فوق الخلفية الفاتحة
+  static const Color lightOnBackground =
+      Color(0xFF1C1C1C); // ✅ جديد: لون النصوص فوق الخلفية الفاتحة
 
   static const Color lightError = Color(0xFFD32F2F);
 
@@ -39,7 +41,8 @@ class AppColors {
   static const Color darkSurface = Color(0xFF121212);
   static const Color darkSurfaceContainer = Color(0xFF1E1E1E);
   static const Color darkBackground = Color(0xFF0D1117);
-  static const Color darkOnBackground = Color(0xFFEAEAEA); // ✅ جديد: لون النصوص فوق الخلفية الداكنة
+  static const Color darkOnBackground =
+      Color(0xFFEAEAEA); // ✅ جديد: لون النصوص فوق الخلفية الداكنة
 
   static const Color darkError = Color(0xFFEF5350);
 

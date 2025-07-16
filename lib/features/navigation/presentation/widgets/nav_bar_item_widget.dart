@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class NavBarItemWidget extends StatelessWidget {
+class NavBarItemWidget extends StatefulWidget {
   final IconData icon;
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
   final AnimationController animationController;
 
-  const NavBarItemWidget({
+    const NavBarItemWidget({
     super.key,
     required this.icon,
     required this.label,
@@ -16,21 +16,32 @@ class NavBarItemWidget extends StatelessWidget {
     required this.animationController,
   });
 
+    @override
+  State<NavBarItemWidget> createState() => _NavBarItemWidgetState();
+}
+
+class _NavBarItemWidgetState extends State<NavBarItemWidget> {
+  late final Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: widget.animationController,
+        curve: Curves.easeOutCubic,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).colorScheme.primary;
     final secondaryColor = Theme.of(context).colorScheme.secondary;
     final colorScheme = Theme.of(context).colorScheme;
 
-    final animation = Tween(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: animationController,
-        curve: Curves.easeOutCubic,
-      ),
-    );
-
     return GestureDetector(
-      onTap: onTap,
+      onTap: widget.onTap,
       behavior: HitTestBehavior.opaque,
       child: SizedBox(
         height: 60, // Fixed height container to better manage space
@@ -45,12 +56,12 @@ class NavBarItemWidget extends StatelessWidget {
                 alignment: Alignment.center,
                 children: [
                   // Background indicator
-                  if (isSelected)
+                  if (widget.isSelected)
                     AnimatedBuilder(
-                      animation: animationController,
+                      animation: widget.animationController,
                       builder: (context, child) {
                         return Transform.scale(
-                          scale: animation.value,
+                          scale: _animation.value,
                           child: Container(
                             width: 36, // Smaller background
                             height: 36, // Smaller background
@@ -72,11 +83,11 @@ class NavBarItemWidget extends StatelessWidget {
 
                   // Icon
                   Icon(
-                    icon,
-                    color: isSelected
+                    widget.icon,
+                    color: widget.isSelected
                         ? primaryColor
                         : colorScheme.onSurface.withValues(alpha: 0.6),
-                    size: isSelected ? 22 : 20, // Smaller icons
+                    size: widget.isSelected ? 22 : 20, // Smaller icons
                   ),
                 ],
               ),
@@ -90,13 +101,13 @@ class NavBarItemWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 10, // Same size for both states
                   height: 1.0, // Tighter line height
-                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                  color: isSelected
+                  fontWeight: widget.isSelected ? FontWeight.w600 : FontWeight.w400,
+                  color: widget.isSelected
                       ? primaryColor
                       : colorScheme.onSurface.withValues(alpha: 0.6),
                 ),
                 child: Text(
-                  label,
+                  widget.label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,

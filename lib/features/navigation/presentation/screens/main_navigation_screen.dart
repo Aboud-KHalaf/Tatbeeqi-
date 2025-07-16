@@ -52,6 +52,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
     return BlocListener<NavigationCubit, NavigationState>(
       listenWhen: (prev, curr) => prev.index != curr.index,
       listener: (context, state) {
+        print(state.index);
         _pageController.animateToPage(
           state.index,
           duration: const Duration(milliseconds: 300),
@@ -75,6 +76,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
             return FancyNavBarWidget(
               currentIndex: state.index,
               onTap: (index) {
+                print(index);
                 HapticFeedback.lightImpact();
                 context.read<NavigationCubit>().changeIndex(index);
               },

@@ -2,17 +2,18 @@ import 'package:equatable/equatable.dart';
 
 abstract class NavigationState extends Equatable {
   final int index;
+  final int timestamp;
 
-  const NavigationState(this.index);
+  NavigationState(this.index) : timestamp = DateTime.now().millisecondsSinceEpoch;
 
   @override
-  List<Object> get props => [index];
+  List<Object> get props => [index, timestamp];
 }
 
 class NavigationInitial extends NavigationState {
-  const NavigationInitial() : super(0); 
+  NavigationInitial() : super(0);
 }
 
 class NavigationIndexChanged extends NavigationState {
-  const NavigationIndexChanged(super.index);
+  NavigationIndexChanged(super.index);
 }
