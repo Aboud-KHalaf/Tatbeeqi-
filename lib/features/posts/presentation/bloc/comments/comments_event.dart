@@ -8,38 +8,38 @@ abstract class CommentsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchCommentsRequested extends CommentsEvent {
+class FetchComments extends CommentsEvent {
   final String postId;
 
-  const FetchCommentsRequested(this.postId);
+  const FetchComments(this.postId);
 
   @override
   List<Object> get props => [postId];
 }
 
-class PostCommentRequested extends CommentsEvent {
+class AddComment extends CommentsEvent {
   final String postId;
   final String content;
 
-  const PostCommentRequested(this.postId, this.content);
+  const AddComment(this.postId, this.content);
 
   @override
   List<Object> get props => [postId, content];
 }
 
-class DeleteCommentRequested extends CommentsEvent {
+class DeleteComment extends CommentsEvent {
   final String commentId;
 
-  const DeleteCommentRequested(this.commentId);
+  const DeleteComment(this.commentId);
 
   @override
   List<Object> get props => [commentId];
 }
 
-class UpdateCommentRequested extends CommentsEvent {
+class UpdateComment extends CommentsEvent {
   final Comment comment;
 
-  const UpdateCommentRequested(this.comment);
+  const UpdateComment(this.comment);
 
   @override
   List<Object> get props => [comment];

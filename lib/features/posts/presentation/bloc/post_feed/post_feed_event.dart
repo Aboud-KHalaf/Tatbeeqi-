@@ -19,3 +19,12 @@ class LikePostToggled extends PostsEvent {
   @override
   List<Object> get props => [postId];
 }
+
+class IncrementPostCommentCount extends PostsEvent {
+  final String postId;
+
+  const IncrementPostCommentCount(this.postId);
+
+  @override
+  List<Object> get props => [postId];
+}

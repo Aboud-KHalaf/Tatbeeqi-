@@ -29,6 +29,3 @@ class CommentsError extends CommentsState {
   @override
   List<Object> get props => [message];
 }
-
-class ComentDeleted extends CommentsState {}
-class CommentUpdated extends CommentsState {}

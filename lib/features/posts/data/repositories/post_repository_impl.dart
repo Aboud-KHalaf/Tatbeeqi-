@@ -7,6 +7,7 @@ import 'package:tatbeeqi/features/posts/data/datasources/post_remote_data_source
 import 'package:tatbeeqi/features/posts/data/models/comment_model.dart';
 import 'package:tatbeeqi/features/posts/data/models/post_model.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/comment.dart';
+import 'package:tatbeeqi/features/posts/domain/entities/comment_reply.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/domain/repositories/post_repository.dart';
 
@@ -68,10 +69,12 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, List<Post>>> getPosts({int start = 0, int limit = 10}) async {
+  Future<Either<Failure, List<Post>>> getPosts(
+      {int start = 0, int limit = 10}) async {
     if (await networkInfo.isConnected()) {
       try {
-        final remotePosts = await remoteDataSource.fetchPosts(start: start, limit: limit);
+        final remotePosts =
+            await remoteDataSource.fetchPosts(start: start, limit: limit);
         print(remotePosts.length);
         // await localDataSource.cachePosts(remotePosts);
         return Right(remotePosts);
@@ -165,7 +168,7 @@ class PostRepositoryImpl implements PostRepository {
     if (await networkInfo.isConnected()) {
       try {
         final newComment =
-            await remoteDataSource.addComment(comment as CommentModel);
+            await remoteDataSource.addComment(CommentModel.fromEntity(comment));
         return Right(newComment);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
@@ -224,6 +227,59 @@ class PostRepositoryImpl implements PostRepository {
       try {
         await remoteDataSource.updateComment(comment as CommentModel);
         return const Right(null);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      }
+    } else {
+      return const Left(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CommentReply>>> getRepliesForComment(
+      String commentId) async {
+    if (await networkInfo.isConnected()) {
+      try {
+        final remoteReplies =
+            await remoteDataSource.getRepliesForComment(commentId);
+        return Right(remoteReplies);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      }
+    } else {
+      return const Left(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Unit>> replyOnComment(
+      String commentId, String text) async {
+    return await _getMessage(() {
+      return remoteDataSource.replyOnComment(commentId, text);
+    });
+  }
+
+  @override
+  Future<Either<Failure, Unit>> updateReplyOnComment(
+      String replyId, String newText) async {
+    return await _getMessage(() {
+      return remoteDataSource.updateReplyOnComment(replyId, newText);
+    });
+  }
+
+  @override
+  Future<Either<Failure, Unit>> deleteReplyOnComment(String replyId) async {
+    return await _getMessage(() {
+      return remoteDataSource.deleteReplyOnComment(replyId);
+    });
+  }
+
+  Future<Either<Failure, Unit>> _getMessage(
+      Future<void> Function() remoteFunction) async {
+    if (await networkInfo.isConnected()) {
+      try {
+        await remoteFunction();
+        return const Right(unit);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
       }

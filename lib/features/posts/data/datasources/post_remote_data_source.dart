@@ -1,4 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:tatbeeqi/features/posts/data/models/comment_model.dart';
+import 'package:tatbeeqi/features/posts/data/models/comment_reply_model.dart';
 import 'package:tatbeeqi/features/posts/data/models/post_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tatbeeqi/core/error/exceptions.dart';
@@ -25,6 +27,12 @@ abstract class PostRemoteDataSource {
   Future<List<CommentModel>> fetchComments(String postId);
   Future<void> removeComment(String commentId);
   Future<void> updateComment(CommentModel comment);
+
+  // Comment Replies
+  Future<List<CommentReplyModel>> getRepliesForComment(String commentId);
+  Future<void> replyOnComment(String commentId, String text);
+  Future<void> updateReplyOnComment(String replyId, String newText);
+  Future<void> deleteReplyOnComment(String replyId);
 }
 
 class PostRemoteDataSourceImpl implements PostRemoteDataSource {
@@ -243,9 +251,14 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   @override
   Future<CommentModel> addComment(CommentModel comment) async {
     try {
+      final authorId = supabase.auth.currentUser?.id;
+      if (authorId == null) {
+        throw ServerException('User ID not available');
+      }
+      debugPrint("id $authorId");
       final response = await supabase
           .from('comments')
-          .insert(comment.toMap())
+          .insert(comment.copyWith(authorId: authorId).toMap())
           .select()
           .single();
       return CommentModel.fromMap(response);
@@ -302,6 +315,57 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
         throw ServerException(e.message);
       }
       throw ServerException('An unexpected error occurred');
+    }
+  }
+
+  @override
+  Future<List<CommentReplyModel>> getRepliesForComment(String commentId) async {
+    try {
+      final response = await supabase
+          .from('comment_replies')
+          .select('*, author:profiles(name)')
+          .eq('comment_id', commentId)
+          .order('created_at', ascending: true);
+
+      return (response as List)
+          .map((reply) => CommentReplyModel.fromJson(reply))
+          .toList();
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> replyOnComment(String commentId, String text) async {
+    try {
+      final userId = supabase.auth.currentUser!.id;
+      await supabase.from('comment_replies').insert({
+        'comment_id': commentId,
+        'author_id': userId,
+        'text': text,
+      });
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> updateReplyOnComment(String replyId, String newText) async {
+    try {
+      await supabase
+          .from('comment_replies')
+          .update({'text': newText}).eq('id', replyId);
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> deleteReplyOnComment(String replyId) async {
+    try {
+      await supabase.from('comment_replies').delete().eq('id', replyId);
+    } catch (e) {
+      throw ServerException(e.toString());
     }
   }
 }

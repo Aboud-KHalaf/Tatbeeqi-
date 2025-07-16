@@ -4,6 +4,8 @@ import 'package:get_it/get_it.dart';
 import 'package:tatbeeqi/features/posts/presentation/bloc/comments/comments_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/bloc/comments/comments_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/bloc/comments/comments_state.dart';
+import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed/post_feed_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed/post_feed_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/comment_tile.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/add_comment_bar.dart';
 
@@ -19,7 +21,7 @@ class CommentsSheet extends StatelessWidget {
 
     return BlocProvider(
       create: (context) =>
-          GetIt.instance<CommentsBloc>()..add(FetchCommentsRequested(postId)),
+          GetIt.instance<CommentsBloc>()..add(FetchComments(postId)),
       child: DraggableScrollableSheet(
         expand: false,
         initialChildSize: 0.7,
@@ -60,30 +62,32 @@ class CommentsSheet extends StatelessWidget {
                 Expanded(
                   child: BlocBuilder<CommentsBloc, CommentsState>(
                     builder: (context, state) {
-                      if (state is CommentsLoading) {
+                      final comments =
+                          state is CommentsLoaded ? state.comments : [];
+
+                      if (state is CommentsLoading && comments.isEmpty) {
+                        // 🔁 Only show loading when it's the initial fetch
                         return const Center(child: CircularProgressIndicator());
-                      } else if (state is CommentsLoaded) {
-                        if (state.comments.isEmpty) {
-                          return const Center(
-                              child: Text('Be the first to comment!'));
-                        }
-                        return ListView.builder(
-                          controller: scrollController,
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          itemCount: state.comments.length,
-                          itemBuilder: (context, index) {
-                            final comment = state.comments[index];
-                            return CommentTile(comment: comment);
-                          },
-                        );
                       } else if (state is CommentsError) {
                         return Center(child: Text(state.message));
-                      } else {
-                        return const SizedBox.shrink();
+                      } else if (comments.isEmpty) {
+                        return const Center(
+                            child: Text('Be the first to comment!'));
                       }
+
+                      return ListView.builder(
+                        controller: scrollController,
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        itemCount: comments.length,
+                        itemBuilder: (context, index) {
+                          final comment = comments[index];
+                          return CommentTile(comment: comment);
+                        },
+                      );
                     },
                   ),
                 ),
+
                 // Add Comment Input
                 Column(
                   mainAxisSize: MainAxisSize.min,
@@ -96,7 +100,10 @@ class CommentsSheet extends StatelessWidget {
                       child: AddCommentBar(onSubmit: (text) {
                         context
                             .read<CommentsBloc>()
-                            .add(PostCommentRequested(postId, text));
+                            .add(AddComment(postId, text));
+                        context
+                            .read<PostsBloc>()
+                            .add(IncrementPostCommentCount(postId));
                       }),
                     ),
                   ],

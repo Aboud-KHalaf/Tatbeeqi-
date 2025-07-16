@@ -6,7 +6,8 @@ class CommentModel extends Comment {
     required super.postId,
     required super.authorId,
     required super.text,
-    required super.createdAt, required super.authorName,
+    required super.createdAt,
+    required super.authorName,
   });
 
   factory CommentModel.fromMap(Map<String, dynamic> map) {
@@ -22,12 +23,50 @@ class CommentModel extends Comment {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'post_id': postId,
       'author_id': authorId,
       'text': text,
-      'author_name': authorName,
-      'created_at': createdAt.toIso8601String(),
     };
+  }
+
+  factory CommentModel.fromEntity(Comment comment) {
+    return CommentModel(
+      id: comment.id,
+      postId: comment.postId,
+      authorId: comment.authorId,
+      text: comment.text,
+      createdAt: comment.createdAt,
+      authorName: comment.authorName,
+    );
+  }
+
+  copyWith({
+    String? id,
+    String? postId,
+    String? authorId,
+    String? text,
+    DateTime? createdAt,
+    String? authorName,
+  }) {
+    return CommentModel(
+      id: id ?? this.id,
+      postId: postId ?? this.postId,
+      authorId: authorId ?? this.authorId,
+      text: text ?? this.text,
+      createdAt: createdAt ?? this.createdAt,
+      authorName: authorName ?? this.authorName,
+    );
+  }
+
+  Comment toEntity() {
+    return Comment(
+      id: id,
+      postId: postId,
+      authorId: authorId,
+      text: text,
+      createdAt: createdAt,
+      authorName: authorName,
+      authorAvatarUrl: authorAvatarUrl,
+    );
   }
 }

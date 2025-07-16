@@ -22,6 +22,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     on<FetchPostsRequested>(_onFetchPostsRequested);
     on<RefreshPostsRequested>(_onFetchPostsRequested);
     on<LikePostToggled>(_onLikePostToggled);
+    on<IncrementPostCommentCount>(_onIncrementCommentCount);
   }
 
   Future<void> _onFetchPostsRequested(
@@ -62,6 +63,23 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       } else {
         await _unlikePostUseCase(event.postId);
       }
+    }
+  }
+
+  Future<void> _onIncrementCommentCount(
+    IncrementPostCommentCount event,
+    Emitter<PostsState> emit,
+  ) async {
+    if (state is PostsLoaded) {
+      final currentState = state as PostsLoaded;
+      final updatedPosts = currentState.posts.map((post) {
+        if (post.id == event.postId) {
+          return post.copyWith(commentsCount: post.commentsCount + 1);
+        }
+        return post;
+      }).toList();
+
+      emit(PostsLoaded(updatedPosts));
     }
   }
 }
