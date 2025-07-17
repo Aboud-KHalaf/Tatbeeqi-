@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:tatbeeqi/core/error/exceptions.dart';
 import 'package:tatbeeqi/core/error/failures.dart';
@@ -28,7 +30,7 @@ class PostRepositoryImpl implements PostRepository {
       try {
         final newPost =
             await remoteDataSource.createPost(PostModel.fromEntity(post));
-      //  await syncLatestPosts(); // Refresh cache
+        //  await syncLatestPosts(); // Refresh cache
         return Right(newPost);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
@@ -286,6 +288,17 @@ class PostRepositoryImpl implements PostRepository {
       }
     } else {
       return const Left(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> uploadPostImage(
+     File image) async {
+    try {
+      final result = await remoteDataSource.uploadPostImage(image);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 }

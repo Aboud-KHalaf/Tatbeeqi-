@@ -43,12 +43,6 @@ class _CreatePostViewState extends State<CreatePostView> {
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
         title: const Text('Create Post'),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        titleTextStyle: theme.textTheme.headlineSmall?.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.preview_outlined),
@@ -153,7 +147,7 @@ class _CreatePostViewState extends State<CreatePostView> {
             topics: _topics,
             text: _textController.text.trim(),
             categories: _categories,
-            imagePath: _image?.path,
+            image: _image,
             isArticle: _isArticle,
           ),
         );

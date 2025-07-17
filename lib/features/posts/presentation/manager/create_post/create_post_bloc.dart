@@ -1,87 +1,106 @@
+import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'create_post_event.dart';
+import 'create_post_state.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/create_post_use_case.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/delete_post_use_case.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/update_post_use_case.dart';
-import 'package:uuid/uuid.dart';
-import 'create_post_event.dart';
-import 'create_post_state.dart';
+import 'package:tatbeeqi/features/posts/domain/use_cases/upload_image_use_case.dart';
 
 class PostCrudBloc extends Bloc<PostCrudEvent, PostCrudState> {
   final CreatePostUseCase createPostUseCase;
   final UpdatePostUseCase updatePostUseCase;
   final DeletePostUseCase deletePostUseCase;
+  final UploadImageUseCase uploadImageUseCase;
+
   PostCrudBloc(
-      this.createPostUseCase, this.updatePostUseCase, this.deletePostUseCase)
-      : super(CreatePostInitial()) {
-    on<CreatePostEvent>(_onPostSubmitted);
-    on<UpdatePostEvent>(_onUpdatePostSubmitted);
-    on<DeletePostEvent>(_onDeletePostSubmitted);
+    this.createPostUseCase,
+    this.updatePostUseCase,
+    this.deletePostUseCase,
+    this.uploadImageUseCase,
+  ) : super(CreatePostInitial()) {
+    on<CreatePostEvent>(_onCreatePost);
+    on<UpdatePostEvent>(_onUpdatePost);
+    on<DeletePostEvent>(_onDeletePost);
   }
 
-  Future<void> _onPostSubmitted(
+  Future<void> _onCreatePost(
     CreatePostEvent event,
     Emitter<PostCrudState> emit,
   ) async {
     emit(CreatePostInProgress());
 
-    final newPost = Post(
-      id: const Uuid().v4(),
-      authorId: '', // Placeholder
-      authorName: 'غير محدد', // Placeholder
+    String? imageUrl;
+    if (event.image != null) {
+      imageUrl = await uploadPostImage(event.image!);
+    }
+
+    final post = Post(
+      id: '',
+      authorId: '', // Replace with actual author ID
+      authorName: 'غير محدد', // Replace with actual author name
       text: event.text,
       categories: event.categories,
       topics: event.topics,
-      imageUrl: event.imagePath, // This would be an uploaded URL in a real app
+      imageUrl: imageUrl,
       createdAt: DateTime.now(),
       isArticle: event.isArticle,
     );
 
-    final failureOrSuccess = await createPostUseCase(newPost);
-
-    failureOrSuccess.fold(
+    final result = await createPostUseCase(post);
+    result.fold(
       (failure) => emit(CreatePostFailure(failure.message)),
       (_) => emit(CreatePostSuccess()),
     );
   }
 
-  Future<void> _onUpdatePostSubmitted(
+  Future<void> _onUpdatePost(
     UpdatePostEvent event,
     Emitter<PostCrudState> emit,
   ) async {
     emit(CreatePostInProgress());
 
-    final updatedPost = Post(
+    final post = Post(
       id: event.postId,
-      authorId: '', // Placeholder
-      authorName: 'غير محدد', // Placeholder
+      authorId: '', // Replace with actual author ID
+      authorName: 'غير محدد', // Replace with actual author name
       text: event.text,
       categories: event.categories,
       topics: event.topics,
-      imageUrl: event.imagePath, // This would be an uploaded URL in a real app
+      imageUrl: event.imagePath,
       createdAt: DateTime.now(),
       isArticle: event.isArticle,
     );
 
-    final failureOrSuccess = await updatePostUseCase(updatedPost);
-
-    failureOrSuccess.fold(
+    final result = await updatePostUseCase(post);
+    result.fold(
       (failure) => emit(CreatePostFailure(failure.message)),
       (_) => emit(CreatePostSuccess()),
     );
   }
 
-  Future<void> _onDeletePostSubmitted(
+  Future<void> _onDeletePost(
     DeletePostEvent event,
     Emitter<PostCrudState> emit,
   ) async {
     emit(CreatePostInProgress());
 
-    final failureOrSuccess = await deletePostUseCase(event.postId);
-
-    failureOrSuccess.fold(
+    final result = await deletePostUseCase(event.postId);
+    result.fold(
       (failure) => emit(CreatePostFailure(failure.message)),
       (_) => emit(CreatePostSuccess()),
     );
+  }
+
+  Future<String?> uploadPostImage(File image) async {
+    String? imageUrl;
+    final result = await uploadImageUseCase(image);
+    result.fold(
+      (faiure) => print(faiure.message),
+      (url) => imageUrl = url,
+    );
+    return imageUrl;
   }
 }

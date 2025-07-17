@@ -18,8 +18,9 @@ class _PostsFeedViewState extends State<PostsFeedView> {
   @override
   void initState() {
     super.initState();
-    context.read<PostsBloc>().add(FetchPostsEvent());
+    //  context.read<PostsBloc>().add(FetchPostsEvent());
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

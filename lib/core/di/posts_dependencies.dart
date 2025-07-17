@@ -20,6 +20,7 @@ import 'package:tatbeeqi/features/posts/domain/use_cases/unlike_post_use_case.da
 import 'package:tatbeeqi/features/posts/domain/use_cases/update_comment_use_case.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/update_post_use_case.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/update_reply_on_comment.dart';
+import 'package:tatbeeqi/features/posts/domain/use_cases/upload_image_use_case.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
@@ -44,6 +45,7 @@ void initPostsDependencies(GetIt sl) {
   sl.registerLazySingleton(() => GetRepliesForCommentUseCase(sl()));
   sl.registerLazySingleton(() => UpdateReplyOnCommentUseCase(sl()));
   sl.registerLazySingleton(() => DeleteReplyOnCommentUseCase(sl()));
+  sl.registerLazySingleton(() => UploadImageUseCase(sl()));
   // BLoCs
   sl.registerFactory(
     () => PostsBloc(
@@ -52,7 +54,7 @@ void initPostsDependencies(GetIt sl) {
       unlikePostUseCase: sl(),
     ),
   );
-  sl.registerFactory(() => PostCrudBloc(sl(), sl(), sl()));
+  sl.registerFactory(() => PostCrudBloc(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => CommentsBloc(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => CommentRepliesBloc(sl(), sl(), sl(), sl()));
 

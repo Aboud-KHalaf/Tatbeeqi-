@@ -19,6 +19,7 @@ import 'package:tatbeeqi/features/notifications/presentation/manager/send_notifi
 import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
 import 'package:tatbeeqi/features/quiz/presentation/bloc/quiz_bloc.dart';
 import 'package:tatbeeqi/features/theme/presentation/manager/theme_cubit/theme_cubit.dart';
 import 'package:tatbeeqi/features/todo/presentation/manager/todo_cubit.dart';
@@ -98,7 +99,7 @@ class MyApp extends StatelessWidget {
           create: (_) => di.sl<CommentsBloc>(),
         ),
         BlocProvider(
-          create: (_) => di.sl<PostsBloc>(),
+          create: (_) => di.sl<PostsBloc>()..add(FetchPostsEvent()),
         ),
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(

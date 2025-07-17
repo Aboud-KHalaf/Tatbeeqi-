@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:equatable/equatable.dart';
 
 abstract class PostCrudEvent extends Equatable {
@@ -11,19 +13,19 @@ class CreatePostEvent extends PostCrudEvent {
   final String text;
   final List<String> categories;
   final List<String> topics;
-  final String? imagePath;
+  final File? image;
   final bool isArticle;
 
   const CreatePostEvent({
     required this.text,
     required this.categories,
     required this.topics,
-    this.imagePath,
+    this.image,
     required this.isArticle,
   });
 
   @override
-  List<Object?> get props => [text, categories, topics, imagePath, isArticle];
+  List<Object?> get props => [text, categories, topics, image, isArticle];
 }
 
 class UpdatePostEvent extends PostCrudEvent {

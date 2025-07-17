@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/widgets.dart';
 import 'package:tatbeeqi/features/posts/data/models/comment_model.dart';
 import 'package:tatbeeqi/features/posts/data/models/comment_reply_model.dart';
@@ -33,6 +35,8 @@ abstract class PostRemoteDataSource {
   Future<void> replyOnComment(String commentId, String text);
   Future<void> updateReplyOnComment(String replyId, String newText);
   Future<void> deleteReplyOnComment(String replyId);
+
+  Future<String> uploadPostImage(File image);
 }
 
 class PostRemoteDataSourceImpl implements PostRemoteDataSource {
@@ -374,5 +378,21 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
     } catch (e) {
       throw ServerException(e.toString());
     }
+  }
+
+  @override
+  Future<String> uploadPostImage(File image) async {
+    final fileName = 'post-image${DateTime.now().millisecondsSinceEpoch}.';
+
+    await supabase.storage.from('post-images').upload(
+          fileName,
+          image,
+          fileOptions: const FileOptions(),
+        );
+
+    final imageUrlResponse =
+        supabase.storage.from('post-images').getPublicUrl(fileName);
+
+    return imageUrlResponse;
   }
 }

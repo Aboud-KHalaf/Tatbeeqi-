@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:tatbeeqi/core/error/failures.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/comment.dart';
@@ -36,4 +38,6 @@ abstract class PostRepository {
   Future<Either<Failure, Unit>> updateReplyOnComment(
       String replyId, String newText);
   Future<Either<Failure, Unit>> deleteReplyOnComment(String replyId);
+
+  Future<Either<Failure, String>> uploadPostImage( File image);
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
-import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_header.dart';
-import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_categories.dart';
-import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_action_buttons.dart';
 import 'package:tatbeeqi/features/posts/presentation/views/post_image_full_screen_view.dart';
+import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_action_buttons.dart';
+import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_categories.dart';
+import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_header.dart';
+import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_image_section.dart';
+import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_text_or_article.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
@@ -26,73 +26,23 @@ class PostCard extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(16.0),
-        onTap: () {
-          if (post.imageUrl != null && post.imageUrl!.isNotEmpty) {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => PostImageFullScreenView(
-                  post: post,
-                ),
-              ),
-            );
-          }
-        },
+        onTap: () => handelTap(context),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 16),
             Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: PostCardHeader(post: post),
             ),
+            const SizedBox(height: 12),
             if (post.text.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0, vertical: 12.0),
-                child: post.isArticle
-                    ? MarkdownBody(
-                        softLineBreak: true,
-                        data: post.text,
-                        styleSheet:
-                            MarkdownStyleSheet.fromTheme(theme).copyWith(
-                          p: theme.textTheme.bodyLarge?.copyWith(
-                              fontSize: 16,
-                              color: colorScheme.onSurfaceVariant),
-                        ),
-                      )
-                    : Text(post.text),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: PostTextOrArticle(post: post),
               ),
             if (post.imageUrl != null && post.imageUrl!.isNotEmpty)
-              Center(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(
-                          0)), // No rounding if it's in the middle
-                  child: CachedNetworkImage(
-                    imageUrl: post.imageUrl!,
-                    placeholder: (context, url) => AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: Container(
-                        color: colorScheme.surfaceContainerHighest
-                            .withValues(alpha: 0.5),
-                        child: Center(
-                            child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: colorScheme.onSurfaceVariant)),
-                      ),
-                    ),
-                    errorWidget: (context, url, error) => AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: Container(
-                        color:
-                            colorScheme.errorContainer.withValues(alpha: 0.5),
-                        child: Icon(Icons.broken_image_outlined,
-                            color: colorScheme.onErrorContainer),
-                      ),
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              PostImageSection(imageUrl: post.imageUrl!),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: PostCardCategories(categories: post.categories),
@@ -105,5 +55,16 @@ class PostCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void handelTap(BuildContext context) {
+    // TODO add go router navigation
+    if (post.imageUrl != null && post.imageUrl!.isNotEmpty) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => PostImageFullScreenView(post: post),
+        ),
+      );
+    }
   }
 }
