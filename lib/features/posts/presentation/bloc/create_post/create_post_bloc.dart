@@ -21,14 +21,14 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     // In a real app, authorId, authorName, and authorAvatarUrl would come from an auth service.
     final newPost = Post(
       id: const Uuid().v4(),
-      authorId: '257c78e5-98e7-47eb-99de-2ee0a9e40b19', // Placeholder
-      authorName: 'عبود', // Placeholder
-      authorAvatarUrl: 'https://i.pravatar.cc/150?u=current_user_id', // Placeholder
+      authorId: '', // Placeholder
+      authorName: 'غير محدد', // Placeholder
       text: event.text,
       categories: event.categories,
       topics: event.topics,
       imageUrl: event.imagePath, // This would be an uploaded URL in a real app
       createdAt: DateTime.now(),
+      isArticle: event.isArticle,
     );
 
     final failureOrSuccess = await createPostUseCase(newPost);

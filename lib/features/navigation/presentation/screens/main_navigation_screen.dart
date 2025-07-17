@@ -6,7 +6,7 @@ import 'package:tatbeeqi/features/home/presentation/views/home_view.dart';
 import 'package:tatbeeqi/features/navigation/presentation/manager/navigation_cubit/navigation_cubit.dart';
 import 'package:tatbeeqi/features/navigation/presentation/manager/navigation_cubit/navigation_state.dart';
 import 'package:tatbeeqi/features/navigation/presentation/widgets/fancy_nav_bar_widget.dart';
-import 'package:tatbeeqi/features/posts/presentation/screens/posts_feed_screen.dart';
+import 'package:tatbeeqi/features/posts/presentation/views/posts_feed_view.dart';
 import 'package:tatbeeqi/features/settings/presentation/screens/settings_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -43,7 +43,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
   final List<Widget> _screens = const [
     HomeView(),
     CoursesView(),
-    PostsFeedScreen(),
+    PostsFeedView(),
     SettingsView(),
   ];
 
@@ -52,7 +52,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
     return BlocListener<NavigationCubit, NavigationState>(
       listenWhen: (prev, curr) => prev.index != curr.index,
       listener: (context, state) {
-        print(state.index);
         _pageController.animateToPage(
           state.index,
           duration: const Duration(milliseconds: 300),
@@ -76,7 +75,6 @@ class _MainNavigationScreenState extends State<MainNavigationScreen>
             return FancyNavBarWidget(
               currentIndex: state.index,
               onTap: (index) {
-                print(index);
                 HapticFeedback.lightImpact();
                 context.read<NavigationCubit>().changeIndex(index);
               },

@@ -39,19 +39,12 @@ class PostModel extends Post {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
       'author_id': authorId,
-      'author_name': authorName,
-      'author_avatar_url': authorAvatarUrl,
       'text': text,
       'image_url': imageUrl,
       'categories': categories,
       'topics': topics,
-      'created_at': createdAt.toIso8601String(),
-      'likes_count': likesCount,
-      'comments_count': commentsCount,
       'is_article': isArticle,
-      'is_liked': isLiked,
     };
   }
 
@@ -77,20 +70,16 @@ class PostModel extends Post {
     return {
       'id': id,
       'author_id': authorId,
-      'author_name': authorName,
       'author_avatar_url': authorAvatarUrl,
       'text': text,
       'image_url': imageUrl,
       'categories': jsonEncode(categories),
       'topics': topics,
-      'created_at': createdAt.toIso8601String(),
-      'likes_count': likesCount,
-      'comments_count': commentsCount,
       'is_article': isArticle,
-      'is_liked': isLiked,
     };
   }
 
+  @override
   PostModel copyWith({
     String? id,
     String? authorId,
@@ -120,6 +109,42 @@ class PostModel extends Post {
       commentsCount: commentsCount ?? this.commentsCount,
       isArticle: isArticle ?? this.isArticle,
       isLiked: isLiked ?? this.isLiked,
+    );
+  }
+
+  factory PostModel.fromEntity(Post post) {
+    return PostModel(
+      id: post.id,
+      authorId: post.authorId,
+      authorName: post.authorName,
+      authorAvatarUrl: post.authorAvatarUrl,
+      text: post.text,
+      imageUrl: post.imageUrl,
+      categories: post.categories,
+      topics: post.topics,
+      createdAt: post.createdAt,
+      likesCount: post.likesCount,
+      commentsCount: post.commentsCount,
+      isArticle: post.isArticle,
+      isLiked: post.isLiked,
+    );
+  }
+
+  Post toEntity() {
+    return Post(
+      id: id,
+      authorId: authorId,
+      authorName: authorName,
+      authorAvatarUrl: authorAvatarUrl,
+      text: text,
+      imageUrl: imageUrl,
+      categories: categories,
+      topics: topics,
+      createdAt: createdAt,
+      likesCount: likesCount,
+      commentsCount: commentsCount,
+      isArticle: isArticle,
+      isLiked: isLiked,
     );
   }
 }

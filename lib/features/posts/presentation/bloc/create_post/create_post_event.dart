@@ -12,12 +12,14 @@ class CreatePostSubmitted extends CreatePostEvent {
   final List<String> categories;
   final List<String> topics;
   final String? imagePath;
+  final bool isArticle; 
 
   const CreatePostSubmitted({
     required this.text,
     required this.categories,
     required this.topics,
     this.imagePath,
+    required this.isArticle,
   });
 
   @override

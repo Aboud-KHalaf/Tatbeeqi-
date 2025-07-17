@@ -7,12 +7,26 @@ class PostMarkdownToolbar extends StatelessWidget {
   void _insert(String start, String end) {
     final text = controller.text;
     final selection = controller.selection;
-    final before = text.substring(0, selection.start);
-    final selected = text.substring(selection.start, selection.end);
-    final after = text.substring(selection.end);
-    controller.text = before + start + selected + end + after;
-    controller.selection = TextSelection.collapsed(
-        offset: (before + start + selected + end).length);
+
+    if (!selection.isValid || selection.start < 0 || selection.end < 0) {
+      debugPrint('Invalid selection');
+      return;
+    }
+
+    final selectedText = text.substring(selection.start, selection.end);
+
+    final newText = text.replaceRange(
+      selection.start,
+      selection.end,
+      '$start$selectedText$end',
+    );
+
+    final newOffset = selection.start + start.length + selectedText.length;
+
+    controller.value = TextEditingValue(
+      text: newText,
+      selection: TextSelection.collapsed(offset: newOffset),
+    );
   }
 
   @override

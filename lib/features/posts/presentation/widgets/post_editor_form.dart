@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/features/posts/presentation/widgets/category_input.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_markdown_toolbar.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_category_input.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_image_picker.dart';
+import 'package:tatbeeqi/features/posts/presentation/widgets/topic_selector.dart';
 
 class PostEditorForm extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
   final TextEditingController textController;
   final TextEditingController categoryController;
   final List<String> categories;
@@ -13,12 +16,16 @@ class PostEditorForm extends StatelessWidget {
   final File? image;
   final void Function(File) onImagePicked;
   final VoidCallback onImageRemoved;
-  final GlobalKey<FormState> formKey;
   final VoidCallback onSubmit;
   final bool isSubmitting;
+  final bool isArticle;
+  final ValueChanged<bool> onArticleTypeChanged;
+  final List<String> topics;
+  final Function(String) onTopicSelected;
 
   const PostEditorForm({
     super.key,
+    required this.formKey,
     required this.textController,
     required this.categoryController,
     required this.categories,
@@ -27,9 +34,12 @@ class PostEditorForm extends StatelessWidget {
     required this.image,
     required this.onImagePicked,
     required this.onImageRemoved,
-    required this.formKey,
     required this.onSubmit,
     required this.isSubmitting,
+    required this.isArticle,
+    required this.onArticleTypeChanged,
+    required this.topics,
+    required this.onTopicSelected,
   });
 
   @override
@@ -43,7 +53,13 @@ class PostEditorForm extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            PostMarkdownToolbar(controller: textController),
+            SwitchListTile(
+              title: const Text('This is an article'),
+              value: isArticle,
+              onChanged: onArticleTypeChanged,
+              secondary: const Icon(Icons.article_outlined),
+            ),
+            if (isArticle) PostMarkdownToolbar(controller: textController),
             const SizedBox(height: 12),
             TextFormField(
               controller: textController,
@@ -58,16 +74,25 @@ class PostEditorForm extends StatelessWidget {
                     colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
               ),
               maxLines: 8,
-              minLines: 5,
+              minLines: 6,
               validator: (v) =>
                   v!.trim().isEmpty ? 'Please enter some text' : null,
             ),
             const SizedBox(height: 18),
-            PostCategoryInput(
+            CategoryInput(
               controller: categoryController,
               categories: categories,
               onAddCategory: onAddCategory,
               onRemoveCategory: onRemoveCategory,
+              // TODO: Fetch existing categories
+              existingCategories: const ['Flutter', 'Dart', 'Firebase'],
+            ),
+            const SizedBox(height: 16),
+            TopicSelector(
+              // TODO: Fetch existing topics
+              availableTopics: const ['Technology', 'Programming', 'News'],
+              selectedTopics: topics,
+              onTopicSelected: onTopicSelected,
             ),
             const SizedBox(height: 18),
             PostImagePicker(

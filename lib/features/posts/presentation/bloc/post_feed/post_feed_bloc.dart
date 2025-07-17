@@ -19,10 +19,10 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
         _likePostUseCase = likePostUseCase,
         _unlikePostUseCase = unlikePostUseCase,
         super(PostsInitial()) {
-    on<FetchPostsRequested>(_onFetchPostsRequested);
-    on<RefreshPostsRequested>(_onFetchPostsRequested);
-    on<LikePostToggled>(_onLikePostToggled);
-    on<IncrementPostCommentCount>(_onIncrementCommentCount);
+    on<FetchPostsEvent>(_onFetchPostsRequested);
+    on<RefreshPostsEvent>(_onFetchPostsRequested);
+    on<LikePostToggledEvent>(_onLikePostToggled);
+    on<IncrementPostCommentCountEvent>(_onIncrementCommentCount);
   }
 
   Future<void> _onFetchPostsRequested(
@@ -38,7 +38,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
   }
 
   Future<void> _onLikePostToggled(
-    LikePostToggled event,
+    LikePostToggledEvent event,
     Emitter<PostsState> emit,
   ) async {
     if (state is PostsLoaded) {
@@ -67,7 +67,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
   }
 
   Future<void> _onIncrementCommentCount(
-    IncrementPostCommentCount event,
+    IncrementPostCommentCountEvent event,
     Emitter<PostsState> emit,
   ) async {
     if (state is PostsLoaded) {

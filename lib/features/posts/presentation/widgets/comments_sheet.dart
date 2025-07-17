@@ -103,7 +103,7 @@ class CommentsSheet extends StatelessWidget {
                             .add(AddComment(postId, text));
                         context
                             .read<PostsBloc>()
-                            .add(IncrementPostCommentCount(postId));
+                            .add(IncrementPostCommentCountEvent(postId));
                       }),
                     ),
                   ],

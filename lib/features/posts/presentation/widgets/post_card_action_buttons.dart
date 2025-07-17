@@ -23,7 +23,7 @@ class PostCardActionButtons extends StatelessWidget {
               icon: post.isLiked ? Icons.thumb_up : Icons.thumb_up_outlined,
               label: post.likesCount.toString(),
               onPressed: () {
-                context.read<PostsBloc>().add(LikePostToggled(post.id));
+                context.read<PostsBloc>().add(LikePostToggledEvent(post.id));
               },
             ),
             const SizedBox(width: 8),

@@ -7,23 +7,23 @@ abstract class PostsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchPostsRequested extends PostsEvent {}
+class FetchPostsEvent extends PostsEvent {}
 
-class RefreshPostsRequested extends PostsEvent {}
+class RefreshPostsEvent extends PostsEvent {}
 
-class LikePostToggled extends PostsEvent {
+class LikePostToggledEvent extends PostsEvent {
   final String postId;
 
-  const LikePostToggled(this.postId);
+  const LikePostToggledEvent(this.postId);
 
   @override
   List<Object> get props => [postId];
 }
 
-class IncrementPostCommentCount extends PostsEvent {
+class IncrementPostCommentCountEvent extends PostsEvent {
   final String postId;
 
-  const IncrementPostCommentCount(this.postId);
+  const IncrementPostCommentCountEvent(this.postId);
 
   @override
   List<Object> get props => [postId];

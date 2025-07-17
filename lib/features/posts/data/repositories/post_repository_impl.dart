@@ -26,8 +26,9 @@ class PostRepositoryImpl implements PostRepository {
   Future<Either<Failure, Post>> createPost(Post post) async {
     if (await networkInfo.isConnected()) {
       try {
-        final newPost = await remoteDataSource.createPost(post as PostModel);
-        await syncLatestPosts(); // Refresh cache
+        final newPost =
+            await remoteDataSource.createPost(PostModel.fromEntity(post));
+      //  await syncLatestPosts(); // Refresh cache
         return Right(newPost);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));

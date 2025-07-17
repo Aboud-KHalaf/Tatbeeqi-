@@ -43,8 +43,15 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   @override
   Future<PostModel> createPost(PostModel post) async {
     try {
-      final response =
-          await supabase.from('posts').insert(post.toMap()).select().single();
+      final userId = supabase.auth.currentUser?.id;
+      if (userId == null) {
+        throw ServerException('User ID not available');
+      }
+      final response = await supabase
+          .from('posts')
+          .insert(post.copyWith(authorId: userId).toMap())
+          .select()
+          .single();
       return PostModel.fromMap(response);
     } catch (e) {
       if (e is PostgrestException) {

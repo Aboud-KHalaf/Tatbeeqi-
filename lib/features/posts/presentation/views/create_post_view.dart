@@ -4,34 +4,31 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/bloc/create_post/create_post_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/bloc/create_post/create_post_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/bloc/create_post/create_post_state.dart';
-import 'package:tatbeeqi/features/posts/presentation/widgets/post_editor_tabs.dart';
+import 'package:tatbeeqi/features/posts/presentation/views/post_preview_view.dart';
+import 'package:tatbeeqi/features/posts/presentation/widgets/post_editor_form.dart';
 
-class CreatePostScreen extends StatefulWidget {
-  const CreatePostScreen({super.key});
+class CreatePostView extends StatefulWidget {
+  const CreatePostView({super.key});
 
   @override
-  State<CreatePostScreen> createState() => _CreatePostScreenState();
+  State<CreatePostView> createState() => _CreatePostViewState();
 }
 
-class _CreatePostScreenState extends State<CreatePostScreen>
-    with SingleTickerProviderStateMixin {
-  late final TabController _tabController;
+class _CreatePostViewState extends State<CreatePostView> {
+  bool _isArticle = false;
   final _formKey = GlobalKey<FormState>();
-  final _textController = TextEditingController();
+  final _textController = TextEditingController()
+    ..value = const TextEditingValue(
+      text: '',
+      selection: TextSelection.collapsed(offset: 0),
+    );
   final _categoryController = TextEditingController();
   final List<String> _categories = [];
   final List<String> _topics = [];
   File? _image;
 
   @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-  }
-
-  @override
   void dispose() {
-    _tabController.dispose();
     _textController.dispose();
     _categoryController.dispose();
     super.dispose();
@@ -52,16 +49,12 @@ class _CreatePostScreenState extends State<CreatePostScreen>
         titleTextStyle: theme.textTheme.headlineSmall?.copyWith(
           fontWeight: FontWeight.bold,
         ),
-        bottom: TabBar(
-          controller: _tabController,
-          indicatorColor: colorScheme.primary,
-          labelColor: colorScheme.primary,
-          unselectedLabelColor: colorScheme.onSurfaceVariant,
-          tabs: const [
-            Tab(text: 'Editor'),
-            Tab(text: 'Preview'),
-          ],
-        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.preview_outlined),
+            onPressed: () => _showPreview(context),
+          ),
+        ],
       ),
       body: BlocListener<CreatePostBloc, CreatePostState>(
         listener: (context, state) {
@@ -79,19 +72,24 @@ class _CreatePostScreenState extends State<CreatePostScreen>
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: PostEditorTabs(
-              tabController: _tabController,
+            child: PostEditorForm(
+              formKey: _formKey,
               textController: _textController,
               categoryController: _categoryController,
               categories: _categories,
               onAddCategory: _addCategory,
-              onRemoveCategory: _removeCategory, // Pass the new method
+              onRemoveCategory: _removeCategory,
               image: _image,
               onImagePicked: (file) => setState(() => _image = file),
               onImageRemoved: _removeImage,
-              formKey: _formKey,
               onSubmit: () => _submit(context),
-              isSubmitting: context.watch<CreatePostBloc>().state is CreatePostInProgress,
+              isSubmitting:
+                  context.watch<CreatePostBloc>().state is CreatePostInProgress,
+              isArticle: _isArticle,
+              onArticleTypeChanged: (value) =>
+                  setState(() => _isArticle = value),
+              topics: _topics,
+              onTopicSelected: _onTopicSelected,
             ),
           ),
         ),
@@ -123,14 +121,40 @@ class _CreatePostScreenState extends State<CreatePostScreen>
     });
   }
 
+  void _onTopicSelected(String topic) {
+    setState(() {
+      if (_topics.contains(topic)) {
+        _topics.remove(topic);
+      } else {
+        _topics.add(topic);
+      }
+    });
+  }
+
+  void _showPreview(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => PostPreviewView(
+          text: _textController.text,
+          image: _image,
+          categories: _categories,
+          topics: _topics,
+          isArticle: _isArticle,
+        ),
+      ),
+    );
+  }
+
   void _submit(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
+
     context.read<CreatePostBloc>().add(
           CreatePostSubmitted(
             topics: _topics,
             text: _textController.text.trim(),
             categories: _categories,
             imagePath: _image?.path,
+            isArticle: _isArticle,
           ),
         );
   }
