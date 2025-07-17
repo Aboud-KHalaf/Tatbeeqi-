@@ -2,13 +2,9 @@ import 'package:logger/logger.dart';
 
 class AppLogger {
   static final Logger _logger = Logger(
-    printer: PrettyPrinter(
-      methodCount: 1,
-      errorMethodCount: 5,
-      lineLength: 100,
-      colors: true,
-      printEmojis: true,
-    ),
+    // printer: PrettyPrinter(
+    //   colors: true,
+    // ),
   );
 
   static void debug(dynamic message, [dynamic error, StackTrace? stackTrace]) {

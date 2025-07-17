@@ -16,7 +16,9 @@ import 'package:tatbeeqi/features/navigation/presentation/manager/navigation_cub
 import 'package:tatbeeqi/features/notifications/data/handlers/firebase_messaging_handlers.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/initialize_notifications_cubit/initialize_notifications_cubit.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/send_notification_bloc/send_notification_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
 import 'package:tatbeeqi/features/quiz/presentation/bloc/quiz_bloc.dart';
 import 'package:tatbeeqi/features/theme/presentation/manager/theme_cubit/theme_cubit.dart';
 import 'package:tatbeeqi/features/todo/presentation/manager/todo_cubit.dart';
@@ -92,6 +94,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.sl<QuizBloc>(),
         ),
+        BlocProvider(
+          create: (_) => di.sl<CommentsBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.sl<PostsBloc>(),
+        ),
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(
         builder: (context, localeState) {
@@ -130,3 +138,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

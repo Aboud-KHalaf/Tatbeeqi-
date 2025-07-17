@@ -5,6 +5,7 @@ import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_header.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_categories.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_action_buttons.dart';
+import 'package:tatbeeqi/features/posts/presentation/views/post_image_full_screen.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
@@ -26,7 +27,15 @@ class PostCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(16.0),
         onTap: () {
-          // TODO: Implement post tap, e.g., navigate to post details
+          if (post.imageUrl != null && post.imageUrl!.isNotEmpty) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => PostImageFullScreen(
+                  post: post,
+                ),
+              ),
+            );
+          }
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

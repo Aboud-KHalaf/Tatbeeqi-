@@ -36,10 +36,7 @@ class PostCardActionButtons extends StatelessWidget {
                   context: context,
                   isScrollControlled: true,
                   backgroundColor: Colors.transparent,
-                  builder: (_) => BlocProvider.value(
-                    value: context.read<PostsBloc>(),
-                    child: CommentsSheet(postId: post.id),
-                  ),
+                  builder: (_) => CommentsSheet(postId: post.id),
                 );
               },
             ),
