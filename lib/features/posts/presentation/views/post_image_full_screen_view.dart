@@ -7,10 +7,10 @@ import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_action_bu
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_categories.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_header.dart';
 
-class PostImageFullScreen extends StatelessWidget {
+class PostImageFullScreenView extends StatelessWidget {
   final Post post;
 
-  const PostImageFullScreen({
+  const PostImageFullScreenView({
     super.key,
     required this.post,
   });
@@ -44,7 +44,7 @@ class PostImageFullScreen extends StatelessWidget {
                 ),
               ),
             ),
-        
+
             // Close button
             SafeArea(
               child: Padding(
@@ -58,7 +58,7 @@ class PostImageFullScreen extends StatelessWidget {
                 ),
               ),
             ),
-        
+
             // Bottom sheet with post details
             Align(
               alignment: Alignment.bottomCenter,

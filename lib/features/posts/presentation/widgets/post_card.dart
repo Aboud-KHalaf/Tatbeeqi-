@@ -5,7 +5,7 @@ import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_header.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_categories.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_action_buttons.dart';
-import 'package:tatbeeqi/features/posts/presentation/views/post_image_full_screen.dart';
+import 'package:tatbeeqi/features/posts/presentation/views/post_image_full_screen_view.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
@@ -30,7 +30,7 @@ class PostCard extends StatelessWidget {
           if (post.imageUrl != null && post.imageUrl!.isNotEmpty) {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => PostImageFullScreen(
+                builder: (context) => PostImageFullScreenView(
                   post: post,
                 ),
               ),
