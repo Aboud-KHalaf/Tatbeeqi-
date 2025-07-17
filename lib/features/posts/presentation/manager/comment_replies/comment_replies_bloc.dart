@@ -3,8 +3,8 @@ import 'package:tatbeeqi/features/posts/domain/use_cases/delete_reply_on_comment
 import 'package:tatbeeqi/features/posts/domain/use_cases/get_replies_for_comment.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/reply_on_comment.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/update_reply_on_comment.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/comment_replies/comment_replies_event.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/comment_replies/comment_replies_state.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/comment_replies/comment_replies_event.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/comment_replies/comment_replies_state.dart';
 
 class CommentRepliesBloc
     extends Bloc<CommentRepliesEvent, CommentRepliesState> {

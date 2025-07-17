@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/category_input.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_markdown_toolbar.dart';
-import 'package:tatbeeqi/features/posts/presentation/widgets/post_category_input.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_image_picker.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/topic_selector.dart';
 

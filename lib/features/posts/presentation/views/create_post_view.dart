@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/create_post/create_post_bloc.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/create_post/create_post_event.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/create_post/create_post_state.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_event.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_state.dart';
 import 'package:tatbeeqi/features/posts/presentation/views/post_preview_view.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_editor_form.dart';
 
@@ -56,7 +56,7 @@ class _CreatePostViewState extends State<CreatePostView> {
           ),
         ],
       ),
-      body: BlocListener<CreatePostBloc, CreatePostState>(
+      body: BlocListener<PostCrudBloc, PostCrudState>(
         listener: (context, state) {
           if (state is CreatePostSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -84,7 +84,7 @@ class _CreatePostViewState extends State<CreatePostView> {
               onImageRemoved: _removeImage,
               onSubmit: () => _submit(context),
               isSubmitting:
-                  context.watch<CreatePostBloc>().state is CreatePostInProgress,
+                  context.watch<PostCrudBloc>().state is CreatePostInProgress,
               isArticle: _isArticle,
               onArticleTypeChanged: (value) =>
                   setState(() => _isArticle = value),
@@ -148,8 +148,8 @@ class _CreatePostViewState extends State<CreatePostView> {
   void _submit(BuildContext context) {
     if (!_formKey.currentState!.validate()) return;
 
-    context.read<CreatePostBloc>().add(
-          CreatePostSubmitted(
+    context.read<PostCrudBloc>().add(
+          CreatePostEvent(
             topics: _topics,
             text: _textController.text.trim(),
             categories: _categories,

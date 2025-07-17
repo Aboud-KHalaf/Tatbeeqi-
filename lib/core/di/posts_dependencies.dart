@@ -20,10 +20,10 @@ import 'package:tatbeeqi/features/posts/domain/use_cases/unlike_post_use_case.da
 import 'package:tatbeeqi/features/posts/domain/use_cases/update_comment_use_case.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/update_post_use_case.dart';
 import 'package:tatbeeqi/features/posts/domain/use_cases/update_reply_on_comment.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/comments/comments_bloc.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/create_post/create_post_bloc.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed/post_feed_bloc.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/comment_replies/comment_replies_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/comment_replies/comment_replies_bloc.dart';
 
 void initPostsDependencies(GetIt sl) {
   // Use Cases
@@ -52,7 +52,7 @@ void initPostsDependencies(GetIt sl) {
       unlikePostUseCase: sl(),
     ),
   );
-  sl.registerFactory(() => CreatePostBloc(sl()));
+  sl.registerFactory(() => PostCrudBloc(sl(), sl(), sl()));
   sl.registerFactory(() => CommentsBloc(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => CommentRepliesBloc(sl(), sl(), sl(), sl()));
 

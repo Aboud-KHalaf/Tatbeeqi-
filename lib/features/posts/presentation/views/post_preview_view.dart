@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:tatbeeqi/features/auth/domain/entities/user.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card.dart';
 
@@ -29,7 +28,8 @@ class PostPreviewView extends StatelessWidget {
       authorName: 'You',
       authorAvatarUrl: '', // Optional: Add a default avatar URL
       text: text,
-      imageUrl: image?.path, // This will be a local path, PostCard expects a URL
+      imageUrl:
+          image?.path, // This will be a local path, PostCard expects a URL
       categories: categories,
       topics: topics,
       isArticle: isArticle,

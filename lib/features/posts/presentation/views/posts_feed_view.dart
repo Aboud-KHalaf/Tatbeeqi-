@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed/post_feed_bloc.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed/post_feed_event.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed/post_feed_state.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_state.dart';
 import 'package:tatbeeqi/features/posts/presentation/views/create_post_view.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card.dart';
 

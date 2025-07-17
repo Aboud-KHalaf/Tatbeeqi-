@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/comments_sheet.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed/post_feed_bloc.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed/post_feed_event.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
 
 class PostCardActionButtons extends StatelessWidget {
   final Post post;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/comments/comments_bloc.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/comments/comments_event.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/comments/comments_state.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed/post_feed_bloc.dart';
-import 'package:tatbeeqi/features/posts/presentation/bloc/post_feed/post_feed_event.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_event.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_state.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
+import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/comment_tile.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/add_comment_bar.dart';
 
