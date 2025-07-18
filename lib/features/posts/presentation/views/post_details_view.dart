@@ -31,7 +31,7 @@ class _PostDetailsViewState extends State<PostDetailsView>
     super.initState();
     _sheetController = DraggableScrollableController();
 
-    if (widget.showMore && widget.post.imageUrl == null) {
+    if (widget.showMore) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _sheetController.animateTo(
           1,
@@ -67,8 +67,8 @@ class _PostDetailsViewState extends State<PostDetailsView>
                 filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                 child: Container(
                   color: isDark
-                      ? Colors.black.withOpacity(0.3)
-                      : Colors.white.withOpacity(0.2),
+                      ? Colors.black.withValues(alpha: 0.3)
+                      : Colors.white.withValues(alpha: 0.2),
                 ),
               ),
             ),
@@ -121,20 +121,20 @@ class _PostDetailsViewState extends State<PostDetailsView>
                       gradient: LinearGradient(
                         colors: isDark
                             ? [
-                                Colors.black.withOpacity(0.6),
-                                Colors.black.withOpacity(0.4),
+                                Colors.black.withValues(alpha: 0.6),
+                                Colors.black.withValues(alpha: 0.4),
                               ]
                             : [
-                                Colors.white.withOpacity(0.8),
-                                Colors.white.withOpacity(0.5),
+                                Colors.white.withValues(alpha: 0.8),
+                                Colors.white.withValues(alpha: 0.5),
                               ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       border: Border.all(
                         color: isDark
-                            ? Colors.white.withOpacity(0.2)
-                            : Colors.black.withOpacity(0.1),
+                            ? Colors.white.withValues(alpha: 0.2)
+                            : Colors.black.withValues(alpha: 0.1),
                       ),
                     ),
                     padding: const EdgeInsets.fromLTRB(20, 18, 20, 32),
@@ -203,17 +203,17 @@ class _ColorfulBackgroundPainter extends CustomPainter {
 
     paint.color = isDark
         ? Colors.pinkAccent.withOpacity(0.2)
-        : Colors.pink.withOpacity(0.2);
+        : Colors.pink.withValues(alpha: 0.2);
     canvas.drawCircle(Offset(size.width * 0.2, size.height * 0.3), 80, paint);
 
     paint.color = isDark
-        ? Colors.cyanAccent.withOpacity(0.2)
-        : Colors.blueAccent.withOpacity(0.2);
+        ? Colors.cyanAccent.withValues(alpha: 0.2)
+        : Colors.blueAccent.withValues(alpha: 0.2);
     canvas.drawCircle(Offset(size.width * 0.7, size.height * 0.2), 100, paint);
 
     paint.color = isDark
-        ? Colors.amberAccent.withOpacity(0.2)
-        : Colors.orangeAccent.withOpacity(0.2);
+        ? Colors.amberAccent.withValues(alpha: 0.2)
+        : Colors.orangeAccent.withValues(alpha: 0.2);
     canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.7), 90, paint);
   }
 

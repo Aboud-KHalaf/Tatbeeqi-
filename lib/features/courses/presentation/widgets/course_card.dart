@@ -74,6 +74,8 @@ class _CourseCardState extends State<CourseCard>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final cardColor = Theme.of(context).colorScheme.surface;
     final progressText = '${(1 * 100).toInt()}%';
 
@@ -91,20 +93,13 @@ class _CourseCardState extends State<CourseCard>
               transform: _isHovering
                   ? (Matrix4.identity()..translate(0, -5, 0))
                   : Matrix4.identity(),
-              child: Card(
-                elevation: _isHovering ? 8.0 : 4.0,
-                shadowColor:
-                    Theme.of(context).shadowColor.withValues(alpha: 0.3),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                  side: BorderSide(
-                    color: _isHovering
-                        ? Theme.of(context).primaryColor.withValues(alpha: 0.5)
-                        : Colors.transparent,
-                    width: 1.5,
-                  ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: colorScheme.surface,
+                  borderRadius: BorderRadius.circular(16.0),
+                  border: Border.all(
+                      color: colorScheme.outline.withValues(alpha: 0.15)),
                 ),
-                margin: const EdgeInsets.all(8.0),
                 child: InkWell(
                   onLongPress: _handleLongPress,
                   onTap: () {

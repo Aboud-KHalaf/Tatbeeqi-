@@ -15,16 +15,15 @@ class CoursesTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isNarrow = screenWidth < 360;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Container(
-      margin: EdgeInsets.symmetric(
-          horizontal: isNarrow ? 8.0 : 16.0, vertical: 12.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
       decoration: BoxDecoration(
-        color: Theme.of(context)
-            .colorScheme
-            .surfaceContainerHighest
-            .withValues(alpha: 0.7),
-        borderRadius: BorderRadius.circular(30.0),
+        color: colorScheme.surface,
+        borderRadius: BorderRadius.circular(16.0),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.15)),
         boxShadow: [
           BoxShadow(
             color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
@@ -39,7 +38,7 @@ class CoursesTabBar extends StatelessWidget {
           controller: tabController,
           onTap: onTabSelected,
           indicator: BoxDecoration(
-            borderRadius: BorderRadius.circular(26.0),
+            borderRadius: BorderRadius.circular(12),
             gradient: LinearGradient(
               colors: [
                 Theme.of(context).primaryColor,

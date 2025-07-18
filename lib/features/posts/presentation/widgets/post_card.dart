@@ -62,7 +62,7 @@ class PostCard extends StatelessWidget {
     if (post.imageUrl != null && post.imageUrl!.isNotEmpty) {
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => PostDetailsView(post: post),
+          builder: (context) => PostDetailsView(post: post, showMore: false),
         ),
       );
     }

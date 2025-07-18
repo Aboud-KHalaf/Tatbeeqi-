@@ -34,13 +34,13 @@ class NewsCard extends StatelessWidget {
         child: Container(
           height: 200,
           margin: EdgeInsets.symmetric(horizontal: isSmallScreen ? 2 : 4),
-          child: Card(
-            elevation: isCurrentPage ? 4.0 : 2.0,
-            shadowColor: colorScheme.shadow.withValues(alpha: 0.3),
-            shape: RoundedRectangleBorder(
+          child: Container(
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
               borderRadius: BorderRadius.circular(16.0),
+              border: Border.all(
+                  color: colorScheme.outline.withValues(alpha: 0.15)),
             ),
-            color: colorScheme.surface,
             child: Stack(
               children: [
                 NewsCardContent(
