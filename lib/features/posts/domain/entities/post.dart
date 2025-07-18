@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+// this is the post entity ,when i update post, i want to find a way to upload image to supabase without reupload the image if it already exists
 class Post extends Equatable {
   final String id;
   final String authorId;

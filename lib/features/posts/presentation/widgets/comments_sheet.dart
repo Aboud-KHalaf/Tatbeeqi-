@@ -39,8 +39,6 @@ class _CommentsSheetState extends State<CommentsSheet> {
           decoration: BoxDecoration(
             color: colorScheme.surface,
             borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-            border:
-                Border.all(color: colorScheme.outline.withValues(alpha: 0.2)),
           ),
           child: Column(
             children: [
@@ -63,7 +61,6 @@ class _CommentsSheetState extends State<CommentsSheet> {
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
-              const Divider(height: 1),
               // Comments List
               Expanded(
                 child: BlocBuilder<CommentsBloc, CommentsState>(
@@ -95,24 +92,18 @@ class _CommentsSheetState extends State<CommentsSheet> {
               ),
 
               // Add Comment Input
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Divider(height: 1),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context).viewInsets.bottom,
-                    ),
-                    child: AddCommentBar(onSubmit: (text) {
-                      context
-                          .read<CommentsBloc>()
-                          .add(AddComment(widget.postId, text));
-                      context
-                          .read<PostsBloc>()
-                          .add(IncrementPostCommentCountEvent(widget.postId));
-                    }),
-                  ),
-                ],
+              Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: AddCommentBar(onSubmit: (text) {
+                  context
+                      .read<CommentsBloc>()
+                      .add(AddComment(widget.postId, text));
+                  context
+                      .read<PostsBloc>()
+                      .add(IncrementPostCommentCountEvent(widget.postId));
+                }),
               ),
             ],
           ),

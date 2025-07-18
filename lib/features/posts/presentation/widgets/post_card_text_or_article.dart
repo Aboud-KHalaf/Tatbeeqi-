@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
+import 'package:tatbeeqi/features/posts/presentation/views/post_details_view.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_article_mode_body.dart';
 
 class PostTextOrArticle extends StatefulWidget {
@@ -18,7 +19,7 @@ class PostTextOrArticle extends StatefulWidget {
 class _PostTextOrArticleState extends State<PostTextOrArticle>
     with TickerProviderStateMixin {
   final GlobalKey _key = GlobalKey();
-  bool _isExpanded = false;
+  final bool _isExpanded = false;
 
   bool get _isLongText {
     if (widget.post.isArticle && (widget.post.text.length > 100)) return true;
@@ -44,16 +45,8 @@ class _PostTextOrArticleState extends State<PostTextOrArticle>
           if (_isLongText)
             InkWell(
               onTap: () {
-                setState(() => _isExpanded = !_isExpanded);
-                if (!_isExpanded) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    Scrollable.ensureVisible(
-                      _key.currentContext!,
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeOut,
-                    );
-                  });
-                }
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => PostDetailsView(post: widget.post)));
               },
               child: Padding(
                 padding: const EdgeInsets.only(top: 4.0),
