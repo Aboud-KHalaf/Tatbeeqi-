@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:tatbeeqi/core/utils/app_functions.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_article_mode_body.dart';
 
@@ -72,11 +72,14 @@ class _PostTextOrArticleState extends State<PostTextOrArticle>
   }
 
   Widget _buildTextContent() {
-    return Text(
-      widget.post.text,
-      maxLines: _isExpanded ? null : 5,
-      overflow: _isExpanded ? null : TextOverflow.ellipsis,
-      style: Theme.of(context).textTheme.bodyLarge,
+    return Directionality(
+      textDirection: getTextDirection(widget.post.text),
+      child: Text(
+        widget.post.text,
+        maxLines: _isExpanded ? null : 5,
+        overflow: _isExpanded ? null : TextOverflow.ellipsis,
+        style: Theme.of(context).textTheme.bodyLarge,
+      ),
     );
   }
 
