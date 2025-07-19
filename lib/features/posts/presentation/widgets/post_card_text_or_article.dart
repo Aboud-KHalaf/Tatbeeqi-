@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
+import 'package:tatbeeqi/core/widgets/custom_markdown_body_widget.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/views/post_details_view.dart';
-import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_article_mode_body.dart';
 
 class PostTextOrArticle extends StatefulWidget {
   final Post post;
@@ -78,14 +78,14 @@ class _PostTextOrArticleState extends State<PostTextOrArticle>
 
   Widget _buildArticleContent() {
     if (_isExpanded) {
-      return PostCardArticleModelBody(post: widget.post);
+      return CustomMarkDownBodyWidget(data: widget.post.text);
     } else {
       return ClipRect(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxHeight: 200),
           child: SingleChildScrollView(
             physics: const NeverScrollableScrollPhysics(),
-            child: PostCardArticleModelBody(post: widget.post),
+            child: CustomMarkDownBodyWidget(data: widget.post.text),
           ),
         ),
       );

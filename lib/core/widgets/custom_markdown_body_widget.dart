@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
+import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
 import 'package:tatbeeqi/core/widgets/code_block_builder_widget.dart';
-import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class PostCardArticleModelBody extends StatelessWidget {
-  final Post post;
-  const PostCardArticleModelBody({
+class CustomMarkDownBodyWidget extends StatelessWidget {
+  final String data;
+  const CustomMarkDownBodyWidget({
     super.key,
-    required this.post,
+    required this.data,
   });
 
   @override
@@ -16,9 +18,9 @@ class PostCardArticleModelBody extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     return Directionality(
-      textDirection: getTextDirection(post.text),
+      textDirection: getTextDirection(data),
       child: MarkdownBody(
-        data: post.text,
+        data: data,
         softLineBreak: true,
         styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(
           p: theme.textTheme.bodyLarge?.copyWith(
@@ -30,10 +32,26 @@ class PostCardArticleModelBody extends StatelessWidget {
           blockSpacing: 8,
         ),
         selectable: true,
+        onTapLink: (text, href, title) {
+          if (href != null) {
+            _launchUrl(href, context);
+          }
+        },
         builders: {
           'code': HighlightedCodeBlockBuilder(context: context),
         },
       ),
     );
+  }
+    Future<void> _launchUrl(String url, BuildContext context) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      if (context.mounted) {
+        CustomSnackBar.showError(
+          context: context,
+          message: AppLocalizations.of(context)!.errorCouldNotLaunch(url),
+        );
+      }
+    }
   }
 }

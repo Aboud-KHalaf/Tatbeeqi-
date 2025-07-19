@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
-import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
+import 'package:tatbeeqi/core/widgets/custom_markdown_body_widget.dart';
 import 'package:tatbeeqi/features/news/domain/entities/news_item_entity.dart';
-import 'package:tatbeeqi/l10n/app_localizations.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class NewsDetailsView extends StatelessWidget {
   static const String routeId = '/newsDetailsView';
@@ -111,25 +108,7 @@ class NewsDetailsView extends StatelessWidget {
                   ),
                   const Divider(height: 32),
                   // Markdown Body
-                  Directionality(
-                    textDirection: getTextDirection(newsItem.body),
-                    child: MarkdownBody(
-                      data: newsItem.body,
-                      selectable: true, // Allow text selection
-                      styleSheet: MarkdownStyleSheet.fromTheme(theme).copyWith(
-                        p: textTheme.bodyLarge
-                            ?.copyWith(height: 1.5), // Adjust paragraph style
-                        h1: textTheme.headlineMedium,
-                        h2: textTheme.headlineSmall,
-                        // Customize other markdown elements as needed
-                      ),
-                      onTapLink: (text, href, title) {
-                        if (href != null) {
-                          _launchUrl(href, context);
-                        }
-                      },
-                    ),
-                  ),
+                  CustomMarkDownBodyWidget(data: newsItem.body),
                   const SizedBox(height: 20), // Bottom padding
                 ],
               ),
@@ -138,17 +117,5 @@ class NewsDetailsView extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Future<void> _launchUrl(String url, BuildContext context) async {
-    final Uri uri = Uri.parse(url);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      if (context.mounted) {
-        CustomSnackBar.showError(
-          context: context,
-          message: AppLocalizations.of(context)!.errorCouldNotLaunch(url),
-        );
-      }
-    }
   }
 }
