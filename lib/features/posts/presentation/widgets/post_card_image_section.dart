@@ -11,10 +11,10 @@ class PostImageSection extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 4, right: 4),
       child: Center(
         child: ClipRRect(
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(0)),
+          borderRadius: BorderRadius.circular(8),
           child: CachedNetworkImage(
             imageUrl: imageUrl,
             placeholder: (context, url) => AspectRatio(

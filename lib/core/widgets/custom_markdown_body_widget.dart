@@ -45,8 +45,17 @@ class CustomMarkDownBodyWidget extends StatelessWidget {
   }
 
   Future<void> _launchUrl(String url, BuildContext context) async {
-    final Uri uri = Uri.parse(url);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+    try {
+      final Uri uri = Uri.parse(url);
+      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+        if (context.mounted) {
+          CustomSnackBar.showError(
+            context: context,
+            message: AppLocalizations.of(context)!.errorCouldNotLaunch(url),
+          );
+        }
+      }
+    } catch (e) {
       if (context.mounted) {
         CustomSnackBar.showError(
           context: context,
