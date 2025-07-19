@@ -172,5 +172,13 @@
   "todoDelete": "حذف",
   "@todoDelete": {
     "description": "Label for delete button"
+  },
+  
+  "errorCouldNotLaunch": "تعذر فتح الرابط: {url}",
+  "@errorCouldNotLaunch": {
+    "description": "Error message shown when a URL cannot be launched",
+    "placeholders": {
+      "url": {}
+    }
   }
 }

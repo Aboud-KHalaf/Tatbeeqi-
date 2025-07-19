@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
 import 'package:tatbeeqi/features/notifications/domain/entities/app_notification.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/initialize_notifications_cubit/initialize_notifications_cubit.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/notification_settings_bloc/notification_settings_bloc.dart';
@@ -40,20 +41,11 @@ class NotificationsView extends StatelessWidget {
     return BlocListener<InitializeNotificationsCubit,
         InitializeNotificationsState>(
       listener: (context, state) {
-        if (state is InitializeNotificationsSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Notification services initialized successfully!'),
-              backgroundColor: Colors.green,
-            ),
-          );
-        }
+        if (state is InitializeNotificationsSuccess) {}
         if (state is InitializeNotificationsFailure) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Initialization failed: ${state.message}'),
-              backgroundColor: Colors.red,
-            ),
+          CustomSnackBar.showError(
+            context: context,
+            message: state.message,
           );
         }
       },
@@ -172,17 +164,15 @@ class NotificationsView extends StatelessWidget {
         BlocListener<SendNotificationBloc, SendNotificationState>(
           listener: (context, state) {
             if (state is SendNotificationSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                    content: Text('Notification sent!'),
-                    backgroundColor: Colors.green),
+              CustomSnackBar.showSuccess(
+                context: context,
+                message: "sended",
               );
             }
             if (state is SendNotificationFailure) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                    content: Text('Error: ${state.message}'),
-                    backgroundColor: Colors.red),
+              CustomSnackBar.showError(
+                context: context,
+                message: state.message,
               );
             }
           },

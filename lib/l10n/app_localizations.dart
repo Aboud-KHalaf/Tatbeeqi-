@@ -496,6 +496,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete'**
   String get todoDelete;
+
+  /// Error message shown when a URL cannot be launched
+  ///
+  /// In en, this message translates to:
+  /// **'Could not launch {url}'**
+  String errorCouldNotLaunch(Object url);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

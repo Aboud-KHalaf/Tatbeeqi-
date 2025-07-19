@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
 import '../manager/bloc/auth_bloc.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/primary_button.dart';
@@ -28,14 +29,20 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthLoading) {
-            showDialog(context: context, barrierDismissible: false, builder: (_) => const Center(child: CircularProgressIndicator()));
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) =>
+                    const Center(child: CircularProgressIndicator()));
           } else {
-            Navigator.of(context, rootNavigator: true).popUntil((route) => route.isFirst);
+            Navigator.of(context, rootNavigator: true)
+                .popUntil((route) => route.isFirst);
           }
           if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
+            CustomSnackBar.showError(context: context, message: state.message);
           } else if (state is AuthUnauthenticated) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Password reset email sent')));
+            CustomSnackBar.showInfo(
+                context: context, message: "Password reset email sent");
           }
         },
         child: Padding(
@@ -48,14 +55,16 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                   controller: _emailController,
                   label: 'Email',
                   keyboardType: TextInputType.emailAddress,
-                  validator: (v) => (v == null || v.isEmpty) ? 'Enter email' : null,
+                  validator: (v) =>
+                      (v == null || v.isEmpty) ? 'Enter email' : null,
                 ),
                 const SizedBox(height: 20),
                 PrimaryButton(
                   text: 'Send Reset Email',
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      context.read<AuthBloc>().add(ForgetPasswordEvent(_emailController.text.trim()));
+                      context.read<AuthBloc>().add(
+                          ForgetPasswordEvent(_emailController.text.trim()));
                     }
                   },
                 ),

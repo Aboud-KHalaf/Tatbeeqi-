@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
@@ -313,10 +314,9 @@ class _PostCardActionButtonsState extends State<PostCardActionButtons>
                     onTap: () {
                       Navigator.pop(context);
                       // TODO: Implement copy link
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text('Link copied to clipboard')),
-                      );
+                      CustomSnackBar.showInfo(
+                          context: context,
+                          message: "Link copied to clipboard");
                     },
                   ),
                   _shareOption(

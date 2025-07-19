@@ -13,8 +13,8 @@ class CoursesTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isNarrow = screenWidth < 360;
+    // final screenWidth = MediaQuery.of(context).size.width;
+    // final isNarrow = screenWidth < 360;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 

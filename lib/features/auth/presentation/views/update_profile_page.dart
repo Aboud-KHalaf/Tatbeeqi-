@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
 
 import '../../domain/entities/user.dart';
 import '../manager/bloc/auth_bloc.dart';
@@ -65,10 +66,14 @@ class _UpdateProfilePageState extends State<UpdateProfilePage> {
             Navigator.of(context, rootNavigator: true).popUntil((route) => route.isFirst);
           }
           if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
-          } else if (state is AuthAuthenticated) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile updated')));
-            Navigator.pop(context);
+    CustomSnackBar.showError(
+              context: context,
+              message: state.message,
+            );          } else if (state is AuthAuthenticated) {
+    CustomSnackBar.showInfo(
+              context: context,
+              message: "profile updated",
+            );            Navigator.pop(context);
           }
         },
         child: Padding(

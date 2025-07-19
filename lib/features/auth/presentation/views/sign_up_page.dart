@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
 import '../manager/bloc/auth_bloc.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/dropdowns.dart';
@@ -53,8 +54,10 @@ class _SignUpPageState extends State<SignUpPage> {
             Navigator.of(context, rootNavigator: true).popUntil((route) => route.isFirst);
           }
           if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
-          }
+    CustomSnackBar.showError(
+              context: context,
+              message: state.message,
+            );          }
         },
         child: Padding(
           padding: const EdgeInsets.all(16.0),

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_state.dart';
@@ -53,13 +54,15 @@ class _CreatePostViewState extends State<CreatePostView> {
       body: BlocListener<PostCrudBloc, PostCrudState>(
         listener: (context, state) {
           if (state is CreatePostSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Post created successfully!')),
+            CustomSnackBar.showSuccess(
+              context: context,
+              message: "Post created successfully!",
             );
             Navigator.pop(context);
           } else if (state is CreatePostFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${state.message}')),
+            CustomSnackBar.showError(
+              context: context,
+              message: state.message,
             );
           }
         },

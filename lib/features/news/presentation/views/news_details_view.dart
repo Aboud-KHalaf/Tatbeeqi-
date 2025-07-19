@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
-import 'package:tatbeeqi/core/utils/app_logger.dart';
+import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
 import 'package:tatbeeqi/features/news/domain/entities/news_item_entity.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsDetailsView extends StatelessWidget {
@@ -124,7 +125,7 @@ class NewsDetailsView extends StatelessWidget {
                       ),
                       onTapLink: (text, href, title) {
                         if (href != null) {
-                          _launchUrl(href);
+                          _launchUrl(href, context);
                         }
                       },
                     ),
@@ -139,11 +140,15 @@ class NewsDetailsView extends StatelessWidget {
     );
   }
 
-  Future<void> _launchUrl(String url) async {
+  Future<void> _launchUrl(String url, BuildContext context) async {
     final Uri uri = Uri.parse(url);
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      // Log or show error if URL can't be launched
-      AppLogger.error('Could not launch $url');
+      if (context.mounted) {
+        CustomSnackBar.showError(
+          context: context,
+          message: AppLocalizations.of(context)!.errorCouldNotLaunch(url),
+        );
+      }
     }
   }
 }

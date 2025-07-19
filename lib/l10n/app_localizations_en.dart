@@ -216,4 +216,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get todoDelete => 'Delete';
+
+  @override
+  String errorCouldNotLaunch(Object url) {
+    return 'Could not launch $url';
+  }
 }

@@ -12,17 +12,17 @@ import 'package:tatbeeqi/l10n/app_localizations.dart';
 class HomeView extends StatefulWidget {
   static const String routePath = '/homeView';
   const HomeView({super.key});
- 
+
   @override
   State<HomeView> createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
-   @override
+  @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-  //  initDeviceToken();
+    //  initDeviceToken();
   }
 
   @override
@@ -42,11 +42,11 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
   //   final user = Supabase.instance.client.auth.currentUser;
   //   if (user != null) {
   //    late String token;
-  //     final tokenOrFailure = await sl<GetDeviceTokenUsecase>().call(); 
+  //     final tokenOrFailure = await sl<GetDeviceTokenUsecase>().call();
   //     tokenOrFailure.fold((l) => null, (r) => token = r);
   //    print(token);
   //     await sl<RegisterDeviceTokenUseCase>().call(RegisterDeviceTokenRequest(deviceToken: token, platform: 'android'));
-  //   }   
+  //   }
   // }
   @override
   Widget build(BuildContext context) {

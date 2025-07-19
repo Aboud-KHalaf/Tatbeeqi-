@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
 import '../manager/bloc/auth_bloc.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/google_sign_in_button.dart';
@@ -39,11 +40,13 @@ class _SignInPageState extends State<SignInPage> {
               builder: (_) => const Center(child: CircularProgressIndicator()),
             );
           } else {
-            Navigator.of(context, rootNavigator: true).popUntil((route) => route.isFirst);
+            Navigator.of(context, rootNavigator: true)
+                .popUntil((route) => route.isFirst);
           }
           if (state is AuthError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message)),
+            CustomSnackBar.showError(
+              context: context,
+              message: state.message,
             );
           }
         },
@@ -57,14 +60,16 @@ class _SignInPageState extends State<SignInPage> {
                   controller: _emailController,
                   label: 'Email',
                   keyboardType: TextInputType.emailAddress,
-                  validator: (v) => (v == null || v.isEmpty) ? 'Enter email' : null,
+                  validator: (v) =>
+                      (v == null || v.isEmpty) ? 'Enter email' : null,
                 ),
                 const SizedBox(height: 12),
                 AuthTextField(
                   controller: _passwordController,
                   label: 'Password',
                   obscureText: true,
-                  validator: (v) => (v == null || v.length < 6) ? 'Min 6 chars' : null,
+                  validator: (v) =>
+                      (v == null || v.length < 6) ? 'Min 6 chars' : null,
                 ),
                 const SizedBox(height: 20),
                 PrimaryButton(
@@ -82,18 +87,26 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 const SizedBox(height: 8),
                 TextButton(
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ForgetPasswordPage())),
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const ForgetPasswordPage())),
                   child: const Text('Forgot password?'),
                 ),
                 const Divider(height: 32),
-                GoogleSignInButton(onPressed: () => context.read<AuthBloc>().add(SignInWithGoogleEvent())),
+                GoogleSignInButton(
+                    onPressed: () =>
+                        context.read<AuthBloc>().add(SignInWithGoogleEvent())),
                 const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text("Don't have an account?"),
                     TextButton(
-                      onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SignUpPage())),
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => const SignUpPage())),
                       child: const Text('Sign Up'),
                     ),
                   ],
