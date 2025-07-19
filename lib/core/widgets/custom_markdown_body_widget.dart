@@ -51,7 +51,7 @@ class CustomMarkDownBodyWidget extends StatelessWidget {
         if (context.mounted) {
           CustomSnackBar.showError(
             context: context,
-            message: AppLocalizations.of(context)!.errorCouldNotLaunch(url),
+            message: AppLocalizations.of(context)!.errorCouldNotLaunch(''),
           );
         }
       }
@@ -59,7 +59,7 @@ class CustomMarkDownBodyWidget extends StatelessWidget {
       if (context.mounted) {
         CustomSnackBar.showError(
           context: context,
-          message: AppLocalizations.of(context)!.errorCouldNotLaunch(url),
+          message: AppLocalizations.of(context)!.errorCouldNotLaunch(''),
         );
       }
     }

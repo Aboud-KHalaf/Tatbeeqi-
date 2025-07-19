@@ -19,7 +19,6 @@ class PostTextOrArticle extends StatefulWidget {
 class _PostTextOrArticleState extends State<PostTextOrArticle>
     with TickerProviderStateMixin {
   final GlobalKey _key = GlobalKey();
-  final bool _isExpanded = false;
 
   bool get _isLongText {
     if (widget.post.isArticle && (widget.post.text.length > 100)) return true;
@@ -49,9 +48,9 @@ class _PostTextOrArticleState extends State<PostTextOrArticle>
                     builder: (context) => PostDetailsView(post: widget.post)));
               },
               child: Padding(
-                padding: const EdgeInsets.only(top: 4.0),
+                padding: const EdgeInsets.only(top: 6.0),
                 child: Text(
-                  _isExpanded ? 'Show less' : 'Read more',
+                  'Read more',
                   style: TextStyle(
                     color: theme.colorScheme.primary,
                     fontWeight: FontWeight.bold,
@@ -69,17 +68,15 @@ class _PostTextOrArticleState extends State<PostTextOrArticle>
       textDirection: getTextDirection(widget.post.text),
       child: Text(
         widget.post.text,
-        maxLines: _isExpanded ? null : 5,
-        overflow: _isExpanded ? null : TextOverflow.ellipsis,
+        maxLines: !_isLongText ? null : 5,
+        overflow: !_isLongText ? null : TextOverflow.ellipsis,
         style: Theme.of(context).textTheme.bodyLarge,
       ),
     );
   }
 
   Widget _buildArticleContent() {
-    if (_isExpanded) {
-      return CustomMarkDownBodyWidget(data: widget.post.text);
-    } else {
+    {
       return ClipRect(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxHeight: 200),

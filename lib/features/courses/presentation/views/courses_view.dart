@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tatbeeqi/core/constants/constants.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_state.dart';
@@ -96,9 +95,6 @@ class _CoursesViewState extends State<CoursesView>
               selectedTabIndex: _selectedTabIndex,
             ),
           ),
-        const SliverToBoxAdapter(
-          child: SizedBox(height: AppConstants.totalBottomPaddingForContent),
-        ),
       ],
     );
   }
@@ -108,16 +104,11 @@ class _CoursesViewState extends State<CoursesView>
       return null;
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(
-          bottom:
-              AppConstants.totalBottomPaddingForContent), // Use your constant
-      child: FloatingActionButton(
-        onPressed: _onAddCoursePressed, // This will now call the updated method
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 4,
-        child: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
-      ),
+    return FloatingActionButton(
+      onPressed: _onAddCoursePressed, // This will now call the updated method
+      backgroundColor: Theme.of(context).primaryColor,
+      elevation: 4,
+      child: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
     );
   }
 

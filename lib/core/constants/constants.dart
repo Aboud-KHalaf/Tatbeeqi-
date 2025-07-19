@@ -4,5 +4,5 @@ class AppConstants {
   static const String allUsersSubscribeToTopic = "all_users";
   static const String androidAppIcon = '@mipmap/ic_launcher';
 
-  static const double totalBottomPaddingForContent = 72.0 + 16.0;
+ // static const double totalBottomPaddingForContent = 72.0 + 16.0;
 }

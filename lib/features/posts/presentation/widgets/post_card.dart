@@ -72,7 +72,6 @@ class PostCard extends StatelessWidget {
   }
 
   void handelLongPress(BuildContext context) {
-    // copy text to clipboard
     Clipboard.setData(ClipboardData(text: post.text));
     CustomSnackBar.showInfo(
       context: context,

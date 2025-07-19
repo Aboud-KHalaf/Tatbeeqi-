@@ -95,9 +95,9 @@ class _PostDetailsViewState extends State<PostDetailsView>
             ),
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.only(left: 8.0, top: 8.0),
+              padding: const EdgeInsets.all(8.0),
               child: CircleAvatar(
-                backgroundColor: Colors.black.withOpacity(0.5),
+                backgroundColor: Colors.black.withValues(alpha: 0.5),
                 child: IconButton(
                   icon: const Icon(Icons.close, color: Colors.white),
                   onPressed: () => Navigator.of(context).pop(),
@@ -220,3 +220,5 @@ class _ColorfulBackgroundPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
+
+//

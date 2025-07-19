@@ -1,34 +1,75 @@
 import 'package:flutter/material.dart';
 
-class TopicSelector extends StatelessWidget {
-  final List<String> availableTopics;
-  final List<String> selectedTopics;
+class TopicSection extends StatelessWidget {
+  final List<String> topics;
   final Function(String) onTopicSelected;
 
-  const TopicSelector({
+  const TopicSection({
     super.key,
-    required this.availableTopics,
-    required this.selectedTopics,
+    required this.topics,
     required this.onTopicSelected,
   });
 
+  // Sample topics - in real app, this would come from API
+  static const List<String> availableTopics = [
+    'Technology',
+    'Science',
+    'Health',
+    'Education',
+    'Sports',
+    'Travel',
+    'Food',
+    'Art',
+    'Music',
+    'Business',
+    'Politics',
+    'Environment',
+  ];
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Select Topics', style: Theme.of(context).textTheme.titleMedium),
-        const SizedBox(height: 8),
+        Row(
+          children: [
+            Icon(
+              Icons.topic_outlined,
+              size: 20,
+              color: colorScheme.onSurfaceVariant,
+            ),
+            const SizedBox(width: 8),
+            Text(
+              'Topics',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
         Wrap(
-          spacing: 8.0,
+          spacing: 8,
+          runSpacing: 8,
           children: availableTopics.map((topic) {
-            final isSelected = selectedTopics.contains(topic);
+            final isSelected = topics.contains(topic);
             return FilterChip(
               label: Text(topic),
               selected: isSelected,
-              onSelected: (bool selected) {
-                onTopicSelected(topic);
-              },
+              onSelected: (_) => onTopicSelected(topic),
+              backgroundColor: colorScheme.surface,
+              selectedColor: colorScheme.primaryContainer,
+              labelStyle: TextStyle(
+                color: isSelected
+                    ? colorScheme.onPrimaryContainer
+                    : colorScheme.onSurface,
+              ),
+              side: BorderSide(
+                color: isSelected ? colorScheme.primary : colorScheme.outline,
+              ),
             );
           }).toList(),
         ),

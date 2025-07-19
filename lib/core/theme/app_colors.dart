@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Light theme colors
-  static const Color lightPrimary =
-      Colors.blue; //Color(0xFF00BCD4); // Cyan 500
+  static const Color lightPrimary = Color(0xFF00BCD4); // Cyan 500
   static const Color lightPrimaryContainer = Color(0xFFE0F7FA);
   static const Color lightSecondary = Color(0xFF3F51B5); // Indigo 500
   static const Color lightSecondaryContainer = Color(0xFFC5CAE9);

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tatbeeqi/core/constants/constants.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/custom_app_bar.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/recently_added_section.dart';
@@ -81,7 +80,6 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           _SectionTitle(title: l10n.homeRecentlyAdded, onPressed: () {}),
           const SizedBox(height: 12.0),
           const RecentlyAddedSection(),
-          const SizedBox(height: AppConstants.totalBottomPaddingForContent),
         ],
       ),
     );

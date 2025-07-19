@@ -219,6 +219,6 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String errorCouldNotLaunch(Object url) {
-    return 'تعذر فتح الرابط: $url';
+    return 'تعذر فتح الرابط $url';
   }
 }
