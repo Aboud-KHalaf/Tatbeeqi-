@@ -16,158 +16,116 @@ class PostCardActionButtons extends StatefulWidget {
 }
 
 class _PostCardActionButtonsState extends State<PostCardActionButtons>
-    with TickerProviderStateMixin {
-  late AnimationController _likeAnimationController;
-  late AnimationController _bounceController;
-  late Animation<double> _likeScaleAnimation;
-  late Animation<double> _bounceAnimation;
-
-  bool _isLikeAnimating = false;
+    with SingleTickerProviderStateMixin {
+  late AnimationController _likeController;
+  late Animation<double> _likeAnimation;
+  bool _isAnimating = false;
 
   @override
   void initState() {
     super.initState();
-    _likeAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );
-    _bounceController = AnimationController(
-      duration: const Duration(milliseconds: 150),
+    _likeController = AnimationController(
+      duration: const Duration(milliseconds: 600),
       vsync: this,
     );
 
-    _likeScaleAnimation = Tween<double>(
-      begin: 1.0,
-      end: 1.2,
-    ).animate(CurvedAnimation(
-      parent: _likeAnimationController,
-      curve: Curves.elasticOut,
-    ));
-
-    _bounceAnimation = Tween<double>(
-      begin: 1.0,
-      end: 0.95,
-    ).animate(CurvedAnimation(
-      parent: _bounceController,
-      curve: Curves.easeInOut,
-    ));
+    _likeAnimation = TweenSequence<double>([
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 1.0, end: 1.3)
+            .chain(CurveTween(curve: Curves.easeOut)),
+        weight: 30,
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 1.3, end: 0.9)
+            .chain(CurveTween(curve: Curves.easeIn)),
+        weight: 20,
+      ),
+      TweenSequenceItem(
+        tween: Tween<double>(begin: 0.9, end: 1.0)
+            .chain(CurveTween(curve: Curves.elasticOut)),
+        weight: 50,
+      ),
+    ]).animate(_likeController);
   }
 
   @override
   void dispose() {
-    _likeAnimationController.dispose();
-    _bounceController.dispose();
+    _likeController.dispose();
     super.dispose();
   }
 
-  void _onLikePressed() async {
-    if (_isLikeAnimating) return;
+  void _handleLike() async {
+    if (_isAnimating) return;
 
-    setState(() {
-      _isLikeAnimating = true;
-    });
-
-    // Haptic feedback
+    _isAnimating = true;
     HapticFeedback.lightImpact();
 
-    // Trigger like animation
-    _likeAnimationController.forward().then((_) {
-      _likeAnimationController.reverse().then((_) {
-        setState(() {
-          _isLikeAnimating = false;
-        });
-      });
-    });
+    await _likeController.forward();
+    _likeController.reset();
+    _isAnimating = false;
 
-    // Trigger the BLoC event
-    context.read<PostsBloc>().add(LikePostToggledEvent(widget.post.id));
+    if (mounted) {
+      context.read<PostsBloc>().add(LikePostToggledEvent(widget.post.id));
+    }
   }
 
-  void _onButtonPressed(VoidCallback onPressed) {
-    _bounceController.forward().then((_) {
-      _bounceController.reverse();
-    });
+  void _showComments() {
     HapticFeedback.selectionClick();
-    onPressed();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      useSafeArea: true,
+      builder: (_) => CommentsSheet(postId: widget.post.id),
+    );
+  }
+
+  void _showShareSheet() {
+    HapticFeedback.selectionClick();
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => _ShareSheet(post: widget.post),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Container(
       margin: const EdgeInsets.only(top: 12.0),
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Like Button
           Expanded(
             child: AnimatedBuilder(
-              animation: _likeScaleAnimation,
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: _likeScaleAnimation.value,
-                  child: _enhancedActionButton(
-                    context: context,
-                    icon: widget.post.isLiked
-                        ? Icons.thumb_up_rounded
-                        : Icons.thumb_up_outlined,
-                    label: _formatCount(widget.post.likesCount),
-                    onPressed: _onLikePressed,
-                    isActive: widget.post.isLiked,
-                    activeColor: theme.colorScheme.primary,
-                  ),
-                );
-              },
+              animation: _likeAnimation,
+              builder: (context, child) => Transform.scale(
+                scale: _likeAnimation.value,
+                child: _ActionButton(
+                  icon: widget.post.isLiked
+                      ? Icons.thumb_up_rounded
+                      : Icons.thumb_up_outlined,
+                  label: _formatCount(widget.post.likesCount),
+                  onPressed: _handleLike,
+                  isActive: widget.post.isLiked,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: 8),
-
-          // Comment Button
           Expanded(
-            child: AnimatedBuilder(
-              animation: _bounceAnimation,
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: _bounceAnimation.value,
-                  child: _enhancedActionButton(
-                    context: context,
-                    icon: Icons.mode_comment_outlined,
-                    label: _formatCount(widget.post.commentsCount),
-                    onPressed: () => _onButtonPressed(() {
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        useSafeArea: true,
-                        builder: (_) => CommentsSheet(postId: widget.post.id),
-                      );
-                    }),
-                  ),
-                );
-              },
+            child: _ActionButton(
+              icon: Icons.mode_comment_outlined,
+              label: _formatCount(widget.post.commentsCount),
+              onPressed: _showComments,
             ),
           ),
           const SizedBox(width: 8),
-
-          // Share Button
           Expanded(
-            child: AnimatedBuilder(
-              animation: _bounceAnimation,
-              builder: (context, child) {
-                return Transform.scale(
-                  scale: _bounceAnimation.value,
-                  child: _enhancedActionButton(
-                    context: context,
-                    icon: Icons.share_outlined,
-                    label: 'Share',
-                    onPressed: () => _onButtonPressed(() {
-                      _showShareOptions(context);
-                    }),
-                  ),
-                );
-              },
+            child: _ActionButton(
+              icon: Icons.share_outlined,
+              label: 'Share',
+              onPressed: _showShareSheet,
             ),
           ),
         ],
@@ -175,23 +133,36 @@ class _PostCardActionButtonsState extends State<PostCardActionButtons>
     );
   }
 
-  Widget _enhancedActionButton({
-    required BuildContext context,
-    required IconData icon,
-    required String label,
-    required VoidCallback onPressed,
-    bool isActive = false,
-    Color? activeColor,
-    Color? backgroundColor,
-  }) {
+  String _formatCount(int count) {
+    if (count >= 1000000) return '${(count / 1000000).toStringAsFixed(1)}M';
+    if (count >= 1000) return '${(count / 1000).toStringAsFixed(1)}K';
+    return count.toString();
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback onPressed;
+  final bool isActive;
+
+  const _ActionButton({
+    required this.icon,
+    required this.label,
+    required this.onPressed,
+    this.isActive = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    final defaultColor = theme.colorScheme.onSurfaceVariant;
-    final buttonColor =
-        isActive ? activeColor ?? theme.colorScheme.primary : defaultColor;
+    final color = isActive
+        ? theme.colorScheme.primary
+        : theme.colorScheme.onSurfaceVariant;
 
-    final defaultBackgroundColor = isDark
+    final backgroundColor = isDark
         ? Colors.grey.shade800.withOpacity(0.3)
         : Colors.grey.shade100.withOpacity(0.8);
 
@@ -200,21 +171,17 @@ class _PostCardActionButtonsState extends State<PostCardActionButtons>
       child: InkWell(
         onTap: onPressed,
         borderRadius: BorderRadius.circular(24),
-        splashColor:
-            (activeColor ?? theme.colorScheme.primary).withOpacity(0.1),
-        highlightColor:
-            (activeColor ?? theme.colorScheme.primary).withOpacity(0.05),
+        splashColor: theme.colorScheme.primary.withOpacity(0.1),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
-            color: backgroundColor ?? defaultBackgroundColor,
+            color: backgroundColor,
             borderRadius: BorderRadius.circular(24),
             boxShadow: isActive
                 ? [
                     BoxShadow(
-                      color: (activeColor ?? theme.colorScheme.primary)
-                          .withOpacity(0.1),
+                      color: theme.colorScheme.primary.withOpacity(0.1),
                       blurRadius: 8,
                       offset: const Offset(0, 2),
                     ),
@@ -225,35 +192,17 @@ class _PostCardActionButtonsState extends State<PostCardActionButtons>
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
-                child: Icon(
-                  icon,
-                  key: ValueKey(icon),
-                  size: 20,
-                  color: buttonColor,
-                ),
-              ),
+              Icon(icon, size: 20, color: color),
               const SizedBox(width: 6),
               Flexible(
-                child: AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 200),
-                  style: theme.textTheme.labelMedium?.copyWith(
-                        color: buttonColor,
-                        fontWeight:
-                            isActive ? FontWeight.w600 : FontWeight.w500,
-                        fontSize: 12,
-                      ) ??
-                      TextStyle(
-                        color: buttonColor,
-                        fontWeight:
-                            isActive ? FontWeight.w600 : FontWeight.w500,
-                        fontSize: 12,
-                      ),
-                  child: Text(
-                    label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: color,
+                    fontWeight: isActive ? FontWeight.w600 : FontWeight.w500,
+                    fontSize: 12,
                   ),
                 ),
               ),
@@ -263,92 +212,78 @@ class _PostCardActionButtonsState extends State<PostCardActionButtons>
       ),
     );
   }
+}
 
-  String _formatCount(int count) {
-    if (count >= 1000000) {
-      return '${(count / 1000000).toStringAsFixed(1)}M';
-    } else if (count >= 1000) {
-      return '${(count / 1000).toStringAsFixed(1)}K';
-    } else {
-      return count.toString();
-    }
-  }
+class _ShareSheet extends StatelessWidget {
+  final Post post;
 
-  void _showShareOptions(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) => Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              width: 40,
-              height: 4,
-              margin: const EdgeInsets.only(top: 12),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(2),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'Share Post',
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  _shareOption(
-                    context: context,
-                    icon: Icons.link_rounded,
-                    title: 'Copy Link',
-                    onTap: () {
-                      Navigator.pop(context);
-                      // TODO: Implement copy link
-                      CustomSnackBar.showInfo(
-                          context: context,
-                          message: "Link copied to clipboard");
-                    },
-                  ),
-                  _shareOption(
-                    context: context,
-                    icon: Icons.share_rounded,
-                    title: 'Share via...',
-                    onTap: () {
-                      Navigator.pop(context);
-                      // TODO: Implement native share
-                    },
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-          ],
-        ),
+  const _ShareSheet({required this.post});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
       ),
-    );
-  }
-
-  Widget _shareOption({
-    required BuildContext context,
-    required IconData icon,
-    required String title,
-    required VoidCallback onTap,
-  }) {
-    return ListTile(
-      leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
-      title: Text(title),
-      onTap: onTap,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 40,
+            height: 4,
+            margin: const EdgeInsets.only(top: 12),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            'Share Post',
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Icon(
+                    Icons.link_rounded,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  title: const Text('Copy Link'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    CustomSnackBar.showInfo(
+                      context: context,
+                      message: "Link copied to clipboard",
+                    );
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                ListTile(
+                  leading: Icon(
+                    Icons.share_rounded,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  title: const Text('Share via...'),
+                  onTap: () => Navigator.pop(context),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+        ],
+      ),
     );
   }
 }
