@@ -132,7 +132,7 @@ class _CreatePostViewState extends State<CreatePostView> {
                   categories: _categories,
                   topics: _topics,
                   image: _image,
-                  isArticle: widget.isArticle,
+                  isArticle: _isArticle,
                   isSubmitting: context.watch<PostCrudBloc>().state
                       is CreatePostInProgress,
                   canSubmit: _canSubmit,

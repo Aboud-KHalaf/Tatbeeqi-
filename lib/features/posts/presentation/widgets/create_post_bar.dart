@@ -39,12 +39,12 @@ class _CreatePostBarState extends State<CreatePostBar>
     super.dispose();
   }
 
-  void _navigateToCreatePost({bool? isArticle, File? imageFile}) {
+  void _navigateToCreatePost({bool isArticle = false, File? imageFile}) {
     Navigator.push(
       context,
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) {
-          return CreatePostView(imageFile: imageFile);
+          return CreatePostView(imageFile: imageFile  , isArticle: isArticle);
         },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
@@ -90,7 +90,7 @@ class _CreatePostBarState extends State<CreatePostBar>
         return Transform.scale(
           scale: _scaleAnimation.value,
           child: Container(
-            margin: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+            margin: const EdgeInsets.fromLTRB(8.0, 16.0, 8.0, 8.0),
             padding: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
               color: colorScheme.surface,

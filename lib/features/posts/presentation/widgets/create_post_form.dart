@@ -68,11 +68,15 @@ class CreatePostForm extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Row(
                     children: [
-                      Icon(
-                        isArticle
-                            ? Icons.article_outlined
-                            : Icons.chat_bubble_outline,
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        child: Icon(
+                          isArticle
+                              ? Icons.article_outlined
+                              : Icons.chat_bubble_outline,
+                          key: ValueKey(isArticle),
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -86,13 +90,29 @@ class CreatePostForm extends StatelessWidget {
                         onChanged: onArticleTypeChanged,
                       ),
                       const SizedBox(width: 8),
-                      Text(isArticle ? 'Article' : 'Post'),
+                      AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 300),
+                        child: Text(
+                          isArticle ? 'Article' : 'Post',
+                          key: ValueKey(isArticle),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
 
-              if (isArticle) PostMarkdownToolbar(controller: textController),
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: isArticle
+                    ? PostMarkdownToolbar(
+                        key: const ValueKey('markdown-toolbar'),
+                        controller: textController,
+                      )
+                    : const SizedBox.shrink(
+                        key: ValueKey('no-toolbar'),
+                      ),
+              ),
 
               const SizedBox(height: 16),
 
