@@ -48,36 +48,45 @@ class PostModel extends Post {
     };
   }
 
-  factory PostModel.fromDbMap(Map<String, dynamic> map) {
-    return PostModel(
-      id: map['id'] as String,
-      authorId: map['author_id'] as String,
-      authorName: map['author_name'] as String,
-      authorAvatarUrl: map['author_avatar_url'] as String?,
-      text: map['text'] as String,
-      imageUrl: map['image_url'] as String?,
-      categories: List<String>.from(jsonDecode(map['categories'] as String)),
-      topics: List<String>.from(map['topics'] ?? ["all"]),
-      createdAt: DateTime.parse(map['created_at'] as String),
-      likesCount: map['likes_count'] as int? ?? 0,
-      commentsCount: map['comments_count'] as int? ?? 0,
-      isArticle: map['is_article'] as bool? ?? false,
-      isLiked: map['is_liked'] as bool? ?? false,
-    );
-  }
 
-  Map<String, dynamic> toDbMap() {
-    return {
-      'id': id,
-      'author_id': authorId,
-      'author_avatar_url': authorAvatarUrl,
-      'text': text,
-      'image_url': imageUrl,
-      'categories': jsonEncode(categories),
-      'topics': topics,
-      'is_article': isArticle,
-    };
-  }
+
+factory PostModel.fromDbMap(Map<String, dynamic> map) {
+  return PostModel(
+    id: map['id'] as String,
+    authorId: map['author_id'] as String,
+    authorName: map['author_name'] as String,
+    authorAvatarUrl: map['author_avatar_url'] as String?,
+    text: map['text'] as String,
+    imageUrl: map['image_url'] as String?,
+    categories: List<String>.from(jsonDecode(map['categories'] as String)),
+    topics: List<String>.from(jsonDecode(map['topics'] as String)),
+    createdAt: DateTime.parse(map['created_at'] as String),
+    likesCount: map['likes_count'] as int? ?? 0,
+    commentsCount: map['comments_count'] as int? ?? 0,
+    isArticle: (map['is_article'] as int? ?? 0) == 1,
+    isLiked: (map['is_liked'] as int? ?? 0) == 1,
+  );
+}
+
+Map<String, dynamic> toDbMap() {
+  return {
+    'id': id,
+    'author_id': authorId,
+    'author_name': authorName,
+    'author_avatar_url': authorAvatarUrl,
+    'text': text,
+    'image_url': imageUrl,
+    'categories': jsonEncode(categories),
+    'topics': jsonEncode(topics),
+    'created_at': createdAt.toIso8601String(),
+    'likes_count': likesCount,
+    'comments_count': commentsCount,
+    'is_article': isArticle ? 1 : 0,
+    'is_liked': isLiked ? 1 : 0,
+  };
+}
+
+
 
   @override
   PostModel copyWith({

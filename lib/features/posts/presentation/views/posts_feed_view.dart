@@ -7,6 +7,7 @@ import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed
 import 'package:tatbeeqi/features/posts/presentation/widgets/create_post_bar.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_shimmer.dart';
+import 'package:tatbeeqi/features/posts/presentation/widgets/create_post_bar_shimmer.dart';
 
 class PostsFeedView extends StatefulWidget {
   const PostsFeedView({super.key});
@@ -39,7 +40,17 @@ class _PostsFeedViewState extends State<PostsFeedView> {
                 posts: state.posts,
               );
             } else if (state is PostsError) {
-              return Center(child: Text(state.message));
+              return Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(state.message),
+                  FilledButton(
+                      onPressed: () async =>
+                          context.read<PostsBloc>().add(RefreshPostsEvent()),
+                      child: const Text("Try Again"))
+                ],
+              ));
             }
             return const CustomScrollView(
               slivers: [
@@ -101,9 +112,9 @@ class PostsShimmerLoadingWidget extends StatelessWidget {
     return const CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: CreatePostBar(),
+          child: CreatePostBarShimmer(),
         ),
-        PostsShimmerList(itemCount: 5),
+        PostsShimmerList(itemCount: 4),
       ],
     );
   }

@@ -30,7 +30,6 @@ class PostRepositoryImpl implements PostRepository {
       try {
         final newPost =
             await remoteDataSource.createPost(PostModel.fromEntity(post));
-        //  await syncLatestPosts(); // Refresh cache
         return Right(newPost);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
@@ -46,7 +45,6 @@ class PostRepositoryImpl implements PostRepository {
       try {
         final updatedPost =
             await remoteDataSource.updatePost(post as PostModel);
-        await syncLatestPosts(); // Refresh cache
         return Right(updatedPost);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
@@ -61,7 +59,6 @@ class PostRepositoryImpl implements PostRepository {
     if (await networkInfo.isConnected()) {
       try {
         await remoteDataSource.deletePost(postId);
-        await syncLatestPosts();
         return const Right(null);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
@@ -79,7 +76,7 @@ class PostRepositoryImpl implements PostRepository {
         final remotePosts =
             await remoteDataSource.fetchPosts(start: start, limit: limit);
         print(remotePosts.length);
-        // await localDataSource.cachePosts(remotePosts);
+        localDataSource.cachePosts(remotePosts);
         return Right(remotePosts);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
@@ -88,8 +85,8 @@ class PostRepositoryImpl implements PostRepository {
       try {
         final localPosts = await localDataSource.getCachedPosts();
         return Right(localPosts);
-      } on CacheException catch (e) {
-        return Left(CacheFailure(e.message));
+      } on CacheException {
+        return const Left(NetworkFailure());
       }
     }
   }
@@ -197,16 +194,12 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<Either<Failure, List<Post>>> syncLatestPosts() async {
-    if (await networkInfo.isConnected()) {
-      try {
-        final remotePosts = await remoteDataSource.fetchPosts(limit: 10);
-        await localDataSource.cachePosts(remotePosts);
-        return Right(remotePosts);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      }
-    } else {
-      return const Left(NetworkFailure());
+    try {
+      final remotePosts = await remoteDataSource.fetchPosts(limit: 10);
+      await localDataSource.cachePosts(remotePosts);
+      return Right(remotePosts);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     }
   }
 
@@ -292,8 +285,7 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, String>> uploadPostImage(
-     File image) async {
+  Future<Either<Failure, String>> uploadPostImage(File image) async {
     try {
       final result = await remoteDataSource.uploadPostImage(image);
       return Right(result);

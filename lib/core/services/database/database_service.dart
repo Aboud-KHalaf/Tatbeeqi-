@@ -52,6 +52,8 @@ const String cachedPostsColCreatedAt = 'created_at';
 const String cachedPostsColLikesCount = 'likes_count';
 const String cachedPostsColCommentsCount = 'comments_count';
 const String cachedPostsColIsArticle = 'is_article';
+const String cachedPostsColIsLiked = 'is_liked';
+const String cachedPostsColTopics = 'topics';
 
 class DatabaseService {
   Database? _database;
@@ -87,7 +89,7 @@ class DatabaseService {
     final path = join(dbPath, _dbName);
     return await openDatabase(
       path,
-      version: 4,
+      version: 5,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -158,20 +160,22 @@ class DatabaseService {
   Future<void> _createCachedPostsTable(Database db) async {
     AppLogger.info('Creating database table: $cachedPostsTableName');
     await db.execute('''
-       CREATE TABLE IF NOT EXISTS $cachedPostsTableName (
-        $cachedPostsColId TEXT PRIMARY KEY,
-        $cachedPostsColAuthorId TEXT NOT NULL,
-        $cachedPostsColAuthorName TEXT NOT NULL,
-        $cachedPostsColAuthorAvatarUrl TEXT,
-        $cachedPostsColText TEXT NOT NULL,
-        $cachedPostsColImageUrl TEXT,
-        $cachedPostsColCategories TEXT NOT NULL,
-        $cachedPostsColCreatedAt TEXT NOT NULL,
-        $cachedPostsColLikesCount INTEGER NOT NULL DEFAULT 0,
-        $cachedPostsColCommentsCount INTEGER NOT NULL DEFAULT 0,
-        $cachedPostsColIsArticle INTEGER NOT NULL DEFAULT 0
-      )
-    ''');
+    CREATE TABLE IF NOT EXISTS $cachedPostsTableName (
+      $cachedPostsColId TEXT PRIMARY KEY,
+      $cachedPostsColAuthorId TEXT NOT NULL,
+      $cachedPostsColAuthorName TEXT NOT NULL,
+      $cachedPostsColAuthorAvatarUrl TEXT,
+      $cachedPostsColText TEXT NOT NULL,
+      $cachedPostsColImageUrl TEXT,
+      $cachedPostsColCategories TEXT NOT NULL,
+      $cachedPostsColTopics TEXT NOT NULL,
+      $cachedPostsColCreatedAt TEXT NOT NULL,
+      $cachedPostsColLikesCount INTEGER NOT NULL DEFAULT 0,
+      $cachedPostsColCommentsCount INTEGER NOT NULL DEFAULT 0,
+      $cachedPostsColIsArticle INTEGER NOT NULL DEFAULT 0,
+      $cachedPostsColIsLiked INTEGER NOT NULL DEFAULT 0
+    )
+  ''');
     AppLogger.info('Table $cachedPostsTableName created successfully.');
   }
 

@@ -3,7 +3,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:tatbeeqi/core/error/exceptions.dart';
 import 'package:tatbeeqi/core/services/database/database_service.dart';
 
-
 abstract class PostLocalDataSource {
   Future<void> cachePosts(List<PostModel> posts); // keep ≤10 newest
   Future<List<PostModel>> getCachedPosts(); // all cached
