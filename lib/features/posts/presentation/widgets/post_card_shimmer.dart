@@ -10,8 +10,8 @@ class PostCardShimmer extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final screenWidth = MediaQuery.of(context).size.width;
 
-    final shimmerBaseColor = colorScheme.onSurface.withOpacity(0.3);
-    final shimmerHighlightColor = colorScheme.onSurfaceVariant.withOpacity(0.6);
+    final shimmerBaseColor = colorScheme.onSurfaceVariant.withValues(alpha: 0.3);
+    final shimmerHighlightColor = colorScheme.onSurface.withValues(alpha: 0.6);
 
     const placeholderColor = Colors.white;
 

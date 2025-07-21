@@ -1,8 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:tatbeeqi/core/widgets/code_block_builder_widget.dart';
+import 'package:tatbeeqi/core/utils/app_functions.dart';
+import 'package:tatbeeqi/core/widgets/colorful_background_painter.dart';
+import 'package:tatbeeqi/core/widgets/custom_markdown_body_widget.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_action_buttons.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_categories.dart';
@@ -59,7 +60,7 @@ class _PostDetailsViewState extends State<PostDetailsView>
           if (widget.post.imageUrl == null) ...[
             Positioned.fill(
               child: CustomPaint(
-                painter: _ColorfulBackgroundPainter(isDark: isDark),
+                painter: ColorfulBackgroundPainter(isDark: isDark),
               ),
             ),
             Positioned.fill(
@@ -67,8 +68,8 @@ class _PostDetailsViewState extends State<PostDetailsView>
                 filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                 child: Container(
                   color: isDark
-                      ? Colors.black.withValues(alpha: 0.3)
-                      : Colors.white.withValues(alpha: 0.2),
+                      ? Colors.black.withOpacity(0.3)
+                      : Colors.white.withOpacity(0.2),
                 ),
               ),
             ),
@@ -97,7 +98,7 @@ class _PostDetailsViewState extends State<PostDetailsView>
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: CircleAvatar(
-                backgroundColor: Colors.black.withValues(alpha: 0.5),
+                backgroundColor: Colors.black.withOpacity(0.5),
                 child: IconButton(
                   icon: const Icon(Icons.close, color: Colors.white),
                   onPressed: () => Navigator.of(context).pop(),
@@ -121,20 +122,20 @@ class _PostDetailsViewState extends State<PostDetailsView>
                       gradient: LinearGradient(
                         colors: isDark
                             ? [
-                                Colors.black.withValues(alpha: 0.6),
-                                Colors.black.withValues(alpha: 0.4),
+                                Colors.black.withOpacity(0.6),
+                                Colors.black.withOpacity(0.4),
                               ]
                             : [
-                                Colors.white.withValues(alpha: 0.8),
-                                Colors.white.withValues(alpha: 0.5),
+                                Colors.white.withOpacity(0.8),
+                                Colors.white.withOpacity(0.5),
                               ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       border: Border.all(
                         color: isDark
-                            ? Colors.white.withValues(alpha: 0.2)
-                            : Colors.black.withValues(alpha: 0.1),
+                            ? Colors.white.withOpacity(0.2)
+                            : Colors.black.withOpacity(0.1),
                       ),
                     ),
                     padding: const EdgeInsets.fromLTRB(20, 18, 20, 32),
@@ -148,29 +149,19 @@ class _PostDetailsViewState extends State<PostDetailsView>
                           const SizedBox(height: 12),
                           if (widget.post.text.isNotEmpty)
                             widget.post.isArticle
-                                ? MarkdownBody(
-                                    data: widget.post.text,
-                                    styleSheet:
-                                        MarkdownStyleSheet.fromTheme(theme)
-                                            .copyWith(
-                                      p: theme.textTheme.bodyLarge?.copyWith(
+                                ? CustomMarkDownBodyWidget(
+                                    data: widget.post.text)
+                                : Directionality(
+                                    textDirection:
+                                        getTextDirection(widget.post.text),
+                                    child: Text(
+                                      widget.post.text,
+                                      style:
+                                          theme.textTheme.bodyLarge?.copyWith(
                                         color: isDark
                                             ? Colors.white
                                             : Colors.black87,
-                                        height: 1.6,
                                       ),
-                                    ),
-                                    builders: {
-                                      'code': HighlightedCodeBlockBuilder(
-                                          context: context),
-                                    },
-                                  )
-                                : Text(
-                                    widget.post.text,
-                                    style: theme.textTheme.bodyLarge?.copyWith(
-                                      color: isDark
-                                          ? Colors.white
-                                          : Colors.black87,
                                     ),
                                   ),
                           const SizedBox(height: 12),
@@ -191,34 +182,3 @@ class _PostDetailsViewState extends State<PostDetailsView>
     );
   }
 }
-
-class _ColorfulBackgroundPainter extends CustomPainter {
-  final bool isDark;
-
-  _ColorfulBackgroundPainter({required this.isDark});
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..style = PaintingStyle.fill;
-
-    paint.color = isDark
-        ? Colors.pinkAccent.withOpacity(0.2)
-        : Colors.pink.withValues(alpha: 0.2);
-    canvas.drawCircle(Offset(size.width * 0.2, size.height * 0.3), 80, paint);
-
-    paint.color = isDark
-        ? Colors.cyanAccent.withValues(alpha: 0.2)
-        : Colors.blueAccent.withValues(alpha: 0.2);
-    canvas.drawCircle(Offset(size.width * 0.7, size.height * 0.2), 100, paint);
-
-    paint.color = isDark
-        ? Colors.amberAccent.withValues(alpha: 0.2)
-        : Colors.orangeAccent.withValues(alpha: 0.2);
-    canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.7), 90, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-//

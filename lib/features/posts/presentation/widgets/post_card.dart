@@ -7,7 +7,7 @@ import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_action_bu
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_categories.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_header.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_image_section.dart';
-import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_text_or_article.dart';
+import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_text.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
@@ -42,7 +42,7 @@ class PostCard extends StatelessWidget {
             if (post.text.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: PostTextOrArticle(post: post),
+                child: PostText(post: post),
               ),
             if (post.imageUrl != null && post.imageUrl!.isNotEmpty)
               PostImageSection(imageUrl: post.imageUrl!),
