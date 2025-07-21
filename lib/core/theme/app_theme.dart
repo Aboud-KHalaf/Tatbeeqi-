@@ -3,14 +3,12 @@ import 'package:flutter/services.dart';
 import 'package:tatbeeqi/core/theme/app_colors.dart';
 import 'package:tatbeeqi/core/theme/app_text_styles.dart';
 
-
-
 class AppTheme {
-  AppTheme._(); // Private constructor
+  AppTheme._();
 
   static ThemeData get lightTheme {
     return ThemeData(
-      useMaterial3: true, // Enable Material 3
+      useMaterial3: true,
       brightness: Brightness.light,
       primaryColor: AppColors.lightPrimary,
       scaffoldBackgroundColor: AppColors.lightBackground,
@@ -44,10 +42,6 @@ class AppTheme {
         foregroundColor: AppColors.lightOnSurface,
         titleTextStyle: AppTextStyles.lightTextTheme.titleLarge,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
-      ),
-      buttonTheme: const ButtonThemeData(
-        buttonColor: AppColors.lightPrimary,
-        textTheme: ButtonTextTheme.primary,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -103,7 +97,7 @@ class AppTheme {
           AppTextStyles.lightTextTheme.labelMedium,
         ),
       ),
-      tabBarTheme:const TabBarThemeData(
+      tabBarTheme: const TabBarThemeData(
         labelColor: AppColors.lightPrimary,
         unselectedLabelColor: AppColors.lightOnSurfaceVariant,
         indicator: UnderlineTabIndicator(
@@ -134,11 +128,11 @@ class AppTheme {
 
   static ThemeData get darkTheme {
     return ThemeData(
-      useMaterial3: true, // Enable Material 3
+      useMaterial3: true,
       brightness: Brightness.dark,
       primaryColor: AppColors.darkPrimary,
       scaffoldBackgroundColor: AppColors.darkBackground,
-      colorScheme:const ColorScheme.dark(
+      colorScheme: const ColorScheme.dark(
         primary: AppColors.darkPrimary,
         primaryContainer: AppColors.darkPrimaryContainer,
         secondary: AppColors.darkSecondary,
@@ -168,10 +162,6 @@ class AppTheme {
         foregroundColor: AppColors.darkOnSurface,
         titleTextStyle: AppTextStyles.darkTextTheme.titleLarge,
         systemOverlayStyle: SystemUiOverlayStyle.light,
-      ),
-      buttonTheme: const ButtonThemeData(
-        buttonColor: AppColors.darkPrimary,
-        textTheme: ButtonTextTheme.primary,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
@@ -227,7 +217,7 @@ class AppTheme {
           AppTextStyles.darkTextTheme.labelMedium,
         ),
       ),
-      tabBarTheme:const TabBarThemeData(
+      tabBarTheme: const TabBarThemeData(
         labelColor: AppColors.darkPrimary,
         unselectedLabelColor: AppColors.darkOnSurfaceVariant,
         indicator: UnderlineTabIndicator(

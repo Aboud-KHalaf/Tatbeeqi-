@@ -1,31 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-/// Shimmer loading widget for post cards following Material 3 design
 class PostCardShimmer extends StatelessWidget {
   const PostCardShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    final shimmerBaseColor = isDark 
-        ? colorScheme.surfaceVariant.withOpacity(0.3)
-        : colorScheme.surfaceVariant.withOpacity(0.1);
-    final shimmerHighlightColor = isDark
-        ? colorScheme.surface.withOpacity(0.5)
-        : colorScheme.surface.withOpacity(0.8);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final shimmerBaseColor = colorScheme.onSurface.withOpacity(0.3);
+    final shimmerHighlightColor = colorScheme.onSurfaceVariant.withOpacity(0.6);
+
+    const placeholderColor = Colors.white;
+
+    Widget shimmerContainer(
+        {required double width, required double height, double radius = 4}) {
+      return Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: placeholderColor,
+          borderRadius: BorderRadius.circular(radius),
+        ),
+      );
+    }
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16.0),
-        border: Border.all(
-          color: colorScheme.outline.withOpacity(0.12),
-        ),
+        border: Border.all(color: colorScheme.outline.withOpacity(0.12)),
       ),
       child: Shimmer.fromColors(
         baseColor: shimmerBaseColor,
@@ -36,95 +44,39 @@ class PostCardShimmer extends StatelessWidget {
             // User info row
             Row(
               children: [
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                ),
+                const CircleAvatar(
+                    radius: 20, backgroundColor: placeholderColor),
                 const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 120,
-                        height: 14,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Container(
-                        width: 80,
-                        height: 12,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                      ),
-                    ],
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    shimmerContainer(width: 120, height: 14),
+                    const SizedBox(height: 4),
+                    shimmerContainer(width: 80, height: 12),
+                  ],
                 ),
               ],
             ),
             const SizedBox(height: 16),
-            
+
             // Text content
-            Container(
-              width: double.infinity,
-              height: 16,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(4),
-              ),
-            ),
+            shimmerContainer(width: double.infinity, height: 16),
             const SizedBox(height: 8),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.7,
-              height: 16,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(4),
-              ),
-            ),
+            shimmerContainer(width: screenWidth * 0.7, height: 16),
             const SizedBox(height: 8),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.5,
-              height: 16,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(4),
-              ),
-            ),
+            shimmerContainer(width: screenWidth * 0.5, height: 16),
             const SizedBox(height: 16),
-            
-            // Image placeholder (optional)
-            Container(
-              width: double.infinity,
-              height: 200,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
+
+            // Image placeholder
+            shimmerContainer(width: double.infinity, height: 200, radius: 12),
             const SizedBox(height: 16),
-            
+
             // Action buttons row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(3, (index) => 
-                Container(
-                  width: 80,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                ),
+              children: List.generate(
+                3,
+                (_) => shimmerContainer(width: 80, height: 32, radius: 16),
               ),
             ),
           ],
@@ -134,20 +86,17 @@ class PostCardShimmer extends StatelessWidget {
   }
 }
 
-/// Multiple shimmer cards for loading state
+/// A shimmer list for multiple loading post cards
 class PostsShimmerList extends StatelessWidget {
   final int itemCount;
-  
-  const PostsShimmerList({
-    super.key,
-    this.itemCount = 3,
-  });
+
+  const PostsShimmerList({super.key, this.itemCount = 3});
 
   @override
   Widget build(BuildContext context) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
-        (context, index) => const PostCardShimmer(),
+        (context, _) => const PostCardShimmer(),
         childCount: itemCount,
       ),
     );

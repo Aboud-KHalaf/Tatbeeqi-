@@ -21,14 +21,12 @@ class _PostTextOrArticleState extends State<PostTextOrArticle>
   final GlobalKey _key = GlobalKey();
 
   bool get _isLongText {
-    if (widget.post.isArticle && (widget.post.text.length > 100)) return true;
     return widget.post.text.length > 200;
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isArticle = widget.post.isArticle;
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
@@ -39,7 +37,7 @@ class _PostTextOrArticleState extends State<PostTextOrArticle>
           AnimatedSize(
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeInOut,
-            child: isArticle ? _buildArticleContent() : _buildTextContent(),
+            child: _buildTextContent(),
           ),
           if (_isLongText)
             InkWell(
@@ -73,19 +71,5 @@ class _PostTextOrArticleState extends State<PostTextOrArticle>
         style: Theme.of(context).textTheme.bodyLarge,
       ),
     );
-  }
-
-  Widget _buildArticleContent() {
-    {
-      return ClipRect(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxHeight: 200),
-          child: SingleChildScrollView(
-            physics: const NeverScrollableScrollPhysics(),
-            child: CustomMarkDownBodyWidget(data: widget.post.text),
-          ),
-        ),
-      );
-    }
   }
 }
