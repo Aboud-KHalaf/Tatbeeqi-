@@ -11,7 +11,7 @@ class CommentsListWidget extends StatefulWidget {
   final bool isLoadingMore;
   final String postId;
   final ScrollController scrollController;
-  
+
   const CommentsListWidget({
     super.key,
     required this.comments,
@@ -63,7 +63,8 @@ class _CommentsListWidgetState extends State<CommentsListWidget> {
         // Loading more indicator with Material 3 design
         if (widget.isLoadingMore)
           Container(
-            margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            margin:
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surfaceContainerLow,
@@ -87,9 +88,9 @@ class _CommentsListWidgetState extends State<CommentsListWidget> {
                 Text(
                   'Loading more comments...',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    fontWeight: FontWeight.w500,
-                  ),
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
               ],
             ),
@@ -97,10 +98,14 @@ class _CommentsListWidgetState extends State<CommentsListWidget> {
         // End of list indicator with Material 3 design
         if (widget.hasReachedMax && widget.comments.isNotEmpty)
           Container(
-            margin: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
+            margin:
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.2),
+              color: Theme.of(context)
+                  .colorScheme
+                  .surfaceContainerHighest
+                  .withOpacity(0.2),
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
                 color: Theme.of(context).colorScheme.outline.withOpacity(0.06),
@@ -118,9 +123,9 @@ class _CommentsListWidgetState extends State<CommentsListWidget> {
                 Text(
                   'All comments loaded',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    fontWeight: FontWeight.w500,
-                  ),
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
               ],
             ),

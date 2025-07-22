@@ -6,6 +6,7 @@ import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_s
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/add_comment_bar.dart';
+import 'package:tatbeeqi/features/posts/presentation/widgets/comment_tile_shimmer.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/comments_list_widget.dart';
 
 class CommentsSheet extends StatefulWidget {
@@ -66,7 +67,7 @@ class _CommentsSheetState extends State<CommentsSheet> {
                 child: BlocBuilder<CommentsBloc, CommentsState>(
                   builder: (context, state) {
                     if (state is CommentsLoading) {
-                      return const Center(child: CircularProgressIndicator());
+                      return const CommentTaileShimmerList();
                     } else if (state is CommentsError) {
                       return Center(child: Text(state.message));
                     } else if (state is CommentsLoaded) {
@@ -74,7 +75,7 @@ class _CommentsSheetState extends State<CommentsSheet> {
                         return const Center(
                             child: Text('Be the first to comment!'));
                       }
-                      
+
                       return CommentsListWidget(
                         comments: state.comments,
                         hasReachedMax: state.hasReachedMax,
@@ -83,8 +84,9 @@ class _CommentsSheetState extends State<CommentsSheet> {
                         scrollController: scrollController,
                       );
                     }
-                    
-                    return const Center(child: Text('Be the first to comment!'));
+
+                    return const Center(
+                        child: Text('Be the first to comment!'));
                   },
                 ),
               ),
