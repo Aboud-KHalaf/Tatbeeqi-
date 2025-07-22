@@ -8,7 +8,7 @@ class GetPostsUseCase {
 
   GetPostsUseCase(this.repository);
 
-  Future<Either<Failure, List<Post>>> call({int limit = 10}) async {
-    return await repository.getPosts(limit: limit);
+  Future<Either<Failure, List<Post>>> call({int start = 0, int limit = 10}) async {
+    return await repository.getPosts(start: start, limit: limit);
   }
 }

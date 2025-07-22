@@ -13,12 +13,12 @@ abstract class PostRepository {
   Future<Either<Failure, void>> deletePost(String postId);
 
   // Reads
-  Future<Either<Failure, List<Post>>> getPosts({int limit = 10});
+  Future<Either<Failure, List<Post>>> getPosts({int start = 0, int limit = 10});
   Future<Either<Failure, Post>> getPostById(String postId);
   Future<Either<Failure, List<Post>>> getPostsByCategories(
-    List<String> categories, {
-    int limit = 10,
-  });
+      List<String> categories,
+      {int start = 0,
+      int limit = 10});
 
   // Likes & Comments
   Future<Either<Failure, void>> likePost(String postId);
@@ -26,7 +26,8 @@ abstract class PostRepository {
   Future<Either<Failure, Comment>> addComment(Comment comment);
   Future<Either<Failure, void>> removeComment(String commentId);
   Future<Either<Failure, void>> updateComment(Comment comment);
-  Future<Either<Failure, List<Comment>>> getComments(String postId);
+  Future<Either<Failure, List<Comment>>> getComments(String postId,
+      {int start = 0, int limit = 10});
 
   // Sync (remote → local)
   Future<Either<Failure, List<Post>>> syncLatestPosts();
@@ -39,5 +40,5 @@ abstract class PostRepository {
       String replyId, String newText);
   Future<Either<Failure, Unit>> deleteReplyOnComment(String replyId);
 
-  Future<Either<Failure, String>> uploadPostImage( File image);
+  Future<Either<Failure, String>> uploadPostImage(File image);
 }

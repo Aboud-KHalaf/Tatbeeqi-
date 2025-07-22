@@ -83,6 +83,9 @@ class PostRepositoryImpl implements PostRepository {
       }
     } else {
       try {
+        if (start > 0) {
+          return right([]);
+        }
         final localPosts = await localDataSource.getCachedPosts();
         return Right(localPosts);
       } on CacheException {
@@ -179,10 +182,12 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<Either<Failure, List<Comment>>> getComments(String postId) async {
+  Future<Either<Failure, List<Comment>>> getComments(String postId,
+      {int start = 0, int limit = 10}) async {
     if (await networkInfo.isConnected()) {
       try {
-        final comments = await remoteDataSource.fetchComments(postId);
+        final comments = await remoteDataSource.fetchComments(postId,
+            start: start, limit: limit);
         return Right(comments);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));

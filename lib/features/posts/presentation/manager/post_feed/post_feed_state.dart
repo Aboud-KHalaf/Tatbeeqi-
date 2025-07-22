@@ -14,11 +14,29 @@ class PostsLoading extends PostsState {}
 
 class PostsLoaded extends PostsState {
   final List<Post> posts;
+  final bool hasReachedMax;
+  final bool isLoadingMore;
 
-  const PostsLoaded(this.posts);
+  const PostsLoaded({
+    required this.posts,
+    this.hasReachedMax = false,
+    this.isLoadingMore = false,
+  });
+
+  PostsLoaded copyWith({
+    List<Post>? posts,
+    bool? hasReachedMax,
+    bool? isLoadingMore,
+  }) {
+    return PostsLoaded(
+      posts: posts ?? this.posts,
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+      isLoadingMore: isLoadingMore ?? this.isLoadingMore,
+    );
+  }
 
   @override
-  List<Object> get props => [posts];
+  List<Object> get props => [posts, hasReachedMax, isLoadingMore];
 }
 
 class PostsError extends PostsState {

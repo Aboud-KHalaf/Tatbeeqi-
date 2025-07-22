@@ -44,3 +44,21 @@ class UpdateComment extends CommentsEvent {
   @override
   List<Object> get props => [comment];
 }
+
+class LoadMoreComments extends CommentsEvent {
+  final String postId;
+
+  const LoadMoreComments(this.postId);
+
+  @override
+  List<Object> get props => [postId];
+}
+
+class RefreshComments extends CommentsEvent {
+  final String postId;
+
+  const RefreshComments(this.postId);
+
+  @override
+  List<Object> get props => [postId];
+}

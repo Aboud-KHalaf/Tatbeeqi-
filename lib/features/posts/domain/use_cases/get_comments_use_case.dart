@@ -8,7 +8,8 @@ class GetCommentsUseCase {
 
   GetCommentsUseCase(this.repository);
 
-  Future<Either<Failure, List<Comment>>> call(String postId) async {
-    return await repository.getComments(postId);
+  Future<Either<Failure, List<Comment>>> call(String postId,
+      {int start = 0, int limit = 10}) async {
+    return await repository.getComments(postId, start: start, limit: limit);
   }
 }

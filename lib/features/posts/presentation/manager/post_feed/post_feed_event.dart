@@ -11,6 +11,8 @@ class FetchPostsEvent extends PostsEvent {}
 
 class RefreshPostsEvent extends PostsEvent {}
 
+class LoadMorePostsEvent extends PostsEvent {}
+
 class LikePostToggledEvent extends PostsEvent {
   final String postId;
 

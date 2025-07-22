@@ -5,8 +5,8 @@ import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_e
 import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_state.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
-import 'package:tatbeeqi/features/posts/presentation/widgets/comment_tile.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/add_comment_bar.dart';
+import 'package:tatbeeqi/features/posts/presentation/widgets/comments_list_widget.dart';
 
 class CommentsSheet extends StatefulWidget {
   final String postId;
@@ -65,28 +65,26 @@ class _CommentsSheetState extends State<CommentsSheet> {
               Expanded(
                 child: BlocBuilder<CommentsBloc, CommentsState>(
                   builder: (context, state) {
-                    final comments =
-                        state is CommentsLoaded ? state.comments : [];
-
-                    if (state is CommentsLoading && comments.isEmpty) {
-                      // 🔁 Only show loading when it's the initial fetch
+                    if (state is CommentsLoading) {
                       return const Center(child: CircularProgressIndicator());
                     } else if (state is CommentsError) {
                       return Center(child: Text(state.message));
-                    } else if (comments.isEmpty) {
-                      return const Center(
-                          child: Text('Be the first to comment!'));
+                    } else if (state is CommentsLoaded) {
+                      if (state.comments.isEmpty) {
+                        return const Center(
+                            child: Text('Be the first to comment!'));
+                      }
+                      
+                      return CommentsListWidget(
+                        comments: state.comments,
+                        hasReachedMax: state.hasReachedMax,
+                        isLoadingMore: state.isLoadingMore,
+                        postId: widget.postId,
+                        scrollController: scrollController,
+                      );
                     }
-
-                    return ListView.builder(
-                      controller: scrollController,
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      itemCount: comments.length,
-                      itemBuilder: (context, index) {
-                        final comment = comments[index];
-                        return CommentTile(comment: comment);
-                      },
-                    );
+                    
+                    return const Center(child: Text('Be the first to comment!'));
                   },
                 ),
               ),

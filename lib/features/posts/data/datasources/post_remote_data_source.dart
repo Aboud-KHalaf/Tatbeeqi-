@@ -26,7 +26,8 @@ abstract class PostRemoteDataSource {
   Future<void> likePost(String postId);
   Future<void> unlikePost(String postId);
   Future<CommentModel> addComment(CommentModel comment);
-  Future<List<CommentModel>> fetchComments(String postId);
+  Future<List<CommentModel>> fetchComments(String postId,
+      {int start = 0, int limit = 10});
   Future<void> removeComment(String commentId);
   Future<void> updateComment(CommentModel comment);
 
@@ -282,13 +283,15 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   }
 
   @override
-  Future<List<CommentModel>> fetchComments(String postId) async {
+  Future<List<CommentModel>> fetchComments(String postId,
+      {int start = 0, int limit = 10}) async {
     try {
       final response = await supabase
           .from('comments')
           .select()
           .eq('post_id', postId)
-          .order('created_at', ascending: true);
+          .order('created_at', ascending: true)
+          .range(start, start + limit);
       return response.map((e) => CommentModel.fromMap(e)).toList();
     } catch (e) {
       if (e is PostgrestException) {
@@ -382,7 +385,7 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
 
   @override
   Future<String> uploadPostImage(File image) async {
-    final fileName = 'post-image${DateTime.now().millisecondsSinceEpoch}.';
+    final fileName = 'post-image${DateTime.now().millisecondsSinceEpoch}';
 
     await supabase.storage.from('post-images').upload(
           fileName,
