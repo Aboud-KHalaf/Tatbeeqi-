@@ -95,41 +95,6 @@ class _CommentsListWidgetState extends State<CommentsListWidget> {
               ],
             ),
           ),
-        // End of list indicator with Material 3 design
-        if (widget.hasReachedMax && widget.comments.isNotEmpty)
-          Container(
-            margin:
-                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-              color: Theme.of(context)
-                  .colorScheme
-                  .surfaceContainerHighest
-                  .withOpacity(0.2),
-              borderRadius: BorderRadius.circular(12.0),
-              border: Border.all(
-                color: Theme.of(context).colorScheme.outline.withOpacity(0.06),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.check_circle_outline_rounded,
-                  size: 20,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                const SizedBox(width: 8),
-                Text(
-                  'All comments loaded',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        fontWeight: FontWeight.w500,
-                      ),
-                ),
-              ],
-            ),
-          ),
       ],
     );
   }

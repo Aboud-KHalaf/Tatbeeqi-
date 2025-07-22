@@ -290,7 +290,7 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
           .from('comments')
           .select()
           .eq('post_id', postId)
-          .order('created_at', ascending: true)
+          .order('created_at', ascending: false)
           .range(start, start + limit);
       return response.map((e) => CommentModel.fromMap(e)).toList();
     } catch (e) {

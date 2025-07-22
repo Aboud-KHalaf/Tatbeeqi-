@@ -31,42 +31,85 @@ class _AddCommentBarState extends State<AddCommentBar> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return Material(
-      color: colorScheme.surface,
+    return Container(
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        border: Border(
+          top: BorderSide(
+            color: colorScheme.outline.withOpacity(0.12),
+            width: 1,
+          ),
+        ),
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 16.0),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Expanded(
-              child: TextField(
-                controller: _controller,
-                decoration: InputDecoration(
-                  hintText: 'Add a comment...',
-                  fillColor: colorScheme.surfaceContainerHighest
-                      .withValues(alpha: 0.5),
-                  filled: true,
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: BorderSide.none,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: colorScheme.surfaceContainerLow,
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(
+                    color: colorScheme.outline.withOpacity(0.12),
+                    width: 1,
                   ),
                 ),
-                onSubmitted: (_) => _submitComment(),
-                onChanged: (_) =>
-                    setState(() {}), // Rebuild to update button state
+                child: TextField(
+                  controller: _controller,
+                  maxLines: null,
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: InputDecoration(
+                    hintText: 'Add a thoughtful comment...',
+                    hintStyle: theme.textTheme.bodyMedium?.copyWith(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 14,
+                    ),
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                  ),
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurface,
+                  ),
+                  onSubmitted: (_) => _submitComment(),
+                ),
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 12),
             ValueListenableBuilder<TextEditingValue>(
               valueListenable: _controller,
               builder: (context, value, child) {
-                return IconButton(
-                  icon: const Icon(Icons.send_rounded),
-                  color: value.text.isNotEmpty
-                      ? colorScheme.primary
-                      : colorScheme.onSurface.withValues(alpha: 0.5),
-                  onPressed: value.text.isNotEmpty ? _submitComment : null,
+                final hasText = value.text.trim().isNotEmpty;
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                  decoration: BoxDecoration(
+                    color: hasText
+                        ? colorScheme.primary
+                        : colorScheme.surfaceContainerHighest,
+                    borderRadius: BorderRadius.circular(20),
+                    border: hasText
+                        ? null
+                        : Border.all(
+                            color: colorScheme.outline.withOpacity(0.12),
+                          ),
+                  ),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.send_rounded,
+                      size: 20,
+                    ),
+                    color: hasText
+                        ? colorScheme.onPrimary
+                        : colorScheme.onSurfaceVariant,
+                    onPressed: hasText ? _submitComment : null,
+                    tooltip: 'Send comment',
+                  ),
                 );
               },
             ),
