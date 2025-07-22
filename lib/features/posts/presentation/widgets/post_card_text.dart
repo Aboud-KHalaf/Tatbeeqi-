@@ -26,7 +26,6 @@ class _PostTextState extends State<PostText> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     bool isArticle = widget.post.isArticle;
     final theme = Theme.of(context);
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: Column(
@@ -44,15 +43,22 @@ class _PostTextState extends State<PostText> with TickerProviderStateMixin {
                 Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => PostDetailsView(post: widget.post)));
               },
-              child: Padding(
-                padding: const EdgeInsets.only(top: 6.0),
-                child: Text(
-                  isArticle ? "Show Details" : 'Read more',
-                  style: TextStyle(
-                    color: theme.colorScheme.primary,
-                    fontWeight: FontWeight.bold,
+              child: Row(
+                children: [
+                  const Expanded(
+                    child: SizedBox(),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 6.0),
+                    child: Text(
+                      isArticle ? "Show Details" : 'Read more',
+                      style: TextStyle(
+                        color: theme.colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
         ],

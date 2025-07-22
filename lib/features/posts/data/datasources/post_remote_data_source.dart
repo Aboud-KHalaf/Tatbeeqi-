@@ -140,7 +140,6 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
 
         posts.add(PostModel.fromMap(postMap));
       }
-
       return posts;
     } catch (e) {
       if (e is PostgrestException) {

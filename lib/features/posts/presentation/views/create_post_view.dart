@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_event.dart';
@@ -78,7 +79,7 @@ class _CreatePostViewState extends State<CreatePostView> {
 
   bool get _canSubmit {
     return _textController.text.trim().isNotEmpty &&
-        context.watch<PostCrudBloc>().state is! CreatePostInProgress;
+        context.read<PostCrudBloc>().state is! CreatePostInProgress;
   }
 
   bool get _canPreview {
@@ -253,15 +254,15 @@ class _CreatePostViewState extends State<CreatePostView> {
       return;
     }
 
-    context.read<PostCrudBloc>().add(
-          CreatePostEvent(
-            topics: _topics,
-            text: _textController.text.trim(),
-            categories: _categories,
-            image: _image,
-            isArticle: _isArticle,
-          ),
-        );
+    Provider.of<PostCrudBloc>(context, listen: false).add(
+      CreatePostEvent(
+        topics: _topics,
+        text: _textController.text.trim(),
+        categories: _categories,
+        image: _image,
+        isArticle: _isArticle,
+      ),
+    );
   }
 }
 
