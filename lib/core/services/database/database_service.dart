@@ -29,6 +29,7 @@ const String coursesColWeeklyHoursTheory = 'weekly_hours_theory';
 const String coursesColWeeklyHoursPractical = 'weekly_hours_practical';
 const String coursesColWeeklyHoursTotal = 'weekly_hours_total';
 const String coursesColGradeStudentWork = 'grade_student_work';
+const String coursesColProgressPercent = 'progress_percent';
 
 // Notes Table
 const String notesTableName = 'notes';
@@ -89,7 +90,7 @@ class DatabaseService {
     final path = join(dbPath, _dbName);
     return await openDatabase(
       path,
-      version: 5,
+      version: 1,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -136,7 +137,8 @@ class DatabaseService {
         $coursesColWeeklyHoursTheory INTEGER,
         $coursesColWeeklyHoursPractical INTEGER,
         $coursesColWeeklyHoursTotal INTEGER,
-        $coursesColGradeStudentWork INTEGER
+        $coursesColGradeStudentWork INTEGER,
+        $coursesColProgressPercent REAL
       )
     ''');
     AppLogger.info('Table $coursesTableName created successfully.');
@@ -180,21 +182,7 @@ class DatabaseService {
   }
 
   // Add migration logic for schema changes
-  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    AppLogger.info(
-        'Upgrading database from version $oldVersion to $newVersion');
-    if (oldVersion < 2) {
-      await _createCoursesTable(db);
-    }
-    if (oldVersion < 3) {
-      await _createNotesTable(db);
-    }
-    if (oldVersion < 5) {
-      await _createCachedPostsTable(db);
-    }
-    // Add more migration steps for future versions if needed
-    // Example: if (oldVersion < 3) { /* changes for version 3 */ }
-  }
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {}
 
   // Method to close the database connection
   Future<void> close() async {

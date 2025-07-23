@@ -14,9 +14,10 @@ class CourseModel extends CourseEntity {
     super.weeklyHoursPractical,
     super.weeklyHoursTotal,
     super.gradeStudentWork,
+    super.progressPercent,
   });
-  
-    factory CourseModel.fromEntity(CourseEntity entity) {
+
+  factory CourseModel.fromEntity(CourseEntity entity) {
     return CourseModel(
       id: entity.id,
       courseCode: entity.courseCode,
@@ -30,9 +31,10 @@ class CourseModel extends CourseEntity {
       weeklyHoursPractical: entity.weeklyHoursPractical,
       weeklyHoursTotal: entity.weeklyHoursTotal,
       gradeStudentWork: entity.gradeStudentWork,
+      progressPercent: entity.progressPercent,
     );
   }
-  
+
   factory CourseModel.fromJson(Map<String, dynamic> json) {
     return CourseModel(
       id: json['id'] as int,
@@ -47,6 +49,7 @@ class CourseModel extends CourseEntity {
       weeklyHoursPractical: json['weekly_hours_practical'] as int?,
       weeklyHoursTotal: json['weekly_hours_total'] as int?,
       gradeStudentWork: json['grade_student_work'] as int?,
+      progressPercent: (json['progress_percent'] as num?)?.toDouble(),
     );
   }
 
@@ -64,8 +67,10 @@ class CourseModel extends CourseEntity {
       'weekly_hours_practical': weeklyHoursPractical,
       'weekly_hours_total': weeklyHoursTotal,
       'grade_student_work': gradeStudentWork,
+     'progress_percent': progressPercent,
     };
   }
+
   CourseModel copyWith({
     int? id,
     String? courseCode,
@@ -79,6 +84,7 @@ class CourseModel extends CourseEntity {
     int? weeklyHoursPractical,
     int? weeklyHoursTotal,
     int? gradeStudentWork,
+    double? progressPercent,
   }) {
     return CourseModel(
       id: id ?? this.id,
@@ -88,12 +94,12 @@ class CourseModel extends CourseEntity {
       studyYear: studyYear ?? this.studyYear,
       semester: semester ?? this.semester,
       gradeTotal: gradeTotal ?? this.gradeTotal,
-      gradeTheoreticalExam:
-          gradeTheoreticalExam ?? this.gradeTheoreticalExam,
+      gradeTheoreticalExam: gradeTheoreticalExam ?? this.gradeTheoreticalExam,
       weeklyHoursTheory: weeklyHoursTheory ?? this.weeklyHoursTheory,
       weeklyHoursPractical: weeklyHoursPractical ?? this.weeklyHoursPractical,
       weeklyHoursTotal: weeklyHoursTotal ?? this.weeklyHoursTotal,
       gradeStudentWork: gradeStudentWork ?? this.gradeStudentWork,
+      progressPercent: progressPercent ?? this.progressPercent,
     );
   }
 }

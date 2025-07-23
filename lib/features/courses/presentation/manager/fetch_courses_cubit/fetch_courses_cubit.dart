@@ -24,14 +24,4 @@ class FetchCoursesCubit extends Cubit<FetchCoursesState> {
       },
     );
   }
-
-  //TODO
-  // double _calculateProgress(CourseEntity entity) {
-  //   // Add logic to calculate progress if applicable from entity fields
-  //   // e.g. based on grades or completion status if available
-  //   if (entity.gradeTotal != null && entity.gradeTotal! > 0) {
-  //     return entity.gradeTotal! / 100.0; // Assuming gradeTotal is out of 100
-  //   }
-  //   return 0.0; // Default progress
-  // }
 }

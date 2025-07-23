@@ -75,7 +75,7 @@ class MyApp extends StatelessWidget {
         // should move from main
         BlocProvider(
           // TEMP
-          create: (_) => di.sl<FetchCoursesCubit>()..fetchCourses(4, 2),
+          create: (_) => di.sl<FetchCoursesCubit>()..fetchCourses(1, 2),
         ),
         BlocProvider(
           // TEMP

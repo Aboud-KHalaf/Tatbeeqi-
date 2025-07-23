@@ -77,8 +77,9 @@ class _CourseCardState extends State<CourseCard>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final cardColor = Theme.of(context).colorScheme.surface;
-    final progressText = '${(1 * 100).toInt()}%';
-
+    final rawProgress = widget.course.progressPercent ?? 0;
+    final progress = rawProgress.clamp(0.0, 1.0); // to avoid over 100%
+    final progressText = '${(progress * 100).toInt()}%';
     return FadeTransition(
       opacity: _fadeAnimation,
       child: SlideTransition(
@@ -135,7 +136,7 @@ class _CourseCardState extends State<CourseCard>
                           ),
                           const Spacer(),
                           CourseCardProgress(
-                            progress: 1.0,
+                            progress: progress,
                             progressText: progressText,
                           ),
                         ],

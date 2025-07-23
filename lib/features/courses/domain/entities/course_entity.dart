@@ -13,6 +13,7 @@ class CourseEntity extends Equatable {
   final int? weeklyHoursPractical;
   final int? weeklyHoursTotal;
   final int? gradeStudentWork;
+  final double? progressPercent;
 
   const CourseEntity({
     required this.id,
@@ -27,6 +28,7 @@ class CourseEntity extends Equatable {
     this.weeklyHoursPractical,
     this.weeklyHoursTotal,
     this.gradeStudentWork,
+    this.progressPercent,
   });
 
   @override
@@ -43,5 +45,6 @@ class CourseEntity extends Equatable {
         weeklyHoursPractical,
         weeklyHoursTotal,
         gradeStudentWork,
+        progressPercent,
       ];
 }

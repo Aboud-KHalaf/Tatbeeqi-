@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 class CourseCardProgress extends StatelessWidget {
-  final double progress;
+  final double progress; // 0.0 to 1.0
   final String progressText;
 
   const CourseCardProgress({
@@ -11,66 +10,71 @@ class CourseCardProgress extends StatelessWidget {
     required this.progressText,
   });
 
-  List<Color> _getProgressGradientColors(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
-    final secondaryColor = HSLColor.fromColor(primaryColor)
-        .withSaturation(
-            math.min(HSLColor.fromColor(primaryColor).saturation + 0.2, 1.0))
-        .withLightness(
-            math.max(HSLColor.fromColor(primaryColor).lightness - 0.1, 0.0))
-        .toColor();
-
-    return [primaryColor, secondaryColor];
-  }
-
   @override
   Widget build(BuildContext context) {
-    if (progress <= 0) {
-      return const SizedBox.shrink(); // Don't show if no progress
-    }
+    final theme = Theme.of(context);
+    final isEmpty = progress <= 0;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        // Progress Bar
         Expanded(
           child: Stack(
             children: [
+              // Background track
               Container(
                 height: 8,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Theme.of(context)
-                      .colorScheme
-                      .surfaceContainerHighest
-                      .withValues(alpha: 0.3),
+                  color: theme.colorScheme.primary.withValues(alpha: 0.1),
                 ),
               ),
+
+              // Progress fill
               FractionallySizedBox(
-                widthFactor: progress,
+                widthFactor: progress.clamp(0.0, 1.0),
                 child: Container(
                   height: 8,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    gradient: LinearGradient(
-                      colors: _getProgressGradientColors(context),
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
+                    gradient: isEmpty
+                        ? null
+                        : LinearGradient(
+                            colors: _getProgressGradientColors(context),
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                          ),
+                    color: isEmpty
+                        ? theme.colorScheme.primary.withOpacity(0.1)
+                        : null,
                   ),
                 ),
               ),
             ],
           ),
         ),
+
         const SizedBox(width: 4.0),
+
+        // Progress Text
         Text(
           progressText,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-                fontSize: 10.0,
-              ),
+          style: theme.textTheme.bodySmall?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: isEmpty ? theme.hintColor : theme.colorScheme.primary,
+            fontSize: 10.0,
+          ),
         ),
       ],
     );
+  }
+
+  List<Color> _getProgressGradientColors(BuildContext context) {
+    final primary = Theme.of(context).colorScheme.primary;
+    return [
+      primary.withValues(alpha: 0.9),
+      primary.withValues(alpha: 0.6),
+    ];
   }
 }
