@@ -8,8 +8,7 @@ class GetAllCoursesForRetakeUsecase {
 
   GetAllCoursesForRetakeUsecase(this.courseRepository);
 
-  Future<Either<Failure, List<CourseEntity>>> call(
-      int studyYear, int departmentId) {
+  Future<Either<Failure, List<Course>>> call(int studyYear, int departmentId) {
     return courseRepository.getAllCoursesForReatake(
         studyYear: studyYear, departmentId: departmentId);
   }

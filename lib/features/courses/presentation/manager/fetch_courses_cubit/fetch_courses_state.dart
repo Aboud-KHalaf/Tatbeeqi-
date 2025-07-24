@@ -25,7 +25,7 @@ class CoursesError extends FetchCoursesState {
 
 class CoursesLoaded extends FetchCoursesState {
   @override
-  final List<CourseEntity> courseEntities;
+  final List<Course> courseEntities;
   const CoursesLoaded(this.courseEntities);
 
   @override

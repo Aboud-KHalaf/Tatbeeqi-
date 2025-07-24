@@ -1,6 +1,6 @@
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 
-class CourseModel extends CourseEntity {
+class CourseModel extends Course {
   const CourseModel({
     required super.id,
     required super.courseCode,
@@ -17,7 +17,7 @@ class CourseModel extends CourseEntity {
     super.progressPercent,
   });
 
-  factory CourseModel.fromEntity(CourseEntity entity) {
+  factory CourseModel.fromEntity(Course entity) {
     return CourseModel(
       id: entity.id,
       courseCode: entity.courseCode,
@@ -67,7 +67,7 @@ class CourseModel extends CourseEntity {
       'weekly_hours_practical': weeklyHoursPractical,
       'weekly_hours_total': weeklyHoursTotal,
       'grade_student_work': gradeStudentWork,
-     'progress_percent': progressPercent,
+      'progress_percent': progressPercent,
     };
   }
 

@@ -3,7 +3,7 @@ import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/course_card.dart';
 
 class CoursesGridWidget extends StatelessWidget {
-  final List<CourseEntity> courses;
+  final List<Course> courses;
   final bool isTablet;
   final int selectedTabIndex;
 

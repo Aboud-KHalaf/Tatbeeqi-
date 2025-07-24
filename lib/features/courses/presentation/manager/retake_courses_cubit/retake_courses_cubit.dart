@@ -8,17 +8,17 @@ import 'package:tatbeeqi/features/courses/domain/usecases/save_selected_retake_c
 part 'retake_courses_state.dart';
 
 class RetakeCoursesCubit extends Cubit<RetakeCoursesState> {
-final GetAllCoursesForRetakeUsecase _getAllCoursesForRetakeUsecase;
+  final GetAllCoursesForRetakeUsecase _getAllCoursesForRetakeUsecase;
   final SaveSelectedRetakeCoursesUseCase _saveSelectedRetakeCoursesUseCase;
-final DeleteRetakeCourseUseCase _deleteRetakeCourseUseCase;
+  final DeleteRetakeCourseUseCase _deleteRetakeCourseUseCase;
 
   RetakeCoursesCubit({
     required GetAllCoursesForRetakeUsecase getAllCoursesForRetakeUsecase,
     required SaveSelectedRetakeCoursesUseCase saveSelectedRetakeCoursesUseCase,
-       required DeleteRetakeCourseUseCase deleteRetakeCourseUseCase,
+    required DeleteRetakeCourseUseCase deleteRetakeCourseUseCase,
   })  : _getAllCoursesForRetakeUsecase = getAllCoursesForRetakeUsecase,
         _saveSelectedRetakeCoursesUseCase = saveSelectedRetakeCoursesUseCase,
-         _deleteRetakeCourseUseCase = deleteRetakeCourseUseCase,
+        _deleteRetakeCourseUseCase = deleteRetakeCourseUseCase,
         super(RetakeCoursesInitial());
   Future<void> fetchAllCoursesForRetake(
       {required int studyYear, required departmentId}) async {
@@ -33,7 +33,8 @@ final DeleteRetakeCourseUseCase _deleteRetakeCourseUseCase;
       },
     );
   }
-  Future<void> saveRetakeCourses(List<CourseEntity> courses) async {
+
+  Future<void> saveRetakeCourses(List<Course> courses) async {
     emit(RetakeCoursesSaving());
     final failureOrSuccess = await _saveSelectedRetakeCoursesUseCase(courses);
 
@@ -43,7 +44,7 @@ final DeleteRetakeCourseUseCase _deleteRetakeCourseUseCase;
     );
   }
 
-    Future<void> deleteRetakeCourse(int courseId) async {
+  Future<void> deleteRetakeCourse(int courseId) async {
     emit(RetakeCourseDeleting());
     final failureOrSuccess = await _deleteRetakeCourseUseCase(courseId);
 

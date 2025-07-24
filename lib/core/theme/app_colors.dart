@@ -9,7 +9,7 @@ class AppColors {
   static const Color lightTertiary = Color(0xFFFF9800); // Orange 500
   static const Color lightTertiaryContainer = Color(0xFFFFE0B2);
 
-  static const Color lightSurface = Color(0xFFF9FAFB);
+  static const Color lightSurface = Color(0xFFEBEFF2);
   static const Color lightSurfaceContainer = Color(0xFFECEFF1);
   static const Color lightBackground = Color(0xFFFFFFFF);
   static const Color lightOnBackground =

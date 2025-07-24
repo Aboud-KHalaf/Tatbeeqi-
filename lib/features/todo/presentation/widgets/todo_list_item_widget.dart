@@ -39,6 +39,8 @@ class TodoListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Dismissible(
       key: Key('todo_${todo.id}'),
       background: _buildDeleteBackground(),
@@ -51,6 +53,7 @@ class TodoListItem extends StatelessWidget {
       },
       onDismissed: (_) => onDelete(),
       child: Card(
+        color: colorScheme.surface,
         margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
         elevation: 2.0,
         shape: RoundedRectangleBorder(

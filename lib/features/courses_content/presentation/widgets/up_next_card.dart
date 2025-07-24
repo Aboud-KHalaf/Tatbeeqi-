@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/models/course_content_item.dart';
+import '../course_content_item.dart';
 
 class UpNextCard extends StatelessWidget {
   final CourseContentItem contentItem;

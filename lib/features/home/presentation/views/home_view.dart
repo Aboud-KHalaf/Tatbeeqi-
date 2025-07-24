@@ -67,7 +67,7 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           const SizedBox(height: 28.0),
           _SectionTitle(
               title: l10n.homeTodayTasks,
-              onPressed: () {
+              onPressed: () async {
                 context.push(AppRoutes.todoPath);
               }),
           const SizedBox(height: 12.0),

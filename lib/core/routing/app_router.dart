@@ -10,9 +10,10 @@ import 'package:tatbeeqi/features/auth/presentation/manager/bloc/auth_bloc.dart'
 import 'package:tatbeeqi/features/auth/presentation/views/forget_password_page.dart';
 import 'package:tatbeeqi/features/auth/presentation/views/sign_in_page.dart';
 import 'package:tatbeeqi/features/auth/presentation/views/sign_up_page.dart';
+import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 
 // Features
-import 'package:tatbeeqi/features/courses_content/presentation/screens/course_overview_screen.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/views/course_overview_screen.dart';
 import 'package:tatbeeqi/features/navigation/presentation/screens/main_navigation_screen.dart';
 import 'package:tatbeeqi/features/news/presentation/views/all_news_view.dart';
 import 'package:tatbeeqi/features/news/presentation/views/news_details_view.dart';
@@ -37,7 +38,6 @@ class GoRouterRefreshStream extends ChangeNotifier {
 }
 
 GoRouter createRouter(AuthBloc authBloc) {
-  
   return GoRouter(
     initialLocation: AppRoutes.home,
     refreshListenable: GoRouterRefreshStream(authBloc.stream),
@@ -48,8 +48,6 @@ GoRouter createRouter(AuthBloc authBloc) {
       if (loggedIn && goingToAuth) return AppRoutes.home;
       return null;
     },
-
-
     routes: <RouteBase>[
       GoRoute(
         path: AppRoutes.home,
@@ -96,40 +94,42 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.courseOverviewPath,
         builder: (BuildContext context, GoRouterState state) {
-          return const CourseOverviewScreen();
+          final args = state.extra as Course;
+          return CourseOverviewScreen(course: args);
         },
       ),
-          GoRoute(
-      path: AppRoutes.newsDetailsPath,
-      name: 'newsDetails',
-      builder: (context, state) {
-        final args = state.extra as NewsDetailsArgs;
-        return NewsDetailsView(newsItem: args.newsItem, heroTag: args.heroTag);
-      },
-    ),
-    GoRoute(
-      path: AppRoutes.addUpdateNotePath,
-      builder: (context, state) {
-        final args = state.extra as AddUpdateNoteArgs;
-        if (args.note == null) {
-          return AddOrUpdateNoteView(courseId: args.courseId);
-        } else {
-          return AddOrUpdateNoteView(note: args.note, courseId: args.courseId);
-        }
-      },
-    ),
+      GoRoute(
+        path: AppRoutes.newsDetailsPath,
+        name: 'newsDetails',
+        builder: (context, state) {
+          final args = state.extra as NewsDetailsArgs;
+          return NewsDetailsView(
+              newsItem: args.newsItem, heroTag: args.heroTag);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.addUpdateNotePath,
+        builder: (context, state) {
+          final args = state.extra as AddUpdateNoteArgs;
+          if (args.note == null) {
+            return AddOrUpdateNoteView(courseId: args.courseId);
+          } else {
+            return AddOrUpdateNoteView(
+                note: args.note, courseId: args.courseId);
+          }
+        },
+      ),
       GoRoute(
         path: AppRoutes.quizPath,
         builder: (BuildContext context, GoRouterState state) {
-          final lessonId = state.extra as String; 
-          return  QuizView(lessonId: lessonId);
+          final lessonId = state.extra as String;
+          return QuizView(lessonId: lessonId);
         },
       ),
-   
       GoRoute(
         path: AppRoutes.quizResultPath,
         builder: (BuildContext context, GoRouterState state) {
-                   final args = state.extra as QuizResultArgs;
+          final args = state.extra as QuizResultArgs;
           return ResultView(
             score: args.score,
             results: args.results,

@@ -7,7 +7,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tatbeeqi/core/error/exceptions.dart';
-import 'package:tatbeeqi/core/utils/app_logger.dart';
 import 'package:tatbeeqi/features/notifications/data/handlers/firebase_messaging_handlers.dart';
 import 'package:tatbeeqi/features/notifications/data/models/device_token_model.dart';
 import 'package:tatbeeqi/features/notifications/data/settings/app_local_notifications_settings.dart';
@@ -77,7 +76,6 @@ class NotificationsRemoteDatasourceImpl
 
   @override
   Future<Unit> initializeFirebaseNotification() async {
-
     try {
       await _requestNotificationPermission();
       final permission = await firebaseMessaging.requestPermission();
@@ -101,11 +99,11 @@ class NotificationsRemoteDatasourceImpl
         await subscribeToTopic(topic);
       }
 
-      AppLogger.warning("Firebase token: ${await getDeviceToken()}");
+      //AppLogger.warning("Firebase token: ${await getDeviceToken()}");
 
       return unit;
     } catch (e) {
-      AppLogger.error("from remote FCM :  ${e.toString()} ");
+//      AppLogger.error("from remote FCM :  ${e.toString()} ");
       throw ServerException(e.toString());
     }
   }

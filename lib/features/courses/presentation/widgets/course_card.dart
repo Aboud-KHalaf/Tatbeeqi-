@@ -11,7 +11,7 @@ import 'course_card_header.dart';
 import 'course_card_progress.dart';
 
 class CourseCard extends StatefulWidget {
-  final CourseEntity course;
+  final Course course;
   final int index;
 
   const CourseCard({super.key, required this.course, required this.index});
@@ -96,15 +96,27 @@ class _CourseCardState extends State<CourseCard>
                   : Matrix4.identity(),
               child: Container(
                 decoration: BoxDecoration(
-                  color: colorScheme.surface,
-                  borderRadius: BorderRadius.circular(16.0),
+                  color: colorScheme.surfaceContainerHighest
+                      .withValues(alpha: 0.3),
+                  borderRadius: BorderRadius.circular(12.0),
                   border: Border.all(
-                      color: colorScheme.outline.withValues(alpha: 0.15)),
+                      color: colorScheme.outline.withValues(alpha: 0.1)),
                 ),
                 child: InkWell(
                   onLongPress: _handleLongPress,
                   onTap: () {
-                    context.push(AppRoutes.courseOverviewPath);
+                    context.push(
+                      AppRoutes.courseOverviewPath,
+                      extra: const Course(
+                        id: 1,
+                        courseCode: "courseCode",
+                        courseName: "courseName",
+                        departmentId: 2,
+                        studyYear: 1,
+                        semester: 1,
+                        progressPercent: 1,
+                      ),
+                    );
                   },
                   borderRadius: BorderRadius.circular(16.0),
                   splashColor:

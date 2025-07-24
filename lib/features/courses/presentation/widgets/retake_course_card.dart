@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 
 class RetakeCourseCard extends StatelessWidget {
-  final CourseEntity course;
+  final Course course;
   final bool isSelected;
   final ValueChanged<bool> onChanged;
 

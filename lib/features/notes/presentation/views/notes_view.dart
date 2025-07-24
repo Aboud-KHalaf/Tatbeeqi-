@@ -9,7 +9,7 @@ import 'package:tatbeeqi/features/notes/presentation/widgets/notes_list.dart';
 class NotesView extends StatefulWidget {
   static const String routePath = '/notesView';
 
-  final String courseId;
+  final int courseId;
 
   const NotesView({super.key, required this.courseId});
 
@@ -23,7 +23,7 @@ class _NotesViewState extends State<NotesView> {
     super.initState();
     final currentState = context.read<NotesBloc>().state;
     if (currentState is! NotesLoaded || currentState.notes.isEmpty) {
-      context.read<NotesBloc>().add(LoadNotes(widget.courseId));
+      context.read<NotesBloc>().add(LoadNotes(widget.courseId.toString()));
     }
   }
 
@@ -50,7 +50,7 @@ class _NotesViewState extends State<NotesView> {
         onPressed: () {
           context.push(
             AppRoutes.addUpdateNotePath,
-            extra: AddUpdateNoteArgs(courseId: widget.courseId),
+            extra: AddUpdateNoteArgs(courseId: widget.courseId.toString()),
           );
         },
         child: const Icon(Icons.add),

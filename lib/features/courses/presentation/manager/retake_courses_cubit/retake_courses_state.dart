@@ -12,7 +12,7 @@ final class RetakeCoursesInitial extends RetakeCoursesState {}
 class CoursesRetakeLoading extends RetakeCoursesState {}
 
 class CoursesRetakeLoaded extends RetakeCoursesState {
-  final List<CourseEntity> courseEntities;
+  final List<Course> courseEntities;
   const CoursesRetakeLoaded(this.courseEntities);
 
   @override
@@ -27,7 +27,6 @@ class CoursesRetakeError extends RetakeCoursesState {
   @override
   List<Object> get props => [message];
 }
-
 
 class RetakeCoursesSaving extends RetakeCoursesState {}
 

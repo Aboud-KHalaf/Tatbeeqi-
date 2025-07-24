@@ -14,7 +14,7 @@ class RetakeCoursesBottomSheet extends StatefulWidget {
 }
 
 class _RetakeCoursesBottomSheetState extends State<RetakeCoursesBottomSheet> {
-  final ValueNotifier<List<CourseEntity>> _selectedCoursesNotifier =
+  final ValueNotifier<List<Course>> _selectedCoursesNotifier =
       ValueNotifier([]);
 
   @override

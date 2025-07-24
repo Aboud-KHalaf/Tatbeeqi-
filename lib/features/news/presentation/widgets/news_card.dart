@@ -33,24 +33,22 @@ class NewsCard extends StatelessWidget {
         tag: 'news_${item.id}',
         child: Container(
           height: 200,
-          margin: EdgeInsets.symmetric(horizontal: isSmallScreen ? 2 : 4),
-          child: Container(
-            decoration: BoxDecoration(
-              color: colorScheme.surface,
-              borderRadius: BorderRadius.circular(16.0),
-              border: Border.all(
-                  color: colorScheme.outline.withValues(alpha: 0.15)),
-            ),
-            child: Stack(
-              children: [
-                NewsCardContent(
-                  item: item,
-                  isCurrentPage: isCurrentPage,
-                  isSmallScreen: isSmallScreen,
-                ),
-                NewsCardCategoryIndicator(item: item),
-              ],
-            ),
+          margin: EdgeInsets.symmetric(horizontal: isSmallScreen ? 1 : 2),
+          decoration: BoxDecoration(
+            color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+            borderRadius: BorderRadius.circular(12.0),
+            border:
+                Border.all(color: colorScheme.outline.withValues(alpha: 0.1)),
+          ),
+          child: Stack(
+            children: [
+              NewsCardContent(
+                item: item,
+                isCurrentPage: isCurrentPage,
+                isSmallScreen: isSmallScreen,
+              ),
+              NewsCardCategoryIndicator(item: item),
+            ],
           ),
         ),
       ),

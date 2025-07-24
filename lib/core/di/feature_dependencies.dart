@@ -1,12 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:tatbeeqi/core/di/auth_dependencies.dart';
+import 'package:tatbeeqi/core/di/course_content_dependencies.dart';
 import 'package:tatbeeqi/core/di/localization_dependencies.dart';
 import 'package:tatbeeqi/core/di/navigation_dependencies.dart';
 import 'package:tatbeeqi/core/di/news_dependencies.dart';
 import 'package:tatbeeqi/core/di/notification_dependencies.dart';
 import 'package:tatbeeqi/core/di/theme_dependencies.dart';
 import 'package:tatbeeqi/core/di/todo_dependencies.dart';
-import 'package:tatbeeqi/core/di/courses_dependencies.dart'; 
+import 'package:tatbeeqi/core/di/courses_dependencies.dart';
 import 'package:tatbeeqi/core/di/notes_dependencies.dart';
 import 'package:tatbeeqi/core/di/quizes_dependencies.dart';
 import 'package:tatbeeqi/core/di/posts_dependencies.dart';
@@ -18,11 +19,10 @@ void initFeatureDependencies(GetIt sl) {
   initNavigationDependencies(sl);
   initNewsDependencies(sl);
   initTDoDependencies(sl);
-  initCoursesDependencies(sl); 
+  initCoursesDependencies(sl);
   initNotesDependencies(sl);
   initAuthDependencies(sl);
   initQuizesDependencies(sl);
   initPostsDependencies(sl);
-  // Call other feature dependency initializers here
-  // e.g., initAuthDependencies(sl);
+  initCourseContentDependencies(sl);
 }

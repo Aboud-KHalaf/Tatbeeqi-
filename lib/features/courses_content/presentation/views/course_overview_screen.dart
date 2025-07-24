@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses_details.dart/presentation/about_course_page.dart';
-
 import 'package:tatbeeqi/features/references/presentation/views/references_view.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_overview_body.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/custom_course_content_app_bar_widget.dart';
@@ -9,7 +9,8 @@ import 'package:tatbeeqi/features/grades/presentation/views/grades_page.dart';
 import 'package:tatbeeqi/features/notes/presentation/views/notes_view.dart';
 
 class CourseOverviewScreen extends StatefulWidget {
-  const CourseOverviewScreen({super.key});
+  final Course course;
+  const CourseOverviewScreen({super.key, required this.course});
   static const String routePath = '/courseOverviewView';
 
   @override
@@ -45,10 +46,10 @@ class _CourseOverviewScreenState extends State<CourseOverviewScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          CourseOverviewBody(tabController: _tabController),
+          CourseOverviewBody(tabController: _tabController , course: widget.course),
           const GradesView(),
           const ForumsView(),
-          const NotesView(courseId: "1"),
+           NotesView(courseId: widget.course.id),
           const ReferencesView(),
           const AboutCoursePage(),
         ],

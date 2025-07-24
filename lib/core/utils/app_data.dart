@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tatbeeqi/features/courses_content/data/models/course_content_item.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/course_content_item.dart';
 import 'package:tatbeeqi/features/home/domain/entities/course_item_entity.dart';
 
 /// ---- ////

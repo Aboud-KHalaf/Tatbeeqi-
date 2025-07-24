@@ -7,8 +7,7 @@ class GetCoursesByStudyYearAndDepartmentIdUseCase {
   final CourseRepository courseRepository;
 
   GetCoursesByStudyYearAndDepartmentIdUseCase(this.courseRepository);
-  Future<Either<Failure, List<CourseEntity>>> call(
-      int studyYear, int departmentId) {
+  Future<Either<Failure, List<Course>>> call(int studyYear, int departmentId) {
     return courseRepository.getCoursesByStudyYearAndDepartmentId(
         studyYear: studyYear, departmentId: departmentId);
   }

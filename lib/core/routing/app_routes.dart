@@ -1,4 +1,4 @@
-import 'package:tatbeeqi/features/courses_content/presentation/screens/course_overview_screen.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/views/course_overview_screen.dart';
 import 'package:tatbeeqi/features/home/presentation/views/home_view.dart';
 import 'package:tatbeeqi/features/news/presentation/views/all_news_view.dart';
 import 'package:tatbeeqi/features/news/presentation/views/news_details_view.dart';

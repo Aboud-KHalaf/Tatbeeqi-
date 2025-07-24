@@ -5,7 +5,7 @@ import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cub
 import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cubit/retake_courses_cubit.dart';
 
 class RetakeCoursesConfirmButton extends StatelessWidget {
-  final ValueNotifier<List<CourseEntity>> selectedCoursesNotifier;
+  final ValueNotifier<List<Course>> selectedCoursesNotifier;
   const RetakeCoursesConfirmButton({
     super.key,
     required this.selectedCoursesNotifier,
@@ -14,7 +14,7 @@ class RetakeCoursesConfirmButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return ValueListenableBuilder<List<CourseEntity>>(
+    return ValueListenableBuilder<List<Course>>(
       valueListenable: selectedCoursesNotifier,
       builder: (_, selectedCoursesList, __) {
         final isEnabled = selectedCoursesList.isNotEmpty;

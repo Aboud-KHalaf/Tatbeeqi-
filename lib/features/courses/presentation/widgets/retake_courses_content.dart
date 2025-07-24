@@ -5,7 +5,7 @@ import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cu
 import 'retake_course_card.dart'; // Import the new card widget
 
 class RetakeCoursesContent extends StatefulWidget {
-  final ValueNotifier<List<CourseEntity>> selectedCoursesNotifier;
+  final ValueNotifier<List<Course>> selectedCoursesNotifier;
 
   const RetakeCoursesContent(
       {super.key, required this.selectedCoursesNotifier});
@@ -100,7 +100,7 @@ class _RetakeCoursesContentState extends State<RetakeCoursesContent> {
                   separatorBuilder: (_, __) => const SizedBox(height: 8),
                   itemBuilder: (context, index) {
                     final course = filteredCourses[index];
-                    return ValueListenableBuilder<List<CourseEntity>>(
+                    return ValueListenableBuilder<List<Course>>(
                       valueListenable: widget.selectedCoursesNotifier,
                       builder: (_, selectedCourses, __) {
                         final isSelected =
@@ -109,8 +109,7 @@ class _RetakeCoursesContentState extends State<RetakeCoursesContent> {
                           course: course,
                           isSelected: isSelected,
                           onChanged: (selected) {
-                            final updated =
-                                List<CourseEntity>.from(selectedCourses);
+                            final updated = List<Course>.from(selectedCourses);
                             selected
                                 ? updated.add(course)
                                 : updated.removeWhere((c) => c.id == course.id);

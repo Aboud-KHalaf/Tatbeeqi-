@@ -67,7 +67,7 @@ class _CoursesViewState extends State<CoursesView>
     );
   }
 
-  Widget _buildCoursesContent(List<CourseEntity> courses, bool isTablet) {
+  Widget _buildCoursesContent(List<Course> courses, bool isTablet) {
     final filteredCourses = courses
         .where((course) => course.semester == _selectedTabIndex + 1)
         .toList();

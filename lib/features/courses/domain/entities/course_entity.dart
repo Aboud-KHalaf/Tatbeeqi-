@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class CourseEntity extends Equatable {
+class Course extends Equatable {
   final int id;
   final String courseCode;
   final String courseName;
@@ -15,7 +15,7 @@ class CourseEntity extends Equatable {
   final int? gradeStudentWork;
   final double? progressPercent;
 
-  const CourseEntity({
+  const Course({
     required this.id,
     required this.courseCode,
     required this.courseName,

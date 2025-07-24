@@ -17,9 +17,8 @@ class CourseRepositoryImpl implements CourseRepository {
   });
 
   @override
-  Future<Either<Failure, List<CourseEntity>>>
-      getCoursesByStudyYearAndDepartmentId(
-          {required int studyYear, required int departmentId}) async {
+  Future<Either<Failure, List<Course>>> getCoursesByStudyYearAndDepartmentId(
+      {required int studyYear, required int departmentId}) async {
     try {
       // 1. Try to get from local cache first
       // final hasLocalData =
@@ -45,7 +44,7 @@ class CourseRepositoryImpl implements CourseRepository {
           studyYear: studyYear,
           departmentId: departmentId);
 
-      return Right(remoteCourseModels.cast<CourseEntity>());
+      return Right(remoteCourseModels.cast<Course>());
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on CacheException catch (e) {
@@ -57,7 +56,7 @@ class CourseRepositoryImpl implements CourseRepository {
   }
 
   @override
-  Future<Either<Failure, List<CourseEntity>>> getAllCoursesForReatake(
+  Future<Either<Failure, List<Course>>> getAllCoursesForReatake(
       {required int studyYear, required int departmentId}) async {
     try {
       final remoteCourseModels = await remoteDataSource.getAllCoursesForReatake(
@@ -71,7 +70,7 @@ class CourseRepositoryImpl implements CourseRepository {
           .where((course) => !localIds.contains(course.id + 500))
           .toList();
 
-      return Right(reTakeCourses.cast<CourseEntity>());
+      return Right(reTakeCourses.cast<Course>());
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } catch (e) {
@@ -82,7 +81,7 @@ class CourseRepositoryImpl implements CourseRepository {
 
   @override
   Future<Either<Failure, Unit>> saveSelectedRetakeCourses(
-      List<CourseEntity> courses) async {
+      List<Course> courses) async {
     try {
       final courseModels =
           courses.map((entity) => CourseModel.fromEntity(entity)).toList();

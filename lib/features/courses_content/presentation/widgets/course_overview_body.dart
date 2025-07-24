@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/core/utils/app_data.dart';
+import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_content_list.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_description_section.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_lectures_list.dart';
@@ -9,8 +10,8 @@ import 'package:tatbeeqi/features/courses_content/presentation/widgets/up_next_c
 
 class CourseOverviewBody extends StatelessWidget {
   final TabController tabController;
-
-  const CourseOverviewBody({super.key, required this.tabController});
+  final Course course;
+  const CourseOverviewBody({super.key, required this.tabController , required this.course});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +19,7 @@ class CourseOverviewBody extends StatelessWidget {
       (item) => !item.isCompleted,
       orElse: () => contentItems.first,
     );
-
-    final completedItems =
-        contentItems.where((item) => item.isCompleted).length;
-    final completionPercentage = completedItems / contentItems.length;
-
+    
     Widget buildResponsiveLayout(BuildContext context, Widget content) {
       final screenWidth = MediaQuery.of(context).size.width;
 
@@ -50,7 +47,7 @@ class CourseOverviewBody extends StatelessWidget {
               children: [
                 const CourseLecturesList(),
                 ModuleProgressSection(
-                  completionPercentage: completionPercentage,
+                  completionPercentage: course.progressPercent ?? 0,
                 ),
                 const Divider(height: 16, indent: 12, endIndent: 12),
                 UpNextCard(
