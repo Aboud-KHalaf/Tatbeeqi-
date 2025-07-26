@@ -8,8 +8,7 @@ abstract class QuizEvent extends Equatable {
 }
 
 class LoadQuiz extends QuizEvent {
-  final String lessonId;
-
+  final int lessonId;
   const LoadQuiz(this.lessonId);
 
   @override

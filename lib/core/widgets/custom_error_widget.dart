@@ -26,10 +26,10 @@ class CustomErrorWidget extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16.0),
             decoration: BoxDecoration(
-                color: colorScheme.errorContainer.withOpacity(0.08),
+                color: colorScheme.errorContainer.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(50),
                 border: Border.all(
-                  color: colorScheme.error.withOpacity(0.2),
+                  color: colorScheme.error.withValues(alpha: 0.2),
                   width: 1,
                 )),
             child: Icon(
@@ -71,7 +71,7 @@ class CustomErrorWidget extends StatelessWidget {
                 style: OutlinedButton.styleFrom(
                   foregroundColor: colorScheme.primary,
                   side: BorderSide(
-                    color: colorScheme.primary.withOpacity(0.5),
+                    color: colorScheme.primary.withValues(alpha: 0.5),
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

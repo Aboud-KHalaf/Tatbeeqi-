@@ -9,6 +9,12 @@ class AppColors {
   static const Color lightTertiary = Color(0xFFFF9800); // Orange 500
   static const Color lightTertiaryContainer = Color(0xFFFFE0B2);
 
+  // Success/Completion colors
+  static const Color lightSuccess = Color(0xFF4CAF50); // Green 500
+  static const Color lightSuccessContainer = Color(0xFFE8F5E8);
+  static const Color lightOnSuccess = Color(0xFFFFFFFF);
+  static const Color lightOnSuccessContainer = Color(0xFF1B5E20);
+
   static const Color lightSurface = Color(0xFFEBEFF2);
   static const Color lightSurfaceContainer = Color(0xFFECEFF1);
   static const Color lightBackground = Color(0xFFFFFFFF);
@@ -30,12 +36,18 @@ class AppColors {
   static const Color lightShadow = Color(0x1F000000);
 
   // Dark theme colors
-  static const Color darkPrimary = Color(0xFF00ACC1);
+  static const Color darkPrimary = Colors.lightBlue;// Color(0xFF00ACC1);
   static const Color darkPrimaryContainer = Color(0xFF006064);
   static const Color darkSecondary = Color(0xFF7986CB);
   static const Color darkSecondaryContainer = Color(0xFF303F9F);
   static const Color darkTertiary = Color(0xFFFFB74D);
   static const Color darkTertiaryContainer = Color(0xFFEF6C00);
+
+  // Success/Completion colors for dark theme
+  static const Color darkSuccess = Color(0xFF66BB6A); // Green 400
+  static const Color darkSuccessContainer = Color(0xFF2E7D32);
+  static const Color darkOnSuccess = Color(0xFF000000);
+  static const Color darkOnSuccessContainer = Color(0xFFC8E6C9);
 
   static const Color darkSurface = Color(0xFF121212);
   static const Color darkSurfaceContainer = Color(0xFF1E1E1E);

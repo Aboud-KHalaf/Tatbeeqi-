@@ -52,12 +52,12 @@ class TodoListItem extends StatelessWidget {
         return false;
       },
       onDismissed: (_) => onDelete(),
-      child: Card(
-        color: colorScheme.surface,
-        margin: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
-        elevation: 2.0,
-        shape: RoundedRectangleBorder(
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
           borderRadius: BorderRadius.circular(12.0),
+          border: Border.all(color: colorScheme.outline.withValues(alpha: 0.1)),
         ),
         child: InkWell(
           onDoubleTap: onEdit,

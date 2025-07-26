@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+import 'package:tatbeeqi/core/error/failures.dart';
 import '../entities/quiz_question.dart';
 import '../repositories/quiz_repository.dart';
 
@@ -6,7 +8,7 @@ class GetQuizQuestionsUseCase {
 
   GetQuizQuestionsUseCase(this.repository);
 
-  Future<List<QuizQuestion>> call(String lessonId) {
+  Future<Either<Failure, List<QuizQuestion>>> call(int lessonId) {
     return repository.getQuizQuestions(lessonId);
   }
 }

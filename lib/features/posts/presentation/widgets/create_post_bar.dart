@@ -44,7 +44,7 @@ class _CreatePostBarState extends State<CreatePostBar>
       context,
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) {
-          return CreatePostView(imageFile: imageFile  , isArticle: isArticle);
+          return CreatePostView(imageFile: imageFile, isArticle: isArticle);
         },
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return SlideTransition(
@@ -96,12 +96,12 @@ class _CreatePostBarState extends State<CreatePostBar>
               color: colorScheme.surface,
               borderRadius: BorderRadius.circular(16.0),
               border: Border.all(
-                color: colorScheme.outline.withOpacity(0.12),
+                color: colorScheme.outline.withValues(alpha: 0.12),
                 width: 1,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: colorScheme.shadow.withOpacity(0.08),
+                  color: colorScheme.shadow.withValues(alpha: 0.08),
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                   spreadRadius: 0,
@@ -124,7 +124,7 @@ class _CreatePostBarState extends State<CreatePostBar>
                         CircleAvatar(
                           radius: 22,
                           backgroundColor:
-                              colorScheme.primary.withOpacity(0.12),
+                              colorScheme.primary.withValues(alpha: 0.12),
                           child: Icon(
                             Icons.person_outline,
                             color: colorScheme.primary,
@@ -140,10 +140,11 @@ class _CreatePostBarState extends State<CreatePostBar>
                             ),
                             decoration: BoxDecoration(
                               color: colorScheme.surfaceContainerHighest
-                                  .withOpacity(0.4),
+                                  .withValues(alpha: 0.4),
                               borderRadius: BorderRadius.circular(28.0),
                               border: Border.all(
-                                color: colorScheme.outline.withOpacity(0.08),
+                                color:
+                                    colorScheme.outline.withValues(alpha: 0.08),
                               ),
                             ),
                             child: Text(
@@ -224,10 +225,10 @@ class _ActionButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.08),
+          color: color.withValues(alpha: 0.08),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: color.withOpacity(0.2),
+            color: color.withValues(alpha: 0.2),
             width: 1,
           ),
         ),

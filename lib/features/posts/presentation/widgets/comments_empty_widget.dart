@@ -16,10 +16,10 @@ class CommentsEmptyWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
-                color: colorScheme.primaryContainer.withOpacity(0.08),
+                color: colorScheme.primaryContainer.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(50),
                 border: Border.all(
-                  color: colorScheme.outline.withOpacity(0.08),
+                  color: colorScheme.outline.withValues(alpha: 0.08),
                   width: 1,
                 ),
               ),
@@ -53,7 +53,7 @@ class CommentsEmptyWidget extends StatelessWidget {
                 vertical: 8,
               ),
               decoration: BoxDecoration(
-                color: colorScheme.primaryContainer.withOpacity(0.2),
+                color: colorScheme.primaryContainer.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(

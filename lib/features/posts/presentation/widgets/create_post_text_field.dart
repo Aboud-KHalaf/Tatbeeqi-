@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class CreatePostTextField extends StatelessWidget {
@@ -47,7 +46,7 @@ class CreatePostTextField extends StatelessWidget {
                 ? 'Write your article content here...'
                 : 'Share your thoughts...',
             hintStyle: TextStyle(
-              color: colorScheme.onSurfaceVariant.withOpacity(0.7),
+              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),

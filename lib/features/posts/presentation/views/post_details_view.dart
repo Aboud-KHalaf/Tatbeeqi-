@@ -68,8 +68,8 @@ class _PostDetailsViewState extends State<PostDetailsView>
                 filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                 child: Container(
                   color: isDark
-                      ? Colors.black.withOpacity(0.3)
-                      : Colors.white.withOpacity(0.2),
+                      ? Colors.black.withValues(alpha: 0.3)
+                      : Colors.white.withValues(alpha: 0.2),
                 ),
               ),
             ),
@@ -98,7 +98,7 @@ class _PostDetailsViewState extends State<PostDetailsView>
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: CircleAvatar(
-                backgroundColor: Colors.black.withOpacity(0.5),
+                backgroundColor: Colors.black.withValues(alpha: 0.5),
                 child: IconButton(
                   icon: const Icon(Icons.close, color: Colors.white),
                   onPressed: () => Navigator.of(context).pop(),
@@ -122,20 +122,20 @@ class _PostDetailsViewState extends State<PostDetailsView>
                       gradient: LinearGradient(
                         colors: isDark
                             ? [
-                                Colors.black.withOpacity(0.6),
-                                Colors.black.withOpacity(0.4),
+                                Colors.black.withValues(alpha: 0.6),
+                                Colors.black.withValues(alpha: 0.4),
                               ]
                             : [
-                                Colors.white.withOpacity(0.8),
-                                Colors.white.withOpacity(0.5),
+                                Colors.white.withValues(alpha: 0.8),
+                                Colors.white.withValues(alpha: 0.5),
                               ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       border: Border.all(
                         color: isDark
-                            ? Colors.white.withOpacity(0.2)
-                            : Colors.black.withOpacity(0.1),
+                            ? Colors.white.withValues(alpha: 0.2)
+                            : Colors.black.withValues(alpha: 0.1),
                       ),
                     ),
                     padding: const EdgeInsets.fromLTRB(20, 18, 20, 32),

@@ -10,18 +10,18 @@ class ColorfulBackgroundPainter extends CustomPainter {
     final paint = Paint()..style = PaintingStyle.fill;
 
     paint.color = isDark
-        ? Colors.pinkAccent.withOpacity(0.2)
-        : Colors.pink.withOpacity(0.2);
+        ? Colors.pinkAccent.withValues(alpha: 0.2)
+        : Colors.pink.withValues(alpha: 0.2);
     canvas.drawCircle(Offset(size.width * 0.2, size.height * 0.3), 80, paint);
 
     paint.color = isDark
-        ? Colors.cyanAccent.withOpacity(0.2)
-        : Colors.blueAccent.withOpacity(0.2);
+        ? Colors.cyanAccent.withValues(alpha: 0.2)
+        : Colors.blueAccent.withValues(alpha: 0.2);
     canvas.drawCircle(Offset(size.width * 0.7, size.height * 0.2), 100, paint);
 
     paint.color = isDark
-        ? Colors.amberAccent.withOpacity(0.2)
-        : Colors.orangeAccent.withOpacity(0.2);
+        ? Colors.amberAccent.withValues(alpha: 0.2)
+        : Colors.orangeAccent.withValues(alpha: 0.2);
     canvas.drawCircle(Offset(size.width * 0.5, size.height * 0.7), 90, paint);
   }
 

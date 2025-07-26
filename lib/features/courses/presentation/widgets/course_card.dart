@@ -76,7 +76,6 @@ class _CourseCardState extends State<CourseCard>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final cardColor = Theme.of(context).colorScheme.surface;
     final rawProgress = widget.course.progressPercent ?? 0;
     final progress = rawProgress.clamp(0.0, 1.0); // to avoid over 100%
     final progressText = '${(progress * 100).toInt()}%';
@@ -94,65 +93,43 @@ class _CourseCardState extends State<CourseCard>
               transform: _isHovering
                   ? (Matrix4.identity()..translate(0, -5, 0))
                   : Matrix4.identity(),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: colorScheme.surfaceContainerHighest
-                      .withValues(alpha: 0.3),
-                  borderRadius: BorderRadius.circular(12.0),
-                  border: Border.all(
-                      color: colorScheme.outline.withValues(alpha: 0.1)),
-                ),
-                child: InkWell(
-                  onLongPress: _handleLongPress,
-                  onTap: () {
-                    context.push(
-                      AppRoutes.courseOverviewPath,
-                      extra: const Course(
-                        id: 1,
-                        courseCode: "courseCode",
-                        courseName: "courseName",
-                        departmentId: 2,
-                        studyYear: 1,
-                        semester: 1,
-                        progressPercent: 1,
-                      ),
-                    );
-                  },
-                  borderRadius: BorderRadius.circular(16.0),
-                  splashColor:
-                      Theme.of(context).primaryColor.withValues(alpha: 0.1),
-                  highlightColor:
-                      Theme.of(context).primaryColor.withValues(alpha: 0.05),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0),
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          cardColor,
-                          cardColor.withValues(alpha: 0.95),
-                        ],
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          CourseCardHeader(
-                            iconData: getIconByCourseId(widget.course.id),
-                            title: widget.course.courseName,
-                          ),
-                          const Spacer(),
-                          CourseCardProgress(
-                            progress: progress,
-                            progressText: progressText,
-                          ),
-                        ],
-                      ),
+              child: InkWell(
+                onLongPress: _handleLongPress,
+                onTap: () {
+                  context.push(
+                    AppRoutes.courseLecturesPath,
+                    extra: widget.course,
+                  );
+                },
+                borderRadius: BorderRadius.circular(16.0),
+                splashColor: theme.primaryColor.withValues(alpha: 0.05),
+                highlightColor: theme.primaryColor.withValues(alpha: 0.05),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: colorScheme.surfaceContainerHighest
+                        .withValues(alpha: 0.3),
+                    borderRadius: BorderRadius.circular(12.0),
+                    border: Border.all(
+                        color: colorScheme.outline.withValues(alpha: 0.1)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        CourseCardHeader(
+                          iconData: getIconByCourseId(widget.course.id),
+                          title: widget.course.courseName,
+                          //      color: colorScheme.onSurface,
+                        ),
+                        const Spacer(),
+                        CourseCardProgress(
+                          progress: progress,
+                          progressText: progressText,
+                        ),
+                      ],
                     ),
                   ),
                 ),

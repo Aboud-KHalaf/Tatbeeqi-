@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/views/pdf_viewer_view.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/custom_app_bar.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/recently_added_section.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/study_progress_section.dart';
 import 'package:tatbeeqi/features/news/presentation/widgets/news_section.dart';
+import 'package:tatbeeqi/features/quiz/presentation/views/quiz_view.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/today_tasks_section.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
@@ -68,7 +70,12 @@ class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
           _SectionTitle(
               title: l10n.homeTodayTasks,
               onPressed: () async {
-                context.push(AppRoutes.todoPath);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const QuizView(lessonId: 10)),
+                );
+                //context.push(AppRoutes.todoPath);
               }),
           const SizedBox(height: 12.0),
           const TodayTasksSection(),

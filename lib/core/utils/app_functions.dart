@@ -137,6 +137,4 @@ IconData getIconByCourseId(int id) {
     default:
       return Icons.book; // Default for unidentified courses
   }
-  
 }
-

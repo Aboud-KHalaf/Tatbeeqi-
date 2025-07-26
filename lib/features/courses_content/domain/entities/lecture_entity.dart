@@ -6,7 +6,6 @@ class Lecture extends Equatable {
   final String title;
   final String? description;
   final int orderIndex;
-//  final List<Lesson> lessons;
 
   const Lecture({
     required this.id,
@@ -14,7 +13,6 @@ class Lecture extends Equatable {
     required this.title,
     this.description,
     required this.orderIndex,
-    // this.lessons = const [],
   });
 
   @override

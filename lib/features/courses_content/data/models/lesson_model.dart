@@ -23,18 +23,41 @@ class LessonModel extends Lesson {
   factory LessonModel.fromJson(Map<String, dynamic> json,
       {bool isCompleted = false}) {
     return LessonModel(
-      isActive: json['is_active'],
-      language: json['language'] ?? 'arbic',
-      isCompleted: isCompleted,
       id: json['id'],
-      createdBy: json['created_by'] ?? '',
-      durationMinutes: json['duration_minutes'] ?? 0,
       lectureId: json['lecture_id'],
       title: json['title'],
-      lessonType: json['lesson_type'],
+      lessonType: _stringToContentType(json['lesson_type']),
       contentUrl: json['content_url'],
       content: json['content'],
       isDownloadable: json['is_downloadable'] ?? false,
+      createdBy: json['created_by'],
+      durationMinutes: json['duration_minutes'] ?? 0,
+      publishedAt: json['published_at'] != null
+          ? DateTime.parse(json['published_at'])
+          : null,
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'])
+          : null,
+      summary: json['summary'],
+      tags: (json['tags'] as List<dynamic>?)?.cast<String>(),
+      isActive: json['is_active'] ?? true,
+      language: json['language'] ?? 'arabic',
+      isCompleted: isCompleted,
     );
+  }
+
+  static ContentType _stringToContentType(String value) {
+    switch (value.toLowerCase()) {
+      case 'video':
+        return ContentType.video;
+      case 'voice':
+        return ContentType.voice;
+      case 'reading':
+        return ContentType.reading;
+      case 'quiz':
+        return ContentType.quiz;
+      default:
+        return ContentType.reading;
+    }
   }
 }

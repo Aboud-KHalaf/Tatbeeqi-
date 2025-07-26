@@ -8,6 +8,8 @@ import 'package:tatbeeqi/core/di/service_locator.dart' as di;
 import 'package:tatbeeqi/core/routing/app_router.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cubit/retake_courses_cubit.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/manager/lectures/lectures_cubit.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/manager/lessons/lessons_cubit.dart';
 import 'package:tatbeeqi/features/localization/presentation/manager/locale_cubit/locale_cubit.dart';
 import 'package:tatbeeqi/features/localization/presentation/manager/locale_cubit/locale_state.dart';
 import 'package:tatbeeqi/features/news/presentation/manager/news_cubit.dart';
@@ -100,6 +102,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.sl<PostsBloc>()..add(FetchPostsEvent()),
+        ),
+        BlocProvider(
+          create: (_) => di.sl<LecturesCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => di.sl<LessonsCubit>(),
         ),
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(

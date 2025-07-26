@@ -20,8 +20,8 @@ class LocaleCubit extends Cubit<LocaleState> {
     final result = await _getLocaleUseCase();
     result.fold(
       (failure) {
-        emit(LocaleError(
-            const Locale(AppConstants.defaultLocale), failure.toString()));
+        emit(LocaleError(const Locale(AppStringConstants.defaultLocale),
+            failure.toString()));
       },
       (locale) => emit(LocaleLoaded(locale)),
     );

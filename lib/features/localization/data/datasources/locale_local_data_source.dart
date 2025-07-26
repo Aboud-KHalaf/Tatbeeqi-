@@ -20,7 +20,7 @@ class LocaleLocalDataSourceImpl implements LocaleLocalDataSource {
     if (jsonString != null) {
       return Future.value(jsonString);
     } else {
-      return Future.value(AppConstants.defaultLocale);
+      return Future.value(AppStringConstants.defaultLocale);
     }
   }
 

@@ -1,10 +1,12 @@
 import 'package:equatable/equatable.dart';
 
+enum ContentType { video, voice, reading, quiz }
+
 class Lesson extends Equatable {
   final int id;
   final int lectureId;
   final String title;
-  final String lessonType;
+  final ContentType lessonType; 
   final String? contentUrl;
   final String? content;
   final bool isDownloadable;

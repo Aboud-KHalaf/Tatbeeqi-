@@ -28,7 +28,7 @@ class _PostCardActionButtonsState extends State<PostCardActionButtons>
       duration: const Duration(milliseconds: 600),
       vsync: this,
     );
-    
+
     _likeAnimation = TweenSequence<double>([
       TweenSequenceItem(
         tween: Tween<double>(begin: 1.0, end: 1.3)
@@ -56,14 +56,14 @@ class _PostCardActionButtonsState extends State<PostCardActionButtons>
 
   void _handleLike() async {
     if (_isAnimating) return;
-    
+
     _isAnimating = true;
     HapticFeedback.lightImpact();
-    
+
     await _likeController.forward();
     _likeController.reset();
     _isAnimating = false;
-    
+
     if (mounted) {
       context.read<PostsBloc>().add(LikePostToggledEvent(widget.post.id));
     }
@@ -102,8 +102,8 @@ class _PostCardActionButtonsState extends State<PostCardActionButtons>
               builder: (context, child) => Transform.scale(
                 scale: _likeAnimation.value,
                 child: _ActionButton(
-                  icon: widget.post.isLiked 
-                      ? Icons.thumb_up_rounded 
+                  icon: widget.post.isLiked
+                      ? Icons.thumb_up_rounded
                       : Icons.thumb_up_outlined,
                   label: _formatCount(widget.post.likesCount),
                   onPressed: _handleLike,
@@ -157,34 +157,36 @@ class _ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    
-    final color = isActive 
-        ? theme.colorScheme.primary 
+
+    final color = isActive
+        ? theme.colorScheme.primary
         : theme.colorScheme.onSurfaceVariant;
-    
+
     final backgroundColor = isDark
-        ? Colors.grey.shade800.withOpacity(0.3)
-        : Colors.grey.shade100.withOpacity(0.8);
+        ? Colors.grey.shade800.withValues(alpha: 0.3)
+        : Colors.grey.shade100.withValues(alpha: 0.8);
 
     return Material(
       color: Colors.transparent,
       child: InkWell(
         onTap: onPressed,
         borderRadius: BorderRadius.circular(24),
-        splashColor: theme.colorScheme.primary.withOpacity(0.1),
+        splashColor: theme.colorScheme.primary.withValues(alpha: 0.1),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             color: backgroundColor,
             borderRadius: BorderRadius.circular(24),
-            boxShadow: isActive ? [
-              BoxShadow(
-                color: theme.colorScheme.primary.withOpacity(0.1),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
-            ] : null,
+            boxShadow: isActive
+                ? [
+                    BoxShadow(
+                      color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
+                  ]
+                : null,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -214,7 +216,7 @@ class _ActionButton extends StatelessWidget {
 
 class _ShareSheet extends StatelessWidget {
   final Post post;
-  
+
   const _ShareSheet({required this.post});
 
   @override
@@ -232,7 +234,10 @@ class _ShareSheet extends StatelessWidget {
             height: 4,
             margin: const EdgeInsets.only(top: 12),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -240,8 +245,8 @@ class _ShareSheet extends StatelessWidget {
           Text(
             'Share Post',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontWeight: FontWeight.w600,
-            ),
+                  fontWeight: FontWeight.w600,
+                ),
           ),
           const SizedBox(height: 20),
           Padding(
@@ -250,7 +255,7 @@ class _ShareSheet extends StatelessWidget {
               children: [
                 ListTile(
                   leading: Icon(
-                    Icons.link_rounded, 
+                    Icons.link_rounded,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   title: const Text('Copy Link'),
@@ -267,7 +272,7 @@ class _ShareSheet extends StatelessWidget {
                 ),
                 ListTile(
                   leading: Icon(
-                    Icons.share_rounded, 
+                    Icons.share_rounded,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   title: const Text('Share via...'),

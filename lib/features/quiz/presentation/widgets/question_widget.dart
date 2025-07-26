@@ -19,42 +19,83 @@ class QuestionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // Question Card
-        Card(
-          elevation: 6, // Increased elevation for a more prominent card
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          margin: const EdgeInsets.only(bottom: 24.0),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              question.questionText,
-              style: textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: colorScheme.onSurface,
+        // Question Card with enhanced design
+        TweenAnimationBuilder<double>(
+          duration: const Duration(milliseconds: 600),
+          tween: Tween(begin: 0.0, end: 1.0),
+          builder: (context, value, child) {
+            return Transform.translate(
+              offset: Offset(0, 20 * (1 - value)),
+              child: Opacity(
+                opacity: value,
+                child: Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(bottom: 32),
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: colorScheme.primaryContainer.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: colorScheme.primary.withOpacity(0.2),
+                      width: 1,
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.quiz_rounded,
+                        color: colorScheme.primary,
+                        size: 28,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        question.questionText,
+                        style: theme.textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: colorScheme.onSurface,
+                          height: 1.3,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              textAlign: TextAlign.center,
-            ),
-          ),
+            );
+          },
         ),
 
-        // Answer Options (as Cards)
-        ...question.answers.map((answer) {
+        // Answer Options with staggered animations
+        ...question.answers.asMap().entries.map((entry) {
+          final index = entry.key;
+          final answer = entry.value;
           final isSelected = selectedAnswerId == answer.id;
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: AnswerOptionCard(
-              answer: answer,
-              isSelected: isSelected,
-              onTap: () => onAnswerSelected(answer.id),
-            ),
+          
+          return TweenAnimationBuilder<double>(
+            duration: Duration(milliseconds: 400 + (index * 100)),
+            tween: Tween(begin: 0.0, end: 1.0),
+            builder: (context, value, child) {
+              return Transform.translate(
+                offset: Offset(30 * (1 - value), 0),
+                child: Opacity(
+                  opacity: value,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: AnswerOptionCard(
+                      answer: answer,
+                      isSelected: isSelected,
+                      onTap: () => onAnswerSelected(answer.id),
+                    ),
+                  ),
+                ),
+              );
+            },
           );
         }).toList(),
       ],

@@ -5,7 +5,7 @@ import 'app_colors.dart';
 class AppTextStyles {
   AppTextStyles._();
 
-  static final TextStyle _baseTextStyle = GoogleFonts.roboto();
+  static final TextStyle _baseTextStyle = GoogleFonts.tajawal();
 
   static final TextTheme lightTextTheme = TextTheme(
     displayLarge: _baseTextStyle.copyWith(

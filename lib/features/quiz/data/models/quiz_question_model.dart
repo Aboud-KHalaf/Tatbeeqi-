@@ -20,15 +20,35 @@ class QuizQuestionModel extends QuizQuestion {
 
   factory QuizQuestionModel.fromJson(Map<String, dynamic> json) {
     return QuizQuestionModel(
-      id: json['id'],
-      lessonId: json['lessonId'],
-      questionText: json['questionText'],
-      questionType: QuestionType.values.firstWhere((e) => e.toString() == 'QuestionType.' + json['questionType']),
-      orderIndex: json['orderIndex'],
-      answers: (json['answers'] as List)
-          .map((answer) => QuizAnswerModel.fromJson(answer))
+      id: json['id']?.toString() ?? '',
+      lessonId: json['lessonId']?.toString() ?? '',
+      questionText: json['questionText']?.toString() ?? '',
+      questionType: _parseQuestionType(json['questionType']),
+      orderIndex: json['orderIndex'] ?? 0,
+      answers: (json['answers'] as List? ?? [])
+          .map((answer) => QuizAnswerModel.fromJson(answer as Map<String, dynamic>))
           .toList(),
     );
+  }
+
+  static QuestionType _parseQuestionType(dynamic questionType) {
+    if (questionType == null) return QuestionType.multipleChoice;
+    
+    final typeString = questionType.toString().toLowerCase();
+    
+    switch (typeString) {
+      case 'multiplechoice':
+      case 'multiple_choice':
+      case 'multiple choice':
+        return QuestionType.multipleChoice;
+      case 'truefalse':
+      case 'true_false':
+      case 'true false':
+        return QuestionType.trueFalse;
+      default:
+        print('Warning: Unknown question type "$questionType", defaulting to multipleChoice');
+        return QuestionType.multipleChoice;
+    }
   }
 
   Map<String, dynamic> toJson() {

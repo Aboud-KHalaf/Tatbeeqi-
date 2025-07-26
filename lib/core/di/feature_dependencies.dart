@@ -22,7 +22,7 @@ void initFeatureDependencies(GetIt sl) {
   initCoursesDependencies(sl);
   initNotesDependencies(sl);
   initAuthDependencies(sl);
-  initQuizesDependencies(sl);
+  initQuizzesDependencies(sl);
   initPostsDependencies(sl);
   initCourseContentDependencies(sl);
 }

@@ -70,7 +70,10 @@ class _CommentsListWidgetState extends State<CommentsListWidget> {
               color: Theme.of(context).colorScheme.surfaceContainerLow,
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
-                color: Theme.of(context).colorScheme.outline.withOpacity(0.12),
+                color: Theme.of(context)
+                    .colorScheme
+                    .outline
+                    .withValues(alpha: 0.12),
               ),
             ),
             child: Row(

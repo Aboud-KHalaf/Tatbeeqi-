@@ -10,7 +10,8 @@ class PostCardShimmer extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final screenWidth = MediaQuery.of(context).size.width;
 
-    final shimmerBaseColor = colorScheme.onSurfaceVariant.withValues(alpha: 0.3);
+    final shimmerBaseColor =
+        colorScheme.onSurfaceVariant.withValues(alpha: 0.3);
     final shimmerHighlightColor = colorScheme.onSurface.withValues(alpha: 0.6);
 
     const placeholderColor = Colors.white;
@@ -33,7 +34,7 @@ class PostCardShimmer extends StatelessWidget {
       decoration: BoxDecoration(
         color: colorScheme.surface,
         borderRadius: BorderRadius.circular(16.0),
-        border: Border.all(color: colorScheme.outline.withOpacity(0.12)),
+        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.12)),
       ),
       child: Shimmer.fromColors(
         baseColor: shimmerBaseColor,

@@ -11,9 +11,10 @@ import 'package:tatbeeqi/features/auth/presentation/views/forget_password_page.d
 import 'package:tatbeeqi/features/auth/presentation/views/sign_in_page.dart';
 import 'package:tatbeeqi/features/auth/presentation/views/sign_up_page.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/views/course_lectures_view.dart';
 
 // Features
-import 'package:tatbeeqi/features/courses_content/presentation/views/course_overview_screen.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/views/course_overview_view.dart';
 import 'package:tatbeeqi/features/navigation/presentation/screens/main_navigation_screen.dart';
 import 'package:tatbeeqi/features/news/presentation/views/all_news_view.dart';
 import 'package:tatbeeqi/features/news/presentation/views/news_details_view.dart';
@@ -94,8 +95,18 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.courseOverviewPath,
         builder: (BuildContext context, GoRouterState state) {
+          final args = state.extra as CourseOverviewArgs;
+          return CourseOverviewView(
+            lecture: args.lecture,
+            course: args.course,
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.courseLecturesPath,
+        builder: (BuildContext context, GoRouterState state) {
           final args = state.extra as Course;
-          return CourseOverviewScreen(course: args);
+          return CourseLecturesView(course: args);
         },
       ),
       GoRoute(
@@ -122,7 +133,7 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.quizPath,
         builder: (BuildContext context, GoRouterState state) {
-          final lessonId = state.extra as String;
+          final lessonId = state.extra as int;
           return QuizView(lessonId: lessonId);
         },
       ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tatbeeqi/core/utils/app_data.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
+import 'package:tatbeeqi/features/courses_content/domain/entities/lesson_entity.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_content_list.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_description_section.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_lectures_list.dart';
@@ -11,15 +11,21 @@ import 'package:tatbeeqi/features/courses_content/presentation/widgets/up_next_c
 class CourseOverviewBody extends StatelessWidget {
   final TabController tabController;
   final Course course;
-  const CourseOverviewBody({super.key, required this.tabController , required this.course});
+  final List<Lesson> lessons;
+
+  const CourseOverviewBody(
+      {super.key,
+      required this.tabController,
+      required this.course,
+      required this.lessons});
 
   @override
   Widget build(BuildContext context) {
-    final upNextItem = contentItems.firstWhere(
-      (item) => !item.isCompleted,
-      orElse: () => contentItems.first,
-    );
-    
+    final Lesson upNextItem = lessons.first;
+// lessons.firstWhere(
+//       (lesson) => !lesson.isCompleted,
+//       orElse: () => lessons.first,
+//     );
     Widget buildResponsiveLayout(BuildContext context, Widget content) {
       final screenWidth = MediaQuery.of(context).size.width;
 
@@ -51,14 +57,14 @@ class CourseOverviewBody extends StatelessWidget {
                 ),
                 const Divider(height: 16, indent: 12, endIndent: 12),
                 UpNextCard(
-                  contentItem: upNextItem,
+                  lesson: upNextItem,
                   onPressed: () {},
                 ),
                 const CourseDescriptionSection(),
               ],
             ),
           ),
-          CourseContentList(items: contentItems),
+          CourseContentList(lessonsList: lessons),
           const SliverToBoxAdapter(child: SizedBox(height: 32)),
         ],
       ),

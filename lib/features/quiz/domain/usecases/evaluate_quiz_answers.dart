@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+import 'package:tatbeeqi/core/error/failures.dart';
 import '../entities/user_answer.dart';
 import '../repositories/quiz_repository.dart';
 
@@ -6,7 +8,14 @@ class EvaluateQuizAnswersUseCase {
 
   EvaluateQuizAnswersUseCase(this.repository);
 
-  Future<Map<String, bool>> call(List<UserAnswer> userAnswers) {
-    return repository.evaluateQuizAnswers(userAnswers);
+  Future<Either<Failure, Map<String, bool>>> call(EvaluateQuizAnswersParams params) {
+    return repository.evaluateQuizAnswers(params.lessonId, params.userAnswers);
   }
+}
+
+class EvaluateQuizAnswersParams {
+  final int lessonId;
+  final List<UserAnswer> userAnswers;
+
+  EvaluateQuizAnswersParams({required this.lessonId, required this.userAnswers});
 }

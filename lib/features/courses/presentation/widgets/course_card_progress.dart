@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 class CourseCardProgress extends StatelessWidget {
   final double progress; // 0.0 to 1.0
   final String progressText;
-
+  //final Color color;
   const CourseCardProgress({
     super.key,
     required this.progress,
     required this.progressText,
+    //required this.color,
   });
 
   @override
@@ -46,7 +47,7 @@ class CourseCardProgress extends StatelessWidget {
                             end: Alignment.centerRight,
                           ),
                     color: isEmpty
-                        ? theme.colorScheme.primary.withOpacity(0.1)
+                        ? theme.colorScheme.primary.withValues(alpha: 0.1)
                         : null,
                   ),
                 ),

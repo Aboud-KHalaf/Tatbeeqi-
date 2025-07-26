@@ -36,7 +36,7 @@ class _AddCommentBarState extends State<AddCommentBar> {
         color: colorScheme.surface,
         border: Border(
           top: BorderSide(
-            color: colorScheme.outline.withOpacity(0.12),
+            color: colorScheme.outline.withValues(alpha: 0.12),
             width: 1,
           ),
         ),
@@ -52,7 +52,7 @@ class _AddCommentBarState extends State<AddCommentBar> {
                   color: colorScheme.surfaceContainerLow,
                   borderRadius: BorderRadius.circular(24),
                   border: Border.all(
-                    color: colorScheme.outline.withOpacity(0.12),
+                    color: colorScheme.outline.withValues(alpha: 0.12),
                     width: 1,
                   ),
                 ),
@@ -96,7 +96,7 @@ class _AddCommentBarState extends State<AddCommentBar> {
                     border: hasText
                         ? null
                         : Border.all(
-                            color: colorScheme.outline.withOpacity(0.12),
+                            color: colorScheme.outline.withValues(alpha: 0.12),
                           ),
                   ),
                   child: IconButton(

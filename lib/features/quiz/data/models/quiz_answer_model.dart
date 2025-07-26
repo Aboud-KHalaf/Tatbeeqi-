@@ -15,10 +15,10 @@ class QuizAnswerModel extends QuizAnswer {
 
   factory QuizAnswerModel.fromJson(Map<String, dynamic> json) {
     return QuizAnswerModel(
-      id: json['id'],
-      questionId: json['questionId'],
-      answerText: json['answerText'],
-      isCorrect: json['isCorrect'],
+      id: json['id']?.toString() ?? '',
+      questionId: json['question_id']?.toString() ?? json['questionId']?.toString() ?? '',
+      answerText: json['answer_text']?.toString() ?? json['answerText']?.toString() ?? '',
+      isCorrect: json['is_correct'] ?? json['isCorrect'] ?? false,
     );
   }
 
