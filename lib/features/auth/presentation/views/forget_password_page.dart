@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
+import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import '../manager/bloc/auth_bloc.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/primary_button.dart';
@@ -39,9 +39,9 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
                 .popUntil((route) => route.isFirst);
           }
           if (state is AuthError) {
-            CustomSnackBar.showError(context: context, message: state.message);
+            SnackBarHelper.showError(context: context, message: state.message);
           } else if (state is AuthUnauthenticated) {
-            CustomSnackBar.showInfo(
+            SnackBarHelper.showInfo(
                 context: context, message: "Password reset email sent");
           }
         },

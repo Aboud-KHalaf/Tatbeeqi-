@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_error_state.dart';
 import '../../domain/entities/quiz_question.dart';
 import '../../domain/entities/user_answer.dart';
 import '../../domain/usecases/evaluate_quiz_answers.dart';
@@ -26,9 +25,9 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
 
   Future<void> _onLoadQuiz(LoadQuiz event, Emitter<QuizState> emit) async {
     emit(QuizLoading());
-    
+
     final result = await getQuizQuestionsUseCase(event.lessonId);
-    
+
     result.fold(
       (failure) {
         print('Quiz loading failed: ${failure.message}');
@@ -75,19 +74,19 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       final currentState = state as QuizLoaded;
       if (currentState.userAnswers.length != currentState.questions.length) {
         print('Quiz submission failed: Not all questions answered');
-        emit(QuizError(error: 'Please answer all questions before submitting'));
+        emit(const QuizError(
+            error: 'Please answer all questions before submitting'));
         return;
       }
-      
+
       final userAnswers = currentState.userAnswers.entries
-          .map((entry) => UserAnswer(
-              questionId: entry.key, selectedAnswerId: entry.value))
+          .map((entry) =>
+              UserAnswer(questionId: entry.key, selectedAnswerId: entry.value))
           .toList();
 
-      final result = await evaluateQuizAnswersUseCase(
-          EvaluateQuizAnswersParams(
-              lessonId: currentState.lessonId, userAnswers: userAnswers));
-      
+      final result = await evaluateQuizAnswersUseCase(EvaluateQuizAnswersParams(
+          lessonId: currentState.lessonId, userAnswers: userAnswers));
+
       result.fold(
         (failure) {
           print('Quiz evaluation failed: ${failure.message}');
@@ -96,7 +95,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
         (results) {
           final score = results.values.where((isCorrect) => isCorrect).length;
           print('Quiz completed with score: $score/${results.length}');
-          
+
           emit(QuizCompleted(
             score: score,
             results: results,

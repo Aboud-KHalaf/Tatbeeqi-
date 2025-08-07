@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tatbeeqi/core/helpers/Lesson_helper.dart';
+import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import 'package:tatbeeqi/features/courses_content/domain/entities/lesson_entity.dart';
 
 class UpNextCard extends StatelessWidget {
@@ -97,7 +99,8 @@ class UpNextCard extends StatelessWidget {
                       ),
                       onPressed: () {
                         HapticFeedback.lightImpact();
-                        // TODO: Implement download functionality
+                        SnackBarHelper.showInfo(
+                            context: context, message: "soon");
                       },
                       tooltip: 'تحميل المحاضرة',
                     ),
@@ -113,7 +116,8 @@ class UpNextCard extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                     decoration: BoxDecoration(
-                      color: _getTypeColor(lesson.lessonType, colorScheme)
+                      color: LessonHelper.getTypeColor(
+                              lesson.lessonType, colorScheme)
                           .withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -121,16 +125,17 @@ class UpNextCard extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Icon(
-                          _getIcon(lesson.lessonType),
+                          LessonHelper.getIcon(lesson.lessonType),
                           size: 14,
-                          color: _getTypeColor(lesson.lessonType, colorScheme),
+                          color: LessonHelper.getTypeColor(
+                              lesson.lessonType, colorScheme),
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          _getTypeText(lesson.lessonType),
+                          LessonHelper.getTypeText(lesson.lessonType, context),
                           style: theme.textTheme.labelSmall?.copyWith(
-                            color:
-                                _getTypeColor(lesson.lessonType, colorScheme),
+                            color: LessonHelper.getTypeColor(
+                                lesson.lessonType, colorScheme),
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -192,44 +197,5 @@ class UpNextCard extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String _getTypeText(ContentType type) {
-    switch (type) {
-      case ContentType.video:
-        return 'فيديو';
-      case ContentType.voice:
-        return 'صوت';
-      case ContentType.reading:
-        return 'قراءة';
-      case ContentType.quiz:
-        return 'اختبار';
-    }
-  }
-
-  Color _getTypeColor(ContentType type, ColorScheme colorScheme) {
-    switch (type) {
-      case ContentType.video:
-        return Colors.red.shade600;
-      case ContentType.voice:
-        return Colors.orange.shade600;
-      case ContentType.reading:
-        return Colors.blue.shade600;
-      case ContentType.quiz:
-        return Colors.green.shade600;
-    }
-  }
-
-  IconData _getIcon(ContentType type) {
-    switch (type) {
-      case ContentType.video:
-        return Icons.play_arrow;
-      case ContentType.voice:
-        return Icons.headset;
-      case ContentType.reading:
-        return Icons.book;
-      case ContentType.quiz:
-        return Icons.quiz;
-    }
   }
 }

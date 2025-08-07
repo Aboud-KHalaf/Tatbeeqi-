@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
+import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import 'package:tatbeeqi/features/notifications/domain/entities/app_notification.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/initialize_notifications_cubit/initialize_notifications_cubit.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/notification_settings_bloc/notification_settings_bloc.dart';
@@ -43,7 +43,7 @@ class NotificationsView extends StatelessWidget {
       listener: (context, state) {
         if (state is InitializeNotificationsSuccess) {}
         if (state is InitializeNotificationsFailure) {
-          CustomSnackBar.showError(
+          SnackBarHelper.showError(
             context: context,
             message: state.message,
           );
@@ -164,13 +164,13 @@ class NotificationsView extends StatelessWidget {
         BlocListener<SendNotificationBloc, SendNotificationState>(
           listener: (context, state) {
             if (state is SendNotificationSuccess) {
-              CustomSnackBar.showSuccess(
+              SnackBarHelper.showSuccess(
                 context: context,
                 message: "sended",
               );
             }
             if (state is SendNotificationFailure) {
-              CustomSnackBar.showError(
+              SnackBarHelper.showError(
                 context: context,
                 message: state.message,
               );

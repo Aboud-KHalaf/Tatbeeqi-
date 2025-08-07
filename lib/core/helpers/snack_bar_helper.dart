@@ -39,7 +39,7 @@ class SnackBarConfig {
 }
 
 /// Custom animated SnackBar utility class
-class CustomSnackBar {
+class SnackBarHelper {
   static const Map<SnackBarType, IconData> _defaultIcons = {
     SnackBarType.success: Icons.check_circle_outline,
     SnackBarType.error: Icons.error_outline,
@@ -383,7 +383,7 @@ class _AnimatedSnackBarContentState extends State<_AnimatedSnackBarContent>
 /// Extension on BuildContext for easier access to SnackBar methods
 extension SnackBarExtension on BuildContext {
   void showSuccessSnackBar(String message, {SnackBarConfig? config}) {
-    CustomSnackBar.showSuccess(
+    SnackBarHelper.showSuccess(
       context: this,
       message: message,
       config: config ?? const SnackBarConfig(),
@@ -391,7 +391,7 @@ extension SnackBarExtension on BuildContext {
   }
 
   void showErrorSnackBar(String message, {SnackBarConfig? config}) {
-    CustomSnackBar.showError(
+    SnackBarHelper.showError(
       context: this,
       message: message,
       config: config ??
@@ -403,7 +403,7 @@ extension SnackBarExtension on BuildContext {
   }
 
   void showWarningSnackBar(String message, {SnackBarConfig? config}) {
-    CustomSnackBar.showWarning(
+    SnackBarHelper.showWarning(
       context: this,
       message: message,
       config: config ?? const SnackBarConfig(duration: Duration(seconds: 4)),
@@ -411,7 +411,7 @@ extension SnackBarExtension on BuildContext {
   }
 
   void showInfoSnackBar(String message, {SnackBarConfig? config}) {
-    CustomSnackBar.showInfo(
+    SnackBarHelper.showInfo(
       context: this,
       message: message,
       config: config ?? const SnackBarConfig(),

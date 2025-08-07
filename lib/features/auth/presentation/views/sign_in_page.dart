@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
+import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import '../manager/bloc/auth_bloc.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/google_sign_in_button.dart';
@@ -103,7 +103,7 @@ class _SignInPageState extends State<SignInPage>
                 });
 
                 if (state is AuthError) {
-                  CustomSnackBar.showError(
+                  SnackBarHelper.showError(
                     context: context,
                     message: state.message,
                   );

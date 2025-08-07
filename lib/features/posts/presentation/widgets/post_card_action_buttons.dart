@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
+import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
@@ -261,7 +261,7 @@ class _ShareSheet extends StatelessWidget {
                   title: const Text('Copy Link'),
                   onTap: () {
                     Navigator.pop(context);
-                    CustomSnackBar.showInfo(
+                    SnackBarHelper.showInfo(
                       context: context,
                       message: "Link copied to clipboard",
                     );

@@ -56,6 +56,8 @@ class LessonModel extends Lesson {
         return ContentType.reading;
       case 'quiz':
         return ContentType.quiz;
+      case 'pdf':
+        return ContentType.pdf;
       default:
         return ContentType.reading;
     }

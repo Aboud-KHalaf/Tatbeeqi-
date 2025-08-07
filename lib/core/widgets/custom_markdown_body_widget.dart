@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
-import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
+import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import 'package:tatbeeqi/core/widgets/code_block_builder_widget.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -49,7 +49,7 @@ class CustomMarkDownBodyWidget extends StatelessWidget {
       final Uri uri = Uri.parse(url);
       if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
         if (context.mounted) {
-          CustomSnackBar.showError(
+          SnackBarHelper.showError(
             context: context,
             message: AppLocalizations.of(context)!.errorCouldNotLaunch(''),
           );
@@ -57,7 +57,7 @@ class CustomMarkDownBodyWidget extends StatelessWidget {
       }
     } catch (e) {
       if (context.mounted) {
-        CustomSnackBar.showError(
+        SnackBarHelper.showError(
           context: context,
           message: AppLocalizations.of(context)!.errorCouldNotLaunch(''),
         );

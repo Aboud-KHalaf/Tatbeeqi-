@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
+import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_state.dart';
@@ -165,7 +165,7 @@ class _CreatePostViewState extends State<CreatePostView> {
   void _handleBlocState(BuildContext context, PostCrudState state) {
     if (state is CreatePostSuccess) {
       HapticFeedback.lightImpact();
-      CustomSnackBar.showSuccess(
+      SnackBarHelper.showSuccess(
         context: context,
         message: _isArticle
             ? "Article published successfully!"
@@ -174,7 +174,7 @@ class _CreatePostViewState extends State<CreatePostView> {
       Navigator.pop(context, true);
     } else if (state is CreatePostFailure) {
       HapticFeedback.lightImpact();
-      CustomSnackBar.showError(
+      SnackBarHelper.showError(
         context: context,
         message: state.message,
       );
@@ -212,7 +212,7 @@ class _CreatePostViewState extends State<CreatePostView> {
 
   void _showPreview() {
     if (!_canPreview) {
-      CustomSnackBar.showWarning(
+      SnackBarHelper.showWarning(
         context: context,
         message: "Add some content to preview",
       );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tatbeeqi/core/utils/custom_snack_bar.dart';
+import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/views/post_details_view.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_action_buttons.dart';
@@ -73,7 +73,7 @@ class PostCard extends StatelessWidget {
 
   void handelLongPress(BuildContext context) {
     Clipboard.setData(ClipboardData(text: post.text));
-    CustomSnackBar.showInfo(
+    SnackBarHelper.showInfo(
       context: context,
       message: 'Text copied to clipboard',
     );
