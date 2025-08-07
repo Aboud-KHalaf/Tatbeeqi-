@@ -14,7 +14,7 @@ class CourseOverviewView extends StatefulWidget {
   const CourseOverviewView({super.key, required this.course});
   static const String routePath = '/courseOverviewView';
 
-    @override
+  @override
   State<CourseOverviewView> createState() => _CourseOverviewViewState();
 }
 
@@ -42,7 +42,8 @@ class _CourseOverviewViewState extends State<CourseOverviewView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(tabController: _tabController),
+      appBar:
+          CustomAppBar(tabController: _tabController, course: widget.course),
       body: TabBarView(
         controller: _tabController,
         children: [
@@ -56,6 +57,3 @@ class _CourseOverviewViewState extends State<CourseOverviewView>
     );
   }
 }
-                       
-
-                              

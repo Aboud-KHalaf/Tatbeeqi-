@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
+import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final Course course;
   const CustomAppBar({
     super.key,
     required TabController tabController,
+    required this.course,
   }) : _tabController = tabController;
 
   final TabController _tabController;
@@ -43,11 +46,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
-      title: Text(
-        'برمجة متقدمة',
-        style: theme.textTheme.titleLarge?.copyWith(
-          fontWeight: FontWeight.w700,
-          color: colorScheme.onSurface,
+      title: Hero(
+        tag: course.courseName,
+        child: Text(
+          course.courseName,
+          style: theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.w700,
+            color: colorScheme.onSurface,
+          ),
         ),
       ),
       actions: [

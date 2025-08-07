@@ -27,6 +27,9 @@ class LectureContent extends StatelessWidget {
               orElse: () => lessons.first,
             )
         : null;
+
+    final progressPercentage =
+        lessons.where((lesson) => lesson.isCompleted).length / lessons.length;
     Widget buildResponsiveLayout(BuildContext context, Widget content) {
       final screenWidth = MediaQuery.of(context).size.width;
 
@@ -54,10 +57,10 @@ class LectureContent extends StatelessWidget {
               children: [
                 // const CourseLecturesList(),
                 ModuleProgressSection(
-                  completionPercentage: course.progressPercent ?? 0,
+                  completionPercentage: progressPercentage,
                 ),
                 const Divider(height: 16, indent: 12, endIndent: 12),
-                if (upNextItem != null)
+                if (upNextItem != null && progressPercentage < 1)
                   UpNextCard(
                     lesson: upNextItem,
                     onPressed: () {},

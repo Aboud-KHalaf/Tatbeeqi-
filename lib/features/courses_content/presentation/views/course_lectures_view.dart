@@ -9,7 +9,6 @@ import 'package:tatbeeqi/features/courses_content/presentation/manager/lectures/
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/lecture_card.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/lecture_card_shimmer.dart';
 
-// Lecture List View Widget
 class CourseLecturesView extends StatelessWidget {
   final Course course;
   static const String routePath = '/courseLecturesView';
@@ -33,7 +32,7 @@ class CourseLecturesView extends StatelessWidget {
             if (state.lectures.isEmpty) {
               return _EmptyState();
             }
-            return _LecturesList(lectures: state.lectures, course: course);
+            return LecturesList(lectures: state.lectures, course: course);
           } else if (state is LecturesError) {
             return _ErrorState(
               message: state.message,
@@ -48,14 +47,10 @@ class CourseLecturesView extends StatelessWidget {
   }
 }
 
-// Lecture Card Widget
-
-// Private Widgets for Different States
-
-class _LecturesList extends StatelessWidget {
+class LecturesList extends StatelessWidget {
   final List<Lecture> lectures;
   final Course course;
-  const _LecturesList({required this.lectures, required this.course});
+  const LecturesList({super.key, required this.lectures, required this.course});
 
   @override
   Widget build(BuildContext context) {
