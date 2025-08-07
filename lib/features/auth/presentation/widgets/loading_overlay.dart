@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class LoadingOverlay extends StatefulWidget {
   final String? message;
   final bool isVisible;
-  
+
   const LoadingOverlay({
     super.key,
     this.message,
@@ -78,13 +78,13 @@ class _LoadingOverlayState extends State<LoadingOverlay>
           child: Opacity(
             opacity: _fadeAnimation.value,
             child: Container(
-              color: colorScheme.scrim.withOpacity(0.7),
+              color: colorScheme.scrim.withValues(alpha: 0.7),
               child: Center(
                 child: Transform.scale(
                   scale: _scaleAnimation.value,
                   child: Card(
                     elevation: 8,
-                    shadowColor: colorScheme.shadow.withOpacity(0.3),
+                    shadowColor: colorScheme.shadow.withValues(alpha: 0.3),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),

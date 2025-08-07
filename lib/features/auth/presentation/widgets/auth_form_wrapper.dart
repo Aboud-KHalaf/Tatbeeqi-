@@ -7,7 +7,7 @@ class AuthFormWrapper extends StatelessWidget {
   final List<Widget>? actions;
   final EdgeInsetsGeometry? padding;
   final bool showBackButton;
-  
+
   const AuthFormWrapper({
     super.key,
     required this.title,
@@ -23,7 +23,7 @@ class AuthFormWrapper extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final mediaQuery = MediaQuery.of(context);
-    
+
     return Scaffold(
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
@@ -43,15 +43,16 @@ class AuthFormWrapper extends StatelessWidget {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: padding ?? EdgeInsets.symmetric(
-            horizontal: 24,
-            vertical: mediaQuery.size.height * 0.02,
-          ),
+          padding: padding ??
+              EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: mediaQuery.size.height * 0.02,
+              ),
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              minHeight: mediaQuery.size.height - 
-                  mediaQuery.padding.top - 
-                  mediaQuery.padding.bottom - 
+              minHeight: mediaQuery.size.height -
+                  mediaQuery.padding.top -
+                  mediaQuery.padding.bottom -
                   kToolbarHeight,
             ),
             child: Column(
@@ -62,12 +63,12 @@ class AuthFormWrapper extends StatelessWidget {
                   title: title,
                   subtitle: subtitle,
                 ),
-                
+
                 SizedBox(height: mediaQuery.size.height * 0.04),
-                
+
                 // Form Content
                 child,
-                
+
                 SizedBox(height: mediaQuery.size.height * 0.02),
               ],
             ),
@@ -81,7 +82,7 @@ class AuthFormWrapper extends StatelessWidget {
 class _AuthHeader extends StatefulWidget {
   final String title;
   final String? subtitle;
-  
+
   const _AuthHeader({
     required this.title,
     this.subtitle,
@@ -179,7 +180,7 @@ class AuthFormSection extends StatelessWidget {
   final List<Widget> children;
   final EdgeInsetsGeometry? padding;
   final double spacing;
-  
+
   const AuthFormSection({
     super.key,
     required this.children,
@@ -204,7 +205,7 @@ class AuthFormSection extends StatelessWidget {
 
 class AuthDivider extends StatelessWidget {
   final String text;
-  
+
   const AuthDivider({
     super.key,
     this.text = 'OR',
@@ -214,14 +215,14 @@ class AuthDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24),
       child: Row(
         children: [
           Expanded(
             child: Divider(
-              color: colorScheme.outline.withOpacity(0.3),
+              color: colorScheme.outline.withValues(alpha: 0.3),
               thickness: 1,
             ),
           ),
@@ -238,7 +239,7 @@ class AuthDivider extends StatelessWidget {
           ),
           Expanded(
             child: Divider(
-              color: colorScheme.outline.withOpacity(0.3),
+              color: colorScheme.outline.withValues(alpha: 0.3),
               thickness: 1,
             ),
           ),

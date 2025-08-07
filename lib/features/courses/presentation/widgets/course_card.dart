@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes_args.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
 import 'package:tatbeeqi/core/utils/app_methods.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
@@ -97,8 +98,10 @@ class _CourseCardState extends State<CourseCard>
                 onLongPress: _handleLongPress,
                 onTap: () {
                   context.push(
-                    AppRoutes.courseLecturesPath,
-                    extra: widget.course,
+                    AppRoutes.courseOverviewPath,
+                    extra: CourseOverviewArgs(
+                      course: widget.course,
+                    ),
                   );
                 },
                 borderRadius: BorderRadius.circular(16.0),

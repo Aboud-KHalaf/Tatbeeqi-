@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class QuizProgressBar extends StatefulWidget {
   final int currentQuestionIndex;
   final int totalQuestions;
-  
+
   const QuizProgressBar({
     Key? key,
     required this.currentQuestionIndex,
@@ -18,7 +18,7 @@ class _QuizProgressBarState extends State<QuizProgressBar>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _progressAnimation;
-  
+
   @override
   void initState() {
     super.initState();
@@ -32,7 +32,7 @@ class _QuizProgressBarState extends State<QuizProgressBar>
     );
     _animationController.forward();
   }
-  
+
   @override
   void didUpdateWidget(QuizProgressBar oldWidget) {
     super.didUpdateWidget(oldWidget);
@@ -41,7 +41,7 @@ class _QuizProgressBarState extends State<QuizProgressBar>
       _animationController.forward();
     }
   }
-  
+
   @override
   void dispose() {
     _animationController.dispose();
@@ -53,7 +53,7 @@ class _QuizProgressBarState extends State<QuizProgressBar>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final progress = (widget.currentQuestionIndex + 1) / widget.totalQuestions;
-    
+
     return AnimatedBuilder(
       animation: _progressAnimation,
       builder: (context, child) {
@@ -63,7 +63,7 @@ class _QuizProgressBarState extends State<QuizProgressBar>
             color: colorScheme.surface,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: colorScheme.outlineVariant.withOpacity(0.5),
+              color: colorScheme.outlineVariant.withValues(alpha: 0.5),
               width: 1,
             ),
           ),
@@ -103,7 +103,8 @@ class _QuizProgressBarState extends State<QuizProgressBar>
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: colorScheme.primaryContainer.withOpacity(0.3),
+                      color:
+                          colorScheme.primaryContainer.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -131,18 +132,20 @@ class _QuizProgressBarState extends State<QuizProgressBar>
                     duration: const Duration(milliseconds: 600),
                     curve: Curves.easeInOut,
                     height: 8,
-                    width: MediaQuery.of(context).size.width * progress * _progressAnimation.value,
+                    width: MediaQuery.of(context).size.width *
+                        progress *
+                        _progressAnimation.value,
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
                           colorScheme.primary,
-                          colorScheme.primary.withOpacity(0.8),
+                          colorScheme.primary.withValues(alpha: 0.8),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(4),
                       boxShadow: [
                         BoxShadow(
-                          color: colorScheme.primary.withOpacity(0.3),
+                          color: colorScheme.primary.withValues(alpha: 0.3),
                           blurRadius: 4,
                           offset: const Offset(0, 2),
                         ),

@@ -90,7 +90,7 @@ class _AuthTextFieldState extends State<AuthTextField>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    
+
     return AnimatedBuilder(
       animation: _scaleAnimation,
       builder: (context, child) {
@@ -108,9 +108,9 @@ class _AuthTextFieldState extends State<AuthTextField>
               onChanged: widget.onChanged,
               onTap: widget.onTap,
               style: theme.textTheme.bodyLarge?.copyWith(
-                color: widget.enabled 
-                    ? colorScheme.onSurface 
-                    : colorScheme.onSurface.withOpacity(0.38),
+                color: widget.enabled
+                    ? colorScheme.onSurface
+                    : colorScheme.onSurface.withValues(alpha: 0.38),
               ),
               decoration: InputDecoration(
                 labelText: widget.label,
@@ -126,12 +126,12 @@ class _AuthTextFieldState extends State<AuthTextField>
                         icon: AnimatedSwitcher(
                           duration: const Duration(milliseconds: 200),
                           child: Icon(
-                            _isObscured 
-                                ? Icons.visibility_outlined 
+                            _isObscured
+                                ? Icons.visibility_outlined
                                 : Icons.visibility_off_outlined,
                             key: ValueKey(_isObscured),
-                            color: _isFocused 
-                                ? colorScheme.primary 
+                            color: _isFocused
+                                ? colorScheme.primary
                                 : colorScheme.onSurfaceVariant,
                           ),
                         ),
@@ -140,8 +140,8 @@ class _AuthTextFieldState extends State<AuthTextField>
                     : widget.suffixIcon,
                 filled: true,
                 fillColor: _isFocused
-                    ? colorScheme.primaryContainer.withOpacity(0.1)
-                    : colorScheme.surfaceVariant.withOpacity(0.3),
+                    ? colorScheme.primaryContainer.withValues(alpha: 0.1)
+                    : colorScheme.surfaceVariant.withValues(alpha: 0.3),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(
@@ -180,17 +180,17 @@ class _AuthTextFieldState extends State<AuthTextField>
                 disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(
-                    color: colorScheme.outline.withOpacity(0.12),
+                    color: colorScheme.outline.withValues(alpha: 0.12),
                     width: 1,
                   ),
                 ),
                 labelStyle: theme.textTheme.bodyMedium?.copyWith(
-                  color: _isFocused 
-                      ? colorScheme.primary 
+                  color: _isFocused
+                      ? colorScheme.primary
                       : colorScheme.onSurfaceVariant,
                 ),
                 hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurfaceVariant.withOpacity(0.6),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                 ),
                 errorStyle: theme.textTheme.bodySmall?.copyWith(
                   color: colorScheme.error,

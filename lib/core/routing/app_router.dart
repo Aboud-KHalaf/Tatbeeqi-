@@ -15,6 +15,7 @@ import 'package:tatbeeqi/features/courses_content/presentation/views/course_lect
 
 // Features
 import 'package:tatbeeqi/features/courses_content/presentation/views/course_overview_view.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/views/lecture_lessons_view.dart';
 import 'package:tatbeeqi/features/navigation/presentation/screens/main_navigation_screen.dart';
 import 'package:tatbeeqi/features/news/presentation/views/all_news_view.dart';
 import 'package:tatbeeqi/features/news/presentation/views/news_details_view.dart';
@@ -97,8 +98,17 @@ GoRouter createRouter(AuthBloc authBloc) {
         builder: (BuildContext context, GoRouterState state) {
           final args = state.extra as CourseOverviewArgs;
           return CourseOverviewView(
-            lecture: args.lecture,
             course: args.course,
+          );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.lectureLessonsPath,
+        builder: (BuildContext context, GoRouterState state) {
+          final args = state.extra as LectureLessonsArgs;
+          return LectureLessonsView(
+            course: args.course,
+            lecture: args.lecture,
           );
         },
       ),

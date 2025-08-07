@@ -606,11 +606,11 @@ class _PageIndicator extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: colorScheme.inverseSurface.withOpacity(0.9),
+                color: colorScheme.inverseSurface.withValues(alpha: 0.9),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: colorScheme.shadow.withOpacity(0.1),
+                    color: colorScheme.shadow.withValues(alpha: 0.1),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -636,19 +636,20 @@ class _PageIndicator extends StatelessWidget {
                   Container(
                     width: 1,
                     height: 16,
-                    color: colorScheme.onInverseSurface.withOpacity(0.3),
+                    color: colorScheme.onInverseSurface.withValues(alpha: 0.3),
                   ),
                   const SizedBox(width: 8),
                   Icon(
                     Icons.zoom_in_rounded,
                     size: 14,
-                    color: colorScheme.onInverseSurface.withOpacity(0.8),
+                    color: colorScheme.onInverseSurface.withValues(alpha: 0.8),
                   ),
                   const SizedBox(width: 4),
                   Text(
                     '${(zoomLevel * 100).round()}%',
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: colorScheme.onInverseSurface.withOpacity(0.8),
+                      color:
+                          colorScheme.onInverseSurface.withValues(alpha: 0.8),
                     ),
                   ),
                 ],

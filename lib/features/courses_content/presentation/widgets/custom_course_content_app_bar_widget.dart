@@ -112,7 +112,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               },
             ),
             tabs: [
-              _buildTab('الرئيسية', Icons.home_outlined),
+              _buildTab('المحاضرات', Icons.school_outlined),
               _buildTab('الدرجات', Icons.grade_outlined),
               // _buildTab('المنتديات', Icons.forum_outlined),
               _buildTab('الملاحظات', Icons.note_outlined),

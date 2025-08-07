@@ -82,7 +82,7 @@ class _CompactButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isEnabled = onPressed != null;
-    
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       height: 44, // Reduced height for compact design
@@ -92,19 +92,15 @@ class _CompactButton extends StatelessWidget {
           icon,
           size: 18, // Smaller icon
           color: isEnabled
-              ? (isPrimary
-                  ? colorScheme.onPrimary
-                  : colorScheme.onSurface)
-              : colorScheme.onSurface.withOpacity(0.38),
+              ? (isPrimary ? colorScheme.onPrimary : colorScheme.onSurface)
+              : colorScheme.onSurface.withValues(alpha: 0.38),
         ),
         label: Text(
           label,
           style: theme.textTheme.labelLarge?.copyWith(
             color: isEnabled
-                ? (isPrimary
-                    ? colorScheme.onPrimary
-                    : colorScheme.onSurface)
-                : colorScheme.onSurface.withOpacity(0.38),
+                ? (isPrimary ? colorScheme.onPrimary : colorScheme.onSurface)
+                : colorScheme.onSurface.withValues(alpha: 0.38),
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -113,22 +109,21 @@ class _CompactButton extends StatelessWidget {
               ? (isPrimary
                   ? colorScheme.primary
                   : colorScheme.surfaceContainerHigh)
-              : colorScheme.surfaceContainerHigh.withOpacity(0.5),
+              : colorScheme.surfaceContainerHigh.withValues(alpha: 0.5),
           foregroundColor: isEnabled
-              ? (isPrimary
-                  ? colorScheme.onPrimary
-                  : colorScheme.onSurface)
-              : colorScheme.onSurface.withOpacity(0.38),
+              ? (isPrimary ? colorScheme.onPrimary : colorScheme.onSurface)
+              : colorScheme.onSurface.withValues(alpha: 0.38),
           elevation: isPrimary && isEnabled ? 2 : 0,
-          shadowColor: isPrimary ? colorScheme.primary.withOpacity(0.3) : null,
+          shadowColor:
+              isPrimary ? colorScheme.primary.withValues(alpha: 0.3) : null,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
             side: isPrimary
                 ? BorderSide.none
                 : BorderSide(
                     color: isEnabled
-                        ? colorScheme.outline.withOpacity(0.5)
-                        : colorScheme.outline.withOpacity(0.2),
+                        ? colorScheme.outline.withValues(alpha: 0.5)
+                        : colorScheme.outline.withValues(alpha: 0.2),
                     width: 1,
                   ),
           ),

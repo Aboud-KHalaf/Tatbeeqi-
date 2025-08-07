@@ -111,10 +111,10 @@ class _PrimaryButtonState extends State<PrimaryButton>
                       ElevatedButton.styleFrom(
                         backgroundColor: isEnabled
                             ? colorScheme.primary
-                            : colorScheme.onSurface.withOpacity(0.12),
+                            : colorScheme.onSurface.withValues(alpha: 0.12),
                         foregroundColor: isEnabled
                             ? colorScheme.onPrimary
-                            : colorScheme.onSurface.withOpacity(0.38),
+                            : colorScheme.onSurface.withValues(alpha: 0.38),
                         elevation: isEnabled ? (_isPressed ? 1 : 3) : 0,
                         shadowColor: colorScheme.shadow,
                         shape: RoundedRectangleBorder(
@@ -156,7 +156,8 @@ class _PrimaryButtonState extends State<PrimaryButton>
                                 style: theme.textTheme.labelLarge?.copyWith(
                                   color: isEnabled
                                       ? colorScheme.onPrimary
-                                      : colorScheme.onSurface.withOpacity(0.38),
+                                      : colorScheme.onSurface
+                                          .withValues(alpha: 0.38),
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),

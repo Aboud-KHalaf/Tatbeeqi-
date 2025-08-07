@@ -39,10 +39,10 @@ class QuestionWidget extends StatelessWidget {
                   margin: const EdgeInsets.only(bottom: 32),
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: colorScheme.primaryContainer.withOpacity(0.1),
+                    color: colorScheme.primaryContainer.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: colorScheme.primary.withOpacity(0.2),
+                      color: colorScheme.primary.withValues(alpha: 0.2),
                       width: 1,
                     ),
                   ),
@@ -76,7 +76,7 @@ class QuestionWidget extends StatelessWidget {
           final index = entry.key;
           final answer = entry.value;
           final isSelected = selectedAnswerId == answer.id;
-          
+
           return TweenAnimationBuilder<double>(
             duration: Duration(milliseconds: 400 + (index * 100)),
             tween: Tween(begin: 0.0, end: 1.0),
@@ -122,13 +122,18 @@ class AnswerOptionCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 200), // Smooth transition for selection
+      duration:
+          const Duration(milliseconds: 200), // Smooth transition for selection
       curve: Curves.easeInOut,
       decoration: BoxDecoration(
-        color: isSelected ? colorScheme.primary.withValues(alpha: 0.15) : colorScheme.surface,
+        color: isSelected
+            ? colorScheme.primary.withValues(alpha: 0.15)
+            : colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isSelected ? colorScheme.primary : colorScheme.outline.withValues(alpha: 0.4),
+          color: isSelected
+              ? colorScheme.primary
+              : colorScheme.outline.withValues(alpha: 0.4),
           width: isSelected ? 2.5 : 1.5, // Thicker border when selected
         ),
         boxShadow: isSelected
@@ -148,20 +153,25 @@ class AnswerOptionCard extends StatelessWidget {
               ],
       ),
       child: Material(
-        color: Colors.transparent, // Make Material transparent to show AnimatedContainer's color
+        color: Colors
+            .transparent, // Make Material transparent to show AnimatedContainer's color
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(12),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
             child: Row(
               children: [
                 Expanded(
                   child: Text(
                     answer.answerText,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: isSelected ? colorScheme.primary : colorScheme.onSurface,
-                          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                          color: isSelected
+                              ? colorScheme.primary
+                              : colorScheme.onSurface,
+                          fontWeight:
+                              isSelected ? FontWeight.bold : FontWeight.normal,
                         ),
                   ),
                 ),

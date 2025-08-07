@@ -22,11 +22,11 @@ class _SignInPageState extends State<SignInPage>
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  
+
   late AnimationController _animationController;
   late Animation<double> _slideAnimation;
   late Animation<double> _fadeAnimation;
-  
+
   bool _isLoading = false;
   bool _isGoogleLoading = false;
 
@@ -87,7 +87,7 @@ class _SignInPageState extends State<SignInPage>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    
+
     return Stack(
       children: [
         AuthFormWrapper(
@@ -101,7 +101,7 @@ class _SignInPageState extends State<SignInPage>
                   _isLoading = state is AuthLoading;
                   _isGoogleLoading = state is AuthLoading;
                 });
-                
+
                 if (state is AuthError) {
                   CustomSnackBar.showError(
                     context: context,
@@ -139,7 +139,8 @@ class _SignInPageState extends State<SignInPage>
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter your email';
                                   }
-                                  if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}\$')
+                                  if (!RegExp(
+                                          r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}\$')
                                       .hasMatch(value)) {
                                     return 'Please enter a valid email';
                                   }
@@ -167,10 +168,12 @@ class _SignInPageState extends State<SignInPage>
                                 },
                                 onTap: () {
                                   // Auto-scroll to keep field visible when keyboard appears
-                                  Future.delayed(const Duration(milliseconds: 300), () {
+                                  Future.delayed(
+                                      const Duration(milliseconds: 300), () {
                                     Scrollable.ensureVisible(
                                       context,
-                                      duration: const Duration(milliseconds: 300),
+                                      duration:
+                                          const Duration(milliseconds: 300),
                                       curve: Curves.easeInOut,
                                     );
                                   });
@@ -178,9 +181,9 @@ class _SignInPageState extends State<SignInPage>
                               ),
                             ],
                           ),
-                          
+
                           const SizedBox(height: 8),
-                          
+
                           // Forgot Password Link
                           Align(
                             alignment: Alignment.centerRight,
@@ -188,13 +191,18 @@ class _SignInPageState extends State<SignInPage>
                               onPressed: () => Navigator.push(
                                 context,
                                 PageRouteBuilder(
-                                  pageBuilder: (context, animation, secondaryAnimation) =>
+                                  pageBuilder: (context, animation,
+                                          secondaryAnimation) =>
                                       const ForgetPasswordPage(),
-                                  transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
                                     return SlideTransition(
                                       position: animation.drive(
-                                        Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)
-                                            .chain(CurveTween(curve: Curves.easeInOut)),
+                                        Tween(
+                                                begin: const Offset(1.0, 0.0),
+                                                end: Offset.zero)
+                                            .chain(CurveTween(
+                                                curve: Curves.easeInOut)),
                                       ),
                                       child: child,
                                     );
@@ -210,9 +218,9 @@ class _SignInPageState extends State<SignInPage>
                               ),
                             ),
                           ),
-                          
+
                           const SizedBox(height: 24),
-                          
+
                           // Sign In Button
                           PrimaryButton(
                             text: 'Sign In',
@@ -224,18 +232,19 @@ class _SignInPageState extends State<SignInPage>
                               color: colorScheme.onPrimary,
                             ),
                           ),
-                          
+
                           // Divider
                           const AuthDivider(),
-                          
+
                           // Google Sign In Button
                           GoogleSignInButton(
-                            onPressed: _isGoogleLoading ? () {} : _handleGoogleSignIn,
+                            onPressed:
+                                _isGoogleLoading ? () {} : _handleGoogleSignIn,
                             isLoading: _isGoogleLoading,
                           ),
-                          
+
                           const SizedBox(height: 32),
-                          
+
                           // Sign Up Link
                           _SignUpPrompt(),
                         ],
@@ -247,7 +256,7 @@ class _SignInPageState extends State<SignInPage>
             ),
           ),
         ),
-        
+
         // Loading Overlay
         if (_isLoading)
           LoadingOverlay(
@@ -264,14 +273,14 @@ class _SignUpPrompt extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceVariant.withOpacity(0.3),
+        color: colorScheme.surfaceVariant.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: colorScheme.outline.withOpacity(0.2),
+          color: colorScheme.outline.withValues(alpha: 0.2),
           width: 1,
         ),
       ),
@@ -291,7 +300,8 @@ class _SignUpPrompt extends StatelessWidget {
               PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>
                     const SignUpPage(),
-                transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
                   return SlideTransition(
                     position: animation.drive(
                       Tween(begin: const Offset(1.0, 0.0), end: Offset.zero)

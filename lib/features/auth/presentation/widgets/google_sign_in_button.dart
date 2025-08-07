@@ -5,9 +5,9 @@ class GoogleSignInButton extends StatefulWidget {
   final VoidCallback onPressed;
   final bool isLoading;
   final String? text;
-  
+
   const GoogleSignInButton({
-    super.key, 
+    super.key,
     required this.onPressed,
     this.isLoading = false,
     this.text,
@@ -75,7 +75,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final isEnabled = !widget.isLoading;
-    
+
     return AnimatedBuilder(
       animation: _scaleAnimation,
       builder: (context, child) {
@@ -90,12 +90,12 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton>
               style: OutlinedButton.styleFrom(
                 backgroundColor: isEnabled
                     ? colorScheme.surface
-                    : colorScheme.surface.withOpacity(0.5),
+                    : colorScheme.surface.withValues(alpha: 0.5),
                 foregroundColor: colorScheme.onSurface,
                 side: BorderSide(
                   color: isEnabled
                       ? colorScheme.outline
-                      : colorScheme.outline.withOpacity(0.5),
+                      : colorScheme.outline.withValues(alpha: 0.5),
                   width: 1.5,
                 ),
                 shape: RoundedRectangleBorder(
@@ -107,7 +107,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton>
                 ),
                 minimumSize: const Size(double.infinity, 48),
                 elevation: _isPressed ? 0 : 1,
-                shadowColor: colorScheme.shadow.withOpacity(0.1),
+                shadowColor: colorScheme.shadow.withValues(alpha: 0.1),
               ),
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),
@@ -143,7 +143,8 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton>
                             style: theme.textTheme.labelLarge?.copyWith(
                               color: isEnabled
                                   ? colorScheme.onSurface
-                                  : colorScheme.onSurface.withOpacity(0.38),
+                                  : colorScheme.onSurface
+                                      .withValues(alpha: 0.38),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -163,7 +164,7 @@ class _GoogleLogoPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..style = PaintingStyle.fill;
-    
+
     // Google "G" simplified representation
     // Blue section
     paint.color = const Color(0xFF4285F4);
@@ -174,7 +175,7 @@ class _GoogleLogoPainter extends CustomPainter {
       ),
       paint,
     );
-    
+
     // Red section
     paint.color = const Color(0xFFEA4335);
     canvas.drawRRect(
@@ -184,22 +185,24 @@ class _GoogleLogoPainter extends CustomPainter {
       ),
       paint,
     );
-    
+
     // Yellow section
     paint.color = const Color(0xFFFBBC05);
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(0, size.height * 0.5, size.width * 0.5, size.height * 0.5),
+        Rect.fromLTWH(
+            0, size.height * 0.5, size.width * 0.5, size.height * 0.5),
         const Radius.circular(2),
       ),
       paint,
     );
-    
+
     // Green section
     paint.color = const Color(0xFF34A853);
     canvas.drawRRect(
       RRect.fromRectAndRadius(
-        Rect.fromLTWH(size.width * 0.5, size.height * 0.5, size.width * 0.5, size.height * 0.5),
+        Rect.fromLTWH(size.width * 0.5, size.height * 0.5, size.width * 0.5,
+            size.height * 0.5),
         const Radius.circular(2),
       ),
       paint,

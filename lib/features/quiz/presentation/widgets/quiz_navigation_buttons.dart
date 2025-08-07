@@ -33,7 +33,7 @@ class QuizNavigationButtons extends StatelessWidget {
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
         border: Border(
           top: BorderSide(
-            color: colorScheme.outlineVariant.withOpacity(0.3),
+            color: colorScheme.outlineVariant.withValues(alpha: 0.3),
             width: 1,
           ),
         ),
@@ -149,7 +149,7 @@ class _NavigationButtonState extends State<_NavigationButton>
   @override
   Widget build(BuildContext context) {
     final isEnabled = widget.onPressed != null && widget.isEnabled;
-    
+
     return AnimatedBuilder(
       animation: _scaleAnimation,
       builder: (context, child) {
@@ -168,20 +168,22 @@ class _NavigationButtonState extends State<_NavigationButton>
                     ? (widget.isPrimary
                         ? widget.colorScheme.primary
                         : widget.colorScheme.surfaceContainerHigh)
-                    : widget.colorScheme.surfaceContainerHigh.withOpacity(0.5),
+                    : widget.colorScheme.surfaceContainerHigh
+                        .withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(16),
                 border: widget.isPrimary
                     ? null
                     : Border.all(
                         color: isEnabled
-                            ? widget.colorScheme.outline.withOpacity(0.5)
-                            : widget.colorScheme.outline.withOpacity(0.2),
+                            ? widget.colorScheme.outline.withValues(alpha: 0.5)
+                            : widget.colorScheme.outline.withValues(alpha: 0.2),
                         width: 1,
                       ),
                 boxShadow: isEnabled && widget.isPrimary
                     ? [
                         BoxShadow(
-                          color: widget.colorScheme.primary.withOpacity(0.3),
+                          color:
+                              widget.colorScheme.primary.withValues(alpha: 0.3),
                           blurRadius: 8,
                           offset: const Offset(0, 4),
                         ),
@@ -197,7 +199,7 @@ class _NavigationButtonState extends State<_NavigationButton>
                         ? (widget.isPrimary
                             ? widget.colorScheme.onPrimary
                             : widget.colorScheme.onSurface)
-                        : widget.colorScheme.onSurface.withOpacity(0.38),
+                        : widget.colorScheme.onSurface.withValues(alpha: 0.38),
                     size: 20,
                   ),
                   const SizedBox(width: 8),
@@ -208,7 +210,8 @@ class _NavigationButtonState extends State<_NavigationButton>
                           ? (widget.isPrimary
                               ? widget.colorScheme.onPrimary
                               : widget.colorScheme.onSurface)
-                          : widget.colorScheme.onSurface.withOpacity(0.38),
+                          : widget.colorScheme.onSurface
+                              .withValues(alpha: 0.38),
                       fontWeight: FontWeight.w600,
                     ),
                   ),

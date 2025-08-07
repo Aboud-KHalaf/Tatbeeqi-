@@ -115,8 +115,9 @@ class _StudyYearDropdownState extends State<StudyYearDropdown>
                 ),
                 filled: true,
                 fillColor: _isFocused
-                    ? colorScheme.primaryContainer.withOpacity(0.1)
-                    : colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                    ? colorScheme.primaryContainer.withValues(alpha: 0.1)
+                    : colorScheme.surfaceContainerHighest
+                        .withValues(alpha: 0.3),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(
@@ -158,7 +159,7 @@ class _StudyYearDropdownState extends State<StudyYearDropdown>
                       : colorScheme.onSurfaceVariant,
                 ),
                 hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurfaceVariant.withOpacity(0.6),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                 ),
                 errorStyle: theme.textTheme.bodySmall?.copyWith(
                   color: colorScheme.error,
@@ -174,7 +175,7 @@ class _StudyYearDropdownState extends State<StudyYearDropdown>
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: widget.enabled
                     ? colorScheme.onSurface
-                    : colorScheme.onSurface.withOpacity(0.38),
+                    : colorScheme.onSurface.withValues(alpha: 0.38),
               ),
             ),
           ),
@@ -299,8 +300,9 @@ class _DepartmentDropdownState extends State<DepartmentDropdown>
                 ),
                 filled: true,
                 fillColor: _isFocused
-                    ? colorScheme.primaryContainer.withOpacity(0.1)
-                    : colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                    ? colorScheme.primaryContainer.withValues(alpha: 0.1)
+                    : colorScheme.surfaceContainerHighest
+                        .withValues(alpha: 0.3),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(
@@ -342,7 +344,7 @@ class _DepartmentDropdownState extends State<DepartmentDropdown>
                       : colorScheme.onSurfaceVariant,
                 ),
                 hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurfaceVariant.withOpacity(0.6),
+                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                 ),
                 errorStyle: theme.textTheme.bodySmall?.copyWith(
                   color: colorScheme.error,
@@ -358,7 +360,7 @@ class _DepartmentDropdownState extends State<DepartmentDropdown>
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: widget.enabled
                     ? colorScheme.onSurface
-                    : colorScheme.onSurface.withOpacity(0.38),
+                    : colorScheme.onSurface.withValues(alpha: 0.38),
               ),
             ),
           ),

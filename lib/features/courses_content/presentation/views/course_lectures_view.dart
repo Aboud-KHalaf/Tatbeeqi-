@@ -10,7 +10,7 @@ import 'package:tatbeeqi/features/courses_content/presentation/widgets/lecture_c
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/lecture_card_shimmer.dart';
 
 // Lecture List View Widget
-class CourseLecturesView extends StatefulWidget {
+class CourseLecturesView extends StatelessWidget {
   final Course course;
   static const String routePath = '/courseLecturesView';
 
@@ -20,22 +20,9 @@ class CourseLecturesView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CourseLecturesView> createState() => _CourseLecturesViewState();
-}
-
-class _CourseLecturesViewState extends State<CourseLecturesView> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<LecturesCubit>().fetchLectures(widget.course.id);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.course.courseName),
-      ),
       body: BlocBuilder<LecturesCubit, LecturesState>(
         builder: (context, state) {
           if (state is LecturesInitial) {
@@ -46,13 +33,12 @@ class _CourseLecturesViewState extends State<CourseLecturesView> {
             if (state.lectures.isEmpty) {
               return _EmptyState();
             }
-            return _LecturesList(
-                lectures: state.lectures, course: widget.course);
+            return _LecturesList(lectures: state.lectures, course: course);
           } else if (state is LecturesError) {
             return _ErrorState(
               message: state.message,
               onRetry: () =>
-                  context.read<LecturesCubit>().fetchLectures(widget.course.id),
+                  context.read<LecturesCubit>().fetchLectures(course.id),
             );
           }
           return const SizedBox.shrink();
@@ -81,9 +67,11 @@ class _LecturesList extends StatelessWidget {
           lecture: lectures[index],
           onTap: () {
             context.push(
-              AppRoutes.courseOverviewPath,
-              extra:
-                  CourseOverviewArgs(lecture: lectures[index], course: course),
+              AppRoutes.lectureLessonsPath,
+              extra: LectureLessonsArgs(
+                course: course,
+                lecture: lectures[index],
+              ),
             );
           },
         );

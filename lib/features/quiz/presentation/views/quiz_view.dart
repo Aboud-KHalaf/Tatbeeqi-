@@ -66,7 +66,8 @@ class _QuizViewState extends State<QuizView> {
 
           if (state is QuizError) {
             return QuizErrorState(
-              onRetry: () => context.read<QuizBloc>().add(LoadQuiz(widget.lessonId)),
+              onRetry: () =>
+                  context.read<QuizBloc>().add(LoadQuiz(widget.lessonId)),
             );
           }
 
@@ -84,7 +85,8 @@ class _QuizViewState extends State<QuizView> {
                   child: Container(
                     width: double.infinity,
                     margin: const EdgeInsets.only(bottom: 8),
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 16),
                     decoration: BoxDecoration(
                       color: colorScheme.surfaceContainerLowest,
                       borderRadius: const BorderRadius.only(
@@ -120,13 +122,15 @@ class _QuizViewState extends State<QuizView> {
                         // Compact navigation section
                         Container(
                           width: double.infinity,
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
                           margin: const EdgeInsets.only(top: 16),
                           decoration: BoxDecoration(
                             color: colorScheme.surface,
                             borderRadius: BorderRadius.circular(16),
                             border: Border.all(
-                              color: colorScheme.outlineVariant.withOpacity(0.3),
+                              color: colorScheme.outlineVariant
+                                  .withValues(alpha: 0.3),
                               width: 1,
                             ),
                           ),
@@ -134,8 +138,8 @@ class _QuizViewState extends State<QuizView> {
                             top: false,
                             child: CompactNavigationButtons(
                               canGoBack: state.currentQuestionIndex > 0,
-                              canGoNext: state.userAnswers.containsKey(
-                                  state.questions[state.currentQuestionIndex].id),
+                              canGoNext: state.userAnswers.containsKey(state
+                                  .questions[state.currentQuestionIndex].id),
                               isLastQuestion: state.currentQuestionIndex ==
                                   state.questions.length - 1,
                               onPrevious: state.currentQuestionIndex > 0

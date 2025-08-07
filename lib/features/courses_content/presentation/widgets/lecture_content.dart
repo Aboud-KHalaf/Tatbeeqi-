@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
+import 'package:tatbeeqi/features/courses_content/domain/entities/lecture_entity.dart';
 import 'package:tatbeeqi/features/courses_content/domain/entities/lesson_entity.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_content_list.dart';
-import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_description_section.dart';
-import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_lectures_list.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/widgets/lecture_description_section.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/course_resources_card.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/module_progress_section.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/up_next_card.dart';
 
-class CourseOverviewBody extends StatelessWidget {
-  final TabController tabController;
+class LectureContent extends StatelessWidget {
   final Course course;
+  final Lecture lecture;
   final List<Lesson> lessons;
 
-  const CourseOverviewBody(
+  const LectureContent(
       {super.key,
-      required this.tabController,
       required this.course,
-      required this.lessons});
+      required this.lessons,
+      required this.lecture});
 
   @override
   Widget build(BuildContext context) {
-    final Lesson upNextItem = lessons.first;
-// lessons.firstWhere(
-//       (lesson) => !lesson.isCompleted,
-//       orElse: () => lessons.first,
-//     );
+    final Lesson? upNextItem = lessons.isNotEmpty
+        ? lessons.cast<Lesson>().firstWhere(
+              (lesson) => !lesson.isCompleted,
+              orElse: () => lessons.first,
+            )
+        : null;
     Widget buildResponsiveLayout(BuildContext context, Widget content) {
       final screenWidth = MediaQuery.of(context).size.width;
 
@@ -51,16 +52,17 @@ class CourseOverviewBody extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CourseLecturesList(),
+                // const CourseLecturesList(),
                 ModuleProgressSection(
                   completionPercentage: course.progressPercent ?? 0,
                 ),
                 const Divider(height: 16, indent: 12, endIndent: 12),
-                UpNextCard(
-                  lesson: upNextItem,
-                  onPressed: () {},
-                ),
-                const CourseDescriptionSection(),
+                if (upNextItem != null)
+                  UpNextCard(
+                    lesson: upNextItem,
+                    onPressed: () {},
+                  ),
+                LectureDescriptionSection(lecture: lecture),
               ],
             ),
           ),
