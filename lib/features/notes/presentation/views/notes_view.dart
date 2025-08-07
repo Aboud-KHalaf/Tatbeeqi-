@@ -3,15 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/core/routing/routes_args.dart';
+import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/notes/presentation/bloc/notes_bloc.dart';
 import 'package:tatbeeqi/features/notes/presentation/widgets/notes_list.dart';
 
 class NotesView extends StatefulWidget {
   static const String routePath = '/notesView';
 
-  final int courseId;
+  final Course course;
 
-  const NotesView({super.key, required this.courseId});
+  const NotesView({super.key, required this.course});
 
   @override
   State<NotesView> createState() => _NotesViewState();
@@ -23,7 +24,7 @@ class _NotesViewState extends State<NotesView> {
     super.initState();
     final currentState = context.read<NotesBloc>().state;
     if (currentState is! NotesLoaded || currentState.notes.isEmpty) {
-      context.read<NotesBloc>().add(LoadNotes(widget.courseId.toString()));
+      context.read<NotesBloc>().add(LoadNotes(widget.course.id.toString()));
     }
   }
 
@@ -50,7 +51,7 @@ class _NotesViewState extends State<NotesView> {
         onPressed: () {
           context.push(
             AppRoutes.addUpdateNotePath,
-            extra: AddUpdateNoteArgs(courseId: widget.courseId.toString()),
+            extra: AddUpdateNoteArgs(courseId: widget.course.id.toString()),
           );
         },
         child: const Icon(Icons.add),
