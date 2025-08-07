@@ -18,12 +18,7 @@ class AboutCoursePage extends StatelessWidget {
     final fetchDetailsUseCase = FetchCourseDetailsUseCase(repository);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('About This Course'),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        foregroundColor: Theme.of(context).colorScheme.onSurface,
-      ),
+ 
       body: FutureBuilder<CourseDetails>(
         future: fetchDetailsUseCase('1'), // Mock course ID
         builder: (context, snapshot) {
