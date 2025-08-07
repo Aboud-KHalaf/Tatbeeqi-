@@ -14,7 +14,7 @@ class CourseOverviewView extends StatefulWidget {
   const CourseOverviewView({super.key, required this.course});
   static const String routePath = '/courseOverviewView';
 
-  @override
+    @override
   State<CourseOverviewView> createState() => _CourseOverviewViewState();
 }
 
@@ -47,12 +47,15 @@ class _CourseOverviewViewState extends State<CourseOverviewView>
         controller: _tabController,
         children: [
           CourseLecturesView(course: widget.course),
-          const GradesView(),
+          GradesView(course: widget.course),
           NotesView(course: widget.course),
-          const ReferencesView(),
-          const AboutCoursePage(),
+          ReferencesView(course: widget.course),
+          AboutCoursePage(course: widget.course),
         ],
       ),
     );
   }
 }
+                       
+
+                              

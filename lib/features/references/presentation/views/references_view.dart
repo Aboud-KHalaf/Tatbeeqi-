@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/references/domain/entities/reference.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
 class ReferencesView extends StatelessWidget {
-  const ReferencesView({super.key});
+  final Course course;
+  const ReferencesView({super.key, required this.course});
 
   @override
   Widget build(BuildContext context) {

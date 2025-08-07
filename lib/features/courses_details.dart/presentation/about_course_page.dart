@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses_details.dart/data/datasources/mock_course_details_datasource.dart';
 import 'package:tatbeeqi/features/courses_details.dart/data/course_details_repository_impl.dart';
 import 'package:tatbeeqi/features/courses_details.dart/domain/entities/course_details.dart';
 import 'package:tatbeeqi/features/courses_details.dart/domain/use_cases/fetch_course_details_use_case.dart';
 
 class AboutCoursePage extends StatelessWidget {
-  const AboutCoursePage({super.key});
+  final Course course;
+  const AboutCoursePage({super.key, required this.course});
 
   @override
   Widget build(BuildContext context) {
     final dataSource = MockCourseDetailsDataSource();
     final repository = CourseDetailsRepositoryImpl(dataSource);
 
-  final fetchDetailsUseCase = FetchCourseDetailsUseCase(repository);
+    final fetchDetailsUseCase = FetchCourseDetailsUseCase(repository);
 
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +56,8 @@ class AboutCoursePage extends StatelessWidget {
                       radius: 30,
                       backgroundImage: NetworkImage(details.instructorImageUrl),
                     ),
-                    title: Text(details.instructorName, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    title: Text(details.instructorName,
+                        style: const TextStyle(fontWeight: FontWeight.bold)),
                     subtitle: Text(details.instructorTitle),
                     contentPadding: EdgeInsets.zero,
                   ),
@@ -81,7 +84,8 @@ class AboutCoursePage extends StatelessWidget {
                         ]),
                         DataRow(cells: [
                           const DataCell(Text('Start Date')),
-                          DataCell(Text(DateFormat.yMMMd().format(details.startDate))),
+                          DataCell(Text(
+                              DateFormat.yMMMd().format(details.startDate))),
                         ]),
                       ],
                     ),
