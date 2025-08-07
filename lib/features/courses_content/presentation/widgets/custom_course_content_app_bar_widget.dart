@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
@@ -63,7 +64,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             onPressed: () {
               HapticFeedback.lightImpact();
-              // TODO: Show schedule/reminders
+              SnackBarHelper.showInfo(
+                  context: context, message: 'المواعيد والتذكيرات');
             },
             tooltip: 'المواعيد والتذكيرات',
             style: IconButton.styleFrom(

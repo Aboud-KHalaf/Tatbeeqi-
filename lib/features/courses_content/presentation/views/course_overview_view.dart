@@ -27,11 +27,9 @@ class _CourseOverviewViewState extends State<CourseOverviewView>
     super.initState();
     _tabController = TabController(length: 5, vsync: this);
     context.read<LecturesCubit>().fetchLectures(widget.course.id);
-
+    
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
-        // Handle tab change here
-        print('Tab changed to ${_tabController.index}');
       }
     });
   }
