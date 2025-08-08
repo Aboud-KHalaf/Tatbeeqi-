@@ -11,11 +11,13 @@ import 'package:tatbeeqi/features/auth/presentation/views/forget_password_page.d
 import 'package:tatbeeqi/features/auth/presentation/views/sign_in_page.dart';
 import 'package:tatbeeqi/features/auth/presentation/views/sign_up_page.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
+import 'package:tatbeeqi/features/courses_content/domain/entities/lesson_entity.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/views/course_lectures_view.dart';
 
 // Features
 import 'package:tatbeeqi/features/courses_content/presentation/views/course_overview_view.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/views/lecture_lessons_view.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/views/lesson_content_view.dart';
 import 'package:tatbeeqi/features/navigation/presentation/screens/main_navigation_screen.dart';
 import 'package:tatbeeqi/features/news/presentation/views/all_news_view.dart';
 import 'package:tatbeeqi/features/news/presentation/views/news_details_view.dart';
@@ -117,6 +119,13 @@ GoRouter createRouter(AuthBloc authBloc) {
         builder: (BuildContext context, GoRouterState state) {
           final args = state.extra as Course;
           return CourseLecturesView(course: args);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.lessonContentPath,
+        builder: (BuildContext context, GoRouterState state) {
+          final args = state.extra as Lesson;
+          return LessonContentView(lesson: args);
         },
       ),
       GoRoute(
