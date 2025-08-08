@@ -31,27 +31,71 @@ class _RetakeCoursesContentState extends State<RetakeCoursesContent> {
     return BlocBuilder<RetakeCoursesCubit, RetakeCoursesState>(
       builder: (context, state) {
         if (state is CoursesRetakeLoading) {
-          return const SizedBox(
-            height: 200,
-            child: Center(child: CircularProgressIndicator()),
+          return SizedBox(
+            height: 300,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    color: theme.colorScheme.primary,
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Loading courses...',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           );
         }
 
         if (state is CoursesRetakeError) {
           return SizedBox(
-            height: 200,
+            height: 300,
             child: Center(
               child: Column(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.error_outline,
-                      color: theme.colorScheme.error, size: 32),
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: theme.colorScheme.errorContainer.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.error_outline_rounded,
+                      color: theme.colorScheme.error,
+                      size: 32,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Something went wrong',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: theme.colorScheme.onSurface,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   Text(
-                    'Error: ${state.message}',
-                    style: theme.textTheme.bodyLarge
-                        ?.copyWith(color: theme.colorScheme.error),
+                    state.message,
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
                     textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 16),
+                  FilledButton.tonal(
+                    onPressed: () {
+                      // Note: This would need proper studyYear and departmentId parameters
+                      // For now, we'll just pop the dialog since we can't retry without proper context
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('Close'),
                   ),
                 ],
               ),
@@ -62,11 +106,42 @@ class _RetakeCoursesContentState extends State<RetakeCoursesContent> {
         if (state is CoursesRetakeLoaded) {
           final courses = state.courseEntities;
           if (courses.isEmpty) {
-            return const SizedBox(
-              height: 200,
+            return SizedBox(
+              height: 300,
               child: Center(
-                child: Text('No courses available for retake.',
-                    style: TextStyle(fontSize: 16)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.school_outlined,
+                        size: 48,
+                        color: theme.colorScheme.primary.withValues(alpha: 0.7),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      'No courses available',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: theme.colorScheme.onSurface,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'There are no courses available for retake at this time.',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             );
           }
@@ -79,17 +154,41 @@ class _RetakeCoursesContentState extends State<RetakeCoursesContent> {
 
           return Column(
             children: [
-              TextField(
+              // Enhanced search field with Material 3 design
+              SearchBar(
                 controller: _searchController,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.search),
-                  hintText: 'Search courses...',
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
+                hintText: 'Search courses...',
+                leading: Icon(
+                  Icons.search_rounded,
+                  color: theme.colorScheme.onSurfaceVariant,
                 ),
+                trailing: _searchQuery.isNotEmpty
+                    ? [
+                        IconButton(
+                          icon: Icon(
+                            Icons.clear_rounded,
+                            color: theme.colorScheme.onSurfaceVariant,
+                          ),
+                          onPressed: () {
+                            _searchController.clear();
+                            setState(() => _searchQuery = '');
+                          },
+                        ),
+                      ]
+                    : null,
                 onChanged: (value) => setState(() => _searchQuery = value),
+                backgroundColor: WidgetStateProperty.all(
+                  theme.colorScheme.surfaceContainerHigh,
+                ),
+                elevation: WidgetStateProperty.all(0),
+                side: WidgetStateProperty.all(
+                  BorderSide(
+                    color: theme.colorScheme.outline.withValues(alpha: 0.2),
+                    width: 1,
+                  ),
+                ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 16),
               ConstrainedBox(
                 constraints: BoxConstraints(
                   maxHeight: MediaQuery.of(context).size.height * 0.5,

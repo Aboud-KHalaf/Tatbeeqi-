@@ -6,13 +6,15 @@ class DragHandle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Center(
       child: Container(
-        width: 48,
-        height: 6,
+        width: 40,
+        height: 4,
         decoration: BoxDecoration(
-          color: theme.dividerColor.withValues(alpha: 0.3),
-          borderRadius: BorderRadius.circular(3),
+          color: colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
+          borderRadius: BorderRadius.circular(2),
         ),
       ),
     );
