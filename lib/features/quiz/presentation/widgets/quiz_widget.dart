@@ -7,14 +7,14 @@ import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_progress_bar.da
 import 'package:tatbeeqi/features/quiz/presentation/widgets/compact_navigation_buttons.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_empty_state.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_error_state.dart';
-import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class QuizWidget extends StatefulWidget {
   final int lessonId;
-  final Function(int score, List results, List questions, Map userAnswers)? onQuizCompleted;
+  final Function(int score, List results, List questions, Map userAnswers)?
+      onQuizCompleted;
 
   const QuizWidget({
-    Key? key, 
+    Key? key,
     required this.lessonId,
     this.onQuizCompleted,
   }) : super(key: key);
@@ -78,8 +78,8 @@ class _QuizWidgetState extends State<QuizWidget> {
                 child: Container(
                   width: double.infinity,
                   margin: const EdgeInsets.only(bottom: 8),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 20, vertical: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                   decoration: BoxDecoration(
                     color: colorScheme.surfaceContainerLowest,
                     borderRadius: const BorderRadius.only(
@@ -131,8 +131,8 @@ class _QuizWidgetState extends State<QuizWidget> {
                           top: false,
                           child: CompactNavigationButtons(
                             canGoBack: state.currentQuestionIndex > 0,
-                            canGoNext: state.userAnswers.containsKey(state
-                                .questions[state.currentQuestionIndex].id),
+                            canGoNext: state.userAnswers.containsKey(
+                                state.questions[state.currentQuestionIndex].id),
                             isLastQuestion: state.currentQuestionIndex ==
                                 state.questions.length - 1,
                             colorScheme: colorScheme,
@@ -215,8 +215,8 @@ class _LoadingState extends StatelessWidget {
           Text(
             'Loading Quiz...',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: colorScheme.onSurface,
-            ),
+                  color: colorScheme.onSurface,
+                ),
           ),
         ],
       ),
@@ -259,16 +259,14 @@ class _QuizCompletedState extends StatelessWidget {
                     height: 120,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: isPassed 
+                      color: isPassed
                           ? colorScheme.primaryContainer
                           : colorScheme.errorContainer,
                     ),
                     child: Icon(
                       isPassed ? Icons.check_circle : Icons.cancel,
                       size: 60,
-                      color: isPassed 
-                          ? colorScheme.primary
-                          : colorScheme.error,
+                      color: isPassed ? colorScheme.primary : colorScheme.error,
                     ),
                   ),
                 );
@@ -287,16 +285,14 @@ class _QuizCompletedState extends StatelessWidget {
             Text(
               'Your Score: $score/$totalQuestions ($percentage%)',
               style: theme.textTheme.titleLarge?.copyWith(
-                color: isPassed 
-                    ? colorScheme.primary
-                    : colorScheme.error,
+                color: isPassed ? colorScheme.primary : colorScheme.error,
                 fontWeight: FontWeight.w600,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
-              isPassed 
+              isPassed
                   ? 'Congratulations! You passed the quiz.'
                   : 'You need at least 60% to pass. Try again!',
               style: theme.textTheme.bodyLarge?.copyWith(
