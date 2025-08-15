@@ -34,16 +34,22 @@ class CoursesContentRemoteDataSourceImpl
   @override
   Future<List<LessonModel>> fetchLessonsByLectureId(int lectureId) async {
     try {
+      final userId = supabaseClient.auth.currentUser?.id;
+      if (userId == null) {
+        throw ServerException('User not logged in');
+      }
+
       final response = await supabaseClient
           .from('lessons')
-          .select('*, lesson_progress(is_completed)')
+          .select('*, lesson_progress!left(user_id, is_completed)')
           .eq('lecture_id', lectureId)
+          // keep left join; do not filter on joined table to avoid turning into inner join
           .order('order_index', ascending: true);
 
-      return response.map<LessonModel>((lesson) {
+      return (response as List).map<LessonModel>((lesson) {
         final progressList = lesson['lesson_progress'] as List<dynamic>? ?? [];
-        final isCompleted =
-            progressList.isNotEmpty && progressList[0]['is_completed'] == true;
+        final isCompleted = progressList.any((p) =>
+            p is Map && p['user_id'] == userId && p['is_completed'] == true);
         return LessonModel.fromJson(lesson, isCompleted: isCompleted);
       }).toList();
     } catch (e) {

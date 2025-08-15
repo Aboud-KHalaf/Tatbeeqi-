@@ -49,7 +49,13 @@ class CourseModel extends Course {
       weeklyHoursPractical: json['weekly_hours_practical'] as int?,
       weeklyHoursTotal: json['weekly_hours_total'] as int?,
       gradeStudentWork: json['grade_student_work'] as int?,
-      progressPercent: (json['progress_percent'] as num?)?.toDouble(),
+      progressPercent: () {
+        final v = json['progress_percent'];
+        if (v == null) return null;
+        if (v is num) return v.toDouble();
+        if (v is String) return double.tryParse(v);
+        return null;
+      }(),
     );
   }
 

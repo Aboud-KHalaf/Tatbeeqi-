@@ -20,18 +20,18 @@ class CourseRepositoryImpl implements CourseRepository {
   Future<Either<Failure, List<Course>>> getCoursesByStudyYearAndDepartmentId(
       {required int studyYear, required int departmentId}) async {
     try {
-      // 1. Try to get from local cache first
-      final hasLocalData =
-          await localDataSource.hasCoursesForStudyYearAndDepartmentId(
-              studyYear: studyYear, departmentId: departmentId);
-      if (hasLocalData) {
-        final localCourses =
-            await localDataSource.getCoursesByStudyYearAndDepartmentId(
-                studyYear: studyYear, departmentId: departmentId);
-        if (localCourses.isNotEmpty) {
-          return Right(localCourses.cast<Course>());
-        }
-      }
+      // // 1. Try to get from local cache first
+      // final hasLocalData =
+      //     await localDataSource.hasCoursesForStudyYearAndDepartmentId(
+      //         studyYear: studyYear, departmentId: departmentId);
+      // if (hasLocalData) {
+      //   final localCourses =
+      //       await localDataSource.getCoursesByStudyYearAndDepartmentId(
+      //           studyYear: studyYear, departmentId: departmentId);
+      //   if (localCourses.isNotEmpty) {
+      //     return Right(localCourses.cast<Course>());
+      //   }
+      // }
 
       // 2. If not in cache or cache is empty, fetch from remote
       final remoteCourseModels =

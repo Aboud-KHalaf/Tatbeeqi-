@@ -28,8 +28,9 @@ class LectureContent extends StatelessWidget {
             )
         : null;
 
-    final progressPercentage =
-        lessons.where((lesson) => lesson.isCompleted).length / lessons.length;
+    final progressPercentage = lessons.isEmpty
+        ? 0.0
+        : lessons.where((lesson) => lesson.isCompleted).length / lessons.length;
     Widget buildResponsiveLayout(BuildContext context, Widget content) {
       final screenWidth = MediaQuery.of(context).size.width;
 

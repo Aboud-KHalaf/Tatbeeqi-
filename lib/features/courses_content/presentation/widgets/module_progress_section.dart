@@ -22,9 +22,13 @@ class _ModuleProgressSectionState extends State<ModuleProgressSection>
       vsync: this,
     );
 
-    _progress = Tween<double>(begin: 0.0, end: widget.completionPercentage)
-        .animate(
-            CurvedAnimation(parent: _controller, curve: Curves.easeOutExpo));
+    final safeEnd = (widget.completionPercentage.isFinite
+            ? widget.completionPercentage
+            : 0.0)
+        .clamp(0.0, 1.0);
+
+    _progress = Tween<double>(begin: 0.0, end: safeEnd).animate(
+        CurvedAnimation(parent: _controller, curve: Curves.easeOutExpo));
 
     _scale = Tween<double>(begin: 0.95, end: 1.0).animate(
         CurvedAnimation(parent: _controller, curve: Curves.elasticOut));
@@ -44,7 +48,12 @@ class _ModuleProgressSectionState extends State<ModuleProgressSection>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
-    final isCompleted = widget.completionPercentage >= 1.0;
+
+    final safeInput = (widget.completionPercentage.isFinite
+            ? widget.completionPercentage
+            : 0.0)
+        .clamp(0.0, 1.0);
+    final isCompleted = safeInput >= 1.0;
 
     const primaryStart = Color(0xFF6366F1);
     const primaryEnd = Color(0xFF8B5CF6);
@@ -137,7 +146,7 @@ class _ModuleProgressSectionState extends State<ModuleProgressSection>
                             const SizedBox(width: 4),
                           ],
                           Text(
-                            '${(_progress.value * 100).toInt()}%',
+                            '${(((_progress.value.isFinite ? _progress.value : 0.0).clamp(0.0, 1.0)) * 100).toInt()}%',
                             style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
@@ -158,8 +167,11 @@ class _ModuleProgressSectionState extends State<ModuleProgressSection>
                   builder: (context, child) {
                     return LayoutBuilder(
                       builder: (context, constraints) {
+                        final safeProgress =
+                            (_progress.value.isFinite ? _progress.value : 0.0)
+                                .clamp(0.0, 1.0);
                         final progressWidth =
-                            constraints.maxWidth * _progress.value;
+                            constraints.maxWidth * safeProgress;
 
                         return Stack(
                           children: [
@@ -187,7 +199,7 @@ class _ModuleProgressSectionState extends State<ModuleProgressSection>
                                         : [primaryStart, primaryEnd],
                                   ),
                                   borderRadius: BorderRadius.circular(6),
-                                  boxShadow: _progress.value > 0.1
+                                  boxShadow: safeProgress > 0.1
                                       ? [
                                           BoxShadow(
                                             color: (isCompleted
@@ -204,7 +216,7 @@ class _ModuleProgressSectionState extends State<ModuleProgressSection>
                             ),
 
                             // Progress Dot - positioned from right, moves with animation
-                            if (_progress.value > 0.05)
+                            if (safeProgress > 0.05)
                               Positioned(
                                 right: progressWidth - 6,
                                 top: 0,
