@@ -6,11 +6,12 @@ class CommentTileShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     final shimmerBaseColor =
         colorScheme.onSurfaceVariant.withValues(alpha: 0.3);
-    final shimmerHighlightColor = colorScheme.onSurface.withValues(alpha: 0.6);
+    final shimmerHighlightColor = theme.scaffoldBackgroundColor;
 
     return Shimmer.fromColors(
       baseColor: shimmerBaseColor,

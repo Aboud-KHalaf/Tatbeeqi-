@@ -80,6 +80,7 @@ class _CourseCardState extends State<CourseCard>
     final rawProgress = widget.course.progressPercent ?? 0;
     final progress = rawProgress.clamp(0.0, 1.0); // to avoid over 100%
     final progressText = '${(progress * 100).toInt()}%';
+    print(rawProgress);
     return FadeTransition(
       opacity: _fadeAnimation,
       child: SlideTransition(

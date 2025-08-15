@@ -14,7 +14,8 @@ class CourseRemoteDataSourceImpl implements CourseRemoteDataSource {
   final SupabaseClient supabaseClient;
 
   CourseRemoteDataSourceImpl({required this.supabaseClient});
-Future<List<CourseModel>> getCoursesByStudyYearAndDepartmentId({
+@override
+  Future<List<CourseModel>> getCoursesByStudyYearAndDepartmentId({
   required int studyYear,
   required int departmentId,
 }) async {
@@ -31,7 +32,7 @@ Future<List<CourseModel>> getCoursesByStudyYearAndDepartmentId({
     });
 
     final data = response as List<dynamic>;
-
+    
     return data
         .map((json) => CourseModel.fromJson({
               ...json as Map<String, dynamic>,

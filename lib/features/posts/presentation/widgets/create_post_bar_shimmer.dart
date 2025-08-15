@@ -11,7 +11,7 @@ class CreatePostBarShimmer extends StatelessWidget {
 
     final shimmerBaseColor =
         colorScheme.onSurfaceVariant.withValues(alpha: 0.3);
-    final shimmerHighlightColor = colorScheme.onSurface.withValues(alpha: 0.6);
+    final shimmerHighlightColor = theme.scaffoldBackgroundColor;
     const placeholderColor = Colors.white;
 
     Widget shimmerContainer({
