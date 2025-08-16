@@ -35,9 +35,6 @@ class CourseRemoteDataSourceImpl implements CourseRemoteDataSource {
       final data = response as List<dynamic>;
 
       return data.map((json) {
-        if (kDebugMode) {
-          print('${json['id']} : ${json['progress_percent']} /n');
-        }
         return CourseModel.fromJson({
           ...json as Map<String, dynamic>,
           'progress_percent': json['progress_percent'], // إضافة نسبة التقدم
