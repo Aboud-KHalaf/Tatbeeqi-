@@ -9,7 +9,7 @@ class AppLocalizationsAr extends AppLocalizations {
   AppLocalizationsAr([String locale = 'ar']) : super(locale);
 
   @override
-  String get homeGreeting => 'مرحبا عبود';
+  String get home => 'الصفحة الرئيسية';
 
   @override
   String get homeContinueLearning => 'واصل التعلم, انت تصنع مستقبلك';
@@ -54,7 +54,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get homeRecentlyAdded => 'المضافة مؤخرا';
 
   @override
-  String get homeAdvancedSoftwareEngineering => 'هندسة برمجيات متقدمة - الفصل 3';
+  String get homeAdvancedSoftwareEngineering =>
+      'هندسة برمجيات متقدمة - الفصل 3';
 
   @override
   String get seeAll => 'عرض الكل';
@@ -128,13 +129,15 @@ class AppLocalizationsAr extends AppLocalizations {
   String get quizEmptyNoQuestions => 'لا توجد أسئلة متاحة لهذا الدرس بعد!';
 
   @override
-  String get quizEmptyTryAnotherLesson => 'يرجى العودة لاحقًا أو تجربة درس آخر.';
+  String get quizEmptyTryAnotherLesson =>
+      'يرجى العودة لاحقًا أو تجربة درس آخر.';
 
   @override
   String get quizErrorTitle => 'حدث خطأ!';
 
   @override
-  String get quizErrorBody => 'تعذر تحميل الاختبار. يرجى المحاولة مرة أخرى لاحقًا.';
+  String get quizErrorBody =>
+      'تعذر تحميل الاختبار. يرجى المحاولة مرة أخرى لاحقًا.';
 
   @override
   String get quizPrev => 'السابق';

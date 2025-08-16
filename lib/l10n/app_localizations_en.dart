@@ -9,10 +9,11 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get homeGreeting => 'Hello Aboud';
+  String get home => 'Home';
 
   @override
-  String get homeContinueLearning => 'Continue learning, you\'re makeing your future';
+  String get homeContinueLearning =>
+      'Continue learning, you\'re makeing your future';
 
   @override
   String get homeLatestNewsAndEvents => 'Latest News and Events';
@@ -24,13 +25,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeAnotherNewsItem => 'Another News Item';
 
   @override
-  String get homeNewsDescription => 'Description for the second news item goes here.';
+  String get homeNewsDescription =>
+      'Description for the second news item goes here.';
 
   @override
   String get homeThirdEvent => 'Third Event';
 
   @override
-  String get homeThirdEventDetails => 'Details about the third event happening soon.';
+  String get homeThirdEventDetails =>
+      'Details about the third event happening soon.';
 
   @override
   String get homeTodayTasks => 'Today\'s Tasks';
@@ -54,7 +57,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeRecentlyAdded => 'Recently Added';
 
   @override
-  String get homeAdvancedSoftwareEngineering => 'Advanced Software Engineering - Chapter 3';
+  String get homeAdvancedSoftwareEngineering =>
+      'Advanced Software Engineering - Chapter 3';
 
   @override
   String get seeAll => 'See all';
@@ -84,7 +88,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get todoNoTasks => 'No Tasks Yet';
 
   @override
-  String get todoAddFirstTask => 'Add your first task by tapping the + button below';
+  String get todoAddFirstTask =>
+      'Add your first task by tapping the + button below';
 
   @override
   String get todoSetDueDate => 'Set Due Date (Optional)';
@@ -128,13 +133,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quizEmptyNoQuestions => 'No questions found for this lesson yet!';
 
   @override
-  String get quizEmptyTryAnotherLesson => 'Please check back later or try another lesson.';
+  String get quizEmptyTryAnotherLesson =>
+      'Please check back later or try another lesson.';
 
   @override
   String get quizErrorTitle => 'Oops! Something went wrong.';
 
   @override
-  String get quizErrorBody => 'We couldn\'t load the quiz. Please try again later.';
+  String get quizErrorBody =>
+      'We couldn\'t load the quiz. Please try again later.';
 
   @override
   String get quizPrev => 'Previous';
@@ -209,7 +216,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get todoConfirmDelete => 'Confirm Delete';
 
   @override
-  String get todoDeleteConfirmation => 'Are you sure you want to delete this item?';
+  String get todoDeleteConfirmation =>
+      'Are you sure you want to delete this item?';
 
   @override
   String get todoCancel => 'Cancel';
