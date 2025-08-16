@@ -25,7 +25,7 @@ import 'package:tatbeeqi/features/notes/presentation/views/add_update_note_view.
 import 'package:tatbeeqi/features/quiz/presentation/views/result_view.dart';
 
 import 'package:tatbeeqi/features/settings/presentation/screens/settings_screen.dart';
-import 'package:tatbeeqi/features/quiz/presentation/views/quiz_view.dart';
+// import 'package:tatbeeqi/features/quiz/presentation/views/quiz_view.dart';
 import 'package:tatbeeqi/features/todo/presentation/views/todo_view.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
@@ -98,7 +98,15 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.courseOverviewPath,
         builder: (BuildContext context, GoRouterState state) {
-          final args = state.extra as CourseOverviewArgs;
+          final args = state.extra as CourseOverviewArgs?;
+          if (args == null) {
+            // Handle null case - navigate back or show error
+            return const Scaffold(
+              body: Center(
+                child: Text('Invalid course data'),
+              ),
+            );
+          }
           return CourseOverviewView(
             course: args.course,
           );
@@ -107,7 +115,14 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.lectureLessonsPath,
         builder: (BuildContext context, GoRouterState state) {
-          final args = state.extra as LectureLessonsArgs;
+          final args = state.extra as LectureLessonsArgs?;
+          if (args == null) {
+            return const Scaffold(
+              body: Center(
+                child: Text('Invalid navigation arguments'),
+              ),
+            );
+          }
           return LectureLessonsView(
             course: args.course,
             lecture: args.lecture,
@@ -117,14 +132,28 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.courseLecturesPath,
         builder: (BuildContext context, GoRouterState state) {
-          final args = state.extra as Course;
+          final args = state.extra as Course?;
+          if (args == null) {
+            return const Scaffold(
+              body: Center(
+                child: Text('Invalid course data'),
+              ),
+            );
+          }
           return CourseLecturesView(course: args);
         },
       ),
       GoRoute(
         path: AppRoutes.lessonContentPath,
         builder: (BuildContext context, GoRouterState state) {
-          final args = state.extra as Lesson;
+          final args = state.extra as Lesson?;
+          if (args == null) {
+            return const Scaffold(
+              body: Center(
+                child: Text('Invalid lesson data'),
+              ),
+            );
+          }
           return LessonContentView(lesson: args);
         },
       ),
@@ -132,7 +161,14 @@ GoRouter createRouter(AuthBloc authBloc) {
         path: AppRoutes.newsDetailsPath,
         name: 'newsDetails',
         builder: (context, state) {
-          final args = state.extra as NewsDetailsArgs;
+          final args = state.extra as NewsDetailsArgs?;
+          if (args == null) {
+            return const Scaffold(
+              body: Center(
+                child: Text('Invalid news data'),
+              ),
+            );
+          }
           return NewsDetailsView(
               newsItem: args.newsItem, heroTag: args.heroTag);
         },
@@ -140,26 +176,40 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.addUpdateNotePath,
         builder: (context, state) {
-          final args = state.extra as AddUpdateNoteArgs;
+          final args = state.extra as AddUpdateNoteArgs?;
+          if (args == null) {
+            return const Scaffold(
+              body: Center(
+                child: Text('Invalid note data'),
+              ),
+            );
+          }
           if (args.note == null) {
             return AddOrUpdateNoteView(courseId: args.courseId);
           } else {
             return AddOrUpdateNoteView(
-                note: args.note, courseId: args.courseId);
+                courseId: args.courseId, note: args.note);
           }
         },
       ),
-      GoRoute(
-        path: AppRoutes.quizPath,
-        builder: (BuildContext context, GoRouterState state) {
-          final lessonId = state.extra as int;
-          return QuizView(lessonId: lessonId);
-        },
-      ),
+      // GoRoute(
+      //   path: AppRoutes.quizPath,
+      //   builder: (BuildContext context, GoRouterState state) {
+      //     final lessonId = state.extra as int;
+      //     return QuizView(lessonId: lessonId);
+      //   },
+      // ),
       GoRoute(
         path: AppRoutes.quizResultPath,
         builder: (BuildContext context, GoRouterState state) {
-          final args = state.extra as QuizResultArgs;
+          final args = state.extra as QuizResultArgs?;
+          if (args == null) {
+            return const Scaffold(
+              body: Center(
+                child: Text('Invalid quiz result data'),
+              ),
+            );
+          }
           return ResultView(
             score: args.score,
             results: args.results,

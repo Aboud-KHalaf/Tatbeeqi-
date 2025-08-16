@@ -7,7 +7,7 @@ import 'package:tatbeeqi/features/news/presentation/views/all_news_view.dart';
 import 'package:tatbeeqi/features/news/presentation/views/news_details_view.dart';
 import 'package:tatbeeqi/features/notes/presentation/views/add_update_note_view.dart';
 import 'package:tatbeeqi/features/notes/presentation/views/notes_view.dart';
-import 'package:tatbeeqi/features/quiz/presentation/views/quiz_view.dart';
+// import 'package:tatbeeqi/features/quiz/presentation/views/quiz_view.dart';
 import 'package:tatbeeqi/features/quiz/presentation/views/result_view.dart';
 import 'package:tatbeeqi/features/settings/presentation/screens/settings_screen.dart';
 import 'package:tatbeeqi/features/todo/presentation/views/todo_view.dart';
@@ -22,7 +22,7 @@ class AppRoutes {
   static const String notesPath = NotesView.routePath;
   static const String newsDetailsPath = NewsDetailsView.routeId;
   static const String addUpdateNotePath = AddOrUpdateNoteView.routePath;
-  static const String quizPath = QuizView.routeName;
+ // static const String quizPath = QuizView.routeName;
   static const String quizResultPath = ResultView.routeName;
   static const String courseLecturesPath = CourseLecturesView.routePath;
   static const String lectureLessonsPath = LectureLessonsView.routePath;

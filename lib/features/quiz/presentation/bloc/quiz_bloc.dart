@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import '../../domain/entities/quiz_question.dart';
 import '../../domain/entities/user_answer.dart';
 import '../../domain/usecases/evaluate_quiz_answers.dart';
@@ -70,24 +71,30 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   }
 
   Future<void> _onSubmitQuiz(SubmitQuiz event, Emitter<QuizState> emit) async {
+    debugPrint('Submitting quiz');
+
     if (state is! QuizLoaded) {
+      debugPrint('Quiz not loaded properly');
       emit(const QuizError(error: 'Quiz not loaded properly'));
       return;
     }
 
     final currentState = state as QuizLoaded;
-    
+
     // Enhanced validation
     if (currentState.questions.isEmpty) {
+      debugPrint('No questions available to submit');
       emit(const QuizError(error: 'No questions available to submit'));
       return;
     }
 
     if (currentState.userAnswers.length != currentState.questions.length) {
-      final unanswered = currentState.questions.length - currentState.userAnswers.length;
+      debugPrint('Not all questions answered');
+      final unanswered =
+          currentState.questions.length - currentState.userAnswers.length;
       emit(QuizError(
-        error: 'Please answer all questions before submitting ($unanswered remaining)'
-      ));
+          error:
+              'Please answer all questions before submitting ($unanswered remaining)'));
       return;
     }
 
@@ -109,7 +116,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
 
       result.fold(
         (failure) {
-          print('Quiz evaluation failed: ${failure.message}');
+          debugPrint('Quiz evaluation failed: ${failure.message}');
           emit(QuizError(error: 'Failed to evaluate quiz: ${failure.message}'));
         },
         (results) {
@@ -127,7 +134,8 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       );
     } catch (e) {
       print('Unexpected error during quiz submission: $e');
-      emit(QuizError(error: 'An unexpected error occurred. Please try again.'));
+      emit(const QuizError(
+          error: 'An unexpected error occurred. Please try again.'));
     }
   }
 }

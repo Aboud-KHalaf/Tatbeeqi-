@@ -4,6 +4,7 @@ import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_score_summary_c
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_result_list.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_result_action_button.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
+
 class ResultView extends StatelessWidget {
   static const String routeName = '/quiz_result';
 
@@ -22,7 +23,7 @@ class ResultView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        final l10n = AppLocalizations.of(context)!;
+    final l10n = AppLocalizations.of(context)!;
 
     final colorScheme = Theme.of(context).colorScheme;
     final totalQuestions = questions.length;
@@ -56,8 +57,8 @@ class ResultView extends StatelessWidget {
               results: results,
               userAnswers: userAnswers,
             ),
-           const SliverToBoxAdapter(
-              child: const QuizResultActionButton(),
+            const SliverToBoxAdapter(
+              child: QuizResultActionButton(),
             ),
           ],
         ),

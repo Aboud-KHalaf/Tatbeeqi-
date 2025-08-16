@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/core/widgets/ai_action_button.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
@@ -80,7 +78,6 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     colorScheme.surfaceContainerHighest.withValues(alpha: 0.7),
                 child: InkWell(
                   onTap: () {
-context.push(AppRoutes.quizPath , extra: "l1");        
         },
                   borderRadius:
                       BorderRadius.circular(isSmallScreen ? 10.0 : 12.0),
