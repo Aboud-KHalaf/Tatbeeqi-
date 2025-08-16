@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/services.dart';
+import 'package:tatbeeqi/features/quiz/domain/entities/quiz_question.dart';
 import 'package:tatbeeqi/features/quiz/presentation/bloc/quiz_bloc.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/question_widget.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_progress_bar.dart';
@@ -10,8 +11,11 @@ import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_error_state.dar
 
 class QuizWidget extends StatefulWidget {
   final int lessonId;
-  final Function(int score, List results, List questions, Map userAnswers)?
-      onQuizCompleted;
+  final Function(
+      int score,
+      Map<String, bool> results,
+      List<QuizQuestion> questions,
+      Map<String, String> userAnswers)? onQuizCompleted;
 
   const QuizWidget({
     Key? key,
@@ -32,6 +36,68 @@ class _QuizWidgetState extends State<QuizWidget> {
     });
   }
 
+  bool _canSubmitQuiz(QuizLoaded state) {
+    // Check if all questions have been answered
+    return state.userAnswers.length == state.questions.length;
+  }
+
+  void _showSubmitConfirmation(BuildContext context, QuizLoaded state) {
+    final answeredCount = state.userAnswers.length;
+    final totalCount = state.questions.length;
+
+    if (answeredCount < totalCount) {
+      // Show warning for incomplete quiz
+      _showIncompleteQuizDialog(context, answeredCount, totalCount);
+      return;
+    }
+
+    // Show confirmation dialog for complete quiz
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: const Text('Submit Quiz'),
+        content: Text(
+          'Are you sure you want to submit your quiz?\n\n'
+          'You have answered all $totalCount questions.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              context.read<QuizBloc>().add(SubmitQuiz());
+            },
+            child: const Text('Submit'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showIncompleteQuizDialog(
+      BuildContext context, int answered, int total) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Incomplete Quiz'),
+        content: Text(
+          'You have answered $answered out of $total questions.\n\n'
+          'Please answer all questions before submitting.',
+        ),
+        actions: [
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Continue Quiz'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -45,9 +111,9 @@ class _QuizWidgetState extends State<QuizWidget> {
           if (widget.onQuizCompleted != null) {
             widget.onQuizCompleted!(
               state.score,
-              state.results as List,
-              state.questions as List,
-              state.userAnswers as Map,
+              state.results,
+              state.questions,
+              state.userAnswers,
             );
           }
         }
@@ -55,6 +121,10 @@ class _QuizWidgetState extends State<QuizWidget> {
       builder: (context, state) {
         if (state is QuizLoading || state is QuizInitial) {
           return _LoadingState(colorScheme: colorScheme);
+        }
+
+        if (state is QuizSubmitting) {
+          return _SubmittingState(colorScheme: colorScheme);
         }
 
         if (state is QuizError) {
@@ -149,16 +219,15 @@ class _QuizWidgetState extends State<QuizWidget> {
                                     .questions[state.currentQuestionIndex].id)
                                 ? () {
                                     HapticFeedback.lightImpact();
-                                    if (state.currentQuestionIndex ==
-                                        state.questions.length - 1) {
-                                      context
-                                          .read<QuizBloc>()
-                                          .add(SubmitQuiz());
-                                    } else {
-                                      context
-                                          .read<QuizBloc>()
-                                          .add(NextQuestion());
-                                    }
+                                    context
+                                        .read<QuizBloc>()
+                                        .add(NextQuestion());
+                                  }
+                                : null,
+                            onSubmit: _canSubmitQuiz(state)
+                                ? () {
+                                    HapticFeedback.mediumImpact();
+                                    _showSubmitConfirmation(context, state);
                                   }
                                 : null,
                           ),
@@ -217,6 +286,52 @@ class _LoadingState extends StatelessWidget {
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: colorScheme.onSurface,
                 ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _SubmittingState extends StatelessWidget {
+  final ColorScheme colorScheme;
+
+  const _SubmittingState({required this.colorScheme});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TweenAnimationBuilder<double>(
+            tween: Tween(begin: 0.0, end: 1.0),
+            duration: const Duration(milliseconds: 1200),
+            builder: (context, value, child) {
+              return Transform.scale(
+                scale: 0.9 + (0.1 * value),
+                child: CircularProgressIndicator(
+                  color: colorScheme.primary,
+                  strokeWidth: 4,
+                ),
+              );
+            },
+          ),
+          const SizedBox(height: 24),
+          Text(
+            'Submitting Quiz...',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: colorScheme.onSurface,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Please wait while we evaluate your answers',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurfaceVariant,
+                ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

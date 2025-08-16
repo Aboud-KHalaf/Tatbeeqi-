@@ -46,7 +46,7 @@ class CompactNavigationButtons extends StatelessWidget {
           flex: isLastQuestion ? 2 : 1,
           child: _CompactButton(
             onPressed: isLastQuestion
-                ? (canGoNext ? onSubmit : null)
+                ? (canGoNext ? (onSubmit ?? onNext) : null)
                 : (canGoNext ? onNext : null),
             icon: isLastQuestion
                 ? Icons.check_circle_rounded

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes_args.dart';
 import 'package:tatbeeqi/features/courses_content/domain/entities/lesson_entity.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/video_player_widget.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/pdf_viewer_widget.dart';
@@ -18,11 +21,11 @@ class LessonContentView extends StatelessWidget {
       appBar: AppBar(
         title: Text(lesson.title),
       ),
-      body: _lessonContentByType(),
+      body: _lessonContentByType(context),
     );
   }
 
-  Widget _lessonContentByType() {
+  Widget _lessonContentByType(BuildContext context) {
     switch (lesson.lessonType) {
       case ContentType.pdf:
         return PDFViewerWidget(
@@ -42,8 +45,7 @@ class LessonContentView extends StatelessWidget {
           child: QuizWidget(
             lessonId: lesson.id,
             onQuizCompleted: (score, results, questions, userAnswers) {
-              // Handle quiz completion if needed
-              // You can add navigation or other logic here
+              context.pushNamed(AppRoutes.quizResultPath, extra: QuizResultArgs(score: score, results: results, questions: questions, userAnswers: userAnswers));
             },
           ),
         );

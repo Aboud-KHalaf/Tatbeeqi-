@@ -70,15 +70,35 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   }
 
   Future<void> _onSubmitQuiz(SubmitQuiz event, Emitter<QuizState> emit) async {
-    if (state is QuizLoaded) {
-      final currentState = state as QuizLoaded;
-      if (currentState.userAnswers.length != currentState.questions.length) {
-        print('Quiz submission failed: Not all questions answered');
-        emit(const QuizError(
-            error: 'Please answer all questions before submitting'));
-        return;
-      }
+    if (state is! QuizLoaded) {
+      emit(const QuizError(error: 'Quiz not loaded properly'));
+      return;
+    }
 
+    final currentState = state as QuizLoaded;
+    
+    // Enhanced validation
+    if (currentState.questions.isEmpty) {
+      emit(const QuizError(error: 'No questions available to submit'));
+      return;
+    }
+
+    if (currentState.userAnswers.length != currentState.questions.length) {
+      final unanswered = currentState.questions.length - currentState.userAnswers.length;
+      emit(QuizError(
+        error: 'Please answer all questions before submitting ($unanswered remaining)'
+      ));
+      return;
+    }
+
+    // Emit submitting state
+    emit(QuizSubmitting(
+      questions: currentState.questions,
+      userAnswers: currentState.userAnswers,
+      lessonId: currentState.lessonId,
+    ));
+
+    try {
       final userAnswers = currentState.userAnswers.entries
           .map((entry) =>
               UserAnswer(questionId: entry.key, selectedAnswerId: entry.value))
@@ -90,11 +110,12 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
       result.fold(
         (failure) {
           print('Quiz evaluation failed: ${failure.message}');
-          emit(QuizError(error: failure.message));
+          emit(QuizError(error: 'Failed to evaluate quiz: ${failure.message}'));
         },
         (results) {
           final score = results.values.where((isCorrect) => isCorrect).length;
-          print('Quiz completed with score: $score/${results.length}');
+          final totalQuestions = results.length;
+          print('Quiz completed with score: $score/$totalQuestions');
 
           emit(QuizCompleted(
             score: score,
@@ -104,6 +125,9 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
           ));
         },
       );
+    } catch (e) {
+      print('Unexpected error during quiz submission: $e');
+      emit(QuizError(error: 'An unexpected error occurred. Please try again.'));
     }
   }
 }

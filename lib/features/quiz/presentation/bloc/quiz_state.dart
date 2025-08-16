@@ -44,6 +44,21 @@ class QuizLoaded extends QuizState {
   }
 }
 
+class QuizSubmitting extends QuizState {
+  final List<QuizQuestion> questions;
+  final Map<String, String> userAnswers;
+  final int lessonId;
+
+  const QuizSubmitting({
+    required this.questions,
+    required this.userAnswers,
+    required this.lessonId,
+  });
+
+  @override
+  List<Object> get props => [questions, userAnswers, lessonId];
+}
+
 class QuizCompleted extends QuizState {
   final int score;
   final Map<String, bool> results;
