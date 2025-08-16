@@ -17,6 +17,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     required this.getQuizQuestionsUseCase,
     required this.evaluateQuizAnswersUseCase,
   }) : super(QuizInitial()) {
+    debugPrint('QuizBloc created with id: \\${identityHashCode(this)}');
     on<LoadQuiz>(_onLoadQuiz);
     on<SelectAnswer>(_onSelectAnswer);
     on<NextQuestion>(_onNextQuestion);
@@ -71,7 +72,7 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
   }
 
   Future<void> _onSubmitQuiz(SubmitQuiz event, Emitter<QuizState> emit) async {
-    debugPrint('Submitting quiz');
+    debugPrint('Submitting quiz on bloc id: \\${identityHashCode(this)}; current state: \\${state.toString()}');
 
     if (state is! QuizLoaded) {
       debugPrint('Quiz not loaded properly');
@@ -139,3 +140,45 @@ class QuizBloc extends Bloc<QuizEvent, QuizState> {
     }
   }
 }
+
+
+
+/*
+ Future<void> _onSubmitQuiz(SubmitQuiz event, Emitter<QuizState> emit) async {
+    if (state is QuizLoaded) {
+      final currentState = state as QuizLoaded;
+      if (currentState.userAnswers.length != currentState.questions.length) {
+        print('Quiz submission failed: Not all questions answered');
+        emit(QuizError(error: 'Please answer all questions before submitting'));
+        return;
+      }
+      
+      final userAnswers = currentState.userAnswers.entries
+          .map((entry) => UserAnswer(
+              questionId: entry.key, selectedAnswerId: entry.value))
+          .toList();
+
+      final result = await evaluateQuizAnswersUseCase(
+          EvaluateQuizAnswersParams(
+              lessonId: currentState.lessonId, userAnswers: userAnswers));
+      
+      result.fold(
+        (failure) {
+          print('Quiz evaluation failed: ${failure.message}');
+          emit(QuizError(error: failure.message));
+        },
+        (results) {
+          final score = results.values.where((isCorrect) => isCorrect).length;
+          print('Quiz completed with score: $score/${results.length}');
+          
+          emit(QuizCompleted(
+            score: score,
+            results: results,
+            questions: currentState.questions,
+            userAnswers: currentState.userAnswers,
+          ));
+        },
+      );
+    }
+  }
+*/

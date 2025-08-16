@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/features/courses_content/domain/entities/lesson_entity.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/pdf_viewer_widget.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/reading_content_widget.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/video_player_widget.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/voice_content_widget.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_widget.dart';
-import 'package:tatbeeqi/features/quiz/presentation/bloc/quiz_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 class LessonContentView extends StatelessWidget {
   static const String routePath = '/lesson-content';
@@ -39,11 +36,8 @@ class LessonContentView extends StatelessWidget {
         );
 
       case ContentType.quiz:
-        return BlocProvider(
-          create: (context) => GetIt.instance<QuizBloc>(),
-          child: QuizWidget(
-            lessonId: lesson.id,
-          ),
+        return QuizWidget(
+          lessonId: lesson.id,
         );
 
       case ContentType.voice:
@@ -54,8 +48,7 @@ class LessonContentView extends StatelessWidget {
 
       case ContentType.reading:
         return ReadingContentWidget(
-          content:
-              "https://ayqqtvgloqmykmgthdvs.supabase.co/storage/v1/object/public/voices/Record%20(online-voice-recorder.com).mp3",
+          content: lesson.content ?? '',
           title: lesson.title,
         );
     }
