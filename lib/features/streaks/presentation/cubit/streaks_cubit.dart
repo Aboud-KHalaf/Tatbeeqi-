@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/usecases/usecase.dart';
 import '../../domain/usecases/get_user_streak.dart';
 import '../../domain/usecases/update_streak_on_lesson_complete.dart';
 import 'streaks_state.dart';
@@ -12,10 +13,10 @@ class StreaksCubit extends Cubit<StreaksState> {
     required this.updateStreakOnLessonComplete,
   }) : super(StreaksInitial());
 
-  Future<void> loadUserStreak(String userId) async {
+  Future<void> loadUserStreak() async {
     emit(StreaksLoading());
 
-    final result = await getUserStreak(GetUserStreakParams(userId: userId));
+    final result = await getUserStreak(NoParams());
 
     result.fold(
       (failure) => emit(StreaksError(message: failure.message)),
@@ -34,12 +35,12 @@ class StreaksCubit extends Cubit<StreaksState> {
 
       result.fold(
         (failure) => emit(StreaksError(message: failure.message)),
-        (_) => loadUserStreak(userId), // Reload to get updated streak
+        (_) => loadUserStreak(), // Reload to get updated streak
       );
     }
   }
 
-  Future<void> refreshStreak(String userId) async {
-    await loadUserStreak(userId);
+  Future<void> refreshStreak() async {
+    await loadUserStreak();
   }
 }

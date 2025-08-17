@@ -25,7 +25,7 @@ import 'package:tatbeeqi/features/quiz/presentation/views/result_view.dart';
 
 import 'package:tatbeeqi/features/settings/presentation/screens/settings_screen.dart';
 // import 'package:tatbeeqi/features/quiz/presentation/views/quiz_view.dart';
-import 'package:tatbeeqi/features/streaks/presentation/pages/streaks_page.dart';
+import 'package:tatbeeqi/features/streaks/presentation/views/streaks_view.dart';
 import 'package:tatbeeqi/features/todo/presentation/views/todo_view.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
@@ -244,7 +244,7 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.streaksPath,
         builder: (BuildContext context, GoRouterState state) {
-          return const StreaksPage();
+          return const StreaksView();
         },
       ),
     ],

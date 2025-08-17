@@ -139,11 +139,7 @@ class _SignInPageState extends State<SignInPage>
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter your email';
                                   }
-                                  if (!RegExp(
-                                          r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}\$')
-                                      .hasMatch(value)) {
-                                    return 'Please enter a valid email';
-                                  }
+
                                   return null;
                                 },
                               ),
@@ -277,7 +273,7 @@ class _SignUpPrompt extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: colorScheme.surfaceVariant.withValues(alpha: 0.3),
+        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           color: colorScheme.outline.withValues(alpha: 0.2),

@@ -16,10 +16,10 @@ class StreaksRepositoryImpl implements StreaksRepository {
   });
 
   @override
-  Future<Either<Failure, UserStreak>> getUserStreak(String userId) async {
+  Future<Either<Failure, UserStreak>> getUserStreak() async {
     if (await connectionChecker.isConnected()) {
       try {
-        final streak = await remoteDataSource.getUserStreak(userId);
+        final streak = await remoteDataSource.getUserStreak();
         return Right(streak);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));

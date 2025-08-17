@@ -3,7 +3,7 @@ import '../../../../core/error/exceptions.dart';
 import '../models/user_streak_model.dart';
 
 abstract class StreaksRemoteDataSource {
-  Future<UserStreakModel> getUserStreak(String userId);
+  Future<UserStreakModel> getUserStreak();
   Future<void> updateStreakOnLessonComplete(String userId);
 }
 
@@ -13,8 +13,12 @@ class StreaksRemoteDataSourceImpl implements StreaksRemoteDataSource {
   StreaksRemoteDataSourceImpl({required this.supabaseClient});
 
   @override
-  Future<UserStreakModel> getUserStreak(String userId) async {
+  Future<UserStreakModel> getUserStreak() async {
     try {
+      final String userId =  supabaseClient.auth.currentUser!.id;
+      if (userId.isEmpty) {
+        throw ServerException('User ID is empty');
+      }
       final response = await supabaseClient
           .from('user_streaks')
           .select()

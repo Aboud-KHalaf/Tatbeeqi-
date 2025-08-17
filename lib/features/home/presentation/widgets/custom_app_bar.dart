@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/widgets/ai_action_button.dart';
-import 'package:tatbeeqi/features/streaks/presentation/pages/streaks_page.dart';
+import 'package:tatbeeqi/features/streaks/presentation/views/streaks_view.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
+
+import '../../../auth/presentation/manager/bloc/auth_bloc.dart';
 
 class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomHomeAppBar({super.key});
@@ -37,7 +38,7 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         IconButton(
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const StreaksPage(),
+                builder: (context) => const StreaksView(),
               ));
             },
             icon: const Icon(
@@ -51,7 +52,9 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           borderRadius: BorderRadius.circular(isSmallScreen ? 10.0 : 12.0),
           color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.7),
           child: InkWell(
-            onTap: () {},
+            onTap: () {
+              context.read<AuthBloc>().add(SignOutEvent());
+            },
             borderRadius: BorderRadius.circular(isSmallScreen ? 10.0 : 12.0),
             child: Container(
               padding: EdgeInsets.all(isSmallScreen ? 8.0 : 10.0),
