@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/core/widgets/ai_action_button.dart';
+import 'package:tatbeeqi/features/streaks/presentation/pages/streaks_page.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -31,6 +34,16 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         maxLines: 1,
       ),
       actions: [
+        IconButton(
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const StreaksPage(),
+              ));
+            },
+            icon: const Icon(
+              Icons.fireplace_rounded,
+              color: Colors.red,
+            )),
         const AiActionButton(),
         SizedBox(width: isSmallScreen ? 6 : 10),
         // Notifications Button

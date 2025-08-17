@@ -24,6 +24,7 @@ import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
 import 'package:tatbeeqi/features/quiz/presentation/bloc/quiz_bloc.dart';
+import 'package:tatbeeqi/features/streaks/presentation/cubit/streaks_cubit.dart';
 import 'package:tatbeeqi/features/theme/presentation/manager/theme_cubit/theme_cubit.dart';
 import 'package:tatbeeqi/features/todo/presentation/manager/todo_cubit.dart';
 import 'package:tatbeeqi/features/auth/presentation/manager/bloc/auth_bloc.dart';
@@ -113,6 +114,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.sl<AiAssistantCubit>(),
         ),
+   
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(
         builder: (context, localeState) {

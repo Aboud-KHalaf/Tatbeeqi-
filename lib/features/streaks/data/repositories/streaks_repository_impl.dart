@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:tatbeeqi/core/network/network_info.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
 import '../../domain/entities/user_streak.dart';
@@ -8,7 +8,7 @@ import '../datasources/streaks_remote_datasource.dart';
 
 class StreaksRepositoryImpl implements StreaksRepository {
   final StreaksRemoteDataSource remoteDataSource;
-  final InternetConnectionChecker connectionChecker;
+  final NetworkInfo connectionChecker;
 
   StreaksRepositoryImpl({
     required this.remoteDataSource,
@@ -17,33 +17,34 @@ class StreaksRepositoryImpl implements StreaksRepository {
 
   @override
   Future<Either<Failure, UserStreak>> getUserStreak(String userId) async {
-    if (await connectionChecker.hasConnection) {
+    if (await connectionChecker.isConnected()) {
       try {
         final streak = await remoteDataSource.getUserStreak(userId);
         return Right(streak);
       } on ServerException catch (e) {
-        return Left(ServerFailure( e.message));
+        return Left(ServerFailure(e.message));
       } catch (e) {
-        return Left(ServerFailure( 'Unexpected error occurred'));
+        return const Left(ServerFailure('Unexpected error occurred'));
       }
     } else {
-      return const Left(NetworkFailure( 'No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
   }
 
   @override
-  Future<Either<Failure, void>> updateStreakOnLessonComplete(String userId) async {
-    if (await connectionChecker.hasConnection) {
+  Future<Either<Failure, void>> updateStreakOnLessonComplete(
+      String userId) async {
+    if (await connectionChecker.isConnected()) {
       try {
         await remoteDataSource.updateStreakOnLessonComplete(userId);
         return const Right(null);
       } on ServerException catch (e) {
-        return Left(ServerFailure(  e.message));
+        return Left(ServerFailure(e.message));
       } catch (e) {
-        return Left(ServerFailure(  'Failed to update streak'));
+        return const Left(ServerFailure('Failed to update streak'));
       }
     } else {
-      return const Left(NetworkFailure(  'No internet connection'));
+      return const Left(NetworkFailure('No internet connection'));
     }
   }
 }

@@ -54,7 +54,7 @@ class _StreaksViewState extends State<StreaksView>
 
   void _loadUserStreak() {
     // In a real app, you'd get the user ID from authentication
-    const userId = 'current-user-id';
+    const userId = 'd893e725-2df9-469d-98d8-dff9ecf81c64';
     context.read<StreaksCubit>().loadUserStreak(userId);
   }
 
@@ -281,8 +281,7 @@ class _StreaksViewState extends State<StreaksView>
         const SizedBox(height: 24),
 
         // Action Button (if needed)
-        if (!streak.hasStreakToday)
-          _buildActionButton(context),
+        if (!streak.hasStreakToday) _buildActionButton(context),
       ],
     );
   }
@@ -296,7 +295,8 @@ class _StreaksViewState extends State<StreaksView>
         // Show current streak with loading overlay
         Opacity(
           opacity: 0.7,
-          child: _buildLoadedState(context, StreaksLoaded(streak: state.currentStreak)),
+          child: _buildLoadedState(
+              context, StreaksLoaded(streak: state.currentStreak)),
         ),
         const SizedBox(height: 16),
         Container(
