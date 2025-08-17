@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes_args.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses_content/domain/entities/lecture_entity.dart';
 import 'package:tatbeeqi/features/courses_content/domain/entities/lesson_entity.dart';
@@ -64,13 +67,22 @@ class LectureContent extends StatelessWidget {
                 if (upNextItem != null && progressPercentage < 1)
                   UpNextCard(
                     lesson: upNextItem,
-                    onPressed: () {},
+                    onPressed: () {
+                      context.push(
+                        AppRoutes.lessonContentPath,
+                        extra: LessonContentArgs(
+                          lesson: lessons,
+                          index: lessons.indexOf(upNextItem),
+                          courseId: course.id.toString(),
+                        ),
+                      );
+                    },
                   ),
                 LectureDescriptionSection(lecture: lecture),
               ],
             ),
           ),
-          CourseContentList(lessonsList: lessons),
+          CourseContentList(lessonsList: lessons, courseId: course.id.toString()),
           const SliverToBoxAdapter(child: SizedBox(height: 32)),
         ],
       ),

@@ -11,7 +11,6 @@ import 'package:tatbeeqi/features/auth/presentation/views/forget_password_page.d
 import 'package:tatbeeqi/features/auth/presentation/views/sign_in_page.dart';
 import 'package:tatbeeqi/features/auth/presentation/views/sign_up_page.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
-import 'package:tatbeeqi/features/courses_content/domain/entities/lesson_entity.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/views/course_lectures_view.dart';
 
 // Features
@@ -26,6 +25,7 @@ import 'package:tatbeeqi/features/quiz/presentation/views/result_view.dart';
 
 import 'package:tatbeeqi/features/settings/presentation/screens/settings_screen.dart';
 // import 'package:tatbeeqi/features/quiz/presentation/views/quiz_view.dart';
+import 'package:tatbeeqi/features/streaks/presentation/pages/streaks_page.dart';
 import 'package:tatbeeqi/features/todo/presentation/views/todo_view.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
@@ -145,16 +145,39 @@ GoRouter createRouter(AuthBloc authBloc) {
       ),
       GoRoute(
         path: AppRoutes.lessonContentPath,
-        builder: (BuildContext context, GoRouterState state) {
-          final args = state.extra as Lesson?;
+        pageBuilder: (context, state) {
+          final args = state.extra as LessonContentArgs?;
           if (args == null) {
-            return const Scaffold(
-              body: Center(
-                child: Text('Invalid lesson data'),
+            return const NoTransitionPage(
+              child: Scaffold(
+                body: Center(
+                  child: Text('Invalid lesson data'),
+                ),
               ),
             );
           }
-          return LessonContentView(lesson: args);
+          return CustomTransitionPage<void>(
+            key: state.pageKey,
+            child: LessonContentView(
+              lesson: args.lesson,
+              courseId: args.courseId,
+              index: args.index,
+            ),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              const begin = Offset(-1.0, 0.0);
+              const end = Offset.zero;
+              const curve = Curves.easeInOut;
+              var tween = Tween(begin: begin, end: end).chain(
+                CurveTween(curve: curve),
+              );
+              return SlideTransition(
+                position: animation.drive(tween),
+                child: child,
+              );
+            },
+            transitionDuration: const Duration(milliseconds: 300),
+          );
         },
       ),
       GoRoute(
@@ -216,6 +239,12 @@ GoRouter createRouter(AuthBloc authBloc) {
             questions: args.questions,
             userAnswers: args.userAnswers,
           );
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.streaksPath,
+        builder: (BuildContext context, GoRouterState state) {
+          return const StreaksPage();
         },
       ),
     ],

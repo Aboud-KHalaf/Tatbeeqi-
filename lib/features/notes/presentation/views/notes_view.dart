@@ -21,6 +21,7 @@ class NotesView extends StatefulWidget {
 class _NotesViewState extends State<NotesView> {
   @override
   void initState() {
+    print("course id ${widget.course.id}");
     super.initState();
     final currentState = context.read<NotesBloc>().state;
     if (currentState is! NotesLoaded || currentState.notes.isEmpty) {

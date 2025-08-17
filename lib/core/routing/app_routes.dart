@@ -27,6 +27,7 @@ class AppRoutes {
   static const String courseLecturesPath = CourseLecturesView.routePath;
   static const String lectureLessonsPath = LectureLessonsView.routePath;
   static const String lessonContentPath = LessonContentView.routePath;
+  static const String streaksPath = '/streaks';
   // Auth
   static const String signInPath = '/auth/signin';
   static const String signUpPath = '/auth/signup';

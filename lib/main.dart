@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tatbeeqi/core/di/service_locator.dart' as di;
 import 'package:tatbeeqi/core/routing/app_router.dart';
+import 'package:tatbeeqi/features/ai_assistant/presentation/cubit/ai_assistant_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cubit/retake_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/manager/lectures/lectures_cubit.dart';
@@ -108,6 +109,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.sl<LessonsCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => di.sl<AiAssistantCubit>(),
         ),
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(

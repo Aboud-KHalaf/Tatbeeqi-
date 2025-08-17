@@ -10,11 +10,15 @@ class AiAssistantCubit extends Cubit<AiAssistantState> {
 
   Future<void> askQuestion(String question, {String? context}) async {
     if (question.trim().isEmpty) {
-      emit(const AiAssistantError(message: 'Please enter a question'));
+      if (!isClosed) {
+        emit(const AiAssistantError(message: 'Please enter a question'));
+      }
       return;
     }
 
-    emit(const AiAssistantLoading());
+    if (!isClosed) {
+      emit(const AiAssistantLoading());
+    }
 
     final aiQuestion = AiQuestion(
       question: question.trim(),
@@ -24,19 +28,25 @@ class AiAssistantCubit extends Cubit<AiAssistantState> {
 
     final result = await askAiQuestion(AiQuestionParams(question: aiQuestion));
 
-    result.fold(
-      (failure) => emit(AiAssistantError(message: failure.message)),
-      (response) => emit(AiAssistantSuccess(response: response)),
-    );
+    if (!isClosed) {
+      result.fold(
+        (failure) => emit(AiAssistantError(message: failure.message)),
+        (response) => emit(AiAssistantSuccess(response: response)),
+      );
+    }
   }
 
   void reset() {
-    emit(const AiAssistantInitial());
+    if (!isClosed) {
+      emit(const AiAssistantInitial());
+    }
   }
 
   void clearError() {
     if (state is AiAssistantError) {
-      emit(const AiAssistantInitial());
+      if (!isClosed) {
+        emit(const AiAssistantInitial());
+      }
     }
   }
 }
