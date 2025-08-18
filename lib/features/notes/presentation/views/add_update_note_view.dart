@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:tatbeeqi/core/utils/notes_colors.dart';
+import 'package:tatbeeqi/core/widgets/custom_markdown_body_widget.dart';
 import 'package:tatbeeqi/features/notes/domain/entities/note.dart';
 import 'package:tatbeeqi/features/notes/presentation/bloc/notes_bloc.dart';
 
@@ -22,6 +23,7 @@ class _AddOrUpdateNoteViewState extends State<AddOrUpdateNoteView> {
   late final TextEditingController _titleController;
   late final TextEditingController _contentController;
   int _selectedColorIndex = 0;
+  bool _isPreview = false;
 
   @override
   void initState() {
@@ -91,6 +93,16 @@ class _AddOrUpdateNoteViewState extends State<AddOrUpdateNoteView> {
         title: Text(isNewNote ? 'New Note' : 'Edit Note'),
         actions: [
           IconButton(
+            icon: Icon(_isPreview ? Icons.visibility_off : Icons.visibility),
+            tooltip: _isPreview ? 'Hide Preview' : 'Show Markdown Preview',
+            color: colorScheme.primary,
+            onPressed: () {
+              setState(() {
+                _isPreview = !_isPreview;
+              });
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.save),
             color: colorScheme.primary,
             tooltip: 'Save',
@@ -105,49 +117,82 @@ class _AddOrUpdateNoteViewState extends State<AddOrUpdateNoteView> {
             ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
+      body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              controller: _titleController,
-              decoration: const InputDecoration(
-                hintText: 'Title',
-                border: InputBorder.none,
-              ),
-              style: Theme.of(context).textTheme.headlineSmall,
-              textCapitalization: TextCapitalization.sentences,
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _contentController,
-              decoration: const InputDecoration(
-                hintText: 'Note content...',
-                border: InputBorder.none,
-              ),
-              maxLines: null, // Allows for multiline input
-              textCapitalization: TextCapitalization.sentences,
-            ),
-            if (!isNewNote)
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: colorScheme.primaryContainer,
-                  ),
-                  child: Text(
-                    'Last edited: ${DateFormat.yMMMd().add_jm().format(widget.note!.lastModified)}',
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.outline,
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextField(
+                      controller: _titleController,
+                      decoration: const InputDecoration(
+                        hintText: 'Title',
+                        border: InputBorder.none,
+                      ),
+                      style: Theme.of(context).textTheme.headlineSmall,
+                      textCapitalization: TextCapitalization.sentences,
+                      enabled: !_isPreview,
+                    ),
+                    const SizedBox(height: 8),
+                    if (_isPreview)
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.surface,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.05),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
                         ),
-                  ),
+                        child: CustomMarkDownBodyWidget(
+                          data: _contentController.text.isEmpty
+                              ? '*No content*'
+                              : _contentController.text,
+                        ),
+                      )
+                    else
+                      TextField(
+                        controller: _contentController,
+                        decoration: const InputDecoration(
+                          hintText: 'Note content...',
+                          border: InputBorder.none,
+                        ),
+                        maxLines: null, // Allows for multiline input
+                        textCapitalization: TextCapitalization.sentences,
+                      ),
+                    if (!isNewNote)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: colorScheme.primaryContainer,
+                          ),
+                          child: Text(
+                            'Last edited: ${DateFormat.yMMMd().add_jm().format(widget.note!.lastModified)}',
+                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: Theme.of(context).colorScheme.outline,
+                                ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
+            ),
             const SizedBox(height: 16),
-            _buildColorSelector(currentNoteColors),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              child: _buildColorSelector(currentNoteColors),
+            ),
           ],
         ),
       ),

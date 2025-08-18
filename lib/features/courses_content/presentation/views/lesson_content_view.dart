@@ -217,10 +217,13 @@ class _LessonContentViewState extends State<LessonContentView>
       backgroundColor: Colors.transparent,
       builder: (context) => BlocProvider.value(
         value: context.read<AiAssistantCubit>(),
-        child: AiAssistantBottomSheet(
-          lessonTitle: widget.lesson[_currentIndex].title,
-          lessonContext: widget.lesson[_currentIndex].content,
-        ),
+        child:AiAssistantBottomSheet(
+  lessonContext: widget.lesson[_currentIndex].content, // Only for reading type
+  lessonTitle: widget.lesson[_currentIndex].title,
+  lessonType: widget.lesson[_currentIndex].lessonType.toString(), // or "voice", "video", "pdf", "quiz"
+  courseId: widget.courseId,
+  lessonId: widget.lesson[_currentIndex].id,
+)
       ),
     );
   }

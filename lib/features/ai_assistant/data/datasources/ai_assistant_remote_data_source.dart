@@ -22,18 +22,21 @@ class AiAssistantRemoteDataSourceImpl implements AiAssistantRemoteDataSource {
       debugPrint("Sending prompt: $prompt");
 
       final content = [Content.text(prompt)];
-      
+
       // Add timeout and better error handling
-      final response = await model.generateContent(
-        content,
-        generationConfig: GenerationConfig(
-          temperature: 0.7,
-          maxOutputTokens: 1024, // Reduced for testing
-        ),
-      ).timeout(
-        const Duration(seconds: 30),
-        onTimeout: () => throw core_exceptions.ServerException('Request timeout'),
-      );
+      final response = await model
+          .generateContent(
+            content,
+            generationConfig: GenerationConfig(
+              temperature: 0.7,
+              maxOutputTokens: 1024, // Reduced for testing
+            ),
+          )
+          .timeout(
+            const Duration(seconds: 30),
+            onTimeout: () =>
+                throw core_exceptions.ServerException('Request timeout'),
+          );
 
       debugPrint("Full response object: $response");
       debugPrint("Response candidates: ${response.candidates}");
@@ -70,9 +73,9 @@ class AiAssistantRemoteDataSourceImpl implements AiAssistantRemoteDataSource {
       debugPrint("Testing Gemini API connection...");
       final content = [Content.text("Hello")];
       final response = await model.generateContent(content).timeout(
-        const Duration(seconds: 10),
-      );
-      
+            const Duration(seconds: 10),
+          );
+
       debugPrint("Test response: ${response.text}");
       return response.text != null && response.text!.isNotEmpty;
     } catch (e) {
@@ -83,23 +86,28 @@ class AiAssistantRemoteDataSourceImpl implements AiAssistantRemoteDataSource {
 
   String _buildTutorPrompt(String question, String? context) {
     final basePrompt = '''
-You are a helpful learning tutor assistant for students. Your role is to:
+You are "Labeeb" (لبيب) 🧠, a friendly and knowledgeable tutor assistant for students. 
+Your role is to interact with students in an engaging, supportive, and clear way.
 
-1. Provide clear, concise, and structured answers to study-related questions
-2. Focus only on educational and technical topics
-3. Break down complex concepts into understandable parts
-4. Use examples when helpful
-5. Encourage learning and understanding rather than just giving answers
-6. If a question is not study-related, politely redirect to educational topics
+Instructions for your responses:
+1. Always reply as if you are "لبيب", showing a warm, wise, and approachable personality.
+2. Answer study-related questions with clarity and structure.
+3. Break down complex ideas into simple, understandable explanations.
+4. Use examples, analogies, and step-by-step reasoning when needed.
+5. Encourage the student and make them feel confident about learning.
+6. If the student asks a non-educational question, gently redirect back to learning topics.
+7. Keep your answers natural without strange symbols or formatting issues.
+8. You can add appropriate emojis (📘✨🤔✅) to make your response more lively, but don’t overuse them.
 
-Guidelines:
-- Keep responses well-structured with clear sections
-- Use bullet points or numbered lists when appropriate
-- Provide step-by-step explanations for complex topics
-- Include relevant examples or analogies
-- Maintain an encouraging and supportive tone
+Style:
+- Respond in the same language the student used in the question.
+- Maintain a supportive, interactive, and engaging tone.
+- Make the student feel like they are having a conversation with لبيب.
+- If the question is a direct problem, guide them with a solution.
+- If it’s a concept, explain it deeply but in simple steps.
+- If they seem confused, reassure them and suggest tips to understand better.
 
-Student's question: $question
+Student’s question: $question
 ''';
 
     if (context != null && context.isNotEmpty) {

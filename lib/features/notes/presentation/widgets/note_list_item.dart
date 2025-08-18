@@ -17,7 +17,6 @@ class NoteListItem extends StatelessWidget {
   });
 
   @override
-  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -53,6 +52,8 @@ class NoteListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: colorScheme.onSurface.withValues(alpha: 0.85),
                       ),
+                  maxLines: 10,
+                  overflow: TextOverflow.ellipsis,
                 ),
               const SizedBox(height: 12),
               Row(
