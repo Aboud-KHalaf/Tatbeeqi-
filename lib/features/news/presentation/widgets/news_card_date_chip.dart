@@ -24,11 +24,15 @@ class NewsCardDateChip extends StatelessWidget {
           Icon(Icons.calendar_today_rounded,
               size: 12, color: colorScheme.primary),
           const SizedBox(width: 4),
-          Text(
-            DateFormat.yMMMMd().add_jm().format(item.date),
-            style: textTheme.bodySmall?.copyWith(
-              color: colorScheme.primary,
-              fontWeight: FontWeight.bold,
+          Flexible(
+            child: Text(
+              DateFormat.yMMMMd().add_jm().format(item.date),
+              style: textTheme.bodySmall?.copyWith(
+                color: colorScheme.primary,
+                fontWeight: FontWeight.bold,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
           ),
         ],

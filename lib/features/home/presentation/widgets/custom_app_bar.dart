@@ -19,6 +19,8 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     // Get screen width to adjust layout
     final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenWidth < 360;
+    final buttonRadius = isSmallScreen ? 10.0 : 12.0;
+    final actionIconSize = isSmallScreen ? 20.0 : 22.0;
 
     return AppBar(
       automaticallyImplyLeading: false,
@@ -35,36 +37,70 @@ class CustomHomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         maxLines: 1,
       ),
       actions: [
-        IconButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const StreaksView(),
-              ));
-            },
-            icon: const Icon(
-              Icons.fireplace_rounded,
-              color: Colors.red,
-            )),
-        const AiActionButton(),
-        SizedBox(width: isSmallScreen ? 6 : 10),
-        // Notifications Button
-        Material(
-          borderRadius: BorderRadius.circular(isSmallScreen ? 10.0 : 12.0),
-          color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.7),
-          child: InkWell(
-            onTap: () {
-              context.read<AuthBloc>().add(SignOutEvent());
-            },
-            borderRadius: BorderRadius.circular(isSmallScreen ? 10.0 : 12.0),
-            child: Container(
-              padding: EdgeInsets.all(isSmallScreen ? 8.0 : 10.0),
-              child: Icon(
-                Icons.notifications_none_rounded,
-                color: colorScheme.onSurfaceVariant,
-                size: isSmallScreen ? 18 : 22,
-              ),
+        // Streaks action (tonal)
+        IconButton.filledTonal(
+          style: IconButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(buttonRadius),
             ),
           ),
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const StreaksView(),
+            ));
+          },
+          icon: Icon(
+            Icons.local_fire_department_rounded,
+            size: actionIconSize,
+          ),
+          tooltip: l10n.home,
+        ),
+        AiActionButton(
+          radius: buttonRadius,
+          iconSize: actionIconSize,
+          tooltip: 'AI Assistant',
+        ),
+        SizedBox(width: isSmallScreen ? 6 : 10),
+        // Notifications button with small badge dot (keeps existing onTap behavior)
+        Stack(
+          clipBehavior: Clip.none,
+          children: [
+            IconButton.outlined(
+              style: IconButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(buttonRadius),
+                ),
+              ),
+              onPressed: () {
+                context.read<AuthBloc>().add(SignOutEvent());
+              },
+              icon: Icon(
+                Icons.notifications_none_rounded,
+                size: isSmallScreen ? 20 : 22,
+                color: colorScheme.onSurfaceVariant,
+              ),
+              tooltip: 'Notifications',
+            ),
+            PositionedDirectional(
+              end: 6,
+              top: 6,
+              child: Container(
+                width: isSmallScreen ? 7 : 8,
+                height: isSmallScreen ? 7 : 8,
+                decoration: BoxDecoration(
+                  color: colorScheme.error,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: colorScheme.error.withOpacity(0.4),
+                      blurRadius: 6,
+                      spreadRadius: 1,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );

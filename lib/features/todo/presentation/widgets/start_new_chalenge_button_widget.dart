@@ -10,41 +10,20 @@ class StartNewChallengeButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
     final l10n = AppLocalizations.of(context)!;
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            colorScheme.primary.withValues(alpha: 0.8),
-            colorScheme.primaryContainer,
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(12.0),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow.withValues(alpha: 0.1),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: ElevatedButton.icon(
+    return SizedBox(
+      width: double.infinity,
+      child: FilledButton.icon(
         icon: const Icon(Icons.add_circle_outline, size: 20),
         label: Text(
           l10n.homeStartNewChallenge,
           style: textTheme.labelLarge?.copyWith(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        style: ElevatedButton.styleFrom(
+        style: FilledButton.styleFrom(
           minimumSize: const Size(double.infinity, 52),
-          backgroundColor: Colors.transparent,
-          foregroundColor: colorScheme.onPrimary,
-          elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),
           ),

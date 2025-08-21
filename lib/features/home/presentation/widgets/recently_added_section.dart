@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 // Dummy model
@@ -6,8 +7,14 @@ class RecentItem {
   final String title;
   final String type; // e.g., 'PDF', 'Video'
   final IconData icon;
+  final String? subtitle;
 
-  RecentItem({required this.title, required this.type, required this.icon});
+  RecentItem({
+    required this.title,
+    required this.type,
+    required this.icon,
+    this.subtitle,
+  });
 }
 
 class RecentlyAddedSection extends StatelessWidget {
@@ -18,10 +25,23 @@ class RecentlyAddedSection extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return [
       RecentItem(
-          title: l10n.homeAdvancedSoftwareEngineering,
-          type: 'PDF',
-          icon: Icons.picture_as_pdf_outlined),
-      // Add more items
+        title: l10n.homeAdvancedSoftwareEngineering,
+        type: 'PDF',
+        icon: Icons.picture_as_pdf_outlined,
+        subtitle: 'Chapter 5: Design Patterns',
+      ),
+      RecentItem(
+        title: 'Data Structures',
+        type: 'Video',
+        icon: Icons.play_circle_outline,
+        subtitle: 'Binary Trees Explained',
+      ),
+      RecentItem(
+        title: 'Algorithm Analysis',
+        type: 'Article',
+        icon: Icons.article_outlined,
+        subtitle: 'Time Complexity Guide',
+      ),
     ];
   }
 
@@ -36,71 +56,124 @@ class RecentlyAddedSection extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    final item = recentItems.first;
+    return Column(
+      children: recentItems.take(3).map((item) => _buildRecentItem(
+        context,
+        item,
+        colorScheme,
+        textTheme,
+      )).toList(),
+    );
+  }
 
-    return Card(
-      elevation: 2.0,
-      shadowColor: colorScheme.shadow.withValues(alpha: 0.2),
-      color: colorScheme.surface,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
-        side: BorderSide(
-          color: colorScheme.outline.withValues(alpha: 0.1),
-        ),
-      ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16.0),
-        onTap: () {
-          // TODO: Implement action (e.g., open PDF)
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-          child: Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: colorScheme.primaryContainer.withValues(alpha: 0.7),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  item.icon,
-                  color: colorScheme.primary,
-                  size: 28,
-                ),
+  Widget _buildRecentItem(
+    BuildContext context,
+    RecentItem item,
+    ColorScheme colorScheme,
+    TextTheme textTheme,
+  ) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            HapticFeedback.lightImpact();
+            // TODO: Implement action (e.g., open PDF)
+          },
+          borderRadius: BorderRadius.circular(8),
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: colorScheme.surfaceVariant.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                color: colorScheme.outline.withOpacity(0.1),
+                width: 1,
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.title,
-                      style: textTheme.titleSmall?.copyWith(
-                        fontWeight: FontWeight.w600,
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: _getTypeColor(item.type, colorScheme).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Icon(
+                    item.icon,
+                    color: _getTypeColor(item.type, colorScheme),
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.title,
+                        style: textTheme.bodyMedium?.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: colorScheme.onSurface,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      item.type,
-                      style: textTheme.bodySmall?.copyWith(
-                        color: colorScheme.outline,
-                      ),
-                    ),
-                  ],
+                      if (item.subtitle != null) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          item.subtitle!,
+                          style: textTheme.bodySmall?.copyWith(
+                            color: colorScheme.onSurfaceVariant,
+                            height: 1.2,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
-              ),
-              Icon(
-                Icons.arrow_forward_ios,
-                size: 16,
-                color: colorScheme.primary,
-              ),
-            ],
+                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: _getTypeColor(item.type, colorScheme).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    item.type,
+                    style: textTheme.labelSmall?.copyWith(
+                      color: _getTypeColor(item.type, colorScheme),
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Icon(
+                  Icons.chevron_right,
+                  size: 16,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  Color _getTypeColor(String type, ColorScheme colorScheme) {
+    switch (type.toLowerCase()) {
+      case 'pdf':
+        return Colors.red;
+      case 'video':
+        return Colors.blue;
+      case 'article':
+        return Colors.green;
+      default:
+        return colorScheme.primary;
+    }
   }
 }
