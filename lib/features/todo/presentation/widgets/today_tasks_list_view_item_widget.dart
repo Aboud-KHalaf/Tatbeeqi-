@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
+import 'package:tatbeeqi/core/utils/app_methods.dart';
 import 'package:tatbeeqi/features/todo/domain/entities/todo_entity.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/todo_check_box_widget.dart';
 
@@ -17,80 +18,102 @@ class ToDayTaskListViewItemWidget extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
 
+    final importanceColor = getColorByImportance(task.importance);
+    final background = task.isCompleted
+        ? colorScheme.surfaceContainerHigh
+        : colorScheme.surfaceContainerHighest;
+    final borderColor = colorScheme.outlineVariant.withOpacity(0.4);
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 6.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
       child: Material(
         color: Colors.transparent,
+        borderRadius: BorderRadius.circular(12),
         child: InkWell(
-          borderRadius: BorderRadius.circular(12.0),
-          onTap: () {
-            // Add tap handling if needed
-          },
+          borderRadius: BorderRadius.circular(12),
+          onLongPress: () => showAddEditTodoBottomSheet(context, todo: task),
+          onDoubleTap: () => showAddEditTodoBottomSheet(context, todo: task),
           child: Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0),
             decoration: BoxDecoration(
-              color: task.isCompleted
-                  ? colorScheme.surfaceContainerHighest.withValues(alpha: 0.2)
-                  : colorScheme.surfaceContainerHighest,
-              borderRadius: BorderRadius.circular(12.0),
-              border: Border.all(
-                color: task.isCompleted
-                    ? colorScheme.outline.withValues(alpha: 0.1)
-                    : getColorByImportance(task.importance),
-                width: 1.2,
-              ),
-              boxShadow: [
-                if (!task.isCompleted)
-                  BoxShadow(
-                    color: colorScheme.shadow.withValues(alpha: 0.1),
-                    blurRadius: 2,
-                    offset: const Offset(0, 1),
-                  ),
-              ],
+              color: background,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: borderColor, width: 1),
             ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        task.title,
-                        style: textTheme.bodyLarge?.copyWith(
-                          decoration: task.isCompleted
-                              ? TextDecoration.lineThrough
-                              : null,
-                          color: task.isCompleted
-                              ? colorScheme.onSurface.withValues(alpha: 0.6)
-                              : colorScheme.onSurface,
-                          fontWeight: task.isCompleted
-                              ? FontWeight.normal
-                              : FontWeight.w500,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      if (task.description.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 4.0),
-                          child: Text(
-                            task.description,
-                            style: textTheme.bodyMedium?.copyWith(
-                              color: task.isCompleted
-                                  ? colorScheme.onSurface.withValues(alpha: 0.4)
-                                  : colorScheme.onSurfaceVariant,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                    ],
+            child: IntrinsicHeight(
+              child: Row(
+                //  crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Leading colored dot
+                  Container(
+                    width: 10,
+                    height: 10,
+                    margin: const EdgeInsets.only(right: 12),
+                    decoration: BoxDecoration(
+                      color: task.isCompleted ? borderColor : importanceColor,
+                      shape: BoxShape.circle,
+                    ),
                   ),
-                ),
-                const SizedBox(width: 12),
-                ToDoCheckBoxWidget(task: task),
-              ],
+
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14.0,
+                        vertical: 6.0,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // Texts
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  task.title,
+                                  style: textTheme.titleSmall?.copyWith(
+                                    decoration: task.isCompleted
+                                        ? TextDecoration.lineThrough
+                                        : null,
+                                    color: task.isCompleted
+                                        ? colorScheme.onSurface.withOpacity(0.6)
+                                        : colorScheme.onSurface,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                if (task.description.isNotEmpty)
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 4.0),
+                                    child: Text(
+                                      task.description,
+                                      style: textTheme.bodySmall?.copyWith(
+                                        color: task.isCompleted
+                                            ? colorScheme.onSurface
+                                                .withOpacity(0.45)
+                                            : colorScheme.onSurfaceVariant,
+                                        height: 1.2,
+                                        decoration: task.isCompleted
+                                            ? TextDecoration.lineThrough
+                                            : null,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          // Trailing checkbox
+                          ToDoCheckBoxWidget(task: task),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

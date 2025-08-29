@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class PostPreviewView extends StatelessWidget {
   final String text;
@@ -21,6 +22,7 @@ class PostPreviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     // Create a dummy post for preview purposes
     final previewPost = Post(
       id: 'preview_post',
@@ -41,7 +43,7 @@ class PostPreviewView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Post Preview'),
+        title: Text(l10n.createPostPreview),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8.0),

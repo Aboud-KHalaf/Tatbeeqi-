@@ -35,13 +35,13 @@ class GradesView extends StatelessWidget {
                 horizontal: 16,
               ),
               title: Text(
-                'Lesson ${grade.lessonId}',
+                'الدرس ${grade.lessonId}',
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               subtitle: Text(
-                'Submitted on: ${grade.submissionDate.toLocal().toString().split(' ')[0]}',
+                'تم الاختبار في: ${grade.submissionDate.toLocal().toString().split(' ')[0]}',
               ),
               trailing: Chip(
                 label: Text(

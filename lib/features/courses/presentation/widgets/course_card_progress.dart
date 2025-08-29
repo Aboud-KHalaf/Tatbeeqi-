@@ -14,6 +14,7 @@ class CourseCardProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     final isEmpty = progress <= 0;
 
     return Row(
@@ -28,7 +29,7 @@ class CourseCardProgress extends StatelessWidget {
                 height: 8,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: theme.colorScheme.primary.withValues(alpha: 0.1),
+                  color: colorScheme.surfaceContainerHighest,
                 ),
               ),
 
@@ -46,9 +47,7 @@ class CourseCardProgress extends StatelessWidget {
                             begin: Alignment.centerLeft,
                             end: Alignment.centerRight,
                           ),
-                    color: isEmpty
-                        ? theme.colorScheme.primary.withValues(alpha: 0.1)
-                        : null,
+                    color: isEmpty ? colorScheme.surfaceContainerHighest : null,
                   ),
                 ),
               ),
@@ -63,7 +62,7 @@ class CourseCardProgress extends StatelessWidget {
           progressText,
           style: theme.textTheme.bodySmall?.copyWith(
             fontWeight: FontWeight.bold,
-            color: isEmpty ? theme.hintColor : theme.colorScheme.primary,
+            color: isEmpty ? colorScheme.onSurfaceVariant : colorScheme.primary,
             fontSize: 10.0,
           ),
         ),

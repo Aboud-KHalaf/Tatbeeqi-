@@ -1,8 +1,8 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class ImageSection extends StatelessWidget {
   final File? image;
@@ -27,12 +27,12 @@ class ImageSection extends StatelessWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.camera_alt),
-              title: const Text('Camera'),
+              title: Text(AppLocalizations.of(context)!.imageSectionCamera),
               onTap: () => Navigator.pop(context, ImageSource.camera),
             ),
             ListTile(
               leading: const Icon(Icons.photo_library),
-              title: const Text('Gallery'),
+              title: Text(AppLocalizations.of(context)!.imageSectionGallery),
               onTap: () => Navigator.pop(context, ImageSource.gallery),
             ),
           ],
@@ -52,6 +52,7 @@ class ImageSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +66,7 @@ class ImageSection extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              'Image',
+              l10n.imageSectionTitle,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w500,
               ),
@@ -133,7 +134,7 @@ class ImageSection extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Add Image',
+                    l10n.imageSectionAddImage,
                     style: theme.textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),

@@ -36,7 +36,7 @@ class StreaksActionButton extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Ready to learn?',
+            'هل أنت مستعد للتعلم؟',
             style: theme.textTheme.titleMedium?.copyWith(
               fontWeight: FontWeight.bold,
               color: colorScheme.onSurface,
@@ -44,7 +44,7 @@ class StreaksActionButton extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'Complete a lesson to maintain your streak!',
+            'أكمل درساً للحفاظ على سلسلتك!',
             style: theme.textTheme.bodyMedium?.copyWith(
               color: colorScheme.onSurfaceVariant,
             ),
@@ -58,7 +58,7 @@ class StreaksActionButton extends StatelessWidget {
               Navigator.of(context).pop();
             },
             icon: const Icon(Icons.play_arrow),
-            label: const Text('Start Learning'),
+            label: const Text('ابدأ التعلم'),
             style: FilledButton.styleFrom(
               backgroundColor: colorScheme.primary,
               foregroundColor: colorScheme.onPrimary,

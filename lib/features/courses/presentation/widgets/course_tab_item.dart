@@ -23,7 +23,9 @@ class CourseTabItem extends StatelessWidget {
               text,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: isSelected ? 12 : 11,
+                fontSize: isSelected ? 13 : 12,
+                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                // Color is provided by TabBar's labelColor/unselectedLabelColor
               ),
             ),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CreatePostAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isArticle;
@@ -18,10 +19,11 @@ class CreatePostAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return AppBar(
       centerTitle: false,
       title: Text(
-        isArticle ? 'Create Article' : 'Create Post',
+        isArticle ? l10n.createPostAppBarTitleArticle : l10n.createPostAppBarTitlePost,
       ),
       leading: IconButton(
         icon: const Icon(Icons.close),
@@ -31,7 +33,7 @@ class CreatePostAppBar extends StatelessWidget implements PreferredSizeWidget {
         FilledButton.tonalIcon(
           onPressed: canPreview ? onPreview : null,
           icon: const Icon(Icons.visibility_outlined, size: 18),
-          label: const Text('Preview'),
+          label: Text(l10n.createPostPreview),
         ),
         const SizedBox(width: 8),
       ],

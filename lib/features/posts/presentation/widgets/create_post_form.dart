@@ -7,6 +7,7 @@ import 'package:tatbeeqi/features/posts/presentation/widgets/post_category_input
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_markdown_toolbar.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/publish_button.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/topic_selector.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CreatePostForm extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -50,6 +51,7 @@ class CreatePostForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Form(
       key: formKey,
       child: Scrollbar(
@@ -81,7 +83,7 @@ class CreatePostForm extends StatelessWidget {
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
-                          'Post Type',
+                          l10n.createPostPostType,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
@@ -93,7 +95,7 @@ class CreatePostForm extends StatelessWidget {
                       AnimatedSwitcher(
                         duration: const Duration(milliseconds: 300),
                         child: Text(
-                          isArticle ? 'Article' : 'Post',
+                          isArticle ? l10n.createPostArticle : l10n.createPostPost,
                           key: ValueKey(isArticle),
                         ),
                       ),

@@ -15,20 +15,20 @@ class NewsCardDateChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: colorScheme.primaryContainer.withValues(alpha: 0.7),
+        color: colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.calendar_today_rounded,
-              size: 12, color: colorScheme.primary),
+              size: 12, color: colorScheme.onPrimaryContainer),
           const SizedBox(width: 4),
           Flexible(
             child: Text(
               DateFormat.yMMMMd().add_jm().format(item.date),
               style: textTheme.bodySmall?.copyWith(
-                color: colorScheme.primary,
+                color: colorScheme.onPrimaryContainer,
                 fontWeight: FontWeight.bold,
               ),
               overflow: TextOverflow.ellipsis,

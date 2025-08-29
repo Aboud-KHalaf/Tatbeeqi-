@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class TopicSection extends StatelessWidget {
   final List<String> topics;
@@ -30,6 +31,7 @@ class TopicSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +45,7 @@ class TopicSection extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              'Topics',
+              l10n.topicsLabel,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w500,
               ),

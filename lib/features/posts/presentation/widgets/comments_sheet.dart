@@ -10,6 +10,7 @@ import 'package:tatbeeqi/features/posts/presentation/widgets/comment_tile_shimme
 import 'package:tatbeeqi/core/widgets/custom_error_widget.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/comments_empty_widget.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/comments_list_widget.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CommentsSheet extends StatefulWidget {
   final String postId;
@@ -31,6 +32,7 @@ class _CommentsSheetState extends State<CommentsSheet> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return DraggableScrollableSheet(
       expand: false,
@@ -59,7 +61,7 @@ class _CommentsSheetState extends State<CommentsSheet> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Text(
-                  'Comments',
+                  l10n.commentsHeaderTitle,
                   style: theme.textTheme.titleLarge
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),

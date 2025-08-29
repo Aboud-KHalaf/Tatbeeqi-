@@ -18,9 +18,9 @@ class ReferencesView extends StatelessWidget {
           final reference = Reference(
               id: "1",
               courseId: "1",
-              title: "Reference $index",
+              title: "المرجع رقم $index",
               url: "https://example.com/reference-$index",
-              type: "documentation");
+              type: index == 3 ? "documentation" : "video");
           return Card(
             margin: const EdgeInsets.only(bottom: 12),
             elevation: 2,

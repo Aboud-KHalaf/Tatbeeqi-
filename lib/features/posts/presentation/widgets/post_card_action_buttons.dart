@@ -6,6 +6,7 @@ import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/comments_sheet.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class PostCardActionButtons extends StatefulWidget {
   final Post post;
@@ -91,6 +92,7 @@ class _PostCardActionButtonsState extends State<PostCardActionButtons>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(top: 12.0),
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -124,7 +126,7 @@ class _PostCardActionButtonsState extends State<PostCardActionButtons>
           Expanded(
             child: _ActionButton(
               icon: Icons.share_outlined,
-              label: 'Share',
+              label: l10n.postCardShare,
               onPressed: _showShareSheet,
             ),
           ),
@@ -221,6 +223,7 @@ class _ShareSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
@@ -243,7 +246,7 @@ class _ShareSheet extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Text(
-            'Share Post',
+            l10n.postCardSharePost,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -258,12 +261,12 @@ class _ShareSheet extends StatelessWidget {
                     Icons.link_rounded,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  title: const Text('Copy Link'),
+                  title: Text(l10n.postCardCopyLink),
                   onTap: () {
                     Navigator.pop(context);
                     SnackBarHelper.showInfo(
                       context: context,
-                      message: "Link copied to clipboard",
+                      message: l10n.postCardLinkCopied,
                     );
                   },
                   shape: RoundedRectangleBorder(
@@ -275,7 +278,7 @@ class _ShareSheet extends StatelessWidget {
                     Icons.share_rounded,
                     color: Theme.of(context).colorScheme.primary,
                   ),
-                  title: const Text('Share via...'),
+                  title: Text(l10n.postCardShareVia),
                   onTap: () => Navigator.pop(context),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),

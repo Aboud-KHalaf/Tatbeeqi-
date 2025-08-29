@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CreatePostTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -14,6 +15,7 @@ class CreatePostTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,7 +29,9 @@ class CreatePostTextField extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              isArticle ? 'Article Content' : 'What\'s on your mind?',
+              isArticle
+                  ? l10n.createPostTextFieldArticleContent
+                  : l10n.createPostPlaceholder,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w500,
               ),
@@ -43,10 +47,10 @@ class CreatePostTextField extends StatelessWidget {
           ),
           decoration: InputDecoration(
             hintText: isArticle
-                ? 'Write your article content here...'
-                : 'Share your thoughts...',
+                ? l10n.createPostTextFieldArticleHint
+                : l10n.createPostTextFieldPostHint,
             hintStyle: TextStyle(
-              color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+              color: colorScheme.onSurfaceVariant.withOpacity(0.7),
             ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -79,7 +83,7 @@ class CreatePostTextField extends StatelessWidget {
           ),
           validator: (value) {
             if (value?.trim().isEmpty ?? true) {
-              return 'Please enter some content';
+              return l10n.createPostValidationEnterContent;
             }
             return null;
           },

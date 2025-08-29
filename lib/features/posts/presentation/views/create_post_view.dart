@@ -10,6 +10,7 @@ import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_
 import 'package:tatbeeqi/features/posts/presentation/views/post_preview_view.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/create_post_app_bar.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/create_post_form.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CreatePostView extends StatefulWidget {
   final File? imageFile;
@@ -165,11 +166,11 @@ class _CreatePostViewState extends State<CreatePostView> {
   void _handleBlocState(BuildContext context, PostCrudState state) {
     if (state is CreatePostSuccess) {
       HapticFeedback.lightImpact();
+      final l10n = AppLocalizations.of(context)!;
       SnackBarHelper.showSuccess(
         context: context,
-        message: _isArticle
-            ? "Article published successfully!"
-            : "Post created successfully!",
+        message:
+            _isArticle ? l10n.createPostSuccessArticle : l10n.createPostSuccessPost,
       );
       Navigator.pop(context, true);
     } else if (state is CreatePostFailure) {
@@ -212,9 +213,10 @@ class _CreatePostViewState extends State<CreatePostView> {
 
   void _showPreview() {
     if (!_canPreview) {
+      final l10n = AppLocalizations.of(context)!;
       SnackBarHelper.showWarning(
         context: context,
-        message: "Add some content to preview",
+        message: l10n.createPostAddContentToPreview,
       );
       return;
     }
@@ -270,31 +272,32 @@ class UnsavedChangesDialog {
   static Future<bool?> show(BuildContext context) {
     return showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        icon: Icon(
-          Icons.warning_amber_rounded,
-          color: Theme.of(context).colorScheme.error,
-          size: 32,
-        ),
-        title: const Text('Discard changes?'),
-        content: const Text(
-          'You have unsaved changes that will be lost if you leave now.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, false),
-            child: const Text('Keep editing'),
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return AlertDialog(
+          icon: Icon(
+            Icons.warning_amber_rounded,
+            color: Theme.of(context).colorScheme.error,
+            size: 32,
           ),
-          FilledButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: FilledButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.error,
-              foregroundColor: Theme.of(context).colorScheme.onError,
+          title: Text(l10n.unsavedChangesTitle),
+          content: Text(l10n.unsavedChangesBody),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: Text(l10n.unsavedChangesKeepEditing),
             ),
-            child: const Text('Discard'),
-          ),
-        ],
-      ),
+            FilledButton(
+              onPressed: () => Navigator.pop(context, true),
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.error,
+                foregroundColor: Theme.of(context).colorScheme.onError,
+              ),
+              child: Text(l10n.unsavedChangesDiscard),
+            ),
+          ],
+        );
+      },
     );
   }
 }

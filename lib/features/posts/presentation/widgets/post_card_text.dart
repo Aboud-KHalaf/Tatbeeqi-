@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/views/post_details_view.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class PostText extends StatefulWidget {
   final Post post;
@@ -26,6 +27,7 @@ class _PostTextState extends State<PostText> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     bool isArticle = widget.post.isArticle;
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: Column(
@@ -51,7 +53,7 @@ class _PostTextState extends State<PostText> with TickerProviderStateMixin {
                   Padding(
                     padding: const EdgeInsets.only(top: 6.0),
                     child: Text(
-                      isArticle ? "Show Details" : 'Read more',
+                      isArticle ? l10n.postCardShowDetails : l10n.postCardReadMore,
                       style: TextStyle(
                         color: theme.colorScheme.primary,
                         fontWeight: FontWeight.bold,

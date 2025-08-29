@@ -106,15 +106,15 @@ class _CourseCardState extends State<CourseCard>
                   );
                 },
                 borderRadius: BorderRadius.circular(16.0),
-                splashColor: theme.primaryColor.withValues(alpha: 0.05),
-                highlightColor: theme.primaryColor.withValues(alpha: 0.05),
+                splashColor: colorScheme.primary.withValues(alpha: 0.08),
+                highlightColor: colorScheme.primary.withValues(alpha: 0.08),
                 child: Container(
                   decoration: BoxDecoration(
-                    color: colorScheme.surfaceContainerHighest
-                        .withValues(alpha: 0.3),
+                    color: colorScheme.surfaceContainerHigh,
                     borderRadius: BorderRadius.circular(12.0),
                     border: Border.all(
-                        color: colorScheme.outline.withValues(alpha: 0.1)),
+                      color: colorScheme.outlineVariant,
+                    ),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),

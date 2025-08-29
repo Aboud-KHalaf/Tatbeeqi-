@@ -1,7 +1,7 @@
 {
   "@@locale": "ar",
   
-  "homeGreeting": "مرحبا عبود",
+  "homeGreeting": "تطبيقي",
   "homeContinueLearning": "واصل التعلم, انت تصنع مستقبلك",
   
   "homeLatestNewsAndEvents": "آخر الاخبار والاحداث",
@@ -181,4 +181,89 @@
       "url": {}
     }
   }
+  ,
+  
+  "postsFeedTitle": "المجمتع",
+  "postsWelcomeToFeed": "مرحبًا بك في صفحة المنشورات",
+  "postsNoPostsAvailable": "لا توجد منشورات متاحة",
+  "postsLoadingMorePosts": "جاري تحميل المزيد من المنشورات...",
+  "postsEndReachedTitle": "لقد اطلعت على كل شيء!",
+  "postsEndReachedSubtitle": "لا توجد منشورات أخرى للتحميل",
+  
+  "createPostAppBarTitlePost": "إنشاء منشور",
+  "createPostAppBarTitleArticle": "إنشاء مقال",
+  "createPostPreview": "معاينة",
+  
+  "createPostPlaceholder": "بماذا تفكر؟",
+  "createPostPhoto": "صورة",
+  "createPostPost": "منشور",
+  "createPostArticle": "مقال",
+  "createPostPostType": "نوع المنشور",
+  
+  "createPostValidationEnterContent": "الرجاء إدخال محتوى",
+  "createPostAddContentToPreview": "أضف بعض المحتوى للمعاينة",
+  
+  "imageSectionTitle": "الصورة",
+  "imageSectionAddImage": "إضافة صورة",
+  "imageSectionCamera": "الكاميرا",
+  "imageSectionGallery": "المعرض",
+  "commonChange": "تغيير",
+  "commonRemove": "إزالة",
+  
+  "createPostTextFieldArticleContent": "محتوى المقال",
+  "createPostTextFieldArticleHint": "اكتب محتوى مقالك هنا...",
+  "createPostTextFieldPostHint": "شارك أفكارك...",
+  
+  "commentsEmptyTitle": "ابدأ المحادثة",
+  "commentsEmptySubtitle": "كن أول من يشارك رأيه\nولنبدأ النقاش!",
+  "commentsEmptyHint": "اكتب تعليقك بالأسفل",
+  "commentsHeaderTitle": "التعليقات",
+  "commentsLoadingMore": "جاري تحميل المزيد من التعليقات...",
+  "addCommentHint": "أضف تعليقًا مفيدًا...",
+  "addCommentSendTooltip": "إرسال التعليق",
+  
+  "postCardCopied": "تم نسخ النص إلى الحافظة",
+  "postCardShare": "مشاركة",
+  "postCardSharePost": "مشاركة المنشور",
+  "postCardCopyLink": "نسخ الرابط",
+  "postCardShareVia": "المشاركة عبر...",
+  "postCardLinkCopied": "تم نسخ الرابط إلى الحافظة",
+  "postCardMoreOptions": "المزيد من الخيارات",
+  "postCardShowDetails": "عرض التفاصيل",
+  "postCardReadMore": "اقرأ المزيد",
+  
+  "postCategoryLabel": "الفئات",
+  "postCategoryHint": "أضف فئة...",
+  
+  "postImagePickerCoverOptional": "صورة الغلاف (اختياري)",
+  
+  "publishButtonPublishingArticle": "جارٍ النشر...",
+  "publishButtonPosting": "جارٍ الإرسال...",
+  "publishButtonPublishArticle": "نشر المقال",
+  "publishButtonPost": "إرسال",
+  
+  "createPostSuccessArticle": "تم نشر المقال بنجاح!",
+  "createPostSuccessPost": "تم إنشاء المنشور بنجاح!",
+  
+  "unsavedChangesTitle": "هل تريد تجاهل التغييرات؟",
+  "unsavedChangesBody": "لديك تغييرات غير محفوظة ستُفقد إذا غادرت الآن.",
+  "unsavedChangesKeepEditing": "تابع التحرير",
+  "unsavedChangesDiscard": "تجاهل",
+  
+  "topicsLabel": "المواضيع",
+  
+  "markdownHeader1": "عنوان 1",
+  "markdownHeader2": "عنوان 2",
+  "markdownHeader3": "عنوان 3",
+  "markdownBold": "عريض",
+  "markdownItalic": "مائل",
+  "markdownStrikethrough": "يتوسطه خط",
+  "markdownInlineCode": "كود ضمني",
+  "markdownCodeBlock": "كتلة كود",
+  "markdownUnorderedList": "قائمة غير مرتبة",
+  "markdownOrderedList": "قائمة مرتبة",
+  "markdownQuote": "اقتباس",
+  "markdownLink": "رابط",
+  "markdownImage": "صورة",
+  "markdownHorizontalRule": "فاصل أفقي"
 }

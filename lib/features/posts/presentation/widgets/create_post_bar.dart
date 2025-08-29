@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tatbeeqi/features/posts/presentation/views/create_post_view.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CreatePostBar extends StatefulWidget {
   const CreatePostBar({super.key});
@@ -83,6 +84,7 @@ class _CreatePostBarState extends State<CreatePostBar>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return AnimatedBuilder(
       animation: _scaleAnimation,
@@ -148,7 +150,7 @@ class _CreatePostBarState extends State<CreatePostBar>
                               ),
                             ),
                             child: Text(
-                              "What's on your mind?",
+                              l10n.createPostPlaceholder,
                               style: theme.textTheme.bodyLarge?.copyWith(
                                 color: colorScheme.onSurfaceVariant,
                                 fontWeight: FontWeight.w400,
@@ -168,7 +170,7 @@ class _CreatePostBarState extends State<CreatePostBar>
                     Expanded(
                       child: _ActionButton(
                         icon: Icons.photo_library_outlined,
-                        label: 'Photo',
+                        label: l10n.createPostPhoto,
                         onTap: _pickImage,
                         color: colorScheme.primary,
                       ),
@@ -177,7 +179,7 @@ class _CreatePostBarState extends State<CreatePostBar>
                     Expanded(
                       child: _ActionButton(
                         icon: Icons.post_add_outlined,
-                        label: 'Post',
+                        label: l10n.createPostPost,
                         onTap: () => _navigateToCreatePost(isArticle: false),
                         color: colorScheme.secondary,
                       ),
@@ -186,7 +188,7 @@ class _CreatePostBarState extends State<CreatePostBar>
                     Expanded(
                       child: _ActionButton(
                         icon: Icons.article_outlined,
-                        label: 'Article',
+                        label: l10n.createPostArticle,
                         onTap: () => _navigateToCreatePost(isArticle: true),
                         color: colorScheme.tertiary,
                       ),

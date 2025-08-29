@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/widgets/custom_app_bar.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_state.dart';
@@ -23,10 +25,9 @@ class _PostsFeedViewState extends State<PostsFeedView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Feed'),
-      ),
+      appBar: CustomHomeAppBar(title: l10n.postsFeedTitle),
       body: SafeArea(
         child: BlocBuilder<PostsBloc, PostsState>(
           builder: (context, state) {
@@ -47,7 +48,7 @@ class _PostsFeedViewState extends State<PostsFeedView> {
                   FilledButton(
                       onPressed: () async =>
                           context.read<PostsBloc>().add(RefreshPostsEvent()),
-                      child: const Text("Try Again"))
+                      child: Text(l10n.tryAgain))
                 ],
               ));
             }
@@ -57,13 +58,13 @@ class _PostsFeedViewState extends State<PostsFeedView> {
                   child: AnimatedCreatePostBar(
                       scrollOffset: ValueNotifier<double>(0.0)),
                 ),
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Center(
                     child: Padding(
-                      padding: EdgeInsets.all(32.0),
+                      padding: const EdgeInsets.all(32.0),
                       child: Text(
-                        'Welcome to the Feed',
-                        style: TextStyle(fontSize: 18),
+                        l10n.postsWelcomeToFeed,
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ),
                   ),

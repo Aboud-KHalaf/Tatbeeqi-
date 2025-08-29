@@ -12,6 +12,7 @@ class CourseCardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -22,12 +23,12 @@ class CourseCardHeader extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+            color: colorScheme.secondaryContainer,
           ),
           child: Icon(
             iconData,
             size: 42.0,
-            color: Theme.of(context).primaryColor,
+            color: colorScheme.onSecondaryContainer,
           ),
         ),
         const SizedBox(height: 12.0),

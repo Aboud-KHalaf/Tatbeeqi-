@@ -4,6 +4,7 @@ import 'package:tatbeeqi/features/posts/domain/entities/comment.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/comment_tile.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CommentsListWidget extends StatefulWidget {
   final List<Comment> comments;
@@ -47,6 +48,7 @@ class _CommentsListWidgetState extends State<CommentsListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         Expanded(
@@ -89,7 +91,7 @@ class _CommentsListWidgetState extends State<CommentsListWidget> {
                 ),
                 const SizedBox(width: 12),
                 Text(
-                  'Loading more comments...',
+                  l10n.commentsLoadingMore,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                         fontWeight: FontWeight.w500,

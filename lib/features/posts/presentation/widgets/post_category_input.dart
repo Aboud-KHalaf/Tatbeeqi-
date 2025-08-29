@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CategorySection extends StatelessWidget {
   final TextEditingController controller;
@@ -18,6 +19,7 @@ class CategorySection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +33,7 @@ class CategorySection extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              'Categories',
+              l10n.postCategoryLabel,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w500,
               ),
@@ -44,7 +46,7 @@ class CategorySection extends StatelessWidget {
         TextFormField(
           controller: controller,
           decoration: InputDecoration(
-            hintText: 'Add a category...',
+            hintText: l10n.postCategoryHint,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
             ),

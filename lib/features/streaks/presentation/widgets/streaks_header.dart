@@ -68,7 +68,7 @@ class StreaksHeader extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Learning Streaks',
+                                    'سلاسل التعلم',
                                     style: theme.textTheme.headlineMedium?.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: colorScheme.onSurface,
@@ -76,7 +76,7 @@ class StreaksHeader extends StatelessWidget {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    'Keep your learning momentum going!',
+                                    'واصل زخم التعلم لديك!',
                                     style: theme.textTheme.bodyMedium?.copyWith(
                                       color: colorScheme.onSurfaceVariant,
                                     ),

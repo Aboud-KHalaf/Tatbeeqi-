@@ -6,6 +6,7 @@ import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed
 import 'package:tatbeeqi/features/posts/presentation/widgets/animated_create_post_bar.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/no_posts_available.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class PostsListWidget extends StatefulWidget {
   final List<Post> posts;
@@ -59,6 +60,7 @@ class _PostsListWidgetState extends State<PostsListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return RefreshIndicator(
       onRefresh: () async => context.read<PostsBloc>().add(RefreshPostsEvent()),
       child: CustomScrollView(
@@ -97,6 +99,7 @@ class _LoadingMorePosts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
       padding: const EdgeInsets.all(20.0),
@@ -104,7 +107,7 @@ class _LoadingMorePosts extends StatelessWidget {
         color: Theme.of(context).colorScheme.surfaceContainerLow,
         borderRadius: BorderRadius.circular(16.0),
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.12),
+          color: Theme.of(context).colorScheme.outline.withOpacity(0.12),
         ),
       ),
       child: Row(
@@ -120,7 +123,7 @@ class _LoadingMorePosts extends StatelessWidget {
           ),
           const SizedBox(width: 16),
           Text(
-            'Loading more posts...',
+            l10n.postsLoadingMorePosts,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.w500,
@@ -137,6 +140,7 @@ class _EndOfPostsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
       padding: const EdgeInsets.all(20.0),
@@ -144,10 +148,10 @@ class _EndOfPostsList extends StatelessWidget {
         color: Theme.of(context)
             .colorScheme
             .surfaceContainerHighest
-            .withValues(alpha: 0.3),
+            .withOpacity(0.3),
         borderRadius: BorderRadius.circular(16.0),
         border: Border.all(
-          color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.08),
+          color: Theme.of(context).colorScheme.outline.withOpacity(0.08),
         ),
       ),
       child: Column(
@@ -159,7 +163,7 @@ class _EndOfPostsList extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'You\'re all caught up!',
+            l10n.postsEndReachedTitle,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onSurface,
                   fontWeight: FontWeight.w600,
@@ -167,7 +171,7 @@ class _EndOfPostsList extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'No more posts to load',
+            l10n.postsEndReachedSubtitle,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Theme.of(context).colorScheme.onSurfaceVariant,
                 ),

@@ -83,8 +83,11 @@ class _RetakeCoursesConfirmButtonState extends State<RetakeCoursesConfirmButton>
             Navigator.of(context).pop();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: const Text('Courses saved successfully!'),
-                backgroundColor: colorScheme.primary,
+                content: Text(
+                  'Courses saved successfully!',
+                  style: TextStyle(color: colorScheme.onInverseSurface),
+                ),
+                backgroundColor: colorScheme.inverseSurface,
                 behavior: SnackBarBehavior.floating,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -95,8 +98,11 @@ class _RetakeCoursesConfirmButtonState extends State<RetakeCoursesConfirmButton>
             HapticFeedback.heavyImpact();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Error: ${state.message}'),
-                backgroundColor: colorScheme.error,
+                content: Text(
+                  'Error: ${state.message}',
+                  style: TextStyle(color: colorScheme.onErrorContainer),
+                ),
+                backgroundColor: colorScheme.errorContainer,
                 behavior: SnackBarBehavior.floating,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -112,7 +118,7 @@ class _RetakeCoursesConfirmButtonState extends State<RetakeCoursesConfirmButton>
           final isEnabled = selectedCoursesList.isNotEmpty && !_isLoading;
           final buttonText = selectedCoursesList.isEmpty
               ? 'Select courses to retake'
-              : 'Retake ${selectedCoursesList.length} Course${selectedCoursesList.length == 1 ? '' : 's'}';
+              : 'اعادة ${selectedCoursesList.length} مقررات${selectedCoursesList.length == 1 ? '' : ''}';
 
           return AnimatedBuilder(
             animation: _animationController,

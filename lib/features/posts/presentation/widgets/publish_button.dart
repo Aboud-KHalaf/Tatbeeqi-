@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class PublishButton extends StatelessWidget {
   final bool isArticle;
@@ -19,6 +19,7 @@ class PublishButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return SizedBox(
       width: double.infinity,
@@ -42,8 +43,12 @@ class PublishButton extends StatelessWidget {
               ),
         label: Text(
           isSubmitting
-              ? (isArticle ? 'Publishing...' : 'Posting...')
-              : (isArticle ? 'Publish Article' : 'Post'),
+              ? (isArticle
+                  ? l10n.publishButtonPublishingArticle
+                  : l10n.publishButtonPosting)
+              : (isArticle
+                  ? l10n.publishButtonPublishArticle
+                  : l10n.publishButtonPost),
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,

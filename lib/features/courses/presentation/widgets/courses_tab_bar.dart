@@ -21,12 +21,12 @@ class CoursesTabBar extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
       decoration: BoxDecoration(
-        color: colorScheme.surface,
+        color: colorScheme.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(16.0),
-        border: Border.all(color: colorScheme.outline.withValues(alpha: 0.15)),
+        border: Border.all(color: colorScheme.outlineVariant),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).shadowColor.withValues(alpha: 0.1),
+            color: theme.shadowColor.withValues(alpha: 0.06),
             blurRadius: 4,
             offset: const Offset(0, 2),
           ),
@@ -39,26 +39,17 @@ class CoursesTabBar extends StatelessWidget {
           onTap: onTabSelected,
           indicator: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            gradient: LinearGradient(
-              colors: [
-                Theme.of(context).primaryColor,
-                Theme.of(context).primaryColor.withBlue(
-                    (Theme.of(context).primaryColor.hashCode + 20)
-                        .clamp(0, 255))
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
+            color: colorScheme.primaryContainer,
             boxShadow: [
               BoxShadow(
-                color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
-                blurRadius: 8,
+                color: colorScheme.primary.withValues(alpha: 0.2),
+                blurRadius: 6,
                 offset: const Offset(0, 2),
               ),
             ],
           ),
-          labelColor: Theme.of(context).colorScheme.onPrimary,
-          unselectedLabelColor: Theme.of(context).colorScheme.onSurfaceVariant,
+          labelColor: colorScheme.onPrimaryContainer,
+          unselectedLabelColor: colorScheme.onSurfaceVariant,
           labelStyle: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 14,
@@ -73,10 +64,10 @@ class CoursesTabBar extends StatelessWidget {
           overlayColor: WidgetStateProperty.resolveWith<Color?>(
             (Set<WidgetState> states) {
               if (states.contains(WidgetState.hovered)) {
-                return Theme.of(context).primaryColor.withValues(alpha: 0.1);
+                return colorScheme.primary.withValues(alpha: 0.06);
               }
               if (states.contains(WidgetState.pressed)) {
-                return Theme.of(context).primaryColor.withValues(alpha: 0.2);
+                return colorScheme.primary.withValues(alpha: 0.12);
               }
               return null;
             },

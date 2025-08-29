@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class AddCommentBar extends StatefulWidget {
   final Function(String) onSubmit;
@@ -30,6 +31,7 @@ class _AddCommentBarState extends State<AddCommentBar> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Container(
       decoration: BoxDecoration(
@@ -61,7 +63,7 @@ class _AddCommentBarState extends State<AddCommentBar> {
                   maxLines: null,
                   textCapitalization: TextCapitalization.sentences,
                   decoration: InputDecoration(
-                    hintText: 'Add a thoughtful comment...',
+                    hintText: l10n.addCommentHint,
                     hintStyle: theme.textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,
                     ),
@@ -108,7 +110,7 @@ class _AddCommentBarState extends State<AddCommentBar> {
                         ? colorScheme.onPrimary
                         : colorScheme.onSurfaceVariant,
                     onPressed: hasText ? _submitComment : null,
-                    tooltip: 'Send comment',
+                    tooltip: l10n.addCommentSendTooltip,
                   ),
                 );
               },

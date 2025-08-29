@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class NoPostsAvailableWidget extends StatelessWidget {
   const NoPostsAvailableWidget({
@@ -7,6 +8,7 @@ class NoPostsAvailableWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -39,7 +41,7 @@ class NoPostsAvailableWidget extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                "No posts available",
+                l10n.postsNoPostsAvailable,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       color: Theme.of(context).colorScheme.outline,
                     ),

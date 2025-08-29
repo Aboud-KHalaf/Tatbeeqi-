@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CommentsEmptyWidget extends StatelessWidget {
   const CommentsEmptyWidget({super.key});
@@ -7,6 +8,7 @@ class CommentsEmptyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Center(
       child: SingleChildScrollView(
@@ -16,10 +18,10 @@ class CommentsEmptyWidget extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
-                color: colorScheme.primaryContainer.withValues(alpha: 0.08),
+                color: colorScheme.primaryContainer.withOpacity(0.08),
                 borderRadius: BorderRadius.circular(50),
                 border: Border.all(
-                  color: colorScheme.outline.withValues(alpha: 0.08),
+                  color: colorScheme.outline.withOpacity(0.08),
                   width: 1,
                 ),
               ),
@@ -31,7 +33,7 @@ class CommentsEmptyWidget extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              'Start the conversation',
+              l10n.commentsEmptyTitle,
               style: theme.textTheme.titleLarge?.copyWith(
                 color: colorScheme.onSurface,
                 fontWeight: FontWeight.w600,
@@ -39,7 +41,7 @@ class CommentsEmptyWidget extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Be the first to share your thoughts\nand get the discussion going!',
+              l10n.commentsEmptySubtitle,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: colorScheme.onSurfaceVariant,
@@ -53,7 +55,7 @@ class CommentsEmptyWidget extends StatelessWidget {
                 vertical: 8,
               ),
               decoration: BoxDecoration(
-                color: colorScheme.primaryContainer.withValues(alpha: 0.2),
+                color: colorScheme.primaryContainer.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
@@ -66,7 +68,7 @@ class CommentsEmptyWidget extends StatelessWidget {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    'Write your comment below',
+                    l10n.commentsEmptyHint,
                     style: theme.textTheme.bodySmall?.copyWith(
                       color: colorScheme.primary,
                       fontWeight: FontWeight.w500,

@@ -27,7 +27,7 @@ class StreaksLoadedState extends StatelessWidget {
             Expanded(
               child: StreakCard(
                 streakCount: streak.currentStreak,
-                title: 'Current Streak',
+                title: 'السلسلة الحالية',
                 icon: Icons.local_fire_department,
                 color: Colors.orange,
                 isActive: streak.isStreakActive,
@@ -37,7 +37,7 @@ class StreaksLoadedState extends StatelessWidget {
             Expanded(
               child: StreakCard(
                 streakCount: streak.longestStreak,
-                title: 'Longest Streak',
+                title: 'أطول سلسلة',
                 icon: Icons.emoji_events,
                 color: Colors.amber,
                 isActive: false,

@@ -101,7 +101,7 @@ class _StreakCalendarState extends State<StreakCalendar>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Recent Activity',
+                  'النشاط الأخير',
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: colorScheme.onSurface,
@@ -154,12 +154,12 @@ class _StreakCalendarState extends State<StreakCalendar>
       children: [
         _LegendItem(
           color: colorScheme.primary,
-          label: 'Completed',
+          label: 'مكتمل',
         ),
         const SizedBox(width: 16),
         _LegendItem(
           color: colorScheme.outline.withOpacity(0.3),
-          label: 'Not completed',
+          label: 'غير مكتمل',
         ),
       ],
     );
@@ -284,7 +284,7 @@ class _DayIndicatorState extends State<_DayIndicator>
   }
 
   String _getDayName(DateTime date) {
-    final days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    final days = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
     return days[date.weekday % 7];
   }
 }

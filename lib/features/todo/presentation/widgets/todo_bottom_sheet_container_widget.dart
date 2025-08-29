@@ -14,10 +14,13 @@ class TodoBottomSheetContainerWidget extends StatelessWidget {
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
       decoration: BoxDecoration(
-        color: theme.colorScheme.surface,
+        color: theme.colorScheme.surfaceContainerHigh,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(24.0),
           topRight: Radius.circular(24.0),
+        ),
+        border: Border(
+          top: BorderSide(color: theme.colorScheme.outlineVariant, width: 1),
         ),
         boxShadow: [
           BoxShadow(

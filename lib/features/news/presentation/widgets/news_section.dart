@@ -17,10 +17,6 @@ class NewsSection extends StatefulWidget {
 class _NewsSectionState extends State<NewsSection>
     with TickerProviderStateMixin {
   late final PageController _pageController;
-  late final AnimationController _animationController;
-  late final AnimationController _fadeController;
-  late final Animation<double> _fadeAnimation;
-  late final Animation<Offset> _slideAnimation;
   int _currentPage = 0;
   bool _isAutoScrolling = false;
 
@@ -28,35 +24,8 @@ class _NewsSectionState extends State<NewsSection>
   void initState() {
     super.initState();
     _pageController = PageController();
-    
-    _animationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 400),
-    );
-    
-    _fadeController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 600),
-    );
-    
-    _fadeAnimation = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: _fadeController,
-      curve: Curves.easeOut,
-    ));
-    
-    _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.3),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _fadeController,
-      curve: Curves.easeOutCubic,
-    ));
 
     _pageController.addListener(_onPageChanged);
-    _fadeController.forward();
   }
 
   void _onPageChanged() {
@@ -65,9 +34,6 @@ class _NewsSectionState extends State<NewsSection>
       if (page != _currentPage) {
         setState(() => _currentPage = page);
         HapticFeedback.selectionClick();
-        _animationController.forward().then((_) {
-          _animationController.reverse();
-        });
       }
     }
   }
@@ -88,8 +54,6 @@ class _NewsSectionState extends State<NewsSection>
     _pageController
       ..removeListener(_onPageChanged)
       ..dispose();
-    _animationController.dispose();
-    _fadeController.dispose();
     super.dispose();
   }
 
@@ -100,13 +64,7 @@ class _NewsSectionState extends State<NewsSection>
     return BlocBuilder<NewsCubit, NewsState>(
       builder: (context, state) {
         if (state is NewsLoadedState) {
-          return FadeTransition(
-            opacity: _fadeAnimation,
-            child: SlideTransition(
-              position: _slideAnimation,
-              child: _buildNewsContent(context, state),
-            ),
-          );
+          return _buildNewsContent(context, state);
         } else if (state is NewsErrorState) {
           AppLogger.error(state.message);
           return _buildErrorState(context);
@@ -123,40 +81,18 @@ class _NewsSectionState extends State<NewsSection>
 
     return Column(
       children: [
-        AnimatedBuilder(
-          animation: _animationController,
-          builder: (context, child) {
-            return Transform.scale(
-              scale: 1.0 + (_animationController.value * 0.02),
-              child: child,
-            );
-          },
-          child: NewsListWidget(
-            newsList: state.newsItems,
-            isSmallScreen: isSmallScreen,
-            pageController: _pageController,
-            currentPage: _currentPage,
-            onPageTap: _goToPage,
-          ),
+        NewsListWidget(
+          newsList: state.newsItems,
+          isSmallScreen: isSmallScreen,
+          pageController: _pageController,
+          currentPage: _currentPage,
+          onPageTap: _goToPage,
         ),
         const SizedBox(height: 16),
-        TweenAnimationBuilder<double>(
-          duration: const Duration(milliseconds: 300),
-          tween: Tween(begin: 0.0, end: 1.0),
-          builder: (context, value, child) {
-            return Opacity(
-              opacity: value,
-              child: Transform.translate(
-                offset: Offset(0, 10 * (1 - value)),
-                child: child,
-              ),
-            );
-          },
-          child: SmoothPageIndicatorWidget(
-            newsListlength: state.newsItems.length,
-            pageController: _pageController,
-            colorScheme: colorScheme,
-          ),
+        SmoothPageIndicatorWidget(
+          newsListlength: state.newsItems.length,
+          pageController: _pageController,
+          colorScheme: colorScheme,
         ),
       ],
     );
@@ -170,10 +106,10 @@ class _NewsSectionState extends State<NewsSection>
       height: 120,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: colorScheme.errorContainer.withOpacity(0.1),
+        color: colorScheme.errorContainer,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: colorScheme.error.withOpacity(0.2),
+          color: colorScheme.outlineVariant,
           width: 1,
         ),
       ),
@@ -183,7 +119,7 @@ class _NewsSectionState extends State<NewsSection>
           Icon(
             Icons.wifi_off_rounded,
             size: 32,
-            color: colorScheme.error,
+            color: colorScheme.onErrorContainer,
           ),
           const SizedBox(height: 8),
           Text(

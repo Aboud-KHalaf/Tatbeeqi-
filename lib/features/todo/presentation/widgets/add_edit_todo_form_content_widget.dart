@@ -46,7 +46,7 @@ class FormContent extends StatelessWidget {
       child: Form(
         key: formKey,
         child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
+      //    physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,

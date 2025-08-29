@@ -1,11 +1,23 @@
-// Example usage of AI Assistant feature
-// This file demonstrates how to use the AI Assistant in your app
+// AI Assistant Chat Interface
+// Modern chat UI for AI learning assistant
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/di/service_locator.dart';
 import 'presentation/cubit/ai_assistant_cubit.dart';
 import 'presentation/cubit/ai_assistant_state.dart';
+
+class ChatMessage {
+  final String text;
+  final bool isUser;
+  final DateTime timestamp;
+  
+  ChatMessage({
+    required this.text,
+    required this.isUser,
+    required this.timestamp,
+  });
+}
 
 class AiAssistantUsageExample extends StatelessWidget {
   const AiAssistantUsageExample({super.key});
@@ -27,148 +39,372 @@ class _AiAssistantView extends StatefulWidget {
 }
 
 class _AiAssistantViewState extends State<_AiAssistantView> {
-  final _questionController = TextEditingController();
+  final _messageController = TextEditingController();
+  final _scrollController = ScrollController();
+  final List<ChatMessage> _messages = [];
 
   @override
   void dispose() {
-    _questionController.dispose();
+    _messageController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
-  void _askQuestion() {
-    final question = _questionController.text.trim();
-    if (question.isNotEmpty) {
-      context.read<AiAssistantCubit>().askQuestion(question);
-      _questionController.clear();
+  void _sendMessage() {
+    final message = _messageController.text.trim();
+    if (message.isNotEmpty) {
+      setState(() {
+        _messages.add(ChatMessage(
+          text: message,
+          isUser: true,
+          timestamp: DateTime.now(),
+        ));
+      });
+      context.read<AiAssistantCubit>().askQuestion(message);
+      _messageController.clear();
+      _scrollToBottom();
     }
+  }
+
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AI Learning Assistant'),
+        title: const Text('لبيب Ai'),
+        backgroundColor: colorScheme.surface,
+        elevation: 0,
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              setState(() {
+                _messages.clear();
+              });
+              context.read<AiAssistantCubit>().reset();
+            },
+            tooltip: 'مسح المحادثة',
+          ),
+        ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: Column(
+        children: [
+          // Chat messages area
+          Expanded(
+            child: BlocListener<AiAssistantCubit, AiAssistantState>(
+              listener: (context, state) {
+                if (state is AiAssistantSuccess) {
+                  setState(() {
+                    _messages.add(ChatMessage(
+                      text: state.response.response,
+                      isUser: false,
+                      timestamp: DateTime.now(),
+                    ));
+                  });
+                  _scrollToBottom();
+                } else if (state is AiAssistantError) {
+                  setState(() {
+                    _messages.add(ChatMessage(
+                      text: 'عذراً، حدث خطأ: ${state.message}',
+                      isUser: false,
+                      timestamp: DateTime.now(),
+                    ));
+                  });
+                  _scrollToBottom();
+                }
+              },
+              child: _messages.isEmpty
+                  ? _buildWelcomeScreen()
+                  : ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.all(16),
+                      itemCount: _messages.length + 
+                          (context.watch<AiAssistantCubit>().state is AiAssistantLoading ? 1 : 0),
+                      itemBuilder: (context, index) {
+                        if (index == _messages.length) {
+                          return _buildTypingIndicator();
+                        }
+                        return _buildMessageBubble(_messages[index]);
+                      },
+                    ),
+            ),
+          ),
+          // Message input area
+          _buildMessageInput(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWelcomeScreen() {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Question input
-            TextField(
-              controller: _questionController,
-              decoration: const InputDecoration(
-                labelText: 'Ask a study-related question',
-                hintText: 'e.g., Explain photosynthesis process',
-                border: OutlineInputBorder(),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: colorScheme.primaryContainer.withOpacity(0.3),
+                shape: BoxShape.circle,
               ),
-              maxLines: 3,
-              onSubmitted: (_) => _askQuestion(),
+              child: Icon(
+                Icons.smart_toy_rounded,
+                size: 64,
+                color: colorScheme.primary,
+              ),
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'مرحباً بك في لبيب Ai!',
+              style: theme.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: colorScheme.onSurface,
+              ),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
-            
-            // Ask button
-            ElevatedButton(
-              onPressed: _askQuestion,
-              child: const Text('Ask AI Assistant'),
+            Text(
+              'اسألني أي سؤال متعلق بالدراسة وسأساعدك!\n\nيمكنني مساعدتك في:\n• شرح المفاهيم\n• حل المسائل\n• نصائح الدراسة\n• المواضيع التقنية',
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: colorScheme.onSurfaceVariant,
+                height: 1.5,
+              ),
+              textAlign: TextAlign.center,
             ),
-            
-            const SizedBox(height: 24),
-            
-            // Response area
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMessageBubble(ChatMessage message) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isUser = message.isUser;
+    
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Row(
+        mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (!isUser) ...[
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: colorScheme.primary,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.smart_toy_rounded,
+                size: 18,
+                color: colorScheme.onPrimary,
+              ),
+            ),
+            const SizedBox(width: 8),
+          ],
+          Flexible(
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: isUser 
+                    ? colorScheme.primary 
+                    : colorScheme.surfaceContainerHighest,
+                borderRadius: BorderRadius.circular(16).copyWith(
+                  bottomRight: isUser ? const Radius.circular(4) : null,
+                  bottomLeft: !isUser ? const Radius.circular(4) : null,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: colorScheme.shadow.withOpacity(0.1),
+                    blurRadius: 4,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Text(
+                message.text,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: isUser 
+                      ? colorScheme.onPrimary 
+                      : colorScheme.onSurface,
+                  height: 1.4,
+                ),
+              ),
+            ),
+          ),
+          if (isUser) ...[
+            const SizedBox(width: 8),
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: colorScheme.secondary,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.person_rounded,
+                size: 18,
+                color: colorScheme.onSecondary,
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTypingIndicator() {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: colorScheme.primary,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.smart_toy_rounded,
+              size: 18,
+              color: colorScheme.onPrimary,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: colorScheme.surfaceContainerHighest,
+              borderRadius: BorderRadius.circular(16).copyWith(
+                bottomLeft: const Radius.circular(4),
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'يكتب',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMessageInput() {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        border: Border(
+          top: BorderSide(
+            color: colorScheme.outline.withOpacity(0.2),
+            width: 1,
+          ),
+        ),
+      ),
+      child: SafeArea(
+        child: Row(
+          children: [
             Expanded(
-              child: BlocBuilder<AiAssistantCubit, AiAssistantState>(
-                builder: (context, state) {
-                  return switch (state) {
-                    AiAssistantInitial() => const Center(
-                        child: Text(
-                          'Ask me any study-related question!\n\nI can help with:\n• Explaining concepts\n• Solving problems\n• Study tips\n• Technical topics',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ),
-                    AiAssistantLoading() => const Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircularProgressIndicator(),
-                            SizedBox(height: 16),
-                            Text('AI is thinking...'),
-                          ],
-                        ),
-                      ),
-                    AiAssistantSuccess(:final response) => Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.green.shade50,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.green.shade200),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.smart_toy, color: Colors.green.shade700),
-                                const SizedBox(width: 8),
-                                Text(
-                                  'AI Assistant Response',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.green.shade700,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            Expanded(
-                              child: SingleChildScrollView(
-                                child: Text(
-                                  response.response,
-                                  style: const TextStyle(fontSize: 14),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    AiAssistantError(:final message) => Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.red.shade50,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.red.shade200),
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.error, color: Colors.red.shade700),
-                                const SizedBox(width: 8),
-                                Text(
-                                  'Error',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red.shade700,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Text(message),
-                            const SizedBox(height: 12),
-                            ElevatedButton(
-                              onPressed: () => context.read<AiAssistantCubit>().reset(),
-                              child: const Text('Try Again'),
-                            ),
-                          ],
-                        ),
-                      ),
-                    // TODO: Handle this case.
-                    AiAssistantState() => throw UnimplementedError(),
-                  };
-                },
+              child: TextField(
+                controller: _messageController,
+                decoration: InputDecoration(
+                  hintText: 'اكتب رسالتك هنا...',
+                  hintStyle: TextStyle(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    borderSide: BorderSide(
+                      color: colorScheme.outline.withOpacity(0.3),
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    borderSide: BorderSide(
+                      color: colorScheme.outline.withOpacity(0.3),
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(24),
+                    borderSide: BorderSide(
+                      color: colorScheme.primary,
+                      width: 2,
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  filled: true,
+                  fillColor: colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                ),
+                maxLines: null,
+                textInputAction: TextInputAction.send,
+                onSubmitted: (_) => _sendMessage(),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              decoration: BoxDecoration(
+                color: colorScheme.primary,
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                onPressed: _sendMessage,
+                icon: Icon(
+                  Icons.send_rounded,
+                  color: colorScheme.onPrimary,
+                ),
+                tooltip: 'إرسال',
               ),
             ),
           ],

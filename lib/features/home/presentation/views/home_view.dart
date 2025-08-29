@@ -1,85 +1,88 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/constants/constants.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
-import 'package:tatbeeqi/features/home/presentation/widgets/custom_app_bar.dart';
+import 'package:tatbeeqi/core/widgets/custom_app_bar.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/recently_added_section.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/study_progress_section.dart';
 import 'package:tatbeeqi/features/news/presentation/widgets/news_section.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/today_tasks_section.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
+import 'package:tatbeeqi/core/widgets/animations/staggered_fade_slide.dart';
 
-class HomeView extends StatefulWidget {
+class HomeView extends StatelessWidget {
   static const String routePath = '/homeView';
   const HomeView({super.key});
 
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> with WidgetsBindingObserver {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    //  initDeviceToken();
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      // initDeviceToken(); // Re-register token if needed
-    }
-  }
-
-  // Future<void> initDeviceToken() async {
-  //   final user = Supabase.instance.client.auth.currentUser;
-  //   if (user != null) {
-  //    late String token;
-  //     final tokenOrFailure = await sl<GetDeviceTokenUsecase>().call();
-  //     tokenOrFailure.fold((l) => null, (r) => token = r);
-  //    print(token);
-  //     await sl<RegisterDeviceTokenUseCase>().call(RegisterDeviceTokenRequest(deviceToken: token, platform: 'android'));
-  //   }
-  // }
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: const CustomHomeAppBar(),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 24.0),
-        children: [
-          _SectionTitle(
-            title: l10n.homeLatestNewsAndEvents,
-            onPressed: () {
-              context.push(AppRoutes.allNewsPath);
-            },
+      appBar:   CustomHomeAppBar(title: l10n.homeGreeting),
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: AppDimensConstants.screenPadding,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  StaggeredFadeSlide(
+                    delay: const Duration(milliseconds: 0),
+                    child: _SectionTitle(
+                      title: l10n.homeLatestNewsAndEvents,
+                      onPressed: () => context.push(AppRoutes.allNewsPath),
+                    ),
+                  ),
+                  const SizedBox(height: 12.0),
+                  const StaggeredFadeSlide(
+                    delay: Duration(milliseconds: 100),
+                    child: NewsSection(),
+                  ),
+                  const SizedBox(height: 28.0),
+                  StaggeredFadeSlide(
+                    delay: const Duration(milliseconds: 200),
+                    child: _SectionTitle(
+                        title: l10n.homeTodayTasks,
+                        onPressed: () async {
+                          context.push(AppRoutes.todoPath);
+                        }),
+                  ),
+                  const SizedBox(height: 12.0),
+                  const StaggeredFadeSlide(
+                    delay: Duration(milliseconds: 300),
+                    child: TodayTasksSection(),
+                  ),
+                  const SizedBox(height: 28.0),
+                  StaggeredFadeSlide(
+                    delay: const Duration(milliseconds: 400),
+                    child: _SectionTitle(
+                        title: l10n.homeContinueStudying,
+                        onPressed: () => context.push(AppRoutes.todoPath)),
+                  ),
+                  const SizedBox(height: 12.0),
+                  const StaggeredFadeSlide(
+                    delay: Duration(milliseconds: 500),
+                    child: StudyProgressSection(),
+                  ),
+                  const SizedBox(height: .0),
+                  StaggeredFadeSlide(
+                    delay: const Duration(milliseconds: 600),
+                    child: _SectionTitle(
+                        title: l10n.homeRecentlyAdded,
+                        onPressed: () => context.push(AppRoutes.todoPath)),
+                  ),
+                  const SizedBox(height: 12.0),
+                  const StaggeredFadeSlide(
+                    delay: Duration(milliseconds: 700),
+                    child: RecentlyAddedSection(),
+                  ),
+                ],
+              ),
+            ),
           ),
-          const SizedBox(height: 12.0),
-          const NewsSection(),
-          const SizedBox(height: 28.0),
-          _SectionTitle(
-              title: l10n.homeTodayTasks,
-              onPressed: () async {
-                context.push(AppRoutes.todoPath);
-              }),
-          const SizedBox(height: 12.0),
-          const TodayTasksSection(),
-          const SizedBox(height: 28.0),
-          _SectionTitle(title: l10n.homeContinueStudying, onPressed: () {}),
-          const SizedBox(height: 12.0),
-          const StudyProgressSection(),
-          const SizedBox(height: .0),
-          _SectionTitle(title: l10n.homeRecentlyAdded, onPressed: () {}),
-          const SizedBox(height: 12.0),
-          const RecentlyAddedSection(),
         ],
       ),
     );

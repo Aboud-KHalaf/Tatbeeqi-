@@ -59,18 +59,18 @@ class _StreakMotivationCardState extends State<StreakMotivationCard>
   String _getMotivationMessage() {
     if (widget.hasStreakToday) {
       if (widget.currentStreak >= 7) {
-        return "🎉 Amazing! You're on fire with a ${widget.currentStreak}-day streak!";
+        return "🎉 مذهل! أنت متألق بسلسلة قدرها ${widget.currentStreak} يوماً!";
       } else if (widget.currentStreak >= 3) {
-        return "🔥 Great job! Keep the momentum going!";
+        return "🔥 عمل رائع! واصل الزخم!";
       } else {
-        return "✨ Perfect! You completed today's lesson!";
+        return "✨ ممتاز! أنجزت درس اليوم!";
       }
     } else if (widget.isStreakActive) {
-      return "⏰ Don't break your ${widget.currentStreak}-day streak! Complete a lesson today.";
+      return "⏰ لا تكسر سلسلتك البالغة ${widget.currentStreak} يوماً! أكمل درساً اليوم.";
     } else if (widget.currentStreak == 0) {
-      return "🚀 Start your learning journey today! Complete your first lesson.";
+      return "🚀 ابدأ رحلتك التعليمية اليوم! أكمل درسك الأول.";
     } else {
-      return "💪 Ready to restart? Your longest streak was ${widget.currentStreak} days!";
+      return "💪 جاهز للعودة؟ أطول سلسلة لك كانت ${widget.currentStreak} يوماً!";
     }
   }
 

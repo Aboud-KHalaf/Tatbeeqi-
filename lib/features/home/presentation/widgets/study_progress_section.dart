@@ -4,7 +4,7 @@ import 'package:tatbeeqi/core/utils/app_data.dart';
 
 class StudyProgressSection extends StatefulWidget {
   const StudyProgressSection({super.key});
-  
+
   @override
   State<StudyProgressSection> createState() => _StudyProgressSectionState();
 }
@@ -14,11 +14,11 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
   late List<AnimationController> _controllers;
   late List<Animation<double>> _fadeAnimations;
   late List<Animation<Offset>> _slideAnimations;
-  
+
   @override
   void initState() {
     super.initState();
-    
+
     _controllers = List.generate(
       courses.length,
       (index) => AnimationController(
@@ -26,22 +26,23 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
         vsync: this,
       ),
     );
-    
+
     _fadeAnimations = _controllers.map((controller) {
       return Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(parent: controller, curve: Curves.easeOut),
       );
     }).toList();
-    
+
     _slideAnimations = _controllers.map((controller) {
-      return Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
+      return Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero)
+          .animate(
         CurvedAnimation(parent: controller, curve: Curves.easeOutCubic),
       );
     }).toList();
-    
+
     _startStaggeredAnimations();
   }
-  
+
   void _startStaggeredAnimations() {
     for (int i = 0; i < _controllers.length; i++) {
       Future.delayed(Duration(milliseconds: i * 150), () {
@@ -51,7 +52,7 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
       });
     }
   }
-  
+
   @override
   void dispose() {
     for (final controller in _controllers) {
@@ -70,11 +71,11 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
         itemCount: courses.length,
         itemBuilder: (context, index) {
           final course = courses[index];
-          
+
           if (index >= _fadeAnimations.length) {
             return _buildCourseCard(context, course, index, null, null);
           }
-          
+
           return AnimatedBuilder(
             animation: _controllers[index],
             builder: (context, child) {
@@ -86,13 +87,14 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
                 ),
               );
             },
-            child: _buildCourseCard(context, course, index, _fadeAnimations[index], _slideAnimations[index]),
+            child: _buildCourseCard(context, course, index,
+                _fadeAnimations[index], _slideAnimations[index]),
           );
         },
       ),
     );
   }
-  
+
   Widget _buildCourseCard(
     BuildContext context,
     course,
@@ -103,7 +105,7 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
-    
+
     return TweenAnimationBuilder<double>(
       duration: Duration(milliseconds: 300 + (index * 50)),
       tween: Tween(begin: 0.0, end: 1.0),
@@ -134,19 +136,6 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
                 return Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: colorScheme.shadow.withOpacity(0.1),
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
-                        spreadRadius: 0,
-                      ),
-                      BoxShadow(
-                        color: colorScheme.shadow.withOpacity(0.05),
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
                   ),
                   child: Material(
                     color: Colors.transparent,
@@ -154,11 +143,11 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
                     child: Container(
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        color: colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                        color: colorScheme.surfaceContainerHigh,
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: colorScheme.outline.withOpacity(0.2),
-                          width: 1.5,
+                          color: colorScheme.outlineVariant,
+                          width: 1,
                         ),
                       ),
                       child: Column(
@@ -168,30 +157,21 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
                           Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: colorScheme.primaryContainer.withOpacity(0.3),
-                              borderRadius: BorderRadius.circular(12),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: colorScheme.shadow.withOpacity(0.1),
-                                  blurRadius: 4,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Image.asset(
-                              course.iconPath,
-                              height: 24,
-                              width: 24,
-                              errorBuilder: (context, error, stackTrace) => Icon(
-                                Icons.school_rounded,
-                                size: 24,
-                                color: colorScheme.primary,
+                              color: colorScheme.secondaryContainer,
+                              borderRadius: BorderRadius.circular(12.0),
+                              border: Border.all(
+                                color: colorScheme.outlineVariant,
                               ),
                             ),
+                            child: Icon(
+                              Icons.school_rounded,
+                              size: 24,
+                              color: colorScheme.onSecondaryContainer,
+                            ),
                           ),
-                          
+
                           const SizedBox(height: 6),
-                          
+
                           // Course title with better typography
                           Text(
                             course.title,
@@ -205,14 +185,15 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          
+
                           const SizedBox(height: 6),
-                          
+
                           // Enhanced progress indicator
                           Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'التقدم',
@@ -236,11 +217,12 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
                               Container(
                                 height: 3,
                                 decoration: BoxDecoration(
-                                  color: colorScheme.outline.withOpacity(0.2),
+                                  color: colorScheme.surfaceContainerHighest,
                                   borderRadius: BorderRadius.circular(2),
                                 ),
                                 child: TweenAnimationBuilder<double>(
-                                  duration: Duration(milliseconds: 800 + (index * 200)),
+                                  duration: Duration(
+                                      milliseconds: 800 + (index * 200)),
                                   tween: Tween(begin: 0.0, end: 0.6),
                                   curve: Curves.easeOutCubic,
                                   builder: (context, progressValue, child) {
@@ -250,7 +232,8 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
                                       child: Container(
                                         decoration: BoxDecoration(
                                           color: colorScheme.primary,
-                                          borderRadius: BorderRadius.circular(2),
+                                          borderRadius:
+                                              BorderRadius.circular(2),
                                           boxShadow: [
                                             BoxShadow(
                                               color: colorScheme.primary.withOpacity(0.4),

@@ -4,11 +4,11 @@ import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_state.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cubit/retake_courses_cubit.dart';
-import 'package:tatbeeqi/features/courses/presentation/widgets/courses_app_bar.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/courses_grid_widget.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/courses_tab_bar.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/empty_courses_widget.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/retake_courses_bottom_sheet.dart';
+import 'package:tatbeeqi/core/widgets/custom_app_bar.dart';
 
 class CoursesView extends StatefulWidget {
   const CoursesView({super.key});
@@ -51,7 +51,7 @@ class _CoursesViewState extends State<CoursesView>
     final bool isTablet = MediaQuery.of(context).size.width > 600;
 
     return Scaffold(
-      appBar: const CoursesAppBar(),
+      appBar: const CustomHomeAppBar(title: "المقررات"),
       body: BlocBuilder<FetchCoursesCubit, FetchCoursesState>(
         builder: (context, state) {
           if (state is CoursesError) {
@@ -106,7 +106,7 @@ class _CoursesViewState extends State<CoursesView>
 
     return FloatingActionButton(
       onPressed: _onAddCoursePressed, // This will now call the updated method
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Theme.of(context).colorScheme.primary,
       elevation: 4,
       child: Icon(Icons.add, color: Theme.of(context).colorScheme.onPrimary),
     );

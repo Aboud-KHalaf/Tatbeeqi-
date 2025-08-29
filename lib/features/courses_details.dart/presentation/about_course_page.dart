@@ -14,20 +14,22 @@ class AboutCoursePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final dataSource = MockCourseDetailsDataSource();
     final repository = CourseDetailsRepositoryImpl(dataSource);
-
     final fetchDetailsUseCase = FetchCourseDetailsUseCase(repository);
 
+    // إضافة Directionality لدعم التخطيط من اليمين لليسار
     return Scaffold(
- 
       body: FutureBuilder<CourseDetails>(
         future: fetchDetailsUseCase('1'), // Mock course ID
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
+            // تعريب رسالة الخطأ
+            return Center(child: Text('حدث خطأ: ${snapshot.error}'));
           } else if (!snapshot.hasData) {
-            return const Center(child: Text('No course details found.'));
+            // تعريب رسالة عدم وجود بيانات
+            return const Center(
+                child: Text('لم يتم العثور على تفاصيل للدورة.'));
           } else {
             final details = snapshot.data!;
             return SingleChildScrollView(
@@ -39,25 +41,35 @@ class AboutCoursePage extends StatelessWidget {
                     details.title,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
+                          fontFamily: 'Cairo', // اقتراح: استخدام خط عربي
                         ),
                   ),
                   const SizedBox(height: 16),
-                  _buildSectionTitle(context, 'Course Description:'),
-                  Text(details.description),
+                  // تعريب عنوان القسم
+                  _buildSectionTitle(context, 'وصف الدورة:'),
+                  Text(
+                    details.description,
+                    style: const TextStyle(fontFamily: 'Cairo', fontSize: 16),
+                  ),
                   const SizedBox(height: 24),
-                  _buildSectionTitle(context, 'Instructor:'),
+                  // تعريب عنوان القسم
+                  _buildSectionTitle(context, 'المحاضر:'),
                   ListTile(
+                    // في وضع RTL، سيظهر leading على اليمين تلقائياً
                     leading: CircleAvatar(
                       radius: 30,
                       backgroundImage: NetworkImage(details.instructorImageUrl),
                     ),
                     title: Text(details.instructorName,
-                        style: const TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(details.instructorTitle),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontFamily: 'Cairo')),
+                    subtitle: Text(details.instructorTitle,
+                        style: const TextStyle(fontFamily: 'Cairo')),
                     contentPadding: EdgeInsets.zero,
                   ),
                   const SizedBox(height: 24),
-                  _buildSectionTitle(context, 'Course Details:'),
+                  // تعريب عنوان القسم
+                  _buildSectionTitle(context, 'تفاصيل الدورة:'),
                   Card(
                     elevation: 2,
                     shape: RoundedRectangleBorder(
@@ -65,22 +77,30 @@ class AboutCoursePage extends StatelessWidget {
                     ),
                     child: DataTable(
                       columns: const [
-                        DataColumn(label: Text('Attribute')),
-                        DataColumn(label: Text('Value')),
+                        // تعريب عناوين الأعمدة
+                        DataColumn(
+                            label: Text('البيان',
+                                style: TextStyle(fontWeight: FontWeight.bold))),
+                        DataColumn(
+                            label: Text('القيمة',
+                                style: TextStyle(fontWeight: FontWeight.bold))),
                       ],
                       rows: [
                         DataRow(cells: [
-                          const DataCell(Text('Credits')),
+                          // تعريب أسماء الحقول
+                          const DataCell(Text('الساعات المعتمدة')),
                           DataCell(Text(details.credits.toString())),
                         ]),
                         DataRow(cells: [
-                          const DataCell(Text('Duration')),
+                          const DataCell(Text('المدة')),
                           DataCell(Text(details.duration)),
                         ]),
                         DataRow(cells: [
-                          const DataCell(Text('Start Date')),
+                          const DataCell(Text('تاريخ البدء')),
                           DataCell(Text(
-                              DateFormat.yMMMd().format(details.startDate))),
+                            // استخدام اللغة العربية لتنسيق التاريخ
+                            DateFormat.yMMMd('ar').format(details.startDate),
+                          )),
                         ]),
                       ],
                     ),
@@ -101,6 +121,7 @@ class AboutCoursePage extends StatelessWidget {
         title,
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
+              fontFamily: 'Cairo', // اقتراح: استخدام خط عربي
             ),
       ),
     );

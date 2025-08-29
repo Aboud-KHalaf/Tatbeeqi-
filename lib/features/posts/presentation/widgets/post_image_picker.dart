@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class PostImagePicker extends StatelessWidget {
   final File? image;
@@ -27,12 +28,13 @@ class PostImagePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Cover Image (Optional)',
+          l10n.postImagePickerCoverOptional,
           style: theme.textTheme.titleMedium
               ?.copyWith(fontWeight: FontWeight.bold),
         ),
@@ -46,10 +48,12 @@ class PostImagePicker extends StatelessWidget {
   }
 
   Widget _buildPicker(BuildContext context, ColorScheme colorScheme) {
+            final l10n = AppLocalizations.of(context)!;
+
     return Container(
       height: 150,
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+        color: colorScheme.surfaceContainerHighest.withOpacity(0.5),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Center(
@@ -62,7 +66,7 @@ class PostImagePicker extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: () => _pickImage(context),
               icon: const Icon(Icons.add),
-              label: const Text('Add Image'),
+              label: Text(l10n.imageSectionAddImage),
             ),
           ],
         ),
@@ -71,6 +75,8 @@ class PostImagePicker extends StatelessWidget {
   }
 
   Widget _buildPreview(BuildContext context, ColorScheme colorScheme) {
+        final l10n = AppLocalizations.of(context)!;
+
     return AspectRatio(
       aspectRatio: 16 / 9,
       child: Container(
@@ -84,7 +90,7 @@ class PostImagePicker extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: Colors.black.withValues(alpha: 0.4),
+            color: Colors.black.withOpacity(0.4),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -93,14 +99,14 @@ class PostImagePicker extends StatelessWidget {
                 style: TextButton.styleFrom(foregroundColor: Colors.white),
                 onPressed: () => _pickImage(context),
                 icon: const Icon(Icons.edit_outlined),
-                label: const Text('Change'),
+                label: Text(l10n.commonChange),
               ),
               const SizedBox(width: 16),
               TextButton.icon(
                 style: TextButton.styleFrom(foregroundColor: colorScheme.error),
                 onPressed: onImageRemoved,
                 icon: const Icon(Icons.delete_outline),
-                label: const Text('Remove'),
+                label: Text(l10n.commonRemove),
               ),
             ],
           ),

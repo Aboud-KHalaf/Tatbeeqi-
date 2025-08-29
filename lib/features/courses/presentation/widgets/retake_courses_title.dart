@@ -12,7 +12,7 @@ class RetakeCoursesTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Retake Courses', // Consider using AppLocalizations for "Retake Courses"
+          'اضافة مقررات للاعادة', // Consider using AppLocalizations for "Retake Courses"
           style: theme.textTheme.headlineSmall?.copyWith(
             fontWeight: FontWeight.w600,
             color: colorScheme.onSurface,
@@ -21,7 +21,7 @@ class RetakeCoursesTitle extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          'Select courses you want to retake',
+          'اختر المقررات التي تريد ان تعيدها',
           style: theme.textTheme.bodyMedium?.copyWith(
             color: colorScheme.onSurfaceVariant,
             fontWeight: FontWeight.w400,

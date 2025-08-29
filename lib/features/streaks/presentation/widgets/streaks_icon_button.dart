@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:tatbeeqi/features/ai_assistant/ai_assistant_usage_example.dart';
+import 'package:tatbeeqi/features/streaks/presentation/views/streaks_view.dart';
 
-class AiActionButton extends StatelessWidget {
-  const AiActionButton({
+class StreaksIconButton extends StatelessWidget {
+  const StreaksIconButton({
     super.key,
-
   });
-
-
 
   @override
   Widget build(BuildContext context) {
-
-  
-
-     final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.of(context).size.width;
     final isSmallScreen = screenWidth < 360;
     final buttonRadius = isSmallScreen ? 10.0 : 12.0;
     final actionIconSize = isSmallScreen ? 20.0 : 22.0;
@@ -25,16 +19,12 @@ class AiActionButton extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const AiAssistantUsageExample(),
-          ),
-        );
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const StreaksView(),
+        ));
       },
-      tooltip: MaterialLocalizations.of(context).searchFieldLabel,
       icon: Icon(
-        Icons.auto_awesome,
+        Icons.local_fire_department_rounded,
         size: actionIconSize,
       ),
     );

@@ -58,7 +58,7 @@ class _CourseLecturesListState extends State<CourseLecturesList>
 
     return Container(
       margin: const EdgeInsets.symmetric(
-          horizontal: AppDimensConstants.sidePadding, vertical: 8.0),
+          horizontal: AppDimensConstants.mainHorizontalPadding, vertical: 8.0),
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         color: colorScheme.surface,

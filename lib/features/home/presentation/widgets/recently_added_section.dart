@@ -72,6 +72,8 @@ class RecentlyAddedSection extends StatelessWidget {
     ColorScheme colorScheme,
     TextTheme textTheme,
   ) {
+    // Derive proper MD3 colors for the item type
+    final (containerColor, onContainerColor) = _getTypeColors(item.type, colorScheme);
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       child: Material(
@@ -85,7 +87,8 @@ class RecentlyAddedSection extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: colorScheme.surfaceVariant.withOpacity(0.3),
+              // Use MD3 surface container tokens instead of semi-transparent variants
+              color: colorScheme.surfaceContainerHigh,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
                 color: colorScheme.outline.withOpacity(0.1),
@@ -97,12 +100,14 @@ class RecentlyAddedSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: _getTypeColor(item.type, colorScheme).withOpacity(0.1),
+                    // Use container color for the type badge background
+                    color: containerColor,
                     borderRadius: BorderRadius.circular(6),
                   ),
                   child: Icon(
                     item.icon,
-                    color: _getTypeColor(item.type, colorScheme),
+                    // Content on container should use on*Container
+                    color: onContainerColor,
                     size: 20,
                   ),
                 ),
@@ -139,13 +144,13 @@ class RecentlyAddedSection extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: _getTypeColor(item.type, colorScheme).withOpacity(0.1),
+                    color: containerColor,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
                     item.type,
                     style: textTheme.labelSmall?.copyWith(
-                      color: _getTypeColor(item.type, colorScheme),
+                      color: onContainerColor,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -164,16 +169,17 @@ class RecentlyAddedSection extends StatelessWidget {
     );
   }
 
-  Color _getTypeColor(String type, ColorScheme colorScheme) {
+  // Returns a tuple of (container, onContainer) for the given type
+  (Color, Color) _getTypeColors(String type, ColorScheme colorScheme) {
     switch (type.toLowerCase()) {
       case 'pdf':
-        return Colors.red;
+        return (colorScheme.errorContainer, colorScheme.onErrorContainer);
       case 'video':
-        return Colors.blue;
+        return (colorScheme.primaryContainer, colorScheme.onPrimaryContainer);
       case 'article':
-        return Colors.green;
+        return (colorScheme.tertiaryContainer, colorScheme.onTertiaryContainer);
       default:
-        return colorScheme.primary;
+        return (colorScheme.secondaryContainer, colorScheme.onSecondaryContainer);
     }
   }
 }
