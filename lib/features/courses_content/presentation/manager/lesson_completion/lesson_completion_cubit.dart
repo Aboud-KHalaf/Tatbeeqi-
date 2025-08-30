@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
+ import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/error/failures.dart';
 import 'package:tatbeeqi/features/courses_content/domain/usecases/mark_lesson_as_completed_usecase.dart';
 

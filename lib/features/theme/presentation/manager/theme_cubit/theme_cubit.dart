@@ -29,9 +29,8 @@ class ThemeCubit extends Cubit<ThemeData> {
   Color get currentSeedColor => _currentSeedColor;
 
   /// Gets the current brightness
-  Brightness get currentBrightness => _currentThemeMode == ThemeMode.dark 
-      ? Brightness.dark 
-      : Brightness.light;
+  Brightness get currentBrightness =>
+      _currentThemeMode == ThemeMode.dark ? Brightness.dark : Brightness.light;
 
   /// Loads the saved theme preferences
   Future<void> loadTheme() async {
@@ -46,7 +45,8 @@ class ThemeCubit extends Cubit<ThemeData> {
       },
       (themeMode) {
         _currentThemeMode = themeMode;
-        _currentSeedColor = AppColors.defaultSeedColor; // TODO: Load saved seed color
+        _currentSeedColor =
+            AppColors.defaultSeedColor; // TODO: Load saved seed color
         emit(_generateTheme());
       },
     );
@@ -83,7 +83,8 @@ class ThemeCubit extends Cubit<ThemeData> {
 
     // TODO: Implement seed color persistence if needed
     // For now, we'll just log the change
-    AppLogger.info('Seed color updated to: ${seedColor.value.toRadixString(16)}');
+    AppLogger.info(
+        'Seed color updated to: ${seedColor.value.toRadixString(16)}');
 
     // If you want to persist the seed color, you would need to create
     // new use cases similar to theme mode persistence
@@ -111,16 +112,16 @@ class ThemeCubit extends Cubit<ThemeData> {
         emit(previousState);
       },
       (_) {
-        AppLogger.info('Theme updated - Mode: ${mode.name}, Seed Color: ${seedColor.value.toRadixString(16)}');
+        AppLogger.info(
+            'Theme updated - Mode: ${mode.name}, Seed Color: ${seedColor.value.toRadixString(16)}');
       },
     );
   }
 
   /// Toggles between light and dark mode
   Future<void> toggleTheme() async {
-    final newMode = _currentThemeMode == ThemeMode.light 
-        ? ThemeMode.dark 
-        : ThemeMode.light;
+    final newMode =
+        _currentThemeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
     await setTheme(newMode);
   }
 
@@ -149,8 +150,10 @@ class ThemeCubit extends Cubit<ThemeData> {
   }
 
   /// Checks if the current theme is using the default seed color
-  bool get isUsingDefaultSeedColor => _currentSeedColor == AppColors.defaultSeedColor;
+  bool get isUsingDefaultSeedColor =>
+      _currentSeedColor == AppColors.defaultSeedColor;
 
   /// Gets the name of the current seed color for display
-  String get currentSeedColorName => AppColors.getSeedColorName(_currentSeedColor);
+  String get currentSeedColorName =>
+      AppColors.getSeedColorName(_currentSeedColor);
 }
