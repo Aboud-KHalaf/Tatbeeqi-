@@ -5,10 +5,11 @@ import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cub
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_state.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cubit/retake_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/courses_grid_widget.dart';
+import 'package:tatbeeqi/features/courses/presentation/widgets/courses_shimmer_grid.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/courses_tab_bar.dart';
+import 'package:tatbeeqi/features/courses/presentation/widgets/courses_tab_bar_shimmer.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/empty_courses_widget.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/retake_courses_bottom_sheet.dart';
-import 'package:tatbeeqi/core/widgets/custom_app_bar.dart';
 
 class CoursesView extends StatefulWidget {
   const CoursesView({super.key});
@@ -51,7 +52,6 @@ class _CoursesViewState extends State<CoursesView>
     final bool isTablet = MediaQuery.of(context).size.width > 600;
 
     return Scaffold(
-      appBar: const CustomHomeAppBar(title: "المقررات"),
       body: BlocBuilder<FetchCoursesCubit, FetchCoursesState>(
         builder: (context, state) {
           if (state is CoursesError) {
@@ -59,7 +59,7 @@ class _CoursesViewState extends State<CoursesView>
           } else if (state is CoursesLoaded) {
             return _buildCoursesContent(state.courseEntities, isTablet);
           } else {
-            return const Center(child: CircularProgressIndicator());
+            return _buildLoadingContent(isTablet);
           }
         },
       ),
@@ -131,6 +131,23 @@ class _CoursesViewState extends State<CoursesView>
           child: const RetakeCoursesBottomSheet(),
         );
       },
+    );
+  }
+
+  Widget _buildLoadingContent(bool isTablet) {
+    return CustomScrollView(
+      slivers: [
+        const SliverToBoxAdapter(
+          child: CoursesTabBarShimmer(),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          sliver: CoursesShimmerGridWidget(
+            isTablet: isTablet,
+            selectedTabIndex: _selectedTabIndex,
+          ),
+        ),
+      ],
     );
   }
 }

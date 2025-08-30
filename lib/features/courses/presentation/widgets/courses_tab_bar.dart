@@ -39,7 +39,15 @@ class CoursesTabBar extends StatelessWidget {
           onTap: onTabSelected,
           indicator: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: colorScheme.primaryContainer,
+            gradient: LinearGradient(
+              colors: [
+                colorScheme.primaryContainer,
+                colorScheme.primaryContainer.withBlue(
+                    (colorScheme.primaryContainer.hashCode + 20).clamp(0, 255))
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
             boxShadow: [
               BoxShadow(
                 color: colorScheme.primary.withValues(alpha: 0.2),

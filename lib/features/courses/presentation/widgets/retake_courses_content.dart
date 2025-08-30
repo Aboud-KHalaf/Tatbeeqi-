@@ -63,7 +63,8 @@ class _RetakeCoursesContentState extends State<RetakeCoursesContent> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: theme.colorScheme.errorContainer.withValues(alpha: 0.1),
+                      color: theme.colorScheme.errorContainer
+                          .withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -115,7 +116,8 @@ class _RetakeCoursesContentState extends State<RetakeCoursesContent> {
                     Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+                        color: theme.colorScheme.surfaceContainerHighest
+                            .withValues(alpha: 0.3),
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -154,21 +156,14 @@ class _RetakeCoursesContentState extends State<RetakeCoursesContent> {
 
           return Column(
             children: [
-              // Enhanced search field with Material 3 design
               SearchBar(
                 controller: _searchController,
                 hintText: 'Search courses...',
-                leading: Icon(
-                  Icons.search_rounded,
-                  color: theme.colorScheme.onSurfaceVariant,
-                ),
+                leading: const Icon(Icons.search_rounded),
                 trailing: _searchQuery.isNotEmpty
                     ? [
                         IconButton(
-                          icon: Icon(
-                            Icons.clear_rounded,
-                            color: theme.colorScheme.onSurfaceVariant,
-                          ),
+                          icon: const Icon(Icons.clear_rounded),
                           onPressed: () {
                             _searchController.clear();
                             setState(() => _searchQuery = '');
@@ -177,24 +172,10 @@ class _RetakeCoursesContentState extends State<RetakeCoursesContent> {
                       ]
                     : null,
                 onChanged: (value) => setState(() => _searchQuery = value),
-                backgroundColor: WidgetStateProperty.all(
-                  theme.colorScheme.surfaceContainerHigh,
-                ),
-                elevation: WidgetStateProperty.all(0),
-                side: WidgetStateProperty.all(
-                  BorderSide(
-                    color: theme.colorScheme.outline.withValues(alpha: 0.2),
-                    width: 1,
-                  ),
-                ),
               ),
-              const SizedBox(height: 16),
-              ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height * 0.5,
-                ),
+              const SizedBox(height: 12),
+              Expanded(
                 child: ListView.separated(
-                  shrinkWrap: true,
                   itemCount: filteredCourses.length,
                   separatorBuilder: (_, __) => const SizedBox(height: 8),
                   itemBuilder: (context, index) {
@@ -209,9 +190,11 @@ class _RetakeCoursesContentState extends State<RetakeCoursesContent> {
                           isSelected: isSelected,
                           onChanged: (selected) {
                             final updated = List<Course>.from(selectedCourses);
-                            selected
-                                ? updated.add(course)
-                                : updated.removeWhere((c) => c.id == course.id);
+                            if (selected) {
+                              updated.add(course);
+                            } else {
+                              updated.removeWhere((c) => c.id == course.id);
+                            }
                             widget.selectedCoursesNotifier.value = updated;
                           },
                         );

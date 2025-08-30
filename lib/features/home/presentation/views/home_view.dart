@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/constants/constants.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
-import 'package:tatbeeqi/core/widgets/custom_app_bar.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/recently_added_section.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/study_progress_section.dart';
 import 'package:tatbeeqi/features/news/presentation/widgets/news_section.dart';
@@ -18,9 +17,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      appBar:   CustomHomeAppBar(title: l10n.homeGreeting),
-      body: CustomScrollView(
+    return CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
           SliverToBoxAdapter(
@@ -84,7 +81,6 @@ class HomeView extends StatelessWidget {
             ),
           ),
         ],
-      ),
     );
   }
 }

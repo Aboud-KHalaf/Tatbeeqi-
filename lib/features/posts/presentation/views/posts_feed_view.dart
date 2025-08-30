@@ -26,9 +26,7 @@ class _PostsFeedViewState extends State<PostsFeedView> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: CustomHomeAppBar(title: l10n.postsFeedTitle),
-      body: SafeArea(
+    return SafeArea(
         child: BlocBuilder<PostsBloc, PostsState>(
           builder: (context, state) {
             if (state is PostsLoading) {
@@ -73,7 +71,6 @@ class _PostsFeedViewState extends State<PostsFeedView> {
             );
           },
         ),
-      ),
-    );
+     );
   }
 }

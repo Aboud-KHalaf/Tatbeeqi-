@@ -14,6 +14,7 @@ class StreaksIconButton extends StatelessWidget {
     final actionIconSize = isSmallScreen ? 20.0 : 22.0;
     return IconButton.filledTonal(
       style: IconButton.styleFrom(
+        backgroundColor: Colors.orange.shade200,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(buttonRadius),
         ),
