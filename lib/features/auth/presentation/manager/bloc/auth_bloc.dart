@@ -55,7 +55,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onSignUp(SignUpEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    emit(AuthLoading(AuthOperation.signUp));
     try {
       final user = await _signUp(
         name: event.name,
@@ -72,7 +72,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onSignIn(SignInEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    emit(AuthLoading(AuthOperation.signIn));
     try {
       final user = await _signIn(email: event.email, password: event.password);
       emit(AuthAuthenticated(user));
@@ -83,7 +83,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onGoogle(
       SignInWithGoogleEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    emit(AuthLoading(AuthOperation.signInWithGoogle));
     try {
       final user = await _google();
       emit(AuthAuthenticated(user));
@@ -94,7 +94,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _onForget(
       ForgetPasswordEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    emit(AuthLoading(AuthOperation.forgetPassword));
     try {
       await _forgetPassword(email: event.email);
       emit(AuthUnauthenticated());
@@ -104,7 +104,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onUpdate(UpdateUserEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    emit(AuthLoading(AuthOperation.updateProfile));
     try {
       final user = await _updateUser(
         name: event.name,
@@ -120,7 +120,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onSignOut(SignOutEvent event, Emitter<AuthState> emit) async {
-    emit(AuthLoading());
+    emit(AuthLoading(AuthOperation.signOut));
     await _signOut();
     emit(AuthUnauthenticated());
   }

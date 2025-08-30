@@ -989,6 +989,12 @@ abstract class AppLocalizations {
   /// **'Save'**
   String get save;
 
+  /// No description provided for @saveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get saveChanges;
+
   /// No description provided for @profileUpdatedSuccessfully.
   ///
   /// In en, this message translates to:
@@ -1012,6 +1018,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to sign out?'**
   String get signOutConfirmation;
+
+  /// No description provided for @studyYearLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Study Year'**
+  String get studyYearLabel;
+
+  /// No description provided for @studyYearHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your study year'**
+  String get studyYearHint;
+
+  /// No description provided for @studyYearValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select your study year'**
+  String get studyYearValidation;
+
+  /// No description provided for @studyYear1.
+  ///
+  /// In en, this message translates to:
+  /// **'First Year'**
+  String get studyYear1;
+
+  /// No description provided for @studyYear2.
+  ///
+  /// In en, this message translates to:
+  /// **'Second Year'**
+  String get studyYear2;
+
+  /// No description provided for @studyYear3.
+  ///
+  /// In en, this message translates to:
+  /// **'Third Year'**
+  String get studyYear3;
+
+  /// No description provided for @studyYear4.
+  ///
+  /// In en, this message translates to:
+  /// **'Fourth Year'**
+  String get studyYear4;
+
+  /// No description provided for @departmentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Department'**
+  String get departmentLabel;
+
+  /// No description provided for @departmentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select your department'**
+  String get departmentHint;
+
+  /// No description provided for @departmentValidation.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select your department'**
+  String get departmentValidation;
+
+  /// No description provided for @departmentCS.
+  ///
+  /// In en, this message translates to:
+  /// **'Computer Science'**
+  String get departmentCS;
+
+  /// No description provided for @departmentIT.
+  ///
+  /// In en, this message translates to:
+  /// **'Information Technology'**
+  String get departmentIT;
 
   /// No description provided for @quickActions.
   ///
@@ -1090,6 +1168,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Manage notification preferences'**
   String get manageNotificationPreferences;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @emailRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Email is required'**
+  String get emailRequired;
+
+  /// No description provided for @newPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password'**
+  String get newPassword;
+
+  /// No description provided for @passwordMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Minimum 6 characters'**
+  String get passwordMinLength;
 
   /// No description provided for @appearance.
   ///

@@ -430,13 +430,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get markdownHorizontalRule => 'فاصل أفقي';
 
   @override
-  String get editProfile => 'Edit Profile';
+  String get editProfile => 'تعديل الملف الشخصي';
 
   @override
-  String get fullName => 'Full Name';
+  String get fullName => 'الاسم الكامل';
 
   @override
-  String get fullNameRequired => 'Full name is required';
+  String get fullNameRequired => 'الاسم الكامل مطلوب';
 
   @override
   String get academicYear => 'Academic Year';
@@ -454,7 +454,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get phoneNumber => 'Phone Number';
 
   @override
-  String get optional => 'Optional';
+  String get optional => 'اختياري';
 
   @override
   String get invalidPhoneNumber => 'Invalid phone number';
@@ -466,7 +466,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get save => 'Save';
 
   @override
-  String get profileUpdatedSuccessfully => 'Profile updated successfully';
+  String get saveChanges => 'حفظ التغييرات';
+
+  @override
+  String get profileUpdatedSuccessfully => 'تم تحديث الملف الشخصي بنجاح';
 
   @override
   String get tapToChangePhoto => 'Tap to change photo';
@@ -476,6 +479,42 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get signOutConfirmation => 'Are you sure you want to sign out?';
+
+  @override
+  String get studyYearLabel => 'السنة الدراسية';
+
+  @override
+  String get studyYearHint => 'اختر سنتك الدراسية';
+
+  @override
+  String get studyYearValidation => 'يرجى اختيار سنتك الدراسية';
+
+  @override
+  String get studyYear1 => 'السنة الأولى';
+
+  @override
+  String get studyYear2 => 'السنة الثانية';
+
+  @override
+  String get studyYear3 => 'السنة الثالثة';
+
+  @override
+  String get studyYear4 => 'السنة الرابعة';
+
+  @override
+  String get departmentLabel => 'القسم';
+
+  @override
+  String get departmentHint => 'اختر قسمك';
+
+  @override
+  String get departmentValidation => 'يرجى اختيار قسمك';
+
+  @override
+  String get departmentCS => 'علوم الحاسوب';
+
+  @override
+  String get departmentIT => 'تقنية المعلومات';
 
   @override
   String get quickActions => 'Quick Actions';
@@ -515,6 +554,18 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get manageNotificationPreferences => 'Manage notification preferences';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get emailRequired => 'البريد الإلكتروني مطلوب';
+
+  @override
+  String get newPassword => 'كلمة المرور الجديدة';
+
+  @override
+  String get passwordMinLength => 'الحد الأدنى 6 أحرف';
 
   @override
   String get appearance => 'Appearance';

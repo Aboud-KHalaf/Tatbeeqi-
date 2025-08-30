@@ -8,6 +8,7 @@ import 'package:tatbeeqi/core/di/service_locator.dart' as di;
 import 'package:tatbeeqi/core/routing/app_router.dart';
 import 'package:tatbeeqi/features/ai_assistant/presentation/cubit/ai_assistant_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_cubit.dart';
+import 'package:tatbeeqi/features/courses/presentation/manager/recent_courses_cubit/recent_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cubit/retake_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/manager/lectures/lectures_cubit.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/manager/lesson_completion/lesson_completion_cubit.dart';
@@ -25,10 +26,11 @@ import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
 import 'package:tatbeeqi/features/quiz/presentation/bloc/quiz_bloc.dart';
- import 'package:tatbeeqi/features/theme/presentation/manager/theme_cubit/theme_cubit.dart';
+import 'package:tatbeeqi/features/theme/presentation/manager/theme_cubit/theme_cubit.dart';
 import 'package:tatbeeqi/features/todo/presentation/manager/todo_cubit.dart';
 import 'package:tatbeeqi/features/auth/presentation/manager/bloc/auth_bloc.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
+import 'package:tatbeeqi/core/observers/recent_courses_observer.dart';
 import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -47,6 +49,8 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   await di.init();
+  // Set a focused Bloc observer for RecentCoursesCubit
+  Bloc.observer = RecentCoursesObserver();
   runApp(const MyApp());
 }
 
@@ -117,7 +121,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.sl<LessonCompletionCubit>(),
         ),
-   
+        BlocProvider(
+          create: (_) => di.sl<RecentCoursesCubit>()..load("123"),
+        ),
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(
         builder: (context, localeState) {

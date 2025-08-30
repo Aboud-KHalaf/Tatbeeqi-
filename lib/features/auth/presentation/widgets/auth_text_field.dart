@@ -4,33 +4,37 @@ import 'package:flutter/services.dart';
 class AuthTextField extends StatefulWidget {
   final TextEditingController controller;
   final String label;
-  final String? hintText;
-  final TextInputType keyboardType;
-  final bool obscureText;
-  final String? Function(String?)? validator;
-  final Widget? prefixIcon;
+  final String? hint;
+  final IconData? prefixIcon;
   final Widget? suffixIcon;
+  final bool obscureText;
+  final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
+  final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
+  final void Function(String)? onFieldSubmitted;
   final bool enabled;
   final int? maxLines;
-  final TextInputAction? textInputAction;
-  final void Function(String)? onChanged;
-  final void Function()? onTap;
+  final int? minLines;
+  final EdgeInsetsGeometry? contentPadding;
 
   const AuthTextField({
     super.key,
     required this.controller,
     required this.label,
-    this.hintText,
-    this.keyboardType = TextInputType.text,
-    this.obscureText = false,
-    this.validator,
+    this.hint,
     this.prefixIcon,
     this.suffixIcon,
+    this.obscureText = false,
+    this.keyboardType,
+    this.textInputAction,
+    this.validator,
+    this.onChanged,
+    this.onFieldSubmitted,
     this.enabled = true,
     this.maxLines = 1,
-    this.textInputAction,
-    this.onChanged,
-    this.onTap,
+    this.minLines,
+    this.contentPadding,
   });
 
   @override
@@ -106,7 +110,7 @@ class _AuthTextFieldState extends State<AuthTextField>
               maxLines: widget.maxLines,
               textInputAction: widget.textInputAction,
               onChanged: widget.onChanged,
-              onTap: widget.onTap,
+              onFieldSubmitted: widget.onFieldSubmitted,
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: widget.enabled
                     ? colorScheme.onSurface
@@ -114,11 +118,16 @@ class _AuthTextFieldState extends State<AuthTextField>
               ),
               decoration: InputDecoration(
                 labelText: widget.label,
-                hintText: widget.hintText,
+                hintText: widget.hint,
                 prefixIcon: widget.prefixIcon != null
                     ? AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
-                        child: widget.prefixIcon,
+                        child: Icon(
+                          widget.prefixIcon,
+                          color: _isFocused
+                              ? colorScheme.primary
+                              : colorScheme.onSurfaceVariant,
+                        ),
                       )
                     : null,
                 suffixIcon: widget.obscureText
@@ -141,7 +150,8 @@ class _AuthTextFieldState extends State<AuthTextField>
                 filled: true,
                 fillColor: _isFocused
                     ? colorScheme.primaryContainer.withValues(alpha: 0.1)
-                    : colorScheme.surfaceVariant.withValues(alpha: 0.3),
+                    : colorScheme.surfaceContainerHighest
+                        .withValues(alpha: 0.3),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(

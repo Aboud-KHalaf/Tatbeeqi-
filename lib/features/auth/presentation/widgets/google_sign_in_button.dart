@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:tatbeeqi/core/assets/svgs.dart';
 
 class GoogleSignInButton extends StatefulWidget {
   final VoidCallback onPressed;
@@ -133,9 +135,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton>
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(2),
                             ),
-                            child: CustomPaint(
-                              painter: _GoogleLogoPainter(),
-                            ),
+                            child: SvgPicture.asset(Svgs.google),
                           ),
                           const SizedBox(width: 12),
                           Text(
@@ -157,58 +157,4 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton>
       },
     );
   }
-}
-
-// Custom painter for Google logo
-class _GoogleLogoPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..style = PaintingStyle.fill;
-
-    // Google "G" simplified representation
-    // Blue section
-    paint.color = const Color(0xFF4285F4);
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(0, 0, size.width * 0.5, size.height * 0.5),
-        const Radius.circular(2),
-      ),
-      paint,
-    );
-
-    // Red section
-    paint.color = const Color(0xFFEA4335);
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(size.width * 0.5, 0, size.width * 0.5, size.height * 0.5),
-        const Radius.circular(2),
-      ),
-      paint,
-    );
-
-    // Yellow section
-    paint.color = const Color(0xFFFBBC05);
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(
-            0, size.height * 0.5, size.width * 0.5, size.height * 0.5),
-        const Radius.circular(2),
-      ),
-      paint,
-    );
-
-    // Green section
-    paint.color = const Color(0xFF34A853);
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromLTWH(size.width * 0.5, size.height * 0.5, size.width * 0.5,
-            size.height * 0.5),
-        const Radius.circular(2),
-      ),
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

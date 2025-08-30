@@ -466,6 +466,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get save => 'Save';
 
   @override
+  String get saveChanges => 'Save Changes';
+
+  @override
   String get profileUpdatedSuccessfully => 'Profile updated successfully';
 
   @override
@@ -476,6 +479,42 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get signOutConfirmation => 'Are you sure you want to sign out?';
+
+  @override
+  String get studyYearLabel => 'Study Year';
+
+  @override
+  String get studyYearHint => 'Select your study year';
+
+  @override
+  String get studyYearValidation => 'Please select your study year';
+
+  @override
+  String get studyYear1 => 'First Year';
+
+  @override
+  String get studyYear2 => 'Second Year';
+
+  @override
+  String get studyYear3 => 'Third Year';
+
+  @override
+  String get studyYear4 => 'Fourth Year';
+
+  @override
+  String get departmentLabel => 'Department';
+
+  @override
+  String get departmentHint => 'Select your department';
+
+  @override
+  String get departmentValidation => 'Please select your department';
+
+  @override
+  String get departmentCS => 'Computer Science';
+
+  @override
+  String get departmentIT => 'Information Technology';
 
   @override
   String get quickActions => 'Quick Actions';
@@ -515,6 +554,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get manageNotificationPreferences => 'Manage notification preferences';
+
+  @override
+  String get email => 'Email';
+
+  @override
+  String get emailRequired => 'Email is required';
+
+  @override
+  String get newPassword => 'New Password';
+
+  @override
+  String get passwordMinLength => 'Minimum 6 characters';
 
   @override
   String get appearance => 'Appearance';

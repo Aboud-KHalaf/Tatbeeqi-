@@ -26,54 +26,56 @@ class AuthFormWrapper extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colorScheme.surface,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        leading: showBackButton
-            ? IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios_new_rounded,
-                  color: colorScheme.onSurface,
+      body: Stack(
+        
+        children: [
+              Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    colorScheme.primaryContainer.withValues(alpha: 0.1),
+                    colorScheme.surface,
+                    colorScheme.secondaryContainer.withValues(alpha: 0.05),
+                  ],
                 ),
-                onPressed: () => Navigator.of(context).pop(),
-              )
-            : null,
-        actions: actions,
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: padding ??
-              EdgeInsets.symmetric(
-                horizontal: 24,
-                vertical: mediaQuery.size.height * 0.02,
               ),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: mediaQuery.size.height -
-                  mediaQuery.padding.top -
-                  mediaQuery.padding.bottom -
-                  kToolbarHeight,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Header Section
-                _AuthHeader(
-                  title: title,
-                  subtitle: subtitle,
+          SafeArea(
+            child: SingleChildScrollView(
+              padding: padding ??
+                  EdgeInsets.symmetric(
+                    horizontal: 24,
+                  vertical: mediaQuery.size.height * 0.02,
                 ),
-
-                SizedBox(height: mediaQuery.size.height * 0.04),
-
-                // Form Content
-                child,
-
-                SizedBox(height: mediaQuery.size.height * 0.02),
-              ],
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: mediaQuery.size.height -
+                    mediaQuery.padding.top -
+                    mediaQuery.padding.bottom -
+                    kToolbarHeight,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header Section
+                  _AuthHeader(
+                    title: title,
+                    subtitle: subtitle,
+                  ),
+        
+                  SizedBox(height: mediaQuery.size.height * 0.04),
+        
+                  // Form Content
+                  child,
+        
+                  SizedBox(height: mediaQuery.size.height * 0.02),
+                ],
+              ),
             ),
-          ),
-        ),
+          ),),
+        ],
       ),
     );
   }

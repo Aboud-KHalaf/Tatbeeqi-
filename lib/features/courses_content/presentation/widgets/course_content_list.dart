@@ -25,7 +25,7 @@ class CourseContentList extends StatelessWidget {
           return CourseContentCard(
             lessonItem: item,
             onTap: () {
-           //   context.read<RecentCoursesCubit>().trackVisit(courseId);
+              context.read<RecentCoursesCubit>().track("123", courseId);
               context.push(
                 AppRoutes.lessonContentPath,
                 extra: LessonContentArgs(
