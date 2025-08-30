@@ -56,6 +56,13 @@ const String cachedPostsColIsArticle = 'is_article';
 const String cachedPostsColIsLiked = 'is_liked';
 const String cachedPostsColTopics = 'topics';
 
+// Recent Courses Table
+const String recentCoursesTableName = 'recent_courses';
+const String recentCoursesColId = 'id';
+const String recentCoursesColUserId = 'user_id';
+const String recentCoursesColCourseId = 'course_id';
+const String recentCoursesColLastVisit = 'last_visit';
+
 class DatabaseService {
   Database? _database;
   bool _isInitializing = false; // Prevent race conditions during init
@@ -90,7 +97,7 @@ class DatabaseService {
     final path = join(dbPath, _dbName);
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -103,6 +110,7 @@ class DatabaseService {
     await _createCoursesTable(db);
     await _createNotesTable(db);
     await _createCachedPostsTable(db);
+    await _createRecentCoursesTable(db);
     AppLogger.info('All tables created successfully.');
   }
 
@@ -181,8 +189,32 @@ class DatabaseService {
     AppLogger.info('Table $cachedPostsTableName created successfully.');
   }
 
+  Future<void> _createRecentCoursesTable(Database db) async {
+    AppLogger.info('Creating database table: $recentCoursesTableName');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS $recentCoursesTableName (
+        $recentCoursesColId INTEGER PRIMARY KEY AUTOINCREMENT,
+        $recentCoursesColUserId TEXT NOT NULL,
+        $recentCoursesColCourseId INTEGER NOT NULL,
+        $recentCoursesColLastVisit INTEGER NOT NULL,
+        UNIQUE($recentCoursesColUserId, $recentCoursesColCourseId) ON CONFLICT REPLACE,
+        FOREIGN KEY($recentCoursesColCourseId) REFERENCES $coursesTableName($coursesColId)
+      )
+    ''');
+    await db.execute('''
+      CREATE INDEX IF NOT EXISTS idx_recent_courses_user_last
+      ON $recentCoursesTableName($recentCoursesColUserId, $recentCoursesColLastVisit DESC)
+    ''');
+    AppLogger.info('Table $recentCoursesTableName created successfully.');
+  }
+
   // Add migration logic for schema changes
-  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {}
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    AppLogger.info('Upgrading database from version $oldVersion to $newVersion');
+    if (oldVersion < 2) {
+      await _createRecentCoursesTable(db);
+    }
+  }
 
   // Method to close the database connection
   Future<void> close() async {

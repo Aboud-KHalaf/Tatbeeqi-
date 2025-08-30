@@ -7,6 +7,7 @@ abstract class CourseLocalDataSource {
   Future<List<CourseModel>> getCoursesByStudyYearAndDepartmentId(
       {required int studyYear, required int departmentId});
   Future<List<CourseModel>> getCoursesBysemester({required int semester});
+  Future<List<CourseModel>> getCoursesByIds({required List<int> ids});
   Future<void> cacheCourses(
       {required List<CourseModel> courses,
       required int studyYear,
@@ -158,6 +159,25 @@ class CourseLocalDataSourceImpl implements CourseLocalDataSource {
       );
     } catch (e) {
       throw CacheException('Failed to delete retake course: ${e.toString()}');
+    }
+  }
+
+  @override
+  Future<List<CourseModel>> getCoursesByIds({required List<int> ids}) async {
+    if (ids.isEmpty) return [];
+    try {
+      final db = await databaseService.database;
+      final placeholders = List.filled(ids.length, '?').join(',');
+      final List<Map<String, dynamic>> maps = await db.rawQuery(
+        'SELECT * FROM $coursesTableName WHERE $coursesColId IN ($placeholders)',
+        ids,
+      );
+      if (maps.isNotEmpty) {
+        return maps.map((json) => CourseModel.fromJson(json)).toList();
+      }
+      return [];
+    } catch (e) {
+      throw CacheException('Failed to get courses by ids: ${e.toString()}');
     }
   }
 }

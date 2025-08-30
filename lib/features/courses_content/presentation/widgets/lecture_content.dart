@@ -73,7 +73,7 @@ class LectureContent extends StatelessWidget {
                         extra: LessonContentArgs(
                           lesson: lessons,
                           index: lessons.indexOf(upNextItem),
-                          courseId: course.id.toString(),
+                          courseId: course.id,
                         ),
                       );
                     },
@@ -82,7 +82,7 @@ class LectureContent extends StatelessWidget {
               ],
             ),
           ),
-          CourseContentList(lessonsList: lessons, courseId: course.id.toString()),
+          CourseContentList(lessonsList: lessons, courseId: course.id),
           const SliverToBoxAdapter(child: SizedBox(height: 32)),
         ],
       ),

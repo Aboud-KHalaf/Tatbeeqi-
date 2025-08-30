@@ -49,6 +49,6 @@ class LectureLessonsArgs {
 class LessonContentArgs {
   final List<Lesson> lesson;
   final int index;
-  final String courseId;
+  final int courseId;
   LessonContentArgs({required this.lesson, required this.index, required this.courseId});
 }

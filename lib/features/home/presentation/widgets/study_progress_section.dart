@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tatbeeqi/core/utils/app_data.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tatbeeqi/core/di/service_locator.dart';
+import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
+import 'package:tatbeeqi/features/courses/presentation/manager/recent_courses_cubit/recent_courses_cubit.dart';
+import 'package:tatbeeqi/features/courses/presentation/manager/recent_courses_cubit/recent_courses_state.dart';
 
 class StudyProgressSection extends StatefulWidget {
   const StudyProgressSection({super.key});
@@ -11,36 +16,47 @@ class StudyProgressSection extends StatefulWidget {
 
 class _StudyProgressSectionState extends State<StudyProgressSection>
     with TickerProviderStateMixin {
-  late List<AnimationController> _controllers;
-  late List<Animation<double>> _fadeAnimations;
-  late List<Animation<Offset>> _slideAnimations;
+  List<AnimationController> _controllers = [];
+  List<Animation<double>> _fadeAnimations = [];
+  List<Animation<Offset>> _slideAnimations = [];
+  List<Course> _courses = const [];
 
   @override
   void initState() {
     super.initState();
 
+    _setupAnimations(itemCount: _courses.length);
+
+    _startStaggeredAnimations();
+  }
+
+  void _setupAnimations({required int itemCount}) {
+    // dispose previous controllers if any
+    if (_controllers.isNotEmpty) {
+      for (final c in _controllers) {
+        try {
+          c.dispose();
+        } catch (_) {}
+      }
+    }
     _controllers = List.generate(
-      courses.length,
+      itemCount,
       (index) => AnimationController(
         duration: Duration(milliseconds: 400 + (index * 100)),
         vsync: this,
       ),
     );
-
-    _fadeAnimations = _controllers.map((controller) {
-      return Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(parent: controller, curve: Curves.easeOut),
-      );
-    }).toList();
-
-    _slideAnimations = _controllers.map((controller) {
-      return Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero)
-          .animate(
-        CurvedAnimation(parent: controller, curve: Curves.easeOutCubic),
-      );
-    }).toList();
-
-    _startStaggeredAnimations();
+    _fadeAnimations = _controllers
+        .map((controller) => Tween<double>(begin: 0.0, end: 1.0).animate(
+              CurvedAnimation(parent: controller, curve: Curves.easeOut),
+            ))
+        .toList();
+    _slideAnimations = _controllers
+        .map((controller) =>
+            Tween<Offset>(begin: const Offset(0, 0.3), end: Offset.zero).animate(
+              CurvedAnimation(parent: controller, curve: Curves.easeOutCubic),
+            ))
+        .toList();
   }
 
   void _startStaggeredAnimations() {
@@ -63,32 +79,68 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 145,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        itemCount: courses.length,
-        itemBuilder: (context, index) {
-          final course = courses[index];
-
-          if (index >= _fadeAnimations.length) {
-            return _buildCourseCard(context, course, index, null, null);
+    final userId = Supabase.instance.client.auth.currentUser?.id;
+    return BlocProvider(
+      create: (_) {
+        final cubit = sl<RecentCoursesCubit>();
+        if (userId != null) cubit.load(userId);
+        return cubit;
+      },
+      child: BlocConsumer<RecentCoursesCubit, RecentCoursesState>(
+        listener: (context, state) {
+          if (state is RecentCoursesLoaded) {
+            setState(() {
+              _courses = state.courses;
+              _setupAnimations(itemCount: _courses.length);
+              _startStaggeredAnimations();
+            });
           }
-
-          return AnimatedBuilder(
-            animation: _controllers[index],
-            builder: (context, child) {
-              return FadeTransition(
-                opacity: _fadeAnimations[index],
-                child: SlideTransition(
-                  position: _slideAnimations[index],
-                  child: child,
-                ),
-              );
-            },
-            child: _buildCourseCard(context, course, index,
-                _fadeAnimations[index], _slideAnimations[index]),
+        },
+        builder: (context, state) {
+          if (state is RecentCoursesLoading) {
+            return _buildShimmer();
+          }
+          if (state is RecentCoursesError) {
+            return _buildError(state.message);
+          }
+          if (state is RecentCoursesEmpty || userId == null) {
+            return _buildEmpty();
+          }
+          // Loaded
+          return SizedBox(
+            height: 145,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              itemCount: _courses.length,
+              itemBuilder: (context, index) {
+                final course = _courses[index];
+                if (index >= _fadeAnimations.length) {
+                  return _buildCourseCard(context, course, index, null, null,
+                      userId: userId);
+                }
+                return AnimatedBuilder(
+                  animation: _controllers[index],
+                  builder: (context, child) {
+                    return FadeTransition(
+                      opacity: _fadeAnimations[index],
+                      child: SlideTransition(
+                        position: _slideAnimations[index],
+                        child: child,
+                      ),
+                    );
+                  },
+                  child: _buildCourseCard(
+                    context,
+                    course,
+                    index,
+                    _fadeAnimations[index],
+                    _slideAnimations[index],
+                    userId: userId,
+                  ),
+                );
+              },
+            ),
           );
         },
       ),
@@ -97,10 +149,11 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
 
   Widget _buildCourseCard(
     BuildContext context,
-    course,
+    Course course,
     int index,
     Animation<double>? fadeAnimation,
     Animation<Offset>? slideAnimation,
+    {required String userId}
   ) {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
@@ -127,6 +180,9 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
           child: GestureDetector(
             onTap: () {
               HapticFeedback.lightImpact();
+              context
+                  .read<RecentCoursesCubit>()
+                  .track(userId, course.id);
               // TODO: Navigate to course details
             },
             child: TweenAnimationBuilder<double>(
@@ -174,7 +230,7 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
 
                           // Course title with better typography
                           Text(
-                            course.title,
+                            course.courseName,
                             style: textTheme.bodySmall?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: colorScheme.onSurface,
@@ -204,7 +260,7 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
                                     ),
                                   ),
                                   Text(
-                                    '60%', // Progress placeholder
+                                    '—', // Placeholder until progress available
                                     style: textTheme.labelSmall?.copyWith(
                                       color: colorScheme.primary,
                                       fontWeight: FontWeight.bold,
@@ -228,7 +284,7 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
                                   builder: (context, progressValue, child) {
                                     return FractionallySizedBox(
                                       alignment: Alignment.centerLeft,
-                                      widthFactor: progressValue,
+                                      widthFactor: 0.0, // no progress yet
                                       child: Container(
                                         decoration: BoxDecoration(
                                           color: colorScheme.primary,
@@ -257,6 +313,74 @@ class _StudyProgressSectionState extends State<StudyProgressSection>
               },
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildShimmer() {
+    final colorScheme = Theme.of(context).colorScheme;
+    return SizedBox(
+      height: 145,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        itemCount: 5,
+        separatorBuilder: (_, __) => const SizedBox(width: 16),
+        itemBuilder: (context, index) => Container(
+          width: 110,
+          decoration: BoxDecoration(
+            color: colorScheme.surfaceContainerHigh,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: colorScheme.outlineVariant),
+          ),
+          padding: const EdgeInsets.all(12),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmpty() {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    return Container(
+      height: 145,
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerHigh,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: colorScheme.outlineVariant),
+      ),
+      child: Center(
+        child: Text(
+          'ابدأ الدراسة اليوم — لا توجد مواد حديثة',
+          style: textTheme.bodyMedium?.copyWith(
+            color: colorScheme.onSurfaceVariant,
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildError(String message) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    return Container(
+      height: 145,
+      margin: const EdgeInsets.symmetric(horizontal: 12),
+      decoration: BoxDecoration(
+        color: colorScheme.errorContainer,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: colorScheme.error.withOpacity(0.4)),
+      ),
+      child: Center(
+        child: Text(
+          'حدث خطأ: $message',
+          style: textTheme.bodyMedium?.copyWith(
+            color: colorScheme.onErrorContainer,
+          ),
+          textAlign: TextAlign.center,
         ),
       ),
     );

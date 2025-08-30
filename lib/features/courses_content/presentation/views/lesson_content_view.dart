@@ -18,7 +18,7 @@ import 'package:tatbeeqi/features/courses_content/presentation/widgets/lesson_ac
 class LessonContentView extends StatefulWidget {
   static const String routePath = '/lesson-content';
   final List<Lesson> lesson;
-  final String courseId;
+  final int courseId;
   final int index;
   const LessonContentView(
       {super.key,
@@ -198,7 +198,7 @@ class _LessonContentViewState extends State<LessonContentView>
     showDialog(
       context: context,
       builder: (context) => AddEditNoteDialog(
-        courseId: widget.courseId,
+        courseId: widget.courseId.toString(),
         onSave: (note) {
           context.read<NotesBloc>().addNote(note);
           SnackBarHelper.showSuccess(
@@ -222,7 +222,7 @@ class _LessonContentViewState extends State<LessonContentView>
   lessonContext: widget.lesson[_currentIndex].content, // Only for reading type
   lessonTitle: widget.lesson[_currentIndex].title,
   lessonType: widget.lesson[_currentIndex].lessonType.toString(), // or "voice", "video", "pdf", "quiz"
-  courseId: widget.courseId,
+  courseId: widget.courseId.toString(),
   lessonId: widget.lesson[_currentIndex].id,
 )
       ),

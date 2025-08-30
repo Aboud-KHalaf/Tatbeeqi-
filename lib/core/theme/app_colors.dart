@@ -9,20 +9,36 @@ class AppColors {
   static const Color defaultSeedColor = Color(0xFF00BCD4); // Cyan 500
 
   /// Predefined seed colors for theme customization
-  static const List<Color> seedColors = [
-    Color(0xFF00BCD4), // Cyan - Default
-    Color(0xFF2196F3), // Blue
-    Color(0xFF4CAF50), // Green
-    Color(0xFFFF9800), // Orange
-    Color(0xFF9C27B0), // Purple
-    Color(0xFFE91E63), // Pink
-    Color(0xFF795548), // Brown
-    Color(0xFF607D8B), // Blue Grey
-    Color(0xFFF44336), // Red
-    Color(0xFF3F51B5), // Indigo
-    Color(0xFF009688), // Teal
-    Color(0xFFFF5722), // Deep Orange
-  ];
+static const List<Color> seedColors = [
+  // الأصلية
+  Color(0xFF00BCD4), // Cyan - Default
+  Color(0xFF2196F3), // Blue
+  Color(0xFF4CAF50), // Green
+  Color(0xFFFF9800), // Orange
+  Color(0xFF9C27B0), // Purple
+  Color(0xFFE91E63), // Pink
+  Color(0xFF795548), // Brown
+  Color(0xFF607D8B), // Blue Grey
+  Color(0xFFF44336), // Red
+  Color(0xFF3F51B5), // Indigo
+  Color(0xFF009688), // Teal
+  Color(0xFFFF5722), // Deep Orange
+
+  // ألوان جديدة (لزيادة التنوع)
+  Color(0xFF8BC34A), // Light Green
+  Color(0xFFFFEB3B), // Yellow
+  Color(0xFF673AB7), // Deep Purple
+  Color(0xFFCDDC39), // Lime
+  Color(0xFFFFCDD2), // Light Red
+  Color(0xFF00ACC1), // Dark Cyan
+  Color(0xFFFFA000), // Amber Dark
+  Color(0xFF7E57C2), // Medium Purple
+  Color(0xFF607D8B), // Greyish Blue
+  Color(0xFF26A69A), // Medium Teal
+  Color(0xFFFF7043), // Coral
+  Color(0xFFB0BEC5), // Light Blue Grey
+];
+
 
   /// Generates a Material Design 3 light color scheme from a seed color
   static ColorScheme lightColorSchemeFromSeed(Color seedColor) {

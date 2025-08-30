@@ -11,6 +11,14 @@ import 'package:tatbeeqi/features/courses/domain/usecases/get_courses_by_study_y
 import 'package:tatbeeqi/features/courses/domain/usecases/save_selected_retake_courses_usecase.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cubit/retake_courses_cubit.dart';
+import 'package:tatbeeqi/features/courses/data/datasources/recent_courses_datasource.dart';
+import 'package:tatbeeqi/features/courses/data/repositories/recent_courses_repository_impl.dart';
+import 'package:tatbeeqi/features/courses/domain/repositories/recent_courses_repository.dart';
+import 'package:tatbeeqi/features/courses/domain/usecases/get_recent_courses_usecase.dart';
+import 'package:tatbeeqi/features/courses/domain/usecases/track_course_visit_usecase.dart';
+import 'package:tatbeeqi/features/courses/domain/usecases/clear_recent_courses_usecase.dart';
+import 'package:tatbeeqi/features/courses/domain/usecases/remove_recent_course_usecase.dart';
+import 'package:tatbeeqi/features/courses/presentation/manager/recent_courses_cubit/recent_courses_cubit.dart';
 
 void initCoursesDependencies(GetIt sl) {
   // --- Courses Feature ---
@@ -45,4 +53,26 @@ void initCoursesDependencies(GetIt sl) {
       () => CourseLocalDataSourceImpl(
             databaseService: sl<DatabaseService>(),
           ));
+
+  // Recent Courses: Data Source
+  sl.registerLazySingleton<RecentCoursesDataSource>(
+      () => RecentCoursesDataSourceImpl(databaseService: sl<DatabaseService>()));
+
+  // Recent Courses: Repository
+  sl.registerLazySingleton<RecentCoursesRepository>(() =>
+      RecentCoursesRepositoryImpl(dataSource: sl(), courseLocal: sl()));
+
+  // Recent Courses: Use Cases
+  sl.registerLazySingleton(() => GetRecentCoursesUseCase(sl()));
+  sl.registerLazySingleton(() => TrackCourseVisitUseCase(sl()));
+  sl.registerLazySingleton(() => ClearRecentCoursesUseCase(sl()));
+  sl.registerLazySingleton(() => RemoveRecentCourseUseCase(sl()));
+
+  // Recent Courses: Cubit
+  sl.registerFactory(() => RecentCoursesCubit(
+        getRecentCoursesUseCase: sl(),
+        trackCourseVisitUseCase: sl(),
+        removeRecentCourseUseCase: sl(),
+        clearRecentCoursesUseCase: sl(),
+      ));
 }
