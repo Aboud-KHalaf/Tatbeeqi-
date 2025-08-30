@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tatbeeqi/core/widgets/custom_app_bar.dart';
-import 'package:tatbeeqi/l10n/app_localizations.dart';
+ import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_state.dart';

@@ -60,8 +60,7 @@ class _PostsListWidgetState extends State<PostsListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    return RefreshIndicator(
+     return RefreshIndicator(
       onRefresh: () async => context.read<PostsBloc>().add(RefreshPostsEvent()),
       child: CustomScrollView(
         controller: _scrollController,
