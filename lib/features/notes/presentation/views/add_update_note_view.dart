@@ -159,8 +159,10 @@ class _AddOrUpdateNoteViewState extends State<AddOrUpdateNoteView> {
                       )
                     else
                       TextField(
+                        
                         controller: _contentController,
                         decoration: const InputDecoration(
+                          fillColor: Colors.transparent,
                           hintText: 'Note content...',
                           border: InputBorder.none,
                         ),

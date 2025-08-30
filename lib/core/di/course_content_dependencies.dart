@@ -17,6 +17,7 @@ void initCourseContentDependencies(GetIt sl) {
   sl.registerFactory(() => LecturesCubit(
         fetchLecturesByCourseIdUsecase: sl(),
       ));
+      
 
   sl.registerFactory(() => LessonsCubit(fetchLessonsByLectureIdUsecase: sl()));
   sl.registerFactory(

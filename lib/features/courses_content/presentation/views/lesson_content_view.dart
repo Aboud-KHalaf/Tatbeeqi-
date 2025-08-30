@@ -89,6 +89,7 @@ class _LessonContentViewState extends State<LessonContentView>
             SlideTransition(
               position: _slideAnimation,
               child: LessonActionBar(
+                lesson : widget.lesson[_currentIndex],
                 canGoPrevious: _currentIndex > 0,
                 canGoNext: _currentIndex < widget.lesson.length - 1,
                 onPrevious: _goToPreviousLesson,
