@@ -101,11 +101,15 @@ class _SignInFormState extends State<SignInForm>
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   validator: (value) {
-                    if (value == null || value.isEmpty)
+                    if (value == null || value.isEmpty) {
                       return 'يرجى إدخال البريد الإلكتروني';
-                    if (!RegExp(r'^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')
-                        .hasMatch(value))
+                    }
+                    // Safer email pattern (avoids invalid range in character class)
+                    if (!RegExp(
+                            r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
+                        .hasMatch(value)) {
                       return 'يرجى إدخال بريد إلكتروني صحيح';
+                    }
                     return null;
                   },
                 ),
