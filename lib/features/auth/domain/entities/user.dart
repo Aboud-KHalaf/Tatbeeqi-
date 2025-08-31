@@ -1,8 +1,18 @@
+import 'package:hive/hive.dart';
+
+part 'user.g.dart';
+
+@HiveType(typeId: 0)
 class User {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   final int studyYear; // 1..4  (maps to years.id)
+  @HiveField(3)
   final int department; // 1 or 2 (maps to departments.department_id)
+  @HiveField(4)
   final String email;
 
   const User({

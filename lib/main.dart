@@ -3,7 +3,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tatbeeqi/features/auth/domain/entities/user.dart';
 import 'package:tatbeeqi/core/di/service_locator.dart' as di;
 import 'package:tatbeeqi/core/routing/app_router.dart';
 import 'package:tatbeeqi/features/ai_assistant/presentation/cubit/ai_assistant_cubit.dart';
@@ -49,6 +51,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserAdapter());
 
   await di.init();
   // Initialize multiple Bloc observers (RecentCourses + Auth)

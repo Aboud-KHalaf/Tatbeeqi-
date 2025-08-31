@@ -33,7 +33,8 @@ abstract class RemoteAuthDataSource {
 
 class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
   final SupabaseClient _supabase;
-  RemoteAuthDataSourceImpl({required SupabaseClient supabaseClient}) : _supabase = supabaseClient;
+  RemoteAuthDataSourceImpl({required SupabaseClient supabaseClient})
+      : _supabase = supabaseClient;
 
   @override
   Stream<UserModel?> authStateChanges() {
@@ -57,46 +58,45 @@ class RemoteAuthDataSourceImpl implements RemoteAuthDataSource {
     await _supabase.auth.resetPasswordForEmail(email);
   }
 
-@override
-Future<UserModel> signIn({
-  required String email,
-  required String password,
-}) async {
-  try {
-    final response = await _supabase.auth.signInWithPassword(
-      email: email,
-      password: password,
-    );
+  @override
+  Future<UserModel> signIn({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final response = await _supabase.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
 
-    final user = response.user;
-    if (user == null) {
-      throw const AuthException('Unable to login: No user returned.');
+      final user = response.user;
+      if (user == null) {
+        throw const AuthException('Unable to login: No user returned.');
+      }
+
+      final metadata = user.userMetadata ?? {};
+
+      return UserModel(
+        id: user.id,
+        name: metadata['name'] as String? ?? 'noName',
+        studyYear: (metadata['study_year_id'] as int?) ?? 1,
+        department: (metadata['department_id'] as int?) ?? 1,
+        email: user.email ?? '',
+      );
+    } on AuthException catch (e) {
+      AppLogger.error("in remote auth datasource :${e.message}");
+      rethrow; // Pass through Supabase auth exceptions
+    } catch (e) {
+      AppLogger.error("in remote auth datasource :${e.toString()}");
+      throw AuthException('Login failed: ${e.toString()}');
     }
-
-    final metadata = user.userMetadata ?? {};
-
-    return UserModel(
-      id: user.id,
-      name: metadata['name'] as String? ?? '',
-      studyYear: (metadata['study_year_id'] as int?) ?? 1,
-      department: (metadata['department_id'] as int?) ?? 1,
-      email: user.email ?? '',
-    );
-  } on AuthException catch (e) {
-    AppLogger.error("in remote auth datasource :${e.message}");
-    rethrow; // Pass through Supabase auth exceptions
-  } catch (e) {
-    AppLogger.error("in remote auth datasource :${e.toString()}");
-    throw AuthException('Login failed: ${e.toString()}');
   }
-}
-
 
   @override
   Future<UserModel> signInWithGoogle() async {
     await _supabase.auth.signInWithOAuth(OAuthProvider.google);
     final user = _supabase.auth.currentUser;
-    if (user == null) throw AuthException('Google sign-in failed');
+    if (user == null) throw const AuthException('Google sign-in failed');
     final metadata = user.userMetadata;
     return UserModel(
       id: user.id,
@@ -112,50 +112,50 @@ Future<UserModel> signIn({
     await _supabase.auth.signOut();
   }
 
-@override
-Future<UserModel> signUp({
-  required String name,
-  required int studyYear,
-  required int department,
-  required String email,
-  required String password,
-}) async {
-  try {
-    final response = await _supabase.auth.signUp(
-      email: email,
-      password: password,
-      data: {
-        'name': name,
-        'study_year_id': studyYear,
-        'department_id': department,
-      },
-    );
+  @override
+  Future<UserModel> signUp({
+    required String name,
+    required int studyYear,
+    required int department,
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final response = await _supabase.auth.signUp(
+        email: email,
+        password: password,
+        data: {
+          'name': name,
+          'study_year_id': studyYear,
+          'department_id': department,
+        },
+      );
 
-    final user = response.user;
+      final user = response.user;
 
-    if (user == null) {
-      AppLogger.error("from remote auth datasource :Unable to sign up. No user returned.");
-      throw const AuthException('Unable to sign up. No user returned.');
+      if (user == null) {
+        AppLogger.error(
+            "from remote auth datasource :Unable to sign up. No user returned.");
+        throw const AuthException('Unable to sign up. No user returned.');
+      }
+
+      return UserModel(
+        id: user.id,
+        name: name,
+        studyYear: studyYear,
+        department: department,
+        email: email,
+      );
+    } on AuthException catch (e) {
+      // Catch Supabase-specific auth errors
+      AppLogger.error("from remote auth datasource :${e.message}");
+      throw AuthException(e.message);
+    } catch (e) {
+      // Catch any other unexpected error
+      AppLogger.error("from remote auth datasource :${e.toString()}");
+      throw Exception('Sign up failed: $e');
     }
-
-    return UserModel(
-      id: user.id,
-      name: name,
-      studyYear: studyYear,
-      department: department,
-      email: email,
-    );
-  } on AuthException catch (e) {
-    // Catch Supabase-specific auth errors
-    AppLogger.error("from remote auth datasource :${e.message}");
-    throw AuthException(e.message);
-  } catch (e) {
-    // Catch any other unexpected error
-    AppLogger.error("from remote auth datasource :${e.toString()}");
-    throw Exception('Sign up failed: $e');
   }
-}
-
 
   @override
   Future<UserModel> updateUser({
@@ -166,7 +166,7 @@ Future<UserModel> signUp({
     String? password,
   }) async {
     final user = _supabase.auth.currentUser;
-    if (user == null) throw AuthException('Not logged in');
+    if (user == null) throw const AuthException('Not logged in');
 
     final Map<String, dynamic> metadataUpdates = {};
     if (name != null) metadataUpdates['name'] = name;

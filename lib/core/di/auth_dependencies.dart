@@ -1,5 +1,9 @@
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../features/auth/data/datasources/user_local_data_source.dart';
+import '../../features/auth/data/datasources/user_local_data_source_impl.dart';
 
 import '../../features/auth/data/datasources/remote_auth_datasource.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';
@@ -38,9 +42,14 @@ void initAuthDependencies(GetIt sl) {
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(
-      () => AuthRepositoryImpl(remote: sl()));
+      () => AuthRepositoryImpl(remote: sl(), local: sl()));
 
   // Data Sources
   sl.registerLazySingleton<RemoteAuthDataSource>(
       () => RemoteAuthDataSourceImpl(supabaseClient: sl<SupabaseClient>()));
+  sl.registerLazySingleton<UserLocalDataSource>(
+      () => UserLocalDataSourceImpl(sl()));
+
+  // External
+  sl.registerLazySingleton<HiveInterface>(() => Hive);
 }

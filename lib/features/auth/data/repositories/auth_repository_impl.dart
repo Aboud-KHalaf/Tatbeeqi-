@@ -1,10 +1,17 @@
 import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/remote_auth_datasource.dart';
+import '../datasources/user_local_data_source.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final RemoteAuthDataSource _remote;
-  AuthRepositoryImpl({required RemoteAuthDataSource remote}) : _remote = remote;
+  final UserLocalDataSource _local;
+
+  AuthRepositoryImpl({
+    required RemoteAuthDataSource remote,
+    required UserLocalDataSource local,
+  })  : _remote = remote,
+        _local = local;
 
   @override
   Stream<User?> authStateChanges() => _remote.authStateChanges();
@@ -13,13 +20,24 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<void> forgetPassword({required String email}) => _remote.forgetPassword(email: email);
 
   @override
-  Future<User> signIn({required String email, required String password}) => _remote.signIn(email: email, password: password);
+  Future<User> signIn({required String email, required String password}) async {
+    final user = await _remote.signIn(email: email, password: password);
+    await _local.saveUser(user);
+    return user;
+  }
 
   @override
-  Future<User> signInWithGoogle() => _remote.signInWithGoogle();
+  Future<User> signInWithGoogle() async {
+    final user = await _remote.signInWithGoogle();
+    await _local.saveUser(user);
+    return user;
+  }
 
   @override
-  Future<void> signOut() => _remote.signOut();
+  Future<void> signOut() async {
+    await _remote.signOut();
+    await _local.clearUser();
+  }
 
   @override
   Future<User> signUp({
@@ -28,13 +46,17 @@ class AuthRepositoryImpl implements AuthRepository {
     required int department,
     required String email,
     required String password,
-  }) => _remote.signUp(
-        name: name,
-        studyYear: studyYear,
-        department: department,
-        email: email,
-        password: password,
-      );
+  }) async {
+    final user = await _remote.signUp(
+      name: name,
+      studyYear: studyYear,
+      department: department,
+      email: email,
+      password: password,
+    );
+    await _local.saveUser(user);
+    return user;
+  }
 
   @override
   Future<User> updateUser({
@@ -43,11 +65,15 @@ class AuthRepositoryImpl implements AuthRepository {
     int? department,
     String? email,
     String? password,
-  }) => _remote.updateUser(
-        name: name,
-        studyYear: studyYear,
-        department: department,
-        email: email,
-        password: password,
-      );
+  }) async {
+    final user = await _remote.updateUser(
+      name: name,
+      studyYear: studyYear,
+      department: department,
+      email: email,
+      password: password,
+    );
+    await _local.saveUser(user);
+    return user;
+  }
 }
