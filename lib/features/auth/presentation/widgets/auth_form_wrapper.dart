@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class AuthFormWrapper extends StatelessWidget {
   final String title;
@@ -206,17 +207,18 @@ class AuthFormSection extends StatelessWidget {
 }
 
 class AuthDivider extends StatelessWidget {
-  final String text;
+  final String? text;
 
   const AuthDivider({
     super.key,
-    this.text = 'OR',
+    this.text,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 24),
@@ -231,7 +233,7 @@ class AuthDivider extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              text,
+              text ?? l10n.authOr,
               style: theme.textTheme.bodySmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
                 fontWeight: FontWeight.w500,

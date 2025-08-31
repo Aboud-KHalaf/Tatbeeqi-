@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 import '../manager/bloc/auth_bloc.dart';
 import 'auth_text_field.dart';
@@ -40,6 +41,7 @@ class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         setState(() {
@@ -48,7 +50,7 @@ class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
         if (state is AuthError) {
           SnackBarHelper.showError(context: context, message: state.message);
         } else if (state is AuthUnauthenticated) {
-          SnackBarHelper.showInfo(context: context, message: 'تم إرسال رابط إعادة تعيين كلمة المرور');
+          SnackBarHelper.showInfo(context: context, message: l10n.authResetLinkSent);
         }
       },
       child: Form(
@@ -58,13 +60,13 @@ class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
           children: [
             AuthTextField(
               controller: _emailController,
-              label: 'البريد الإلكتروني',
+              label: l10n.authEmailLabel,
               keyboardType: TextInputType.emailAddress,
-              validator: (v) => (v == null || v.isEmpty) ? 'يرجى إدخال البريد الإلكتروني' : null,
+              validator: (v) => (v == null || v.isEmpty) ? l10n.authEnterEmail : null,
             ),
             const SizedBox(height: 20),
             PrimaryButton(
-              text: 'إرسال رابط الاستعادة',
+              text: l10n.authSendResetLink,
               onPressed: _isLoading ? null : _submit,
               isLoading: _isLoading,
             ),

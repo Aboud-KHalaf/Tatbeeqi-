@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class UpdateProfileHeader extends StatelessWidget {
   final String? subtitle;
@@ -8,12 +9,13 @@ class UpdateProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'تحديث الملف الشخصي',
+          l10n.authUpdateProfileTitle,
           textAlign: TextAlign.right,
           style: theme.textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.w700,

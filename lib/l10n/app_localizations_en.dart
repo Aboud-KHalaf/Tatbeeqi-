@@ -448,7 +448,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get department => 'Department';
 
   @override
-  String get departmentRequired => 'Department is required';
+  String get departmentRequired => 'Please select department';
 
   @override
   String get phoneNumber => 'Phone Number';
@@ -884,4 +884,139 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authUpdateProfileSubtitle => 'Update your account information';
+
+  @override
+  String get authEmailLabel => 'Email';
+
+  @override
+  String get authEmailHint => 'Enter your email';
+
+  @override
+  String get authEnterEmail => 'Please enter your email';
+
+  @override
+  String get authEnterValidEmail => 'Please enter a valid email';
+
+  @override
+  String get authPasswordLabel => 'Password';
+
+  @override
+  String get authPasswordHint => 'Enter your password';
+
+  @override
+  String get authEnterPassword => 'Please enter your password';
+
+  @override
+  String get authPasswordMinChars => 'Password must be at least 6 characters';
+
+  @override
+  String get authConfirmPasswordLabel => 'Confirm Password';
+
+  @override
+  String get authConfirmPasswordHint => 'Re-enter your password';
+
+  @override
+  String get authConfirmPasswordRequired => 'Please confirm your password';
+
+  @override
+  String get authPasswordsDoNotMatch => 'Passwords do not match';
+
+  @override
+  String get authFullNameLabel => 'Full Name';
+
+  @override
+  String get authFullNameHint => 'Enter your full name';
+
+  @override
+  String get authEnterName => 'Please enter your name';
+
+  @override
+  String get authNameMinChars => 'Name must be at least 2 characters';
+
+  @override
+  String get authOr => 'Or';
+
+  @override
+  String get authForgotPasswordLink => 'Forgot password?';
+
+  @override
+  String get authGoogleSignIn => 'Continue with Google';
+
+  @override
+  String get authCreateAccountButton => 'Create Account';
+
+  @override
+  String get authSignInButton => 'Sign In';
+
+  @override
+  String get authSendResetLink => 'Send reset link';
+
+  @override
+  String get authResetLinkSent => 'Password reset link sent';
+
+  @override
+  String get studyYearLabel => 'Academic Year';
+
+  @override
+  String get studyYearHint => 'Select academic year';
+
+  @override
+  String get studyYearRequired => 'Please select academic year';
+
+  @override
+  String get departmentLabel => 'Department';
+
+  @override
+  String get departmentHint => 'Select department';
+
+  @override
+  String get signInFooterNoAccount => 'Don\'t have an account?';
+
+  @override
+  String get signInFooterCreateAccount => 'Create Account';
+
+  @override
+  String get signUpFooterHaveAccount => 'Already have an account?';
+
+  @override
+  String get signUpFooterSignIn => 'Sign In';
+
+  @override
+  String get profileNewPasswordOptional => 'New Password (optional)';
+
+  @override
+  String get profileMin6Chars => 'Min 6 chars';
+
+  @override
+  String get profileSaveChanges => 'Save Changes';
+
+  @override
+  String get authNoAccount => 'Don\'t have an account?';
+
+  @override
+  String get authHaveAccount => 'Already have an account?';
+
+  @override
+  String get authInvalidEmail => 'Please enter a valid email address';
+
+  @override
+  String get authPasswordTooShort => 'Password must be at least 6 characters';
+
+  @override
+  String get authFullNameEmpty => 'Please enter your full name';
+
+  @override
+  String get authFullNameTooShort => 'Name must be at least 2 characters';
+
+  @override
+  String get authEmailEmpty => 'Please enter your email';
+
+  @override
+  String get authPasswordEmpty => 'Please enter your password';
+
+  @override
+  String get authConfirmPasswordEmpty => 'Please confirm your password';
+
+  @override
+  String get authPasswordMismatch => 'Passwords do not match';
 }

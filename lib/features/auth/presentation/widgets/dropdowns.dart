@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class StudyYearDropdown extends StatefulWidget {
   final int? value;
@@ -76,7 +77,8 @@ class _StudyYearDropdownState extends State<StudyYearDropdown>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final locale = Localizations.localeOf(context);  
+    final locale = Localizations.localeOf(context);
+    final l10n = AppLocalizations.of(context)!;
     switch (locale.languageCode) {
       case 'ar':
         _studyYears = _studyYearsAr;
@@ -159,8 +161,8 @@ class _StudyYearDropdownState extends State<StudyYearDropdown>
                       ))
                   .toList(),
               decoration: InputDecoration(
-                labelText: 'السنة الدراسية',
-                hintText: 'اختر السنة الدراسية',
+                labelText: l10n.studyYearLabel,
+                hintText: l10n.studyYearHint,
                 alignLabelWithHint: true,
                 prefixIcon: Icon(
                   Icons.school_outlined,
@@ -224,7 +226,7 @@ class _StudyYearDropdownState extends State<StudyYearDropdown>
                 ),
               ),
               validator: (val) =>
-                  val == null ? 'يرجى اختيار السنة الدراسية' : null,
+                  val == null ? l10n.studyYearRequired : null,
               dropdownColor: colorScheme.surface,
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: widget.enabled
@@ -310,12 +312,13 @@ class _DepartmentDropdownState extends State<DepartmentDropdown>
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final locale = Localizations.localeOf(context);
+    final l10n = AppLocalizations.of(context)!;
     switch (locale.languageCode) {
       case 'ar':
-         _departments = _departmentsAr;
+        _departments = _departmentsAr;
         break;
       case 'en':
-         _departments = _departmentsEn;
+        _departments = _departmentsEn;
         break;
     }
     return AnimatedBuilder(
@@ -393,8 +396,8 @@ class _DepartmentDropdownState extends State<DepartmentDropdown>
                       ))
                   .toList(),
               decoration: InputDecoration(
-                labelText: 'القسم',
-                hintText: 'اختر القسم',
+                labelText: l10n.departmentLabel,
+                hintText: l10n.departmentHint,
                 prefixIcon: Icon(
                   Icons.business_outlined,
                   color: _isFocused
@@ -456,7 +459,7 @@ class _DepartmentDropdownState extends State<DepartmentDropdown>
                   vertical: 16,
                 ),
               ),
-              validator: (val) => val == null ? 'يرجى اختيار القسم' : null,
+              validator: (val) => val == null ? l10n.departmentRequired : null,
               dropdownColor: colorScheme.surface,
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: widget.enabled

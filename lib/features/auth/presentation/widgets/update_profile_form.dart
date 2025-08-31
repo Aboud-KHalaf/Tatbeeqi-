@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/services.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
@@ -61,6 +62,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         setState(() {
@@ -70,7 +72,7 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
         if (state is AuthError) {
           SnackBarHelper.showError(context: context, message: state.message);
         } else if (state is AuthAuthenticated) {
-          SnackBarHelper.showInfo(context: context, message: 'Profile updated');
+          SnackBarHelper.showInfo(context: context, message: l10n.profileUpdatedSuccessfully);
           Navigator.of(context).pop();
         }
       },
@@ -81,8 +83,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
           children: [
             AuthTextField(
               controller: _nameController,
-              label: 'Name',
-              validator: (v) => (v == null || v.isEmpty) ? 'Enter name' : null,
+              label: l10n.authFullNameLabel,
+              validator: (v) => (v == null || v.isEmpty) ? l10n.authEnterName : null,
             ),
             const SizedBox(height: 12),
             StudyYearDropdown(
@@ -93,22 +95,22 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
             const SizedBox(height: 12),
             AuthTextField(
               controller: _emailController,
-              label: 'Email',
+              label: l10n.authEmailLabel,
               keyboardType: TextInputType.emailAddress,
-              validator: (v) => (v == null || v.isEmpty) ? 'Enter email' : null,
+              validator: (v) => (v == null || v.isEmpty) ? l10n.authEnterEmail : null,
             ),
             const SizedBox(height: 12),
             AuthTextField(
               controller: _passwordController,
-              label: 'New Password (optional)',
+              label: l10n.profileNewPasswordOptional,
               obscureText: true,
               validator: (v) => (v != null && v.isNotEmpty && v.length < 6)
-                  ? 'Min 6 chars'
+                  ? l10n.profileMin6Chars
                   : null,
             ),
             const SizedBox(height: 20),
             PrimaryButton(
-                text: 'Save Changes',
+                text: l10n.profileSaveChanges,
                 onPressed: _isLoading ? null : _submit,
                 isLoading: _isLoading),
           ],

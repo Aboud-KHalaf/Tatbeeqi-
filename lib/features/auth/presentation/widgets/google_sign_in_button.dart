@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tatbeeqi/core/assets/svgs.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class GoogleSignInButton extends StatefulWidget {
   final VoidCallback onPressed;
   final bool isLoading;
-  final String? text;
 
   const GoogleSignInButton({
     super.key,
     required this.onPressed,
     this.isLoading = false,
-    this.text,
   });
 
   @override
@@ -76,6 +75,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
     final isEnabled = !widget.isLoading;
 
     return AnimatedBuilder(
@@ -139,7 +139,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton>
                           ),
                           const SizedBox(width: 12),
                           Text(
-                            widget.text ?? 'Sign in with Google',
+                            l10n.authGoogleSignIn,
                             style: theme.textTheme.labelLarge?.copyWith(
                               color: isEnabled
                                   ? colorScheme.onSurface

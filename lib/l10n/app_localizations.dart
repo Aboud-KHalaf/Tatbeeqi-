@@ -956,7 +956,7 @@ abstract class AppLocalizations {
   /// No description provided for @departmentRequired.
   ///
   /// In en, this message translates to:
-  /// **'Department is required'**
+  /// **'Please select department'**
   String get departmentRequired;
 
   /// No description provided for @phoneNumber.
@@ -1828,6 +1828,276 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Update your account information'**
   String get authUpdateProfileSubtitle;
+
+  /// No description provided for @authEmailLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get authEmailLabel;
+
+  /// No description provided for @authEmailHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email'**
+  String get authEmailHint;
+
+  /// No description provided for @authEnterEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email'**
+  String get authEnterEmail;
+
+  /// No description provided for @authEnterValidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get authEnterValidEmail;
+
+  /// No description provided for @authPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get authPasswordLabel;
+
+  /// No description provided for @authPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get authPasswordHint;
+
+  /// No description provided for @authEnterPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your password'**
+  String get authEnterPassword;
+
+  /// No description provided for @authPasswordMinChars.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get authPasswordMinChars;
+
+  /// No description provided for @authConfirmPasswordLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get authConfirmPasswordLabel;
+
+  /// No description provided for @authConfirmPasswordHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Re-enter your password'**
+  String get authConfirmPasswordHint;
+
+  /// No description provided for @authConfirmPasswordRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get authConfirmPasswordRequired;
+
+  /// No description provided for @authPasswordsDoNotMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get authPasswordsDoNotMatch;
+
+  /// No description provided for @authFullNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Full Name'**
+  String get authFullNameLabel;
+
+  /// No description provided for @authFullNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your full name'**
+  String get authFullNameHint;
+
+  /// No description provided for @authEnterName.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your name'**
+  String get authEnterName;
+
+  /// No description provided for @authNameMinChars.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 2 characters'**
+  String get authNameMinChars;
+
+  /// No description provided for @authOr.
+  ///
+  /// In en, this message translates to:
+  /// **'Or'**
+  String get authOr;
+
+  /// No description provided for @authForgotPasswordLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot password?'**
+  String get authForgotPasswordLink;
+
+  /// No description provided for @authGoogleSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get authGoogleSignIn;
+
+  /// No description provided for @authCreateAccountButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get authCreateAccountButton;
+
+  /// No description provided for @authSignInButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get authSignInButton;
+
+  /// No description provided for @authSendResetLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Send reset link'**
+  String get authSendResetLink;
+
+  /// No description provided for @authResetLinkSent.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset link sent'**
+  String get authResetLinkSent;
+
+  /// No description provided for @studyYearLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Academic Year'**
+  String get studyYearLabel;
+
+  /// No description provided for @studyYearHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select academic year'**
+  String get studyYearHint;
+
+  /// No description provided for @studyYearRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select academic year'**
+  String get studyYearRequired;
+
+  /// No description provided for @departmentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Department'**
+  String get departmentLabel;
+
+  /// No description provided for @departmentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Select department'**
+  String get departmentHint;
+
+  /// No description provided for @signInFooterNoAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get signInFooterNoAccount;
+
+  /// No description provided for @signInFooterCreateAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get signInFooterCreateAccount;
+
+  /// No description provided for @signUpFooterHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get signUpFooterHaveAccount;
+
+  /// No description provided for @signUpFooterSignIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get signUpFooterSignIn;
+
+  /// No description provided for @profileNewPasswordOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'New Password (optional)'**
+  String get profileNewPasswordOptional;
+
+  /// No description provided for @profileMin6Chars.
+  ///
+  /// In en, this message translates to:
+  /// **'Min 6 chars'**
+  String get profileMin6Chars;
+
+  /// No description provided for @profileSaveChanges.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Changes'**
+  String get profileSaveChanges;
+
+  /// No description provided for @authNoAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get authNoAccount;
+
+  /// No description provided for @authHaveAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get authHaveAccount;
+
+  /// No description provided for @authInvalidEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get authInvalidEmail;
+
+  /// No description provided for @authPasswordTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get authPasswordTooShort;
+
+  /// No description provided for @authFullNameEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your full name'**
+  String get authFullNameEmpty;
+
+  /// No description provided for @authFullNameTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 2 characters'**
+  String get authFullNameTooShort;
+
+  /// No description provided for @authEmailEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email'**
+  String get authEmailEmpty;
+
+  /// No description provided for @authPasswordEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your password'**
+  String get authPasswordEmpty;
+
+  /// No description provided for @authConfirmPasswordEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please confirm your password'**
+  String get authConfirmPasswordEmpty;
+
+  /// No description provided for @authPasswordMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get authPasswordMismatch;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

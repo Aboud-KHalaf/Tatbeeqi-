@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 import '../manager/bloc/auth_bloc.dart';
+import 'auth_form_wrapper.dart';
 import 'auth_text_field.dart';
 import 'dropdowns.dart';
-import 'primary_button.dart';
 import 'google_sign_in_button.dart';
+import 'primary_button.dart';
  
 class SignUpForm extends StatefulWidget {
   const SignUpForm({super.key});
@@ -81,6 +83,7 @@ class _SignUpFormState extends State<SignUpForm>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         setState(() {
@@ -98,29 +101,28 @@ class _SignUpFormState extends State<SignUpForm>
           children: [
             AuthTextField(
               controller: _nameController,
-              label: 'الاسم الكامل',
-              hint: 'أدخل اسمك الكامل',
+              label: l10n.authFullNameLabel,
+              hint: l10n.authFullNameHint,
               prefixIcon: Icons.person_outline,
               textInputAction: TextInputAction.next,
               validator: (v) {
-                if (v == null || v.isEmpty) return 'يرجى إدخال الاسم';
-                if (v.length < 2) return 'الاسم يجب أن يكون حرفين على الأقل';
+                if (v == null || v.isEmpty) return l10n.authFullNameEmpty;
+                if (v.length < 2) return l10n.authFullNameTooShort;
                 return null;
               },
             ),
             const SizedBox(height: 16),
             AuthTextField(
               controller: _emailController,
-              label: 'البريد الإلكتروني',
-              hint: 'أدخل بريدك الإلكتروني',
+              label: l10n.authEmailLabel,
+              hint: l10n.authEmailHint,
               prefixIcon: Icons.email_outlined,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               validator: (value) {
-                if (value == null || value.isEmpty)
-                  return 'يرجى إدخال البريد الإلكتروني';
-                if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$')
-                    .hasMatch(value)) return 'يرجى إدخال بريد إلكتروني صحيح';
+                if (value == null || value.isEmpty) return l10n.authEmailEmpty;
+                if (!RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$').hasMatch(value))
+                  return l10n.authInvalidEmail;
                 return null;
               },
             ),
@@ -133,32 +135,29 @@ class _SignUpFormState extends State<SignUpForm>
             const SizedBox(height: 16),
             AuthTextField(
               controller: _passwordController,
-              label: 'كلمة المرور',
-              hint: 'أدخل كلمة المرور',
+              label: l10n.authPasswordLabel,
+              hint: l10n.authPasswordHint,
               prefixIcon: Icons.lock_outline,
               obscureText: true,
               textInputAction: TextInputAction.next,
               validator: (value) {
-                if (value == null || value.isEmpty)
-                  return 'يرجى إدخال كلمة المرور';
-                if (value.length < 6)
-                  return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+                if (value == null || value.isEmpty) return l10n.authPasswordEmpty;
+                if (value.length < 6) return l10n.authPasswordTooShort;
                 return null;
               },
             ),
             const SizedBox(height: 16),
             AuthTextField(
               controller: _confirmPasswordController,
-              label: 'تأكيد كلمة المرور',
-              hint: 'أعد إدخال كلمة المرور',
+              label: l10n.authConfirmPasswordLabel,
+              hint: l10n.authConfirmPasswordHint,
               prefixIcon: Icons.lock_outline,
               obscureText: true,
               textInputAction: TextInputAction.done,
               validator: (value) {
                 if (value == null || value.isEmpty)
-                  return 'يرجى تأكيد كلمة المرور';
-                if (value != _passwordController.text)
-                  return 'كلمة المرور غير متطابقة';
+                  return l10n.authConfirmPasswordEmpty;
+                if (value != _passwordController.text) return l10n.authPasswordMismatch;
                 return null;
               },
             ),
@@ -169,7 +168,7 @@ class _SignUpFormState extends State<SignUpForm>
                 return Transform.scale(
                   scale: _scaleAnimation.value,
                   child: PrimaryButton(
-                    text: 'إنشاء الحساب',
+                    text: l10n.authCreateAccountButton,
                     onPressed: _isLoading ? null : _submit,
                     icon: const Icon(Icons.person_add_rounded),
                     isLoading: _isLoading,
@@ -178,39 +177,15 @@ class _SignUpFormState extends State<SignUpForm>
               },
             ),
             const SizedBox(height: 24),
-            const _AuthDividerLocalized(text: 'أو'),
+            const AuthDivider(),
             const SizedBox(height: 24),
             GoogleSignInButton(
               onPressed: _handleGoogleSignIn,
               isLoading: _isGoogleLoading,
-              text: 'المتابعة مع جوجل',
             ),
           ],
         ),
       ),
-    );
-  }
-}
-
-class _AuthDividerLocalized extends StatelessWidget {
-  final String text;
-  const _AuthDividerLocalized({required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    return Row(
-      children: [
-        Expanded(child: Divider(color: colorScheme.outline.withOpacity(0.3))),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(text,
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: colorScheme.onSurfaceVariant)),
-        ),
-        Expanded(child: Divider(color: colorScheme.outline.withOpacity(0.3))),
-      ],
     );
   }
 }

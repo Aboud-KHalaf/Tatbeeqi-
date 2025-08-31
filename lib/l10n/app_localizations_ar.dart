@@ -448,7 +448,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get department => 'Department';
 
   @override
-  String get departmentRequired => 'Department is required';
+  String get departmentRequired => 'يرجى اختيار القسم';
 
   @override
   String get phoneNumber => 'Phone Number';
@@ -884,4 +884,139 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get authUpdateProfileSubtitle => 'قم بتحديث معلومات حسابك';
+
+  @override
+  String get authEmailLabel => 'البريد الإلكتروني';
+
+  @override
+  String get authEmailHint => 'أدخل بريدك الإلكتروني';
+
+  @override
+  String get authEnterEmail => 'يرجى إدخال البريد الإلكتروني';
+
+  @override
+  String get authEnterValidEmail => 'يرجى إدخال بريد إلكتروني صحيح';
+
+  @override
+  String get authPasswordLabel => 'كلمة المرور';
+
+  @override
+  String get authPasswordHint => 'أدخل كلمة المرور';
+
+  @override
+  String get authEnterPassword => 'يرجى إدخال كلمة المرور';
+
+  @override
+  String get authPasswordMinChars => 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+
+  @override
+  String get authConfirmPasswordLabel => 'تأكيد كلمة المرور';
+
+  @override
+  String get authConfirmPasswordHint => 'أعد إدخال كلمة المرور';
+
+  @override
+  String get authConfirmPasswordRequired => 'يرجى تأكيد كلمة المرور';
+
+  @override
+  String get authPasswordsDoNotMatch => 'كلمة المرور غير متطابقة';
+
+  @override
+  String get authFullNameLabel => 'الاسم الكامل';
+
+  @override
+  String get authFullNameHint => 'أدخل اسمك الكامل';
+
+  @override
+  String get authEnterName => 'يرجى إدخال الاسم';
+
+  @override
+  String get authNameMinChars => 'الاسم يجب أن يكون حرفين على الأقل';
+
+  @override
+  String get authOr => 'أو';
+
+  @override
+  String get authForgotPasswordLink => 'نسيت كلمة المرور؟';
+
+  @override
+  String get authGoogleSignIn => 'المتابعة مع جوجل';
+
+  @override
+  String get authCreateAccountButton => 'إنشاء الحساب';
+
+  @override
+  String get authSignInButton => 'تسجيل الدخول';
+
+  @override
+  String get authSendResetLink => 'إرسال رابط الاستعادة';
+
+  @override
+  String get authResetLinkSent => 'تم إرسال رابط إعادة تعيين كلمة المرور';
+
+  @override
+  String get studyYearLabel => 'السنة الدراسية';
+
+  @override
+  String get studyYearHint => 'اختر السنة الدراسية';
+
+  @override
+  String get studyYearRequired => 'يرجى اختيار السنة الدراسية';
+
+  @override
+  String get departmentLabel => 'القسم';
+
+  @override
+  String get departmentHint => 'اختر القسم';
+
+  @override
+  String get signInFooterNoAccount => 'ليس لديك حساب؟';
+
+  @override
+  String get signInFooterCreateAccount => 'إنشاء حساب';
+
+  @override
+  String get signUpFooterHaveAccount => 'لديك حساب بالفعل؟';
+
+  @override
+  String get signUpFooterSignIn => 'تسجيل الدخول';
+
+  @override
+  String get profileNewPasswordOptional => 'كلمة مرور جديدة (اختياري)';
+
+  @override
+  String get profileMin6Chars => 'حد أدنى 6 أحرف';
+
+  @override
+  String get profileSaveChanges => 'حفظ التغييرات';
+
+  @override
+  String get authNoAccount => 'ليس لديك حساب؟';
+
+  @override
+  String get authHaveAccount => 'لديك حساب بالفعل؟';
+
+  @override
+  String get authInvalidEmail => 'يرجى إدخال عنوان بريد إلكتروني صالح';
+
+  @override
+  String get authPasswordTooShort => 'يجب أن تتكون كلمة المرور من 6 أحرف على الأقل';
+
+  @override
+  String get authFullNameEmpty => 'يرجى إدخال اسمك الكامل';
+
+  @override
+  String get authFullNameTooShort => 'يجب أن يتكون الاسم من حرفين على الأقل';
+
+  @override
+  String get authEmailEmpty => 'يرجى إدخال بريدك الإلكتروني';
+
+  @override
+  String get authPasswordEmpty => 'يرجى إدخال كلمة المرور الخاصة بك';
+
+  @override
+  String get authConfirmPasswordEmpty => 'يرجى تأكيد كلمة المرور الخاصة بك';
+
+  @override
+  String get authPasswordMismatch => 'كلمات المرور غير متطابقة';
 }

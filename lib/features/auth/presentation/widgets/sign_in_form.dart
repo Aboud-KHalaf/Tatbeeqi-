@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import 'package:tatbeeqi/features/auth/presentation/views/forget_password_page.dart';
+import 'package:tatbeeqi/features/auth/presentation/widgets/auth_form_wrapper.dart';
 import 'package:tatbeeqi/features/auth/presentation/widgets/google_sign_in_button.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 import '../manager/bloc/auth_bloc.dart';
 import 'primary_button.dart';
@@ -73,6 +75,7 @@ class _SignInFormState extends State<SignInForm>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
@@ -93,19 +96,18 @@ class _SignInFormState extends State<SignInForm>
           children: [
             AuthTextField(
               controller: _emailController,
-              label: 'البريد الإلكتروني',
-              hint: 'أدخل بريدك الإلكتروني',
+              label: l10n.authEmailLabel,
+              hint: l10n.authEnterEmail,
               prefixIcon: Icons.email_outlined,
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return 'يرجى إدخال البريد الإلكتروني';
+                  return l10n.authEnterEmail;
                 }
-                // Safer email pattern (avoids invalid range in character class)
                 if (!RegExp(r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
                     .hasMatch(value)) {
-                  return 'يرجى إدخال بريد إلكتروني صحيح';
+                  return l10n.authInvalidEmail;
                 }
                 return null;
               },
@@ -113,16 +115,14 @@ class _SignInFormState extends State<SignInForm>
             const SizedBox(height: 16),
             AuthTextField(
               controller: _passwordController,
-              label: 'كلمة المرور',
-              hint: 'أدخل كلمة المرور',
+              label: l10n.authPasswordLabel,
+              hint: l10n.authEnterPassword,
               prefixIcon: Icons.lock_outline,
               obscureText: true,
               textInputAction: TextInputAction.done,
               validator: (value) {
-                if (value == null || value.isEmpty)
-                  return 'يرجى إدخال كلمة المرور';
-                if (value.length < 6)
-                  return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+                if (value == null || value.isEmpty) return l10n.authEnterPassword;
+                if (value.length < 6) return l10n.authPasswordTooShort;
                 return null;
               },
             ),
@@ -136,7 +136,7 @@ class _SignInFormState extends State<SignInForm>
                   ),
                 ),
                 child: Text(
-                  'نسيت كلمة المرور؟',
+                  l10n.authForgotPasswordLink,
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: colorScheme.primary,
                     fontWeight: FontWeight.w600,
@@ -151,7 +151,7 @@ class _SignInFormState extends State<SignInForm>
                 return Transform.scale(
                   scale: _scaleAnimation.value,
                   child: PrimaryButton(
-                    text: 'تسجيل الدخول',
+                    text: l10n.authSignInButton,
                     onPressed: _isLoading ? null : _handleSignIn,
                     icon: const Icon(Icons.login_rounded),
                     isLoading: _isLoading,
@@ -160,13 +160,12 @@ class _SignInFormState extends State<SignInForm>
               },
             ),
             const SizedBox(height: 24),
-            const _AuthDividerLocalized(text: 'أو'),
+            const AuthDivider(),
             const SizedBox(height: 24),
             GoogleSignInButton(
               onPressed: _handleGoogleSignIn,
               isLoading: _isGoogleLoading,
-              text: 'المتابعة مع جوجل',
-            ),
+             ),
           ],
         ),
       ),
@@ -174,25 +173,3 @@ class _SignInFormState extends State<SignInForm>
   }
 }
 
-class _AuthDividerLocalized extends StatelessWidget {
-  final String text;
-  const _AuthDividerLocalized({required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    return Row(
-      children: [
-        Expanded(child: Divider(color: colorScheme.outline.withOpacity(0.3))),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(text,
-              style: theme.textTheme.bodySmall
-                  ?.copyWith(color: colorScheme.onSurfaceVariant)),
-        ),
-        Expanded(child: Divider(color: colorScheme.outline.withOpacity(0.3))),
-      ],
-    );
-  }
-}
