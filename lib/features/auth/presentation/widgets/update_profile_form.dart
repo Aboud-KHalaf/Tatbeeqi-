@@ -8,7 +8,6 @@ import '../../domain/entities/user.dart' as ent;
 import '../manager/bloc/auth_bloc.dart';
 import 'auth_text_field.dart';
 import 'dropdowns.dart';
-import 'loading_overlay.dart';
 
 class UpdateProfileForm extends StatefulWidget {
   final ent.User currentUser;
@@ -65,7 +64,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         setState(() {
-          _isLoading = state is AuthLoading && state.operation == AuthOperation.updateProfile;
+          _isLoading = state is AuthLoading &&
+              state.operation == AuthOperation.updateProfile;
         });
         if (state is AuthError) {
           SnackBarHelper.showError(context: context, message: state.message);
@@ -74,52 +74,45 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
           Navigator.of(context).pop();
         }
       },
-      child: Stack(
-        children: [
-          Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AuthTextField(
-                  controller: _nameController,
-                  label: 'Name',
-                  validator: (v) =>
-                      (v == null || v.isEmpty) ? 'Enter name' : null,
-                ),
-                const SizedBox(height: 12),
-                StudyYearDropdown(
-                    value: _year, onChanged: (v) => setState(() => _year = v)),
-                const SizedBox(height: 12),
-                DepartmentDropdown(
-                    value: _dept, onChanged: (v) => setState(() => _dept = v)),
-                const SizedBox(height: 12),
-                AuthTextField(
-                  controller: _emailController,
-                  label: 'Email',
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (v) =>
-                      (v == null || v.isEmpty) ? 'Enter email' : null,
-                ),
-                const SizedBox(height: 12),
-                AuthTextField(
-                  controller: _passwordController,
-                  label: 'New Password (optional)',
-                  obscureText: true,
-                  validator: (v) => (v != null && v.isNotEmpty && v.length < 6)
-                      ? 'Min 6 chars'
-                      : null,
-                ),
-                const SizedBox(height: 20),
-                PrimaryButton(
-                    text: 'Save Changes',
-                    onPressed: _isLoading ? null : _submit,
-                    isLoading: _isLoading),
-              ],
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AuthTextField(
+              controller: _nameController,
+              label: 'Name',
+              validator: (v) => (v == null || v.isEmpty) ? 'Enter name' : null,
             ),
-          ),
-          if (_isLoading) const LoadingOverlay(message: 'Saving changes...'),
-        ],
+            const SizedBox(height: 12),
+            StudyYearDropdown(
+                value: _year, onChanged: (v) => setState(() => _year = v)),
+            const SizedBox(height: 12),
+            DepartmentDropdown(
+                value: _dept, onChanged: (v) => setState(() => _dept = v)),
+            const SizedBox(height: 12),
+            AuthTextField(
+              controller: _emailController,
+              label: 'Email',
+              keyboardType: TextInputType.emailAddress,
+              validator: (v) => (v == null || v.isEmpty) ? 'Enter email' : null,
+            ),
+            const SizedBox(height: 12),
+            AuthTextField(
+              controller: _passwordController,
+              label: 'New Password (optional)',
+              obscureText: true,
+              validator: (v) => (v != null && v.isNotEmpty && v.length < 6)
+                  ? 'Min 6 chars'
+                  : null,
+            ),
+            const SizedBox(height: 20),
+            PrimaryButton(
+                text: 'Save Changes',
+                onPressed: _isLoading ? null : _submit,
+                isLoading: _isLoading),
+          ],
+        ),
       ),
     );
   }

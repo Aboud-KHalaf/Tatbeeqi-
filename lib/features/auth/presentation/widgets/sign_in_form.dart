@@ -7,8 +7,7 @@ import 'package:tatbeeqi/features/auth/presentation/widgets/google_sign_in_butto
 import '../manager/bloc/auth_bloc.dart';
 import 'primary_button.dart';
 import 'auth_text_field.dart';
-import 'loading_overlay.dart';
-
+ 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
 
@@ -86,92 +85,87 @@ class _SignInFormState extends State<SignInForm>
           SnackBarHelper.showError(context: context, message: state.message);
         }
       },
-      child: Stack(
-        children: [
-          Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AuthTextField(
-                  controller: _emailController,
-                  label: 'البريد الإلكتروني',
-                  hint: 'أدخل بريدك الإلكتروني',
-                  prefixIcon: Icons.email_outlined,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'يرجى إدخال البريد الإلكتروني';
-                    }
-                    // Safer email pattern (avoids invalid range in character class)
-                    if (!RegExp(
-                            r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
-                        .hasMatch(value)) {
-                      return 'يرجى إدخال بريد إلكتروني صحيح';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                AuthTextField(
-                  controller: _passwordController,
-                  label: 'كلمة المرور',
-                  hint: 'أدخل كلمة المرور',
-                  prefixIcon: Icons.lock_outline,
-                  obscureText: true,
-                  textInputAction: TextInputAction.done,
-                  validator: (value) {
-                    if (value == null || value.isEmpty)
-                      return 'يرجى إدخال كلمة المرور';
-                    if (value.length < 6)
-                      return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 8),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: TextButton(
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed('/forget-password'),
-                    child: Text(
-                      'نسيت كلمة المرور؟',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: colorScheme.primary,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AuthTextField(
+              controller: _emailController,
+              label: 'البريد الإلكتروني',
+              hint: 'أدخل بريدك الإلكتروني',
+              prefixIcon: Icons.email_outlined,
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'يرجى إدخال البريد الإلكتروني';
+                }
+                // Safer email pattern (avoids invalid range in character class)
+                if (!RegExp(
+                        r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
+                    .hasMatch(value)) {
+                  return 'يرجى إدخال بريد إلكتروني صحيح';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 16),
+            AuthTextField(
+              controller: _passwordController,
+              label: 'كلمة المرور',
+              hint: 'أدخل كلمة المرور',
+              prefixIcon: Icons.lock_outline,
+              obscureText: true,
+              textInputAction: TextInputAction.done,
+              validator: (value) {
+                if (value == null || value.isEmpty)
+                  return 'يرجى إدخال كلمة المرور';
+                if (value.length < 6)
+                  return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+                return null;
+              },
+            ),
+            const SizedBox(height: 8),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () =>
+                    Navigator.of(context).pushNamed('/forget-password'),
+                child: Text(
+                  'نسيت كلمة المرور؟',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.primary,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 24),
-                AnimatedBuilder(
-                  animation: _scaleAnimation,
-                  builder: (context, child) {
-                    return Transform.scale(
-                      scale: _scaleAnimation.value,
-                      child: PrimaryButton(
-                        text: 'تسجيل الدخول',
-                        onPressed: _isLoading ? null : _handleSignIn,
-                        icon: const Icon(Icons.login_rounded),
-                        isLoading: _isLoading,
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 24),
-                const _AuthDividerLocalized(text: 'أو'),
-                const SizedBox(height: 24),
-                GoogleSignInButton(
-                  onPressed: _handleGoogleSignIn,
-                  isLoading: _isGoogleLoading,
-                  text: 'Sign in with Google',
-                ),
-              ],
+              ),
             ),
-          ),
-          if (_isLoading) const LoadingOverlay(message: 'جاري تسجيل الدخول...'),
-        ],
+            const SizedBox(height: 24),
+            AnimatedBuilder(
+              animation: _scaleAnimation,
+              builder: (context, child) {
+                return Transform.scale(
+                  scale: _scaleAnimation.value,
+                  child: PrimaryButton(
+                    text: 'تسجيل الدخول',
+                    onPressed: _isLoading ? null : _handleSignIn,
+                    icon: const Icon(Icons.login_rounded),
+                    isLoading: _isLoading,
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: 24),
+            const _AuthDividerLocalized(text: 'أو'),
+            const SizedBox(height: 24),
+            GoogleSignInButton(
+              onPressed: _handleGoogleSignIn,
+              isLoading: _isGoogleLoading,
+              text: 'Sign in with Google',
+            ),
+          ],
+        ),
       ),
     );
   }

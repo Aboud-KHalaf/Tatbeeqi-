@@ -6,8 +6,7 @@ import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import '../manager/bloc/auth_bloc.dart';
 import 'auth_text_field.dart';
 import 'primary_button.dart';
-import 'loading_overlay.dart';
-
+ 
 class ForgetPasswordForm extends StatefulWidget {
   const ForgetPasswordForm({super.key});
 
@@ -52,30 +51,25 @@ class _ForgetPasswordFormState extends State<ForgetPasswordForm> {
           SnackBarHelper.showInfo(context: context, message: 'تم إرسال رابط إعادة تعيين كلمة المرور');
         }
       },
-      child: Stack(
-        children: [
-          Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                AuthTextField(
-                  controller: _emailController,
-                  label: 'البريد الإلكتروني',
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (v) => (v == null || v.isEmpty) ? 'يرجى إدخال البريد الإلكتروني' : null,
-                ),
-                const SizedBox(height: 20),
-                PrimaryButton(
-                  text: 'إرسال رابط الاستعادة',
-                  onPressed: _isLoading ? null : _submit,
-                  isLoading: _isLoading,
-                ),
-              ],
+      child: Form(
+        key: _formKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            AuthTextField(
+              controller: _emailController,
+              label: 'البريد الإلكتروني',
+              keyboardType: TextInputType.emailAddress,
+              validator: (v) => (v == null || v.isEmpty) ? 'يرجى إدخال البريد الإلكتروني' : null,
             ),
-          ),
-          if (_isLoading) const LoadingOverlay(message: 'جاري الإرسال...'),
-        ],
+            const SizedBox(height: 20),
+            PrimaryButton(
+              text: 'إرسال رابط الاستعادة',
+              onPressed: _isLoading ? null : _submit,
+              isLoading: _isLoading,
+            ),
+          ],
+        ),
       ),
     );
   }
