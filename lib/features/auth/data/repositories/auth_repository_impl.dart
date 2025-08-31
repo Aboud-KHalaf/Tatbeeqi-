@@ -17,6 +17,9 @@ class AuthRepositoryImpl implements AuthRepository {
   Stream<User?> authStateChanges() => _remote.authStateChanges();
 
   @override
+  Future<User?> getCurrentUser() => _local.getUser();
+
+  @override
   Future<void> forgetPassword({required String email}) => _remote.forgetPassword(email: email);
 
   @override

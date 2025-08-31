@@ -15,7 +15,9 @@ import '../../features/auth/domain/usecases/sign_in_with_google_usecase.dart';
 import '../../features/auth/domain/usecases/sign_out_usecase.dart';
 import '../../features/auth/domain/usecases/sign_up_usecase.dart';
 import '../../features/auth/domain/usecases/update_user_usecase.dart';
+import '../../features/auth/domain/usecases/get_current_user_usecase.dart';
 import '../../features/auth/presentation/manager/bloc/auth_bloc.dart';
+import '../../features/auth/presentation/manager/user_cubit/user_cubit.dart';
 
 void initAuthDependencies(GetIt sl) {
   // --- Auth Feature ---
@@ -31,6 +33,8 @@ void initAuthDependencies(GetIt sl) {
         authStateChangesUseCase: sl(),
       ));
 
+  sl.registerFactory(() => UserCubit(sl()));
+
   // Use Cases
   sl.registerLazySingleton(() => SignUpUseCase(sl()));
   sl.registerLazySingleton(() => SignInUseCase(sl()));
@@ -39,6 +43,7 @@ void initAuthDependencies(GetIt sl) {
   sl.registerLazySingleton(() => UpdateUserUseCase(sl()));
   sl.registerLazySingleton(() => SignOutUseCase(sl()));
   sl.registerLazySingleton(() => AuthStateChangesUseCase(sl()));
+  sl.registerLazySingleton(() => GetCurrentUserUseCase(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(

@@ -150,7 +150,7 @@ class MyApp extends StatelessWidget {
                   return MaterialApp.router(
                     routerConfig: router,
                     debugShowCheckedModeBanner: false,
-                    locale: Locale('en'),//currentLocale,
+                    locale: currentLocale,
                     theme: currentThemeData,
                     localizationsDelegates: const [
                       AppLocalizations.delegate,
