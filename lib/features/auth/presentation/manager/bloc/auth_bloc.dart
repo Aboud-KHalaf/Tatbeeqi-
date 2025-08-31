@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/utils/app_logger.dart';
 
@@ -72,6 +73,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onSignIn(SignInEvent event, Emitter<AuthState> emit) async {
+    debugPrint("on sign in");
     emit(AuthLoading(AuthOperation.signIn));
     try {
       final user = await _signIn(email: event.email, password: event.password);

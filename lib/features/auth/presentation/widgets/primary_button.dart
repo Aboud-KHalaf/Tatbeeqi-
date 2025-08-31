@@ -105,10 +105,10 @@ class _PrimaryButtonState extends State<PrimaryButton>
                 onTapDown: _onTapDown,
                 onTapUp: _onTapUp,
                 onTapCancel: _onTapCancel,
-                child: ElevatedButton(
+                child: FilledButton(
                   onPressed: isEnabled ? widget.onPressed : null,
                   style: widget.style ??
-                      ElevatedButton.styleFrom(
+                      FilledButton.styleFrom(
                         backgroundColor: isEnabled
                             ? colorScheme.primary
                             : colorScheme.onSurface.withValues(alpha: 0.12),
@@ -137,10 +137,7 @@ class _PrimaryButtonState extends State<PrimaryButton>
                             height: 20,
                             width: 20,
                             child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                colorScheme.onPrimary,
-                              ),
+                              color: colorScheme.onPrimary,
                             ),
                           )
                         : Row(

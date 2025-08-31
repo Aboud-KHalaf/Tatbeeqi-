@@ -16,7 +16,8 @@ class SignInForm extends StatefulWidget {
   State<SignInForm> createState() => _SignInFormState();
 }
 
-class _SignInFormState extends State<SignInForm> with SingleTickerProviderStateMixin {
+class _SignInFormState extends State<SignInForm>
+    with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -36,8 +37,9 @@ class _SignInFormState extends State<SignInForm> with SingleTickerProviderStateM
       duration: const Duration(milliseconds: 200),
       vsync: this,
     );
-    _scaleAnimation = Tween<double>(begin: 0.95, end: 1.0)
-        .animate(CurvedAnimation(parent: _buttonAnimationController, curve: Curves.easeInOut));
+    _scaleAnimation = Tween<double>(begin: 0.95, end: 1.0).animate(
+        CurvedAnimation(
+            parent: _buttonAnimationController, curve: Curves.easeInOut));
   }
 
   @override
@@ -56,9 +58,9 @@ class _SignInFormState extends State<SignInForm> with SingleTickerProviderStateM
         _buttonAnimationController.reverse();
       });
       context.read<AuthBloc>().add(SignInEvent(
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
-      ));
+            email: _emailController.text.trim(),
+            password: _passwordController.text,
+          ));
     }
   }
 
@@ -75,8 +77,10 @@ class _SignInFormState extends State<SignInForm> with SingleTickerProviderStateM
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         setState(() {
-          _isLoading = state is AuthLoading && state.operation == AuthOperation.signIn;
-          _isGoogleLoading = state is AuthLoading && state.operation == AuthOperation.signInWithGoogle;
+          _isLoading =
+              state is AuthLoading && state.operation == AuthOperation.signIn;
+          _isGoogleLoading = state is AuthLoading &&
+              state.operation == AuthOperation.signInWithGoogle;
         });
         if (state is AuthError) {
           SnackBarHelper.showError(context: context, message: state.message);
@@ -97,8 +101,11 @@ class _SignInFormState extends State<SignInForm> with SingleTickerProviderStateM
                   keyboardType: TextInputType.emailAddress,
                   textInputAction: TextInputAction.next,
                   validator: (value) {
-                    if (value == null || value.isEmpty) return 'يرجى إدخال البريد الإلكتروني';
-                    if (!RegExp(r'^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$').hasMatch(value)) return 'يرجى إدخال بريد إلكتروني صحيح';
+                    if (value == null || value.isEmpty)
+                      return 'يرجى إدخال البريد الإلكتروني';
+                    if (!RegExp(r'^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$')
+                        .hasMatch(value))
+                      return 'يرجى إدخال بريد إلكتروني صحيح';
                     return null;
                   },
                 ),
@@ -111,8 +118,10 @@ class _SignInFormState extends State<SignInForm> with SingleTickerProviderStateM
                   obscureText: true,
                   textInputAction: TextInputAction.done,
                   validator: (value) {
-                    if (value == null || value.isEmpty) return 'يرجى إدخال كلمة المرور';
-                    if (value.length < 6) return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+                    if (value == null || value.isEmpty)
+                      return 'يرجى إدخال كلمة المرور';
+                    if (value.length < 6)
+                      return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
                     return null;
                   },
                 ),
@@ -120,7 +129,8 @@ class _SignInFormState extends State<SignInForm> with SingleTickerProviderStateM
                 Align(
                   alignment: Alignment.centerLeft,
                   child: TextButton(
-                    onPressed: () => Navigator.of(context).pushNamed('/forget-password'),
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed('/forget-password'),
                     child: Text(
                       'نسيت كلمة المرور؟',
                       style: theme.textTheme.bodyMedium?.copyWith(
@@ -176,7 +186,9 @@ class _AuthDividerLocalized extends StatelessWidget {
         Expanded(child: Divider(color: colorScheme.outline.withOpacity(0.3))),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(text, style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.onSurfaceVariant)),
+          child: Text(text,
+              style: theme.textTheme.bodySmall
+                  ?.copyWith(color: colorScheme.onSurfaceVariant)),
         ),
         Expanded(child: Divider(color: colorScheme.outline.withOpacity(0.3))),
       ],

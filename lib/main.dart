@@ -31,6 +31,8 @@ import 'package:tatbeeqi/features/todo/presentation/manager/todo_cubit.dart';
 import 'package:tatbeeqi/features/auth/presentation/manager/bloc/auth_bloc.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:tatbeeqi/core/observers/recent_courses_observer.dart';
+import 'package:tatbeeqi/core/observers/multi_bloc_observer.dart';
+import 'package:tatbeeqi/core/observers/auth_observer.dart';
 import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -49,8 +51,11 @@ void main() async {
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   await di.init();
-  // Set a focused Bloc observer for RecentCoursesCubit
-  Bloc.observer = RecentCoursesObserver();
+  // Initialize multiple Bloc observers (RecentCourses + Auth)
+  Bloc.observer = MultiBlocObserver([
+    RecentCoursesObserver(),
+    AuthObserver(),
+  ]);
   runApp(const MyApp());
 }
 
