@@ -417,5 +417,14 @@
   "followUs": "Follow Us",
   "website": "Website",
   "version": "Version",
-  "appDescription": "Your comprehensive learning companion for academic success"
+  "appDescription": "Your comprehensive learning companion for academic success",
+  
+  "authSignInTitle": "Sign In",
+  "authSignInSubtitle": "Sign in to continue your learning journey",
+  "authSignUpTitle": "Create a New Account",
+  "authSignUpSubtitle": "Create your account and start learning",
+  "authForgetPasswordTitle": "Forgot Password",
+  "authForgetPasswordSubtitle": "Enter your email to receive a reset link",
+  "authUpdateProfileTitle": "Update Profile",
+  "authUpdateProfileSubtitle": "Update your account information"
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 import '../widgets/auth_form_wrapper.dart';
 import '../widgets/sign_up_form.dart';
 import '../widgets/sign_up_footer.dart';
@@ -8,10 +9,11 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AuthFormWrapper(
-      title: 'إنشاء حساب جديد',
-      subtitle: 'أنشئ حسابك الجديد وابدأ رحلتك التعليمية',
-      child: Column(
+    final l10n = AppLocalizations.of(context)!;
+    return AuthFormWrapper(
+      title: l10n.authSignUpTitle,
+      subtitle: l10n.authSignUpSubtitle,
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SignUpForm(),

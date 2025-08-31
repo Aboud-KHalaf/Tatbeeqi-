@@ -265,5 +265,14 @@
   "markdownQuote": "اقتباس",
   "markdownLink": "رابط",
   "markdownImage": "صورة",
-  "markdownHorizontalRule": "فاصل أفقي"
+  "markdownHorizontalRule": "فاصل أفقي",
+  
+  "authSignInTitle": "تسجيل الدخول",
+  "authSignInSubtitle": "سجل دخولك لمتابعة رحلتك التعليمية",
+  "authSignUpTitle": "إنشاء حساب جديد",
+  "authSignUpSubtitle": "أنشئ حسابك الجديد وابدأ رحلتك التعليمية",
+  "authForgetPasswordTitle": "استعادة كلمة المرور",
+  "authForgetPasswordSubtitle": "أدخل بريدك الإلكتروني لإرسال رابط الاستعادة",
+  "authUpdateProfileTitle": "تحديث الملف الشخصي",
+  "authUpdateProfileSubtitle": "قم بتحديث معلومات حسابك"
 }

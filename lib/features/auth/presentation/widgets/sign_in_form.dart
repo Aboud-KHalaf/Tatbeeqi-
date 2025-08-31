@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
+import 'package:tatbeeqi/features/auth/presentation/views/forget_password_page.dart';
 import 'package:tatbeeqi/features/auth/presentation/widgets/google_sign_in_button.dart';
 
 import '../manager/bloc/auth_bloc.dart';
 import 'primary_button.dart';
 import 'auth_text_field.dart';
- 
+
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
 
@@ -102,8 +103,7 @@ class _SignInFormState extends State<SignInForm>
                   return 'يرجى إدخال البريد الإلكتروني';
                 }
                 // Safer email pattern (avoids invalid range in character class)
-                if (!RegExp(
-                        r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
+                if (!RegExp(r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$')
                     .hasMatch(value)) {
                   return 'يرجى إدخال بريد إلكتروني صحيح';
                 }
@@ -130,8 +130,11 @@ class _SignInFormState extends State<SignInForm>
             Align(
               alignment: Alignment.centerLeft,
               child: TextButton(
-                onPressed: () =>
-                    Navigator.of(context).pushNamed('/forget-password'),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const ForgetPasswordPage(),
+                  ),
+                ),
                 child: Text(
                   'نسيت كلمة المرور؟',
                   style: theme.textTheme.bodyMedium?.copyWith(
@@ -162,7 +165,7 @@ class _SignInFormState extends State<SignInForm>
             GoogleSignInButton(
               onPressed: _handleGoogleSignIn,
               isLoading: _isGoogleLoading,
-              text: 'Sign in with Google',
+              text: 'المتابعة مع جوجل',
             ),
           ],
         ),

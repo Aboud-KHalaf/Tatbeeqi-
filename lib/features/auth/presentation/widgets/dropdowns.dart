@@ -22,14 +22,22 @@ class _StudyYearDropdownState extends State<StudyYearDropdown>
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   bool _isFocused = false;
+  bool _isMenuOpen = false;
 
-  static const Map<int, String> _studyYears = {
+  Map<int, String> _studyYears = {};
+
+  static const Map<int, String> _studyYearsAr = {
+    1: 'السنة الأولى',
+    2: 'السنة الثانية',
+    3: 'السنة الثالثة',
+    4: 'السنة الرابعة',
+  };
+  static const Map<int, String> _studyYearsEn = {
     1: 'First Year',
     2: 'Second Year',
     3: 'Third Year',
     4: 'Fourth Year',
   };
-
   @override
   void initState() {
     super.initState();
@@ -68,7 +76,15 @@ class _StudyYearDropdownState extends State<StudyYearDropdown>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-
+    final locale = Localizations.localeOf(context);  
+    switch (locale.languageCode) {
+      case 'ar':
+        _studyYears = _studyYearsAr;
+        break;
+      case 'en':
+        _studyYears = _studyYearsEn;
+        break;
+    }
     return AnimatedBuilder(
       animation: _scaleAnimation,
       builder: (context, child) {
@@ -82,31 +98,70 @@ class _StudyYearDropdownState extends State<StudyYearDropdown>
                   ? (value) {
                       widget.onChanged?.call(value);
                       HapticFeedback.lightImpact();
+                      _isMenuOpen = false;
                     }
                   : null,
+              onTap: () {
+                if (widget.enabled) {
+                  setState(() {
+                    _isMenuOpen = !_isMenuOpen;
+                  });
+                }
+              },
+              isExpanded: true,
+              borderRadius: BorderRadius.circular(12),
+              menuMaxHeight: 320,
+              alignment: AlignmentDirectional.centerStart,
+              icon: AnimatedRotation(
+                turns: (_isFocused || _isMenuOpen) ? 0.5 : 0.0,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut,
+                child: Icon(
+                  Icons.expand_more_rounded,
+                  color: (_isFocused || _isMenuOpen)
+                      ? colorScheme.primary
+                      : colorScheme.onSurfaceVariant,
+                ),
+              ),
               items: _studyYears.entries
-                  .map((entry) => DropdownMenuItem(
+                  .map((entry) => DropdownMenuItem<int>(
                         value: entry.key,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.school_outlined,
-                              size: 20,
-                              color: colorScheme.primary,
-                            ),
-                            const SizedBox(width: 12),
-                            Text(
-                              entry.value,
-                              style: theme.textTheme.bodyLarge,
-                            ),
-                          ],
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  entry.value,
+                                  style: theme.textTheme.bodyLarge,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              if (widget.value == entry.key)
+                                Icon(
+                                  Icons.check_rounded,
+                                  size: 18,
+                                  color: colorScheme.primary,
+                                ),
+                            ],
+                          ),
+                        ),
+                      ))
+                  .toList(),
+              selectedItemBuilder: (ctx) => _studyYears.entries
+                  .map((entry) => Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Text(
+                          entry.value,
+                          style: theme.textTheme.bodyLarge,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ))
                   .toList(),
               decoration: InputDecoration(
-                labelText: 'Study Year',
-                hintText: 'Select your study year',
+                labelText: 'السنة الدراسية',
+                hintText: 'اختر السنة الدراسية',
+                alignLabelWithHint: true,
                 prefixIcon: Icon(
                   Icons.school_outlined,
                   color: _isFocused
@@ -115,9 +170,8 @@ class _StudyYearDropdownState extends State<StudyYearDropdown>
                 ),
                 filled: true,
                 fillColor: _isFocused
-                    ? colorScheme.primaryContainer.withValues(alpha: 0.1)
-                    : colorScheme.surfaceContainerHighest
-                        .withValues(alpha: 0.3),
+                    ? colorScheme.primaryContainer.withOpacity(0.10)
+                    : colorScheme.surfaceContainerHighest.withOpacity(0.30),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(
@@ -159,7 +213,7 @@ class _StudyYearDropdownState extends State<StudyYearDropdown>
                       : colorScheme.onSurfaceVariant,
                 ),
                 hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                  color: colorScheme.onSurfaceVariant.withOpacity(0.60),
                 ),
                 errorStyle: theme.textTheme.bodySmall?.copyWith(
                   color: colorScheme.error,
@@ -170,12 +224,12 @@ class _StudyYearDropdownState extends State<StudyYearDropdown>
                 ),
               ),
               validator: (val) =>
-                  val == null ? 'Please select your study year' : null,
+                  val == null ? 'يرجى اختيار السنة الدراسية' : null,
               dropdownColor: colorScheme.surface,
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: widget.enabled
                     ? colorScheme.onSurface
-                    : colorScheme.onSurface.withValues(alpha: 0.38),
+                    : colorScheme.onSurface.withOpacity(0.38),
               ),
             ),
           ),
@@ -206,12 +260,17 @@ class _DepartmentDropdownState extends State<DepartmentDropdown>
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
   bool _isFocused = false;
+  bool _isMenuOpen = false;
 
-  static const Map<int, String> _departments = {
-    1: 'Computer Science',
-    2: 'Information Technology',
+  static const Map<int, String> _departmentsAr = {
+    1: 'تقنيات الحاسب',
+    2: 'التكييف والتبريد',
   };
-
+  static const Map<int, String> _departmentsEn = {
+    1: 'Computer Engineering',
+    2: 'Air Conditioning and Refrigeration',
+  };
+  Map<int, String> _departments = {};
   @override
   void initState() {
     super.initState();
@@ -250,7 +309,15 @@ class _DepartmentDropdownState extends State<DepartmentDropdown>
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-
+    final locale = Localizations.localeOf(context);
+    switch (locale.languageCode) {
+      case 'ar':
+         _departments = _departmentsAr;
+        break;
+      case 'en':
+         _departments = _departmentsEn;
+        break;
+    }
     return AnimatedBuilder(
       animation: _scaleAnimation,
       builder: (context, child) {
@@ -264,34 +331,70 @@ class _DepartmentDropdownState extends State<DepartmentDropdown>
                   ? (value) {
                       widget.onChanged?.call(value);
                       HapticFeedback.lightImpact();
+                      _isMenuOpen = false;
                     }
                   : null,
+              onTap: () {
+                if (widget.enabled) {
+                  setState(() {
+                    _isMenuOpen = !_isMenuOpen;
+                  });
+                }
+              },
+              isExpanded: true,
+              elevation: 8,
+              borderRadius: BorderRadius.circular(12),
+              menuMaxHeight: 320,
+              alignment: AlignmentDirectional.centerStart,
+              icon: AnimatedRotation(
+                turns: (_isFocused || _isMenuOpen) ? 0.5 : 0.0,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut,
+                child: Icon(
+                  Icons.expand_more_rounded,
+                  color: (_isFocused || _isMenuOpen)
+                      ? colorScheme.primary
+                      : colorScheme.onSurfaceVariant,
+                ),
+              ),
               items: _departments.entries
-                  .map((entry) => DropdownMenuItem(
+                  .map((entry) => DropdownMenuItem<int>(
                         value: entry.key,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.business_outlined,
-                              size: 20,
-                              color: colorScheme.primary,
-                            ),
-                            const SizedBox(width: 12),
-                            Flexible(
-                              child: Text(
-                                entry.value,
-                                style: theme.textTheme.bodyLarge,
-                                overflow: TextOverflow.ellipsis,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  entry.value,
+                                  style: theme.textTheme.bodyLarge,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                            ),
-                          ],
+                              if (widget.value == entry.key)
+                                Icon(
+                                  Icons.check_rounded,
+                                  size: 18,
+                                  color: colorScheme.primary,
+                                ),
+                            ],
+                          ),
+                        ),
+                      ))
+                  .toList(),
+              selectedItemBuilder: (ctx) => _departments.entries
+                  .map((entry) => Align(
+                        alignment: AlignmentDirectional.centerStart,
+                        child: Text(
+                          entry.value,
+                          style: theme.textTheme.bodyLarge,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ))
                   .toList(),
               decoration: InputDecoration(
-                labelText: 'Department',
-                hintText: 'Select your department',
+                labelText: 'القسم',
+                hintText: 'اختر القسم',
                 prefixIcon: Icon(
                   Icons.business_outlined,
                   color: _isFocused
@@ -300,9 +403,8 @@ class _DepartmentDropdownState extends State<DepartmentDropdown>
                 ),
                 filled: true,
                 fillColor: _isFocused
-                    ? colorScheme.primaryContainer.withValues(alpha: 0.1)
-                    : colorScheme.surfaceContainerHighest
-                        .withValues(alpha: 0.3),
+                    ? colorScheme.primaryContainer.withOpacity(0.10)
+                    : colorScheme.surfaceContainerHighest.withOpacity(0.30),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide(
@@ -344,7 +446,7 @@ class _DepartmentDropdownState extends State<DepartmentDropdown>
                       : colorScheme.onSurfaceVariant,
                 ),
                 hintStyle: theme.textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
+                  color: colorScheme.onSurfaceVariant.withOpacity(0.60),
                 ),
                 errorStyle: theme.textTheme.bodySmall?.copyWith(
                   color: colorScheme.error,
@@ -354,13 +456,12 @@ class _DepartmentDropdownState extends State<DepartmentDropdown>
                   vertical: 16,
                 ),
               ),
-              validator: (val) =>
-                  val == null ? 'Please select your department' : null,
+              validator: (val) => val == null ? 'يرجى اختيار القسم' : null,
               dropdownColor: colorScheme.surface,
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: widget.enabled
                     ? colorScheme.onSurface
-                    : colorScheme.onSurface.withValues(alpha: 0.38),
+                    : colorScheme.onSurface.withOpacity(0.38),
               ),
             ),
           ),
