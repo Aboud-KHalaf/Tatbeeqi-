@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/recent_courses_cubit/recent_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/recent_courses_cubit/recent_courses_state.dart';
+import 'package:tatbeeqi/features/courses/presentation/widgets/course_card_progress.dart';
 
 class StudyProgressSection extends StatefulWidget {
   const StudyProgressSection({super.key});
@@ -56,126 +57,73 @@ class _StudyProgressSectionState extends State<StudyProgressSection> {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
+        final rawProgress = course.progressPercent ?? 0;
+    final progress = rawProgress.clamp(0.0, 1.0); // to avoid over 100%
+    final progressText = '${(progress * 100).toInt()}%';
     return Container(
       width: 110,
       margin: const EdgeInsetsDirectional.only(end: 16),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          onTap: () {
-            HapticFeedback.lightImpact();
-            context.read<RecentCoursesCubit>().track(userId, course.id);
-            // TODO: Navigate to course details
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Material(
-              color: Colors.transparent,
-              borderRadius: BorderRadius.circular(16),
-              child: Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: colorScheme.surfaceContainerHigh,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                    color: colorScheme.outlineVariant,
-                    width: 1,
+      child: GestureDetector(
+        onTap: () {
+          context.read<RecentCoursesCubit>().track(userId, course.id);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(16),
+            child: Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: colorScheme.surfaceContainerHigh,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: colorScheme.outlineVariant,
+                  width: 1,
+                ),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Icon container with enhanced styling
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: colorScheme.secondaryContainer,
+                      borderRadius: BorderRadius.circular(12.0),
+                      border: Border.all(
+                        color: colorScheme.outlineVariant,
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.school_rounded,
+                      size: 24,
+                      color: colorScheme.onSecondaryContainer,
+                    ),
                   ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Icon container with enhanced styling
-                    Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: colorScheme.secondaryContainer,
-                        borderRadius: BorderRadius.circular(12.0),
-                        border: Border.all(
-                          color: colorScheme.outlineVariant,
-                        ),
-                      ),
-                      child: Icon(
-                        Icons.school_rounded,
-                        size: 24,
-                        color: colorScheme.onSecondaryContainer,
-                      ),
+      
+                  const SizedBox(height: 6),
+      
+                  // Course title with better typography
+                  Text(
+                    course.courseName,
+                    style: textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                      color: colorScheme.onSurface,
+                      height: 1.2,
+                      fontSize: 12,
                     ),
-
-                    const SizedBox(height: 6),
-
-                    // Course title with better typography
-                    Text(
-                      course.courseName,
-                      style: textTheme.bodySmall?.copyWith(
-                        fontWeight: FontWeight.w600,
-                        color: colorScheme.onSurface,
-                        height: 1.2,
-                        fontSize: 12,
-                      ),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-
-                    const SizedBox(height: 6),
-
-                    // Simple progress indicator (no animation yet)
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'التقدم',
-                              style: textTheme.labelSmall?.copyWith(
-                                color: colorScheme.onSurfaceVariant,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10,
-                              ),
-                            ),
-                            Text(
-                              '—', // Placeholder until progress available
-                              style: textTheme.labelSmall?.copyWith(
-                                color: colorScheme.primary,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 10,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        Container(
-                          height: 3,
-                          decoration: BoxDecoration(
-                            color: colorScheme.surfaceContainerHighest,
-                            borderRadius: BorderRadius.circular(2),
-                          ),
-                          child: FractionallySizedBox(
-                            alignment: Alignment.centerLeft,
-                            widthFactor: 0.0, // no progress yet
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: colorScheme.primary,
-                                borderRadius: BorderRadius.circular(2),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color:
-                                        colorScheme.primary.withOpacity(0.4),
-                                    blurRadius: 2,
-                                    offset: const Offset(0, 1),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+      
+                  const SizedBox(height: 6),
+      
+                   CourseCardProgress(progress: progress, progressText: progressText),
+                ],
               ),
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/helpers/courses_data_helper.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/core/routing/routes_args.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
@@ -123,9 +124,9 @@ class _CourseCardState extends State<CourseCard>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         CourseCardHeader(
-                          iconData: getIconByCourseId(widget.course.id),
+                          iconData: CourseIconHelper.getStyle(widget.course.id, context),
                           title: widget.course.courseName,
-                          //      color: colorScheme.onSurface,
+                          
                         ),
                         const Spacer(),
                         CourseCardProgress(

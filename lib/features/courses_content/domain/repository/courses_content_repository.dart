@@ -7,5 +7,6 @@ import '../entities/lesson_entity.dart';
 abstract class CoursesContentRepository {
   Future<Either<Failure, List<Lecture>>> fetchLecturesByCourseId(int courseId);
   Future<Either<Failure, List<Lesson>>> fetchLessonsByLectureId(int lectureId);
+  Future<Either<Failure, List<Lesson>>> fetchRecentLessons({int limit = 4});
   Future<Either<Failure, Unit>> markLessonAsCompleted(int lessonId);
 }

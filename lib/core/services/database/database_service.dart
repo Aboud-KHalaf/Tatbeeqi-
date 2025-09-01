@@ -1,4 +1,5 @@
 // ignore: depend_on_referenced_packages
+import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tatbeeqi/core/utils/app_logger.dart';
@@ -56,14 +57,23 @@ const String cachedPostsColIsArticle = 'is_article';
 const String cachedPostsColIsLiked = 'is_liked';
 const String cachedPostsColTopics = 'topics';
 
+// Cached News Table
+const String cachedNewsTableName = 'cached_news';
+const String cachedNewsColId = 'id';
+const String cachedNewsColTitle = 'title';
+const String cachedNewsColContent = 'content';
+const String cachedNewsColImageUrl = 'image_url';
+const String cachedNewsColAuthor = 'author';
+const String cachedNewsColPublicationDate = 'publication_date';
+const String cachedNewsColCategory = 'category';
+const String cachedNewsColDescription = 'description';
 // Recent Courses Table
 const String recentCoursesTableName = 'recent_courses';
 const String recentCoursesColId = 'id';
 const String recentCoursesColUserId = 'user_id';
 const String recentCoursesColCourseId = 'course_id';
 const String recentCoursesColLastVisit = 'last_visit';
-
-class DatabaseService {
+ class DatabaseService {
   Database? _database;
   bool _isInitializing = false; // Prevent race conditions during init
 
@@ -97,7 +107,7 @@ class DatabaseService {
     final path = join(dbPath, _dbName);
     return await openDatabase(
       path,
-      version: 2,
+      version: 11,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -105,12 +115,17 @@ class DatabaseService {
 
   // Define the schema creation logic
   Future<void> _onCreate(Database db, int version) async {
+    if (version == 10) {
+      await db.execute(''' DROP TABLE IF EXISTS $cachedNewsTableName''');
+      debugPrint('Dropping cached news table');
+    }
     AppLogger.info('Creating database tables for version $version');
     await _createTodosTable(db);
     await _createCoursesTable(db);
     await _createNotesTable(db);
     await _createCachedPostsTable(db);
     await _createRecentCoursesTable(db);
+    await _createCachedNewsTable(db);
     AppLogger.info('All tables created successfully.');
   }
 
@@ -189,6 +204,23 @@ class DatabaseService {
     AppLogger.info('Table $cachedPostsTableName created successfully.');
   }
 
+  Future<void> _createCachedNewsTable(Database db) async {
+    AppLogger.info('Creating database table: $cachedNewsTableName');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS $cachedNewsTableName (
+        $cachedNewsColId TEXT PRIMARY KEY,
+        $cachedNewsColTitle TEXT NOT NULL,
+        $cachedNewsColContent TEXT NOT NULL,
+        $cachedNewsColImageUrl TEXT,
+        $cachedNewsColAuthor TEXT,
+        $cachedNewsColPublicationDate TEXT NOT NULL,
+        $cachedNewsColCategory TEXT,
+        $cachedNewsColDescription TEXT
+      )
+    ''');
+    AppLogger.info('Table $cachedNewsTableName created successfully.');
+  }
+
   Future<void> _createRecentCoursesTable(Database db) async {
     AppLogger.info('Creating database table: $recentCoursesTableName');
     await db.execute('''
@@ -211,9 +243,7 @@ class DatabaseService {
   // Add migration logic for schema changes
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     AppLogger.info('Upgrading database from version $oldVersion to $newVersion');
-    if (oldVersion < 2) {
-      await _createRecentCoursesTable(db);
-    }
+
   }
 
   // Method to close the database connection

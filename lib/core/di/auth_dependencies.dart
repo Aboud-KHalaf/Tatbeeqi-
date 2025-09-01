@@ -3,7 +3,6 @@ import 'package:hive/hive.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../features/auth/data/datasources/user_local_data_source.dart';
-import '../../features/auth/data/datasources/user_local_data_source_impl.dart';
 
 import '../../features/auth/data/datasources/remote_auth_datasource.dart';
 import '../../features/auth/data/repositories/auth_repository_impl.dart';

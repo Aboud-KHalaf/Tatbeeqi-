@@ -38,6 +38,16 @@ class CoursesContentRepositoryImpl implements CoursesContentRepository {
   }
 
   @override
+  Future<Either<Failure, List<Lesson>>> fetchRecentLessons({int limit = 4}) async {
+    try {
+      final remoteLessons = await remoteDataSource.fetchRecentLessons(limit: limit);
+      return Right(remoteLessons);
+    } on ServerException {
+      return const Left(ServerFailure("Error fetching recent lessons"));
+    }
+  }
+
+  @override
   Future<Either<Failure, Unit>> markLessonAsCompleted(int lessonId) async {
     try {
       await remoteDataSource.markLessonAsCompleted(lessonId);
@@ -47,3 +57,4 @@ class CoursesContentRepositoryImpl implements CoursesContentRepository {
     }
   }
 }
+

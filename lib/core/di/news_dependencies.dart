@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tatbeeqi/core/services/database/database_service.dart';
+import 'package:tatbeeqi/features/news/data/datasources/news_local_data_source.dart';
 import 'package:tatbeeqi/features/news/data/datasources/news_remote_data_source.dart';
 import 'package:tatbeeqi/features/news/data/repositories/news_repository_impl.dart';
 import 'package:tatbeeqi/features/news/domain/repositories/news_repository.dart';
@@ -18,9 +20,12 @@ void initNewsDependencies(GetIt sl) {
 
   // Repository
   sl.registerLazySingleton<NewsRepository>(
-      () => NewsRepositoryImpl(remoteDataSource: sl()));
+      () => NewsRepositoryImpl(remoteDataSource: sl(), localDataSource: sl()));
 
   // Data Source
   sl.registerLazySingleton<NewsRemoteDataSource>(
       () => NewsRemoteDataSourceImpl(supabaseClient: sl<SupabaseClient>()));
+
+  sl.registerLazySingleton<NewsLocalDataSource>(
+      () => NewsLocalDataSourceImpl(sl<DatabaseService>()));
 }

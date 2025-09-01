@@ -3,8 +3,7 @@ import 'package:tatbeeqi/features/quiz/domain/entities/quiz_question.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_score_summary_card.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_result_list.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_result_action_button.dart';
-import 'package:tatbeeqi/l10n/app_localizations.dart';
-
+ 
 class ResultView extends StatelessWidget {
   static const String routeName = '/quiz_result';
 
@@ -23,25 +22,12 @@ class ResultView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
-    final colorScheme = Theme.of(context).colorScheme;
-    final totalQuestions = questions.length;
+ 
+     final totalQuestions = questions.length;
     final passed = score >= (totalQuestions / 2); // Example passing threshold
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.quizResultsTitle),
-        backgroundColor: colorScheme.primary,
-        foregroundColor: colorScheme.onPrimary,
-        centerTitle: true,
-        elevation: 4,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(16),
-          ),
-        ),
-      ),
+      
       body: SafeArea(
         child: CustomScrollView(
           slivers: [

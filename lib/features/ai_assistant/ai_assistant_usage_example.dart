@@ -1,5 +1,5 @@
 // AI Assistant Chat Interface
-// Modern chat UI for AI learning assistant
+// Modern chat UI for AI learning assistant - Fixed keyboard overflow issue
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -104,7 +104,7 @@ class _AiAssistantViewState extends State<_AiAssistantView> {
       ),
       body: Column(
         children: [
-          // Chat messages area
+          // Chat messages area - This will shrink when keyboard appears
           Expanded(
             child: BlocListener<AiAssistantCubit, AiAssistantState>(
               listener: (context, state) {
@@ -144,7 +144,7 @@ class _AiAssistantViewState extends State<_AiAssistantView> {
                     ),
             ),
           ),
-          // Message input area
+          // Message input area - Fixed to bottom
           _buildMessageInput(),
         ],
       ),
@@ -156,7 +156,7 @@ class _AiAssistantViewState extends State<_AiAssistantView> {
     final colorScheme = theme.colorScheme;
     
     return Center(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -339,57 +339,63 @@ class _AiAssistantViewState extends State<_AiAssistantView> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: colorScheme.surface,
-        border: Border(
-          top: BorderSide(
-            color: colorScheme.outline.withOpacity(0.2),
-            width: 1,
+    return SafeArea(
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: colorScheme.surface,
+          border: Border(
+            top: BorderSide(
+              color: colorScheme.outline.withOpacity(0.2),
+              width: 1,
+            ),
           ),
         ),
-      ),
-      child: SafeArea(
         child: Row(
           children: [
             Expanded(
-              child: TextField(
-                controller: _messageController,
-                decoration: InputDecoration(
-                  hintText: 'اكتب رسالتك هنا...',
-                  hintStyle: TextStyle(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(24),
-                    borderSide: BorderSide(
-                      color: colorScheme.outline.withOpacity(0.3),
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(24),
-                    borderSide: BorderSide(
-                      color: colorScheme.outline.withOpacity(0.3),
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(24),
-                    borderSide: BorderSide(
-                      color: colorScheme.primary,
-                      width: 2,
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                  filled: true,
-                  fillColor: colorScheme.surfaceContainerHighest.withOpacity(0.3),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxHeight: 120, // Limit maximum height
                 ),
-                maxLines: null,
-                textInputAction: TextInputAction.send,
-                onSubmitted: (_) => _sendMessage(),
+                child: TextField(
+                  controller: _messageController,
+                  decoration: InputDecoration(
+                    hintText: 'اكتب رسالتك هنا...',
+                    hintStyle: TextStyle(
+                      color: colorScheme.onSurfaceVariant,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(24),
+                      borderSide: BorderSide(
+                        color: colorScheme.outline.withOpacity(0.3),
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(24),
+                      borderSide: BorderSide(
+                        color: colorScheme.outline.withOpacity(0.3),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(24),
+                      borderSide: BorderSide(
+                        color: colorScheme.primary,
+                        width: 2,
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    filled: true,
+                    fillColor: colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                  ),
+                  maxLines: null,
+                  minLines: 1,
+                  textInputAction: TextInputAction.send,
+                  onSubmitted: (_) => _sendMessage(),
+                ),
               ),
             ),
             const SizedBox(width: 8),
@@ -413,46 +419,3 @@ class _AiAssistantViewState extends State<_AiAssistantView> {
     );
   }
 }
-
-/*
-USAGE INSTRUCTIONS:
-
-1. Import the necessary dependencies in your pubspec.yaml (already done)
-
-2. Make sure your .env file contains the GEMINI_API_KEY (already done)
-
-3. Initialize the dependencies in your main.dart:
-   ```dart
-   await dotenv.load(fileName: ".env");
-   await init(); // This will initialize all dependencies including AI Assistant
-   ```
-
-4. Use the AI Assistant in your app:
-   ```dart
-   // Method 1: Use the example widget directly
-   Navigator.push(
-     context,
-     MaterialPageRoute(builder: (context) => const AiAssistantUsageExample()),
-   );
-
-   // Method 2: Use the Cubit directly in your own widget
-   BlocProvider(
-     create: (context) => sl<AiAssistantCubit>(),
-     child: YourCustomWidget(),
-   );
-   ```
-
-5. Ask questions programmatically:
-   ```dart
-   final cubit = context.read<AiAssistantCubit>();
-   cubit.askQuestion("Explain the water cycle");
-   ```
-
-FEATURES:
-- Clean Architecture implementation
-- Proper error handling and loading states
-- Study-focused AI responses
-- Network connectivity checks
-- Configurable AI model parameters
-- Professional tutor prompt engineering
-*/

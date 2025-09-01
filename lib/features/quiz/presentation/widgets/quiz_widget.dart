@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/core/routing/routes_args.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/manager/lesson_completion/lesson_completion_cubit.dart';
 import 'package:tatbeeqi/features/quiz/presentation/bloc/quiz_bloc.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_empty_state.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_error_state.dart';
@@ -36,6 +37,13 @@ class _QuizWidgetState extends State<QuizWidget> {
     return BlocConsumer<QuizBloc, QuizState>(
       listener: (context, state) {
         if (state is QuizCompleted) {
+          // mark lesson as completed if passed
+          if (state.score >= (state.questions.length / 2)) {
+            debugPrint('Lesson completed');
+            context
+                .read<LessonCompletionCubit>()
+                .markLessonAsCompleted(widget.lessonId);
+          }
           HapticFeedback.lightImpact();
           context.pushReplacement(
             AppRoutes.quizResultPath,
@@ -59,7 +67,8 @@ class _QuizWidgetState extends State<QuizWidget> {
 
         if (state is QuizError) {
           return QuizErrorState(
-            onRetry: () => context.read<QuizBloc>().add(LoadQuiz(widget.lessonId)),
+            onRetry: () =>
+                context.read<QuizBloc>().add(LoadQuiz(widget.lessonId)),
           );
         }
 

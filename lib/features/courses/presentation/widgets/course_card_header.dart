@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/core/helpers/courses_data_helper.dart';
 
 class CourseCardHeader extends StatelessWidget {
-  final IconData iconData;
+  final CourseStyle iconData;
   final String title;
 
   const CourseCardHeader({
@@ -23,12 +24,12 @@ class CourseCardHeader extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: colorScheme.secondaryContainer,
+            color: iconData.color.withValues(alpha: 0.2),
           ),
           child: Icon(
-            iconData,
+            iconData.icon,
             size: 42.0,
-            color: colorScheme.onSecondaryContainer,
+            color: iconData.color,
           ),
         ),
         const SizedBox(height: 12.0),

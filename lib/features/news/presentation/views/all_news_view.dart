@@ -25,21 +25,37 @@ class AllNewsView extends StatelessWidget {
           title: Text(
         l10n.homeLatestNewsAndEvents,
       )),
-      body: BlocBuilder<NewsCubit, NewsState>(
+      body: RefreshIndicator(
+        onRefresh: () => context.read<NewsCubit>().fetchNews(),
+        child: BlocBuilder<NewsCubit, NewsState>(
         builder: (context, state) {
           if (state is NewsLoadedState) {
+            if (state.newsItems.isEmpty) {
+              return Center(child: Text(l10n.newsNoNewsAvailable));
+            }
             return AllNewsListViewWidget(
                 news: state.newsItems,
                 isSmallScreen: isSmallScreen,
                 colorScheme: colorScheme);
           } else if (state is NewsErrorState) {
             AppLogger.error(state.message);
-            return const Icon(Icons.error);
+            return ListView(children: [
+              SizedBox(height: size.height / 3),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    state.message,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ]);
           } else {
             return AllNewsShimmerLoaderList(isSmallScreen: isSmallScreen);
           }
         },
-      ),
+      ),)
     );
   }
 }
