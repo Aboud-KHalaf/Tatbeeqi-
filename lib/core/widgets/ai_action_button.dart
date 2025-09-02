@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tatbeeqi/features/ai_assistant/ai_assistant_usage_example.dart';
+import 'package:tatbeeqi/features/ai_assistant/presentation/views/labeb_ai_assistant_view.dart';
 
 class AiActionButton extends StatelessWidget {
   const AiActionButton({

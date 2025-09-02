@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/features/auth/presentation/manager/user_cubit/user_cubit.dart';
+import 'package:tatbeeqi/features/auth/presentation/manager/user_cubit/user_state.dart';
 
 class StreaksHeader extends StatelessWidget {
   const StreaksHeader({
@@ -16,7 +19,7 @@ class StreaksHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-
+    String text = 'واصل زخم التعلم لديك!';
     return SliverAppBar(
       expandedHeight: 120,
       floating: false,
@@ -69,16 +72,26 @@ class StreaksHeader extends StatelessWidget {
                                 children: [
                                   Text(
                                     'سلاسل التعلم',
-                                    style: theme.textTheme.headlineMedium?.copyWith(
+                                    style: theme.textTheme.headlineMedium
+                                        ?.copyWith(
                                       fontWeight: FontWeight.bold,
                                       color: colorScheme.onSurface,
                                     ),
                                   ),
                                   const SizedBox(height: 4),
-                                  Text(
-                                    'واصل زخم التعلم لديك!',
-                                    style: theme.textTheme.bodyMedium?.copyWith(
-                                      color: colorScheme.onSurfaceVariant,
+                                  BlocListener<UserCubit, UserState>(
+                                    listener: (context, state) {
+                                      if (state is UserLoaded) {
+                                        text =
+                                            'واصل زخم التعلم لديك يا ${state.user.name}';
+                                      }
+                                    },
+                                    child: Text(
+                                      text,
+                                      style:
+                                          theme.textTheme.bodyMedium?.copyWith(
+                                        color: colorScheme.onSurfaceVariant,
+                                      ),
                                     ),
                                   ),
                                 ],

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/core/routing/routes_args.dart';
+import 'package:tatbeeqi/core/widgets/app_error.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses_content/domain/entities/lecture_entity.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/manager/lectures/lectures_cubit.dart';
@@ -34,9 +35,8 @@ class CourseLecturesView extends StatelessWidget {
             }
             return LecturesList(lectures: state.lectures, course: course);
           } else if (state is LecturesError) {
-            return _ErrorState(
-              message: state.message,
-              onRetry: () =>
+            return AppError(
+              onAction: () =>
                   context.read<LecturesCubit>().fetchLectures(course.id),
             );
           }
@@ -86,6 +86,7 @@ class _EmptyState extends StatelessWidget {
         padding: const EdgeInsets.all(32),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Icon(
               Icons.school_outlined,
@@ -94,71 +95,11 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'No Lectures Available',
+              'لا يوجد محاضرات متاحة لهذا المقرر',
               style: theme.textTheme.headlineSmall?.copyWith(
                 color: colorScheme.onSurface,
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'There are no lectures in this course yet.',
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
               textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ErrorState extends StatelessWidget {
-  final String message;
-  final VoidCallback onRetry;
-
-  const _ErrorState({
-    required this.message,
-    required this.onRetry,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.error_outline,
-              size: 80,
-              color: colorScheme.error,
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'Oops! Something went wrong',
-              style: theme.textTheme.headlineSmall?.copyWith(
-                color: colorScheme.onSurface,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              message,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: colorScheme.onSurfaceVariant,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 24),
-            FilledButton.icon(
-              onPressed: onRetry,
-              icon: const Icon(Icons.refresh),
-              label: const Text('Retry'),
             ),
           ],
         ),

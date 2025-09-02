@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/widgets/app_error.dart';
+import 'package:tatbeeqi/core/widgets/app_loading.dart';
 import '../cubit/streaks_cubit.dart';
 import '../cubit/streaks_state.dart';
 import 'streaks_header.dart';
-import 'streaks_loading_state.dart';
 import 'streaks_loaded_state.dart';
 import 'streaks_updating_state.dart';
-import 'streaks_error_state.dart';
 
 class StreaksViewBody extends StatefulWidget {
   const StreaksViewBody({super.key});
@@ -21,7 +21,7 @@ class _StreaksViewBodyState extends State<StreaksViewBody>
   late AnimationController _headerAnimationController;
   late Animation<double> _headerSlideAnimation;
   late Animation<double> _headerFadeAnimation;
-
+  
   @override
   void initState() {
     super.initState();
@@ -68,47 +68,45 @@ class _StreaksViewBodyState extends State<StreaksViewBody>
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return Scaffold(
-      backgroundColor: colorScheme.surface,
-      body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: () async {
-            HapticFeedback.lightImpact();
-            await context.read<StreaksCubit>().refreshStreak();
-          },
-          child: CustomScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            slivers: [
-              // Extracted header widget with animation controllers.
-              StreaksHeader(
-                headerAnimationController: _headerAnimationController,
-                headerSlideAnimation: _headerSlideAnimation,
-                headerFadeAnimation: _headerFadeAnimation,
-              ),
-              // Main content area, which rebuilds based on the BLoC state.
-              SliverPadding(
-                padding: const EdgeInsets.all(16),
-                sliver: SliverToBoxAdapter(
-                  child: BlocBuilder<StreaksCubit, StreaksState>(
-                    builder: (context, state) {
-                      if (state is StreaksLoading) {
-                        return const StreaksLoadingState();
-                      } else if (state is StreaksLoaded) {
-                        return StreaksLoadedState(state: state);
-                      } else if (state is StreaksUpdating) {
-                        return StreaksUpdatingState(state: state);
-                      } else if (state is StreaksError) {
-                        return StreaksErrorState(state: state);
-                      }
-                      return const SizedBox.shrink();
-                    },
-                  ),
+    return SafeArea(
+      child: RefreshIndicator(
+        onRefresh: () async {
+          HapticFeedback.lightImpact();
+          await context.read<StreaksCubit>().refreshStreak();
+        },
+        child: CustomScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          slivers: [
+            // Extracted header widget with animation controllers.
+            StreaksHeader(
+              headerAnimationController: _headerAnimationController,
+              headerSlideAnimation: _headerSlideAnimation,
+              headerFadeAnimation: _headerFadeAnimation,
+            ),
+            // Main content area, which rebuilds based on the BLoC state.
+            SliverPadding(
+              padding: const EdgeInsets.all(16),
+              sliver: SliverToBoxAdapter(
+                child: BlocBuilder<StreaksCubit, StreaksState>(
+                  builder: (context, state) {
+                    if (state is StreaksLoading) {
+                      return const AppLoading();
+                    } else if (state is StreaksLoaded) {
+                      return StreaksLoadedState(state: state);
+                    } else if (state is StreaksUpdating) {
+                      return StreaksUpdatingState(state: state);
+                    } else if (state is StreaksError) {
+                      return AppError(
+                        onAction: () =>
+                            context.read<StreaksCubit>().refreshStreak(),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

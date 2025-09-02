@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/widgets/app_error.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_state.dart';
@@ -7,7 +8,6 @@ import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/add_comment_bar.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/comment_tile_shimmer.dart';
-import 'package:tatbeeqi/core/widgets/custom_error_widget.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/comments_empty_widget.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/comments_list_widget.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
@@ -73,9 +73,10 @@ class _CommentsSheetState extends State<CommentsSheet> {
                     if (state is CommentsLoading) {
                       return const CommentTaileShimmerList();
                     } else if (state is CommentsError) {
-                      return CustomErrorWidget(
-                        message: state.message,
-                        postId: widget.postId,
+                      return AppError(
+                        onAction: () => context
+                            .read<CommentsBloc>()
+                            .add(RefreshComments(widget.postId)),
                       );
                     } else if (state is CommentsLoaded) {
                       if (state.comments.isEmpty) {
