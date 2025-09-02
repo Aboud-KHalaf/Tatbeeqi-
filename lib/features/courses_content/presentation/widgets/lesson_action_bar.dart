@@ -42,17 +42,18 @@ class LessonActionBar extends StatelessWidget {
       child: SafeArea(
         child: Row(
           children: [
+             _buildCompactNavButton(
+              context: context,
+              icon: Icons.arrow_forward,
+              onPressed: canGoNext ? onNext : null,
+            ),
+            const SizedBox(width: 8),
             _buildCompactNavButton(
               context: context,
               icon: Icons.arrow_back,
               onPressed: canGoPrevious ? onPrevious : null,
             ),
-            const SizedBox(width: 8),
-            _buildCompactNavButton(
-              context: context,
-              icon: Icons.arrow_forward,
-              onPressed: canGoNext ? onNext : null,
-            ),
+           
             const SizedBox(width: 8),
             _CompletionButton(lesson: lesson),
             const Spacer(),

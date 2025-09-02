@@ -27,6 +27,7 @@ class _PostCardHeaderState extends State<PostCardHeader>
     _scaleAnim = Tween<double>(begin: 1.0, end: 0.98).animate(
       CurvedAnimation(parent: _hoverController, curve: Curves.easeOut),
     );
+
   }
 
   @override
@@ -98,7 +99,14 @@ class _PostCardHeaderState extends State<PostCardHeader>
                       const SizedBox(width: 4),
                       Flexible(
                         child: Text(
-                          timeago.format(post.createdAt, locale: 'ar_short'),
+                          timeago.format(
+                            post.createdAt,
+                            locale:
+                                Localizations.localeOf(context).languageCode ==
+                                        'ar'
+                                    ? 'ar'
+                                    : 'en',
+                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: theme.textTheme.bodySmall?.copyWith(
@@ -113,7 +121,7 @@ class _PostCardHeaderState extends State<PostCardHeader>
               ),
             ),
             const SizedBox(width: 8),
-            _MoreMenuButton(isHovered: _isHovered),
+            MoreMenuButton(isHovered: _isHovered),
           ],
         ),
       ),
@@ -163,8 +171,8 @@ class _Avatar extends StatelessWidget {
   }
 }
 
-class _MoreMenuButton extends StatelessWidget {
-  const _MoreMenuButton({required this.isHovered});
+class MoreMenuButton extends StatelessWidget {
+  const MoreMenuButton({super.key, required this.isHovered});
   final bool isHovered;
 
   @override
@@ -243,4 +251,3 @@ class _MoreMenuButton extends StatelessWidget {
     );
   }
 }
-

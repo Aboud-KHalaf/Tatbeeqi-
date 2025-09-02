@@ -18,11 +18,11 @@ class AiAssistantRepositoryImpl implements AiAssistantRepository {
   });
 
   @override
-  Future<Either<Failure, AiResponse>> askQuestion(AiQuestion question) async {
+  Future<Either<Failure, AiResponse>> askQuestion(AiQuestion question , String userName) async {
     if (await networkInfo.isConnected()) {
       try {
         final questionModel = AiQuestionModel.fromEntity(question);
-        final response = await remoteDataSource.askQuestion(questionModel);
+         final response = await remoteDataSource.askQuestion(questionModel , userName);
         return Right(response);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));

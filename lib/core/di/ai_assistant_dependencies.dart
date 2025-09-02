@@ -10,15 +10,17 @@ import '../../features/ai_assistant/presentation/cubit/ai_assistant_cubit.dart';
 void initAiAssistantDependencies(GetIt sl) {
   // External dependencies
   final apiKey = dotenv.env['GEMINI_API_KEY'];
-  print('API Key loaded: ${apiKey != null ? 'Yes (${apiKey.length} chars)' : 'No'}');
-  
+  print(
+      'API Key loaded: ${apiKey != null ? 'Yes (${apiKey.length} chars)' : 'No'}');
+
   if (apiKey == null || apiKey.isEmpty) {
     throw Exception('GEMINI_API_KEY not found in environment variables');
   }
-  
+
   // Validate API key format (should start with AIza)
   if (!apiKey.startsWith('AIza')) {
-    print('Warning: API key does not start with "AIza" - this might be invalid');
+    print(
+        'Warning: API key does not start with "AIza" - this might be invalid');
   }
 
   final model = GenerativeModel(
@@ -57,5 +59,6 @@ void initAiAssistantDependencies(GetIt sl) {
   sl.registerLazySingleton(() => AskAiQuestion(sl()));
 
   // Cubit
-  sl.registerFactory(() => AiAssistantCubit(askAiQuestion: sl()));
+  sl.registerFactory(
+      () => AiAssistantCubit(askAiQuestion: sl(), getCurrentUser: sl()));
 }

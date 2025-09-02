@@ -250,14 +250,18 @@ class _PDFViewerWidgetState extends State<PDFViewerWidget>
             AnimatedBuilder(
               animation: _controlsAnimation,
               builder: (context, child) {
-                return Opacity(
-                  opacity: _controlsAnimation.value,
-                  child: _PageIndicator(
-                    currentPage: _currentPage,
-                    totalPages: _totalPages,
-                    zoomLevel: _zoomLevel,
-                    theme: theme,
-                    colorScheme: colorScheme,
+                return Positioned(
+                  top: MediaQuery.of(context).padding.top + 16,
+                  left: 16,
+                  child: Opacity(
+                    opacity: _controlsAnimation.value,
+                    child: _PageIndicator(
+                      currentPage: _currentPage,
+                      totalPages: _totalPages,
+                      zoomLevel: _zoomLevel,
+                      theme: theme,
+                      colorScheme: colorScheme,
+                    ),
                   ),
                 );
               },
@@ -268,16 +272,20 @@ class _PDFViewerWidgetState extends State<PDFViewerWidget>
             AnimatedBuilder(
               animation: _fabAnimation,
               builder: (context, child) {
-                return Opacity(
-                  opacity: _fabAnimation.value,
-                  child: _PDFNavigationButtons(
-                    currentPage: _currentPage,
-                    totalPages: _totalPages,
-                    onPreviousPage: () => _goToPage(_currentPage - 1),
-                    onNextPage: () => _goToPage(_currentPage + 1),
-                    onPageNavigation: _showPageNavigationDialog,
-                    onZoomControl: _showZoomDialog,
-                    colorScheme: colorScheme,
+                return Positioned(
+                  bottom: 24,
+                  right: 16,
+                  child: Opacity(
+                    opacity: _fabAnimation.value,
+                    child: _PDFNavigationButtons(
+                      currentPage: _currentPage,
+                      totalPages: _totalPages,
+                      onPreviousPage: () => _goToPage(_currentPage - 1),
+                      onNextPage: () => _goToPage(_currentPage + 1),
+                      onPageNavigation: _showPageNavigationDialog,
+                      onZoomControl: _showZoomDialog,
+                      colorScheme: colorScheme,
+                    ),
                   ),
                 );
               },
@@ -465,65 +473,61 @@ class _PageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: MediaQuery.of(context).padding.top + 16,
-      left: 16,
-      child: TweenAnimationBuilder<double>(
-        tween: Tween(begin: 0.0, end: 1.0),
-        duration: const Duration(milliseconds: 300),
-        builder: (context, value, child) {
-          return Transform.scale(
-            scale: value,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              decoration: BoxDecoration(
-                color: colorScheme.surface.withValues(alpha: 0.9),
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.3),
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.picture_as_pdf,
-                    size: 16,
-                    color: colorScheme.primary,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    '$currentPage / $totalPages',
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: colorScheme.onSurface,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Container(
-                    width: 1,
-                    height: 12,
-                    color: colorScheme.outlineVariant,
-                  ),
-                  const SizedBox(width: 8),
-                  Icon(
-                    Icons.zoom_in,
-                    size: 14,
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    '${(zoomLevel * 100).round()}%',
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.0, end: 1.0),
+      duration: const Duration(milliseconds: 300),
+      builder: (context, value, child) {
+        return Transform.scale(
+          scale: value,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: colorScheme.surface.withValues(alpha: 0.9),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: colorScheme.outlineVariant.withValues(alpha: 0.3),
               ),
             ),
-          );
-        },
-      ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.picture_as_pdf,
+                  size: 16,
+                  color: colorScheme.primary,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  '$currentPage / $totalPages',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: colorScheme.onSurface,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Container(
+                  width: 1,
+                  height: 12,
+                  color: colorScheme.outlineVariant,
+                ),
+                const SizedBox(width: 8),
+                Icon(
+                  Icons.zoom_in,
+                  size: 14,
+                  color: colorScheme.onSurfaceVariant,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  '${(zoomLevel * 100).round()}%',
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -549,69 +553,65 @@ class _PDFNavigationButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 24,
-      right: 16,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          // Zoom Control
-          FloatingActionButton.small(
-            heroTag: "zoom",
-            onPressed: () {
-              HapticFeedback.lightImpact();
-              onZoomControl();
-            },
-            backgroundColor: colorScheme.primaryContainer,
-            foregroundColor: colorScheme.onPrimaryContainer,
-            child: const Icon(Icons.zoom_in),
-          ),
-          const SizedBox(height: 8),
-          // Page Navigation
-          FloatingActionButton.small(
-            heroTag: "navigate",
-            onPressed: () {
-              HapticFeedback.lightImpact();
-              onPageNavigation();
-            },
-            backgroundColor: colorScheme.secondaryContainer,
-            foregroundColor: colorScheme.onSecondaryContainer,
-            child: const Icon(Icons.menu_book),
-          ),
-          const SizedBox(height: 8),
-          // Previous Page
-          FloatingActionButton.small(
-            heroTag: "previous",
-            onPressed: currentPage > 1 ? () {
-              HapticFeedback.lightImpact();
-              onPreviousPage();
-            } : null,
-            backgroundColor: currentPage > 1 
-                ? colorScheme.tertiaryContainer 
-                : colorScheme.surfaceContainerHighest,
-            foregroundColor: currentPage > 1 
-                ? colorScheme.onTertiaryContainer 
-                : colorScheme.onSurfaceVariant,
-            child: const Icon(Icons.keyboard_arrow_up),
-          ),
-          const SizedBox(height: 8),
-          // Next Page
-          FloatingActionButton.small(
-            heroTag: "next",
-            onPressed: currentPage < totalPages ? () {
-              HapticFeedback.lightImpact();
-              onNextPage();
-            } : null,
-            backgroundColor: currentPage < totalPages 
-                ? colorScheme.tertiaryContainer 
-                : colorScheme.surfaceContainerHighest,
-            foregroundColor: currentPage < totalPages 
-                ? colorScheme.onTertiaryContainer 
-                : colorScheme.onSurfaceVariant,
-            child: const Icon(Icons.keyboard_arrow_down),
-          ),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        // Zoom Control
+        FloatingActionButton.small(
+          heroTag: "zoom",
+          onPressed: () {
+            HapticFeedback.lightImpact();
+            onZoomControl();
+          },
+          backgroundColor: colorScheme.primaryContainer,
+          foregroundColor: colorScheme.onPrimaryContainer,
+          child: const Icon(Icons.zoom_in),
+        ),
+        const SizedBox(height: 8),
+        // Page Navigation
+        FloatingActionButton.small(
+          heroTag: "navigate",
+          onPressed: () {
+            HapticFeedback.lightImpact();
+            onPageNavigation();
+          },
+          backgroundColor: colorScheme.secondaryContainer,
+          foregroundColor: colorScheme.onSecondaryContainer,
+          child: const Icon(Icons.menu_book),
+        ),
+        const SizedBox(height: 8),
+        // Previous Page
+        FloatingActionButton.small(
+          heroTag: "previous",
+          onPressed: currentPage > 1 ? () {
+            HapticFeedback.lightImpact();
+            onPreviousPage();
+          } : null,
+          backgroundColor: currentPage > 1 
+              ? colorScheme.tertiaryContainer 
+              : colorScheme.surfaceContainerHighest,
+          foregroundColor: currentPage > 1 
+              ? colorScheme.onTertiaryContainer 
+              : colorScheme.onSurfaceVariant,
+          child: const Icon(Icons.keyboard_arrow_up),
+        ),
+        const SizedBox(height: 8),
+        // Next Page
+        FloatingActionButton.small(
+          heroTag: "next",
+          onPressed: currentPage < totalPages ? () {
+            HapticFeedback.lightImpact();
+            onNextPage();
+          } : null,
+          backgroundColor: currentPage < totalPages 
+              ? colorScheme.tertiaryContainer 
+              : colorScheme.surfaceContainerHighest,
+          foregroundColor: currentPage < totalPages 
+              ? colorScheme.onTertiaryContainer 
+              : colorScheme.onSurfaceVariant,
+          child: const Icon(Icons.keyboard_arrow_down),
+        ),
+      ],
     );
   }
 }

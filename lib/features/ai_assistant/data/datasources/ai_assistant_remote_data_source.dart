@@ -5,7 +5,7 @@ import '../models/ai_question_model.dart';
 import '../models/ai_response_model.dart';
 
 abstract class AiAssistantRemoteDataSource {
-  Future<AiResponseModel> askQuestion(AiQuestionModel question);
+  Future<AiResponseModel> askQuestion(AiQuestionModel question , String userName);
   Future<bool> testConnection();
 }
 
@@ -15,11 +15,10 @@ class AiAssistantRemoteDataSourceImpl implements AiAssistantRemoteDataSource {
   AiAssistantRemoteDataSourceImpl({required this.model});
 
   @override
-  Future<AiResponseModel> askQuestion(AiQuestionModel question) async {
+  Future<AiResponseModel> askQuestion(AiQuestionModel question , String userName) async {
     try {
       // Create the learning tutor prompt
-      final prompt = _buildTutorPrompt(question.question, question.context);
-      debugPrint("Sending prompt: $prompt");
+      final prompt = _buildTutorPrompt(question.question, question.context , userName);
 
       final content = [Content.text(prompt)];
 
@@ -84,9 +83,9 @@ class AiAssistantRemoteDataSourceImpl implements AiAssistantRemoteDataSource {
     }
   }
 
-  String _buildTutorPrompt(String question, String? context) {
+  String _buildTutorPrompt(String question, String? context , String userName) {
     final basePrompt = '''
-You are "Labeeb" (لبيب) 🧠, a friendly and knowledgeable tutor assistant for students. 
+You are "Labeeb" (لبيب) 🧠 the best strudent at applied college, a friendly and knowledgeable tutor assistant for students of applied college. 
 Your role is to interact with students in an engaging, supportive, and clear way.
 
 Instructions for your responses:
@@ -108,7 +107,7 @@ Style:
 - If they seem confused, reassure them and suggest tips to understand better.
 
 Student’s question: $question
-''';
+Student’s name: $userName''';
 
     if (context != null && context.isNotEmpty) {
       return '$basePrompt\n\nAdditional context: $context';

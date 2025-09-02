@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/widgets/app_error.dart';
+import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_state.dart';
@@ -13,9 +14,9 @@ import 'package:tatbeeqi/features/posts/presentation/widgets/comments_list_widge
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CommentsSheet extends StatefulWidget {
-  final String postId;
+  final Post post;
 
-  const CommentsSheet({super.key, required this.postId});
+  const CommentsSheet({super.key, required this.post});
 
   @override
   State<CommentsSheet> createState() => _CommentsSheetState();
@@ -25,7 +26,7 @@ class _CommentsSheetState extends State<CommentsSheet> {
   @override
   void initState() {
     super.initState();
-    context.read<CommentsBloc>().add(FetchComments(widget.postId));
+    context.read<CommentsBloc>().add(FetchComments(widget.post.id));
   }
 
   @override
@@ -71,12 +72,13 @@ class _CommentsSheetState extends State<CommentsSheet> {
                 child: BlocBuilder<CommentsBloc, CommentsState>(
                   builder: (context, state) {
                     if (state is CommentsLoading) {
-                      return const CommentTaileShimmerList();
+                      return CommentTaileShimmerList(
+                          length: widget.post.likesCount);
                     } else if (state is CommentsError) {
                       return AppError(
                         onAction: () => context
                             .read<CommentsBloc>()
-                            .add(RefreshComments(widget.postId)),
+                            .add(RefreshComments(widget.post.id)),
                       );
                     } else if (state is CommentsLoaded) {
                       if (state.comments.isEmpty) {
@@ -87,7 +89,7 @@ class _CommentsSheetState extends State<CommentsSheet> {
                         comments: state.comments,
                         hasReachedMax: state.hasReachedMax,
                         isLoadingMore: state.isLoadingMore,
-                        postId: widget.postId,
+                        postId: widget.post.id,
                         scrollController: scrollController,
                       );
                     }
@@ -105,10 +107,10 @@ class _CommentsSheetState extends State<CommentsSheet> {
                 child: AddCommentBar(onSubmit: (text) {
                   context
                       .read<CommentsBloc>()
-                      .add(AddComment(widget.postId, text));
+                      .add(AddComment(widget.post.id, text));
                   context
                       .read<PostsBloc>()
-                      .add(IncrementPostCommentCountEvent(widget.postId));
+                      .add(IncrementPostCommentCountEvent(widget.post.id));
                 }),
               ),
             ],

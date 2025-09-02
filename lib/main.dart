@@ -36,6 +36,7 @@ import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:tatbeeqi/core/observers/recent_courses_observer.dart';
 import 'package:tatbeeqi/core/observers/multi_bloc_observer.dart';
 import 'package:tatbeeqi/core/observers/auth_observer.dart';
+import 'package:timeago/timeago.dart' as timeago;
 import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -62,6 +63,8 @@ void main() async {
     RecentCoursesObserver(),
     AuthObserver(),
   ]);
+  timeago.setLocaleMessages('ar', timeago.ArMessages());
+  timeago.setLocaleMessages('en', timeago.EnMessages());
   runApp(const MyApp());
 }
 
@@ -94,7 +97,7 @@ class MyApp extends StatelessWidget {
         // should move from main
         BlocProvider(
           // TEMP
-          create: (_) => di.sl<FetchCoursesCubit>()..fetchCourses( ),
+          create: (_) => di.sl<FetchCoursesCubit>()..fetchCourses(),
         ),
         BlocProvider(
           // TEMP

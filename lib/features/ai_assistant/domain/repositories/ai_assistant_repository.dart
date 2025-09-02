@@ -4,5 +4,5 @@ import '../entities/ai_question.dart';
 import '../entities/ai_response.dart';
 
 abstract class AiAssistantRepository {
-  Future<Either<Failure, AiResponse>> askQuestion(AiQuestion question);
+  Future<Either<Failure, AiResponse>> askQuestion(AiQuestion question , String userName);
 }

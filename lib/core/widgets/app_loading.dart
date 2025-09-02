@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AppLoading extends StatelessWidget {
@@ -24,9 +25,8 @@ class AppLoading extends StatelessWidget {
         SizedBox(
           width: size ?? 36,
           height: size ?? 36,
-          child: CircularProgressIndicator(
-            strokeWidth: 3,
-            valueColor: AlwaysStoppedAnimation<Color>(colorScheme.primary),
+          child: CupertinoActivityIndicator(
+            color: colorScheme.primary,
           ),
         ),
         if ((message ?? '').isNotEmpty) ...[

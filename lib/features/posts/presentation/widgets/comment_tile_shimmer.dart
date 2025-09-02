@@ -95,12 +95,13 @@ class CommentTileShimmer extends StatelessWidget {
 }
 
 class CommentTaileShimmerList extends StatelessWidget {
-  const CommentTaileShimmerList({super.key});
+  final int length;
+  const CommentTaileShimmerList({super.key, required this.length});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 5,
+      itemCount: length,
       itemBuilder: (context, index) {
         return const CommentTileShimmer();
       },

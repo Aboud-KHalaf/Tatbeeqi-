@@ -1,12 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/features/auth/domain/usecases/get_current_user_usecase.dart';
 import '../../domain/entities/ai_question.dart';
 import '../../domain/usecases/ask_ai_question.dart';
 import 'ai_assistant_state.dart';
 
 class AiAssistantCubit extends Cubit<AiAssistantState> {
   final AskAiQuestion askAiQuestion;
-
-  AiAssistantCubit({required this.askAiQuestion}) : super(const AiAssistantInitial());
+ final GetCurrentUserUseCase getCurrentUser;
+  AiAssistantCubit({required this.askAiQuestion , required this.getCurrentUser}) : super(const AiAssistantInitial());
 
   Future<void> askQuestion(String question, {String? context}) async {
     if (question.trim().isEmpty) {
@@ -25,9 +26,10 @@ class AiAssistantCubit extends Cubit<AiAssistantState> {
       timestamp: DateTime.now(),
       context: context,
     );
-
-    final result = await askAiQuestion(AiQuestionParams(question: aiQuestion));
-
+    
+    final user = await getCurrentUser.call();
+    final result = await askAiQuestion(AiQuestionParams(question: aiQuestion , userName: user?.name ?? ''));
+     
     if (!isClosed) {
       result.fold(
         (failure) => emit(AiAssistantError(message: failure.message)),

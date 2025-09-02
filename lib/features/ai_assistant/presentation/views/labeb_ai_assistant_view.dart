@@ -3,42 +3,23 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/di/service_locator.dart';
+import 'package:tatbeeqi/features/ai_assistant/domain/entities/chat_message.dart';
 import '../cubit/ai_assistant_cubit.dart';
 import '../cubit/ai_assistant_state.dart';
+import 'package:tatbeeqi/features/ai_assistant/presentation/widgets/messages_list.dart';
 
-class ChatMessage {
-  final String text;
-  final bool isUser;
-  final DateTime timestamp;
-  
-  ChatMessage({
-    required this.text,
-    required this.isUser,
-    required this.timestamp,
-  });
-}
 
-class AiAssistantUsageExample extends StatelessWidget {
-  const AiAssistantUsageExample({super.key});
+
+
+
+class LabebAiAssistantView extends StatefulWidget {
+  const LabebAiAssistantView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<AiAssistantCubit>(),
-      child: const _AiAssistantView(),
-    );
-  }
+  State<LabebAiAssistantView> createState() => _LabebAiAssistantViewState();
 }
 
-class _AiAssistantView extends StatefulWidget {
-  const _AiAssistantView();
-
-  @override
-  State<_AiAssistantView> createState() => _AiAssistantViewState();
-}
-
-class _AiAssistantViewState extends State<_AiAssistantView> {
+class _LabebAiAssistantViewState extends State<LabebAiAssistantView> {
   final _messageController = TextEditingController();
   final _scrollController = ScrollController();
   final List<ChatMessage> _messages = [];
@@ -60,10 +41,31 @@ class _AiAssistantViewState extends State<_AiAssistantView> {
           timestamp: DateTime.now(),
         ));
       });
-      context.read<AiAssistantCubit>().askQuestion(message);
+
+      // 1) Build context from conversation (last few messages)
+      final contextText = _buildConversationContext();
+
+      // 2) Send with context
+      context.read<AiAssistantCubit>().askQuestion(
+        message,
+        context: contextText, // <- pass context here
+      );
+
       _messageController.clear();
       _scrollToBottom();
     }
+  }
+
+  String _buildConversationContext() {
+    // Use last 5 messages as brief context (without extension helpers)
+    final int count = _messages.length;
+    final int start = count > 5 ? count - 5 : 0;
+    final List<String> lines = [];
+    for (int i = start; i < count; i++) {
+      final m = _messages[i];
+      lines.add('${m.isUser ? 'User' : 'Assistant'}: ${m.text}');
+    }
+    return lines.join('\n');
   }
 
   void _scrollToBottom() {
@@ -130,17 +132,9 @@ class _AiAssistantViewState extends State<_AiAssistantView> {
               },
               child: _messages.isEmpty
                   ? _buildWelcomeScreen()
-                  : ListView.builder(
-                      controller: _scrollController,
-                      padding: const EdgeInsets.all(16),
-                      itemCount: _messages.length + 
-                          (context.watch<AiAssistantCubit>().state is AiAssistantLoading ? 1 : 0),
-                      itemBuilder: (context, index) {
-                        if (index == _messages.length) {
-                          return _buildTypingIndicator();
-                        }
-                        return _buildMessageBubble(_messages[index]);
-                      },
+                  : MessagesList(
+                      messages: _messages,
+                      scrollController: _scrollController,
                     ),
             ),
           ),
@@ -197,143 +191,7 @@ class _AiAssistantViewState extends State<_AiAssistantView> {
     );
   }
 
-  Widget _buildMessageBubble(ChatMessage message) {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final isUser = message.isUser;
-    
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: Row(
-        mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (!isUser) ...[
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: colorScheme.primary,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.smart_toy_rounded,
-                size: 18,
-                color: colorScheme.onPrimary,
-              ),
-            ),
-            const SizedBox(width: 8),
-          ],
-          Flexible(
-            child: Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: isUser 
-                    ? colorScheme.primary 
-                    : colorScheme.surfaceContainerHighest,
-                borderRadius: BorderRadius.circular(16).copyWith(
-                  bottomRight: isUser ? const Radius.circular(4) : null,
-                  bottomLeft: !isUser ? const Radius.circular(4) : null,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: colorScheme.shadow.withOpacity(0.1),
-                    blurRadius: 4,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Text(
-                message.text,
-                style: theme.textTheme.bodyMedium?.copyWith(
-                  color: isUser 
-                      ? colorScheme.onPrimary 
-                      : colorScheme.onSurface,
-                  height: 1.4,
-                ),
-              ),
-            ),
-          ),
-          if (isUser) ...[
-            const SizedBox(width: 8),
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: colorScheme.secondary,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.person_rounded,
-                size: 18,
-                color: colorScheme.onSecondary,
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTypingIndicator() {
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              color: colorScheme.primary,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.smart_toy_rounded,
-              size: 18,
-              color: colorScheme.onPrimary,
-            ),
-          ),
-          const SizedBox(width: 8),
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: colorScheme.surfaceContainerHighest,
-              borderRadius: BorderRadius.circular(16).copyWith(
-                bottomLeft: const Radius.circular(4),
-              ),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'يكتب',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                    fontStyle: FontStyle.italic,
-                  ),
-                ),
-                const SizedBox(width: 8),
-                SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      colorScheme.primary,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // extracted MessageBubble and TypingIndicator moved to widgets/
 
   Widget _buildMessageInput() {
     final theme = Theme.of(context);

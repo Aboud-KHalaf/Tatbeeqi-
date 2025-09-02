@@ -40,12 +40,10 @@ class _LectureLessonsViewState extends State<LectureLessonsView> {
                 lecture: widget.lecture);
           }
           if (state is LessonsLoading) {
-            return const AppLoading(
-              message: "جاري تحميل الدروس",
-            );
+            return const AppLoading();
           }
           if (state is LessonsError) {
-            return AppError(message: state.message);
+            return const AppError();
           }
           return const SizedBox.shrink();
         },

@@ -12,12 +12,13 @@ class AskAiQuestion implements UseCase<AiResponse, AiQuestionParams> {
 
   @override
   Future<Either<Failure, AiResponse>> call(AiQuestionParams params) async {
-    return await repository.askQuestion(params.question);
+    return await repository.askQuestion(params.question , params.userName);
   }
 }
 
 class AiQuestionParams {
   final AiQuestion question;
+  final String userName;
 
-  AiQuestionParams({required this.question});
+  AiQuestionParams({required this.question , required this.userName});
 }

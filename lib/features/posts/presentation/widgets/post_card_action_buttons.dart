@@ -77,7 +77,7 @@ class _PostCardActionButtonsState extends State<PostCardActionButtons>
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       useSafeArea: true,
-      builder: (_) => CommentsSheet(postId: widget.post.id),
+      builder: (_) => CommentsSheet(post: widget.post),
     );
   }
 
