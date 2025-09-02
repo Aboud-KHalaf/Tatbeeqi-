@@ -10,10 +10,10 @@ class StartNewChallengeButtonWidget extends StatelessWidget {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final l10n = AppLocalizations.of(context)!;
-
+    final colorScheme = theme.colorScheme;
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton.icon(
+      child: FilledButton.icon(
         icon: const Icon(Icons.add_circle_outline, size: 20),
         label: Text(
           l10n.homeStartNewChallenge,
@@ -21,7 +21,9 @@ class StartNewChallengeButtonWidget extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        style: ElevatedButton.styleFrom(
+        style: FilledButton.styleFrom(
+          backgroundColor: colorScheme.primaryContainer,
+          foregroundColor: colorScheme.onPrimaryContainer,
           minimumSize: const Size(double.infinity, 52),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.0),

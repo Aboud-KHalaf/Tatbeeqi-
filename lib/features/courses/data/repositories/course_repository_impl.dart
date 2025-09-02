@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:tatbeeqi/core/error/exceptions.dart';
 import 'package:tatbeeqi/core/error/failures.dart';
+import 'package:tatbeeqi/core/network/network_info.dart';
 import 'package:tatbeeqi/features/courses/data/datasources/course_local_data_source.dart';
 import 'package:tatbeeqi/features/courses/data/datasources/course_remote_data_source.dart';
 import 'package:tatbeeqi/features/courses/data/models/course_data_model.dart';
@@ -10,41 +11,44 @@ import 'package:tatbeeqi/features/courses/domain/repositories/course_repository.
 class CourseRepositoryImpl implements CourseRepository {
   final CourseRemoteDataSource remoteDataSource;
   final CourseLocalDataSource localDataSource; // Added local data source
+  final NetworkInfo networkInfo;
 
   CourseRepositoryImpl({
     required this.remoteDataSource,
     required this.localDataSource, // Added local data source
+    required this.networkInfo,
   });
 
   @override
   Future<Either<Failure, List<Course>>> getCoursesByStudyYearAndDepartmentId(
       {required int studyYear, required int departmentId}) async {
     try {
-      // // 1. Try to get from local cache first
-      // final hasLocalData =
-      //     await localDataSource.hasCoursesForStudyYearAndDepartmentId(
-      //         studyYear: studyYear, departmentId: departmentId);
-      // if (hasLocalData) {
-      //   final localCourses =
-      //       await localDataSource.getCoursesByStudyYearAndDepartmentId(
-      //           studyYear: studyYear, departmentId: departmentId);
-      //   if (localCourses.isNotEmpty) {
-      //     return Right(localCourses.cast<Course>());
-      //   }
-      // }
+      if (await networkInfo.isConnected()) {
+        final remoteCourseModels =
+            await remoteDataSource.getCoursesByStudyYearAndDepartmentId(
+                studyYear: studyYear, departmentId: departmentId);
 
-      // 2. If not in cache or cache is empty, fetch from remote
-      final remoteCourseModels =
-          await remoteDataSource.getCoursesByStudyYearAndDepartmentId(
-              studyYear: studyYear, departmentId: departmentId);
+        // Cache the fetched data
+        await localDataSource.cacheCourses(
+            courses: remoteCourseModels,
+            studyYear: studyYear,
+            departmentId: departmentId);
 
-      // 3. Cache the fetched data
-      await localDataSource.cacheCourses(
-          courses: remoteCourseModels,
-          studyYear: studyYear,
-          departmentId: departmentId);
-
-      return Right(remoteCourseModels.cast<Course>());
+        return Right(remoteCourseModels.cast<Course>());
+      } else {
+        final hasLocalData =
+            await localDataSource.hasCoursesForStudyYearAndDepartmentId(
+                studyYear: studyYear, departmentId: departmentId);
+        if (hasLocalData) {
+          final localCourses =
+              await localDataSource.getCoursesByStudyYearAndDepartmentId(
+                  studyYear: studyYear, departmentId: departmentId);
+          if (localCourses.isNotEmpty) {
+            return Right(localCourses.cast<Course>());
+          }
+        }
+        return const Left(ServerFailure("no interent connection"));
+      }
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on CacheException catch (e) {

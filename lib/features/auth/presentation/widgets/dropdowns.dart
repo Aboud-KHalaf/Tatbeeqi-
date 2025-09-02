@@ -265,12 +265,12 @@ class _DepartmentDropdownState extends State<DepartmentDropdown>
   bool _isMenuOpen = false;
 
   static const Map<int, String> _departmentsAr = {
-    1: 'تقنيات الحاسب',
-    2: 'التكييف والتبريد',
+    1: 'التكييف والتبريد',
+    2: 'تقنيات الحاسب',
   };
   static const Map<int, String> _departmentsEn = {
-    1: 'Computer Engineering',
-    2: 'Air Conditioning and Refrigeration',
+    1: 'Air Conditioning and Refrigeration',
+    2: 'Computer Engineering',
   };
   Map<int, String> _departments = {};
   @override

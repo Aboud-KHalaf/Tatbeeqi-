@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/helpers/courses_data_helper.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes_args.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/recent_courses_cubit/recent_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/recent_courses_cubit/recent_courses_state.dart';
@@ -57,15 +61,20 @@ class _StudyProgressSectionState extends State<StudyProgressSection> {
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
-        final rawProgress = course.progressPercent ?? 0;
-    final progress = rawProgress.clamp(0.0, 1.0); // to avoid over 100%
+    final rawProgress = course.progressPercent ?? 0;
+    final progress = rawProgress.clamp(0.0, 1.0); 
     final progressText = '${(progress * 100).toInt()}%';
     return Container(
       width: 110,
       margin: const EdgeInsetsDirectional.only(end: 16),
       child: GestureDetector(
         onTap: () {
-          context.read<RecentCoursesCubit>().track(userId, course.id);
+          context.push(
+            AppRoutes.courseOverviewPath,
+            extra: CourseOverviewArgs(
+              course: course,
+            ),
+          );
         },
         child: Container(
           decoration: BoxDecoration(
@@ -91,21 +100,26 @@ class _StudyProgressSectionState extends State<StudyProgressSection> {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: colorScheme.secondaryContainer,
+                      color: CourseIconHelper.getStyle(course.id, context)
+                          .color
+                          .withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12.0),
                       border: Border.all(
-                        color: colorScheme.outlineVariant,
+                        color: CourseIconHelper.getStyle(course.id, context)
+                            .color
+                            .withValues(alpha: 0.1),
                       ),
                     ),
                     child: Icon(
-                      Icons.school_rounded,
+                      CourseIconHelper.getStyle(course.id, context).icon,
                       size: 24,
-                      color: colorScheme.onSecondaryContainer,
+                      color:
+                          CourseIconHelper.getStyle(course.id, context).color,
                     ),
                   ),
-      
+
                   const SizedBox(height: 6),
-      
+
                   // Course title with better typography
                   Text(
                     course.courseName,
@@ -119,10 +133,11 @@ class _StudyProgressSectionState extends State<StudyProgressSection> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-      
+
                   const SizedBox(height: 6),
-      
-                   CourseCardProgress(progress: progress, progressText: progressText),
+
+                  CourseCardProgress(
+                      progress: progress, progressText: progressText),
                 ],
               ),
             ),

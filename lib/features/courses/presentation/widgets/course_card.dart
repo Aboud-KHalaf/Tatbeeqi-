@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/helpers/courses_data_helper.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/core/routing/routes_args.dart';
-import 'package:tatbeeqi/core/utils/app_functions.dart';
 import 'package:tatbeeqi/core/utils/app_methods.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_cubit.dart';
@@ -28,7 +27,7 @@ class _CourseCardState extends State<CourseCard>
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
   late Animation<double> _scaleAnimation;
-  bool _isHovering = false;
+  final bool _isHovering = false;
 
   @override
   void initState() {
@@ -47,7 +46,7 @@ class _CourseCardState extends State<CourseCard>
       CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
     );
 
-    _scaleAnimation = Tween<double>(begin: 0.95, end: 1.0).animate(
+    _scaleAnimation = Tween<double>(begin: 0.85, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeOut),
     );
 
@@ -68,7 +67,7 @@ class _CourseCardState extends State<CourseCard>
           context
               .read<RetakeCoursesCubit>()
               .deleteRetakeCourse(widget.course.id);
-          context.read<FetchCoursesCubit>().fetchCourses(1, 2);
+          context.read<FetchCoursesCubit>().fetchCourses();
         }
       }
     }
@@ -87,54 +86,50 @@ class _CourseCardState extends State<CourseCard>
         position: _slideAnimation,
         child: ScaleTransition(
           scale: _scaleAnimation,
-          child: MouseRegion(
-            onEnter: (_) => setState(() => _isHovering = true),
-            onExit: (_) => setState(() => _isHovering = false),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              transform: _isHovering
-                  ? (Matrix4.identity()..translate(0, -5, 0))
-                  : Matrix4.identity(),
-              child: InkWell(
-                onLongPress: _handleLongPress,
-                onTap: () {
-                  context.push(
-                    AppRoutes.courseOverviewPath,
-                    extra: CourseOverviewArgs(
-                      course: widget.course,
-                    ),
-                  );
-                },
-                borderRadius: BorderRadius.circular(16.0),
-                splashColor: colorScheme.primary.withValues(alpha: 0.08),
-                highlightColor: colorScheme.primary.withValues(alpha: 0.08),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: colorScheme.surfaceContainerHigh,
-                    borderRadius: BorderRadius.circular(12.0),
-                    border: Border.all(
-                      color: colorScheme.outlineVariant,
-                    ),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            transform: _isHovering
+                ? (Matrix4.identity()..translate(0, -5, 0))
+                : Matrix4.identity(),
+            child: InkWell(
+              onLongPress: _handleLongPress,
+              onTap: () {
+                context.push(
+                  AppRoutes.courseOverviewPath,
+                  extra: CourseOverviewArgs(
+                    course: widget.course,
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        CourseCardHeader(
-                          iconData: CourseIconHelper.getStyle(widget.course.id, context),
-                          title: widget.course.courseName,
-                          
-                        ),
-                        const Spacer(),
-                        CourseCardProgress(
-                          progress: progress,
-                          progressText: progressText,
-                        ),
-                      ],
-                    ),
+                );
+              },
+              borderRadius: BorderRadius.circular(16.0),
+              splashColor: colorScheme.primary.withValues(alpha: 0.08),
+              highlightColor: colorScheme.primary.withValues(alpha: 0.08),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: colorScheme.surfaceContainerHigh,
+                  borderRadius: BorderRadius.circular(12.0),
+                  border: Border.all(
+                    color: colorScheme.outlineVariant,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      CourseCardHeader(
+                        iconData: CourseIconHelper.getStyle(
+                            widget.course.id, context),
+                        title: widget.course.courseName,
+                      ),
+                      const Spacer(),
+                      CourseCardProgress(
+                        progress: progress,
+                        progressText: progressText,
+                      ),
+                    ],
                   ),
                 ),
               ),

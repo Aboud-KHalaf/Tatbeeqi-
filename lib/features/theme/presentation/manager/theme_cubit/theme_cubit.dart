@@ -75,10 +75,10 @@ class ThemeCubit extends Cubit<ThemeData> {
 
   /// Sets a custom seed color while preserving the current theme mode
   Future<void> setSeedColor(Color seedColor) async {
-    final previousSeedColor = _currentSeedColor;
-    final previousState = state;
+    // final previousSeedColor = _currentSeedColor;
+    // final previousState = state;
 
-    _currentSeedColor = seedColor;
+     _currentSeedColor = seedColor;
     emit(_generateTheme());
 
     // TODO: Implement seed color persistence if needed

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/constants/constants.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/features/home/presentation/widgets/all_lessons_view.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/recently_added_section.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/study_progress_section.dart';
 import 'package:tatbeeqi/features/news/presentation/widgets/news_section.dart';
@@ -18,69 +19,73 @@ class HomeView extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: AppDimensConstants.screenPadding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  StaggeredFadeSlide(
-                    delay: const Duration(milliseconds: 0),
-                    child: _SectionTitle(
-                      title: l10n.homeLatestNewsAndEvents,
-                      onPressed: () => context.push(AppRoutes.allNewsPath),
-                    ),
+      physics: const BouncingScrollPhysics(),
+      slivers: [
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: AppDimensConstants.screenPadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                StaggeredFadeSlide(
+                  delay: const Duration(milliseconds: 0),
+                  child: _SectionTitle(
+                    title: l10n.homeLatestNewsAndEvents,
+                    onPressed: () => context.push(AppRoutes.allNewsPath),
                   ),
-                  const SizedBox(height: 12.0),
-                  const StaggeredFadeSlide(
-                    delay: Duration(milliseconds: 100),
-                    child: NewsSection(),
+                ),
+                const SizedBox(height: 12.0),
+                const StaggeredFadeSlide(
+                  delay: Duration(milliseconds: 100),
+                  child: NewsSection(),
+                ),
+                const SizedBox(height: 28.0),
+                StaggeredFadeSlide(
+                  delay: const Duration(milliseconds: 200),
+                  child: _SectionTitle(
+                      title: l10n.homeTodayTasks,
+                      onPressed: () async {
+                        context.push(AppRoutes.todoPath);
+                      }),
+                ),
+                const SizedBox(height: 12.0),
+                const StaggeredFadeSlide(
+                  delay: Duration(milliseconds: 300),
+                  child: TodayTasksSection(),
+                ),
+                const SizedBox(height: 28.0),
+                StaggeredFadeSlide(
+                  delay: const Duration(milliseconds: 400),
+                  child: _SectionTitle(
+                      title: l10n.homeContinueStudying,
+                      onPressed: () => context.push(AppRoutes.todoPath)),
+                ),
+                const SizedBox(height: 12.0),
+                const StaggeredFadeSlide(
+                  delay: Duration(milliseconds: 500),
+                  child: StudyProgressSection(),
+                ),
+                const SizedBox(height: .0),
+                StaggeredFadeSlide(
+                  delay: const Duration(milliseconds: 600),
+                  child: _SectionTitle(
+                    title: l10n.homeRecentlyAdded,
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AllLessonsView())),
                   ),
-                  const SizedBox(height: 28.0),
-                  StaggeredFadeSlide(
-                    delay: const Duration(milliseconds: 200),
-                    child: _SectionTitle(
-                        title: l10n.homeTodayTasks,
-                        onPressed: () async {
-                          context.push(AppRoutes.todoPath);
-                        }),
-                  ),
-                  const SizedBox(height: 12.0),
-                  const StaggeredFadeSlide(
-                    delay: Duration(milliseconds: 300),
-                    child: TodayTasksSection(),
-                  ),
-                  const SizedBox(height: 28.0),
-                  StaggeredFadeSlide(
-                    delay: const Duration(milliseconds: 400),
-                    child: _SectionTitle(
-                        title: l10n.homeContinueStudying,
-                        onPressed: () => context.push(AppRoutes.todoPath)),
-                  ),
-                  const SizedBox(height: 12.0),
-                  const StaggeredFadeSlide(
-                    delay: Duration(milliseconds: 500),
-                    child: StudyProgressSection(),
-                  ),
-                  const SizedBox(height: .0),
-                  StaggeredFadeSlide(
-                    delay: const Duration(milliseconds: 600),
-                    child: _SectionTitle(
-                        title: l10n.homeRecentlyAdded,
-                        onPressed: () => context.push(AppRoutes.todoPath)),
-                  ),
-                  const SizedBox(height: 12.0),
-                  const StaggeredFadeSlide(
-                    delay: Duration(milliseconds: 700),
-                    child: RecentlyAddedSection(),
-                  ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 12.0),
+                const StaggeredFadeSlide(
+                  delay: Duration(milliseconds: 700),
+                  child: RecentlyAddedSection(),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
+      ],
     );
   }
 }

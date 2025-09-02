@@ -102,7 +102,7 @@ class _CourseContentCardState extends State<CourseContentCard>
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
                     // أيقونة المحتوى مع تحسينات بصرية
@@ -244,7 +244,8 @@ class _CourseContentCardState extends State<CourseContentCard>
                           onPressed: () {
                             HapticFeedback.lightImpact();
                             SnackBarHelper.showInfo(
-                                context: context, message: "soon");
+                                context: context,
+                                message: "ستضاف ميزة التحميل قريبا");
                           },
                           tooltip: 'تحميل',
                           style: IconButton.styleFrom(

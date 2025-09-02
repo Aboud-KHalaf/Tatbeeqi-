@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tatbeeqi/features/auth/presentation/manager/bloc/auth_bloc.dart';
+  import 'package:tatbeeqi/features/auth/presentation/views/update_profile_page.dart';
+import 'package:tatbeeqi/features/notifications/presentation/views/notifications_view.dart';
 
 class NotificationsIconButton extends StatelessWidget {
   const NotificationsIconButton({
@@ -27,7 +26,8 @@ class NotificationsIconButton extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            context.read<AuthBloc>().add(SignOutEvent());
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const NotificationsPage()));
           },
           icon: Icon(
             Icons.notifications_none_rounded,

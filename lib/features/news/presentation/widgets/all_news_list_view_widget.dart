@@ -13,18 +13,21 @@ class AllNewsListViewWidget extends StatelessWidget {
   final List<NewsItemEntity> news;
   final bool isSmallScreen;
   final ColorScheme colorScheme;
-
+  
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       itemCount: news.length,
       itemBuilder: (context, index) {
         final item = news[index];
-        return NewsCard(
-          item: item,
-          isCurrentPage: true,
-          isSmallScreen: isSmallScreen,
-          colorScheme: colorScheme,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+          child: NewsCard(
+            item: item,
+            isCurrentPage: true,
+            isSmallScreen: isSmallScreen,
+            colorScheme: colorScheme,
+          ),
         );
       },
     );

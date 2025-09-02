@@ -62,88 +62,76 @@ class RecentlyAddedSection extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 8),
       child: Material(
         color: Colors.transparent,
-        child: InkWell(
-          onTap: () {
-            HapticFeedback.lightImpact();
-            // TODO: Navigate to lesson
-          },
-          borderRadius: BorderRadius.circular(8),
-          child: Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: colorScheme.surfaceContainerHigh,
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: colorScheme.outline.withOpacity(0.1),
-                width: 1,
-              ),
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: colorScheme.surfaceContainerHigh,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: colorScheme.outline.withOpacity(0.1),
+              width: 1,
             ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: typeColor.withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Icon(
-                    icon,
-                    color: typeColor,
-                    size: 20,
-                  ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: typeColor.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(6),
                 ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                child: Icon(
+                  icon,
+                  color: typeColor,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      lesson.title,
+                      style: textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: colorScheme.onSurface,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (lesson.createdBy != null ||
+                        lesson.durationMinutes > 0) ...[
+                      const SizedBox(height: 2),
                       Text(
-                        lesson.title,
-                        style: textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: colorScheme.onSurface,
+                        _buildSubtitle(lesson),
+                        style: textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                          height: 1.2,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      if (lesson.createdBy != null || lesson.durationMinutes > 0) ...[
-                        const SizedBox(height: 2),
-                        Text(
-                          _buildSubtitle(lesson),
-                          style: textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                            height: 1.2,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
                     ],
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: typeColor.withOpacity(0.15),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  typeText,
+                  style: textTheme.labelSmall?.copyWith(
+                    color: typeColor,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(width: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: typeColor.withOpacity(0.15),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    typeText,
-                    style: textTheme.labelSmall?.copyWith(
-                      color: typeColor,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 4),
-                Icon(
-                  Icons.chevron_right,
-                  size: 16,
-                  color: colorScheme.onSurfaceVariant,
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -159,7 +147,8 @@ class RecentlyAddedSection extends StatelessWidget {
           decoration: BoxDecoration(
             color: colorScheme.surfaceContainerHigh,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: colorScheme.outline.withOpacity(0.1), width: 1),
+            border: Border.all(
+                color: colorScheme.outline.withOpacity(0.1), width: 1),
           ),
           child: Row(
             children: [
@@ -212,7 +201,8 @@ class RecentlyAddedSection extends StatelessWidget {
     );
   }
 
-  Widget _buildError(ColorScheme colorScheme, TextTheme textTheme, String message) {
+  Widget _buildError(
+      ColorScheme colorScheme, TextTheme textTheme, String message) {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.all(12),
@@ -223,12 +213,14 @@ class RecentlyAddedSection extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.error_outline, color: colorScheme.onErrorContainer, size: 18),
+          Icon(Icons.error_outline,
+              color: colorScheme.onErrorContainer, size: 18),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               'حدث خطأ: $message',
-              style: textTheme.bodySmall?.copyWith(color: colorScheme.onErrorContainer),
+              style: textTheme.bodySmall
+                  ?.copyWith(color: colorScheme.onErrorContainer),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),

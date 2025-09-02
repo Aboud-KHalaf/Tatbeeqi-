@@ -24,7 +24,7 @@ class _NewsSectionState extends State<NewsSection>
   void initState() {
     super.initState();
     _pageController = PageController();
-
+     
     _pageController.addListener(_onPageChanged);
   }
 

@@ -81,7 +81,7 @@ class _RetakeCoursesConfirmButtonState extends State<RetakeCoursesConfirmButton>
                   ? () {
                       HapticFeedback.mediumImpact();
                       context.read<RetakeCoursesCubit>().saveRetakeCourses(selectedCoursesList);
-                      context.read<FetchCoursesCubit>().fetchCourses(1, 2);
+                      context.read<FetchCoursesCubit>().fetchCourses();
                     }
                   : null,
               style: FilledButton.styleFrom(

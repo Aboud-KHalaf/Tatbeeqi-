@@ -25,6 +25,7 @@ void initCoursesDependencies(GetIt sl) {
 
   // Manager (Cubit)
   sl.registerFactory(() => FetchCoursesCubit(
+        getCurrentUserUseCase: sl(),
         getCoursesByStudyYearUseCase: sl(),
       ));
   sl.registerFactory(() => RetakeCoursesCubit(
@@ -43,6 +44,7 @@ void initCoursesDependencies(GetIt sl) {
   sl.registerLazySingleton<CourseRepository>(() => CourseRepositoryImpl(
         remoteDataSource: sl(),
         localDataSource: sl(),
+        networkInfo: sl(),
       ));
 
   // Data Sources
@@ -74,5 +76,6 @@ void initCoursesDependencies(GetIt sl) {
         trackCourseVisitUseCase: sl(),
         removeRecentCourseUseCase: sl(),
         clearRecentCoursesUseCase: sl(),
+        getCurrentUserUseCase: sl(),
       ));
 }

@@ -9,6 +9,7 @@ import 'package:tatbeeqi/features/auth/domain/entities/user.dart';
 import 'package:tatbeeqi/core/di/service_locator.dart' as di;
 import 'package:tatbeeqi/core/routing/app_router.dart';
 import 'package:tatbeeqi/features/ai_assistant/presentation/cubit/ai_assistant_cubit.dart';
+import 'package:tatbeeqi/features/auth/presentation/manager/user_cubit/user_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/recent_courses_cubit/recent_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cubit/retake_courses_cubit.dart';
@@ -93,7 +94,7 @@ class MyApp extends StatelessWidget {
         // should move from main
         BlocProvider(
           // TEMP
-          create: (_) => di.sl<FetchCoursesCubit>()..fetchCourses(1, 2),
+          create: (_) => di.sl<FetchCoursesCubit>()..fetchCourses( ),
         ),
         BlocProvider(
           // TEMP
@@ -132,7 +133,10 @@ class MyApp extends StatelessWidget {
           create: (_) => di.sl<LessonCompletionCubit>(),
         ),
         BlocProvider(
-          create: (_) => di.sl<RecentCoursesCubit>()..load("123"),
+          create: (_) => di.sl<RecentCoursesCubit>()..load(),
+        ),
+        BlocProvider(
+          create: (_) => di.sl<UserCubit>()..loadCurrentUser(),
         ),
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(
