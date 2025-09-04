@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/constants/constants.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/features/courses/presentation/views/all_courses_view.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/all_lessons_view.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/recently_added_section.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/study_progress_section.dart';
@@ -58,7 +59,10 @@ class HomeView extends StatelessWidget {
                   delay: const Duration(milliseconds: 400),
                   child: _SectionTitle(
                       title: l10n.homeContinueStudying,
-                      onPressed: () => context.push(AppRoutes.todoPath)),
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AllCoursesView()))),
                 ),
                 const SizedBox(height: 12.0),
                 const StaggeredFadeSlide(

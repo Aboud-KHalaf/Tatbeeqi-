@@ -35,8 +35,8 @@ class ToDoListViewWidget extends StatelessWidget {
                     BoxShadow(
                       color: Theme.of(context)
                           .colorScheme
-                          .primary
-                          .withValues(alpha: .3),
+                          .secondary
+                          .withValues(alpha: .5),
                       blurRadius: shadowBlurRadius,
                     ),
                   ],
@@ -49,7 +49,6 @@ class ToDoListViewWidget extends StatelessWidget {
         );
       },
       itemCount: todos.length,
-      padding: const EdgeInsets.all(16.0),
       itemBuilder: (context, index) {
         final todo = todos[index];
         return Padding(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'suggested_questions.dart';
-
+ 
 class WelcomeMessage extends StatelessWidget {
   final String? lessonTitle;
   final String? lessonType;
@@ -23,21 +22,7 @@ class WelcomeMessage extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 40),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: colorScheme.primaryContainer.withOpacity(0.3),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Text(
-              'لبيب',
-              style: textTheme.headlineLarge?.copyWith(
-                color: colorScheme.primary,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
+        
           Text(
             'مرحباً! أنا لبيب، مساعدك الذكي للتعلم',
             style: textTheme.headlineSmall?.copyWith(
@@ -57,10 +42,7 @@ class WelcomeMessage extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 24),
-          SuggestedQuestions(
-            lessonType: lessonType,
-            onQuestionSelected: onQuestionSelected,
-          ),
+        
         ],
       ),
     );

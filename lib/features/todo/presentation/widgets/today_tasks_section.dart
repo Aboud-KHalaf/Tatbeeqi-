@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
+import 'package:tatbeeqi/core/widgets/app_loading.dart';
 import 'package:tatbeeqi/features/todo/presentation/manager/todo_cubit.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/empty_today_tasks_widget.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/start_new_chalenge_button_widget.dart';
 import 'package:tatbeeqi/features/todo/domain/entities/todo_entity.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/today_tasks_list_view_widget.dart';
-import 'package:tatbeeqi/features/todo/presentation/widgets/todo_loading_widget.dart';
-
+ 
 class TodayTasksSection extends StatelessWidget {
   const TodayTasksSection({super.key});
 
@@ -98,6 +98,6 @@ class TodayTasksSection extends StatelessWidget {
   }
 
   Widget _buildLoadingState(BuildContext context) {
-    return const TodoLoadingWidget();
+    return const AppLoading();
   }
 }

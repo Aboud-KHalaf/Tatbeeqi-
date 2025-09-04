@@ -10,21 +10,18 @@ class AppColors {
 
   /// Predefined seed colors for theme customization
 static const List<Color> seedColors = [
-  // الأصلية
-  Color(0xFF00BCD4), // Cyan - Default
-  Color(0xFF2196F3), // Blue
-  Color(0xFF4CAF50), // Green
-  Color(0xFFFF9800), // Orange
-  Color(0xFF9C27B0), // Purple
-  Color(0xFFE91E63), // Pink
-  Color(0xFF795548), // Brown
-  Color(0xFF607D8B), // Blue Grey
-  Color(0xFFF44336), // Red
-  Color(0xFF3F51B5), // Indigo
+   Color(0xFF6750A4), // M3 Baseline
+  Color(0xFF4285F4), // Google Blue
+  Color(0xFF34A853), // Google Green
+  Color(0xFFEA4335), // Google Red
+  Color(0xFFF9AB00), // Google Yellow/Orange
   Color(0xFF009688), // Teal
+  Color(0xFFE91E63), // Pink
   Color(0xFFFF5722), // Deep Orange
-
-  
+  Color(0xFF3F51B5), // Indigo
+  Color(0xFF00BCD4), // Cyan
+  Color(0xFFBE1E1E), // Dark Red
+  Color(0xFF607D8B), // Blue Grey
 ];
 
 

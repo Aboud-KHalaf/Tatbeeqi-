@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/utils/app_methods.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
+import 'package:tatbeeqi/core/widgets/app_loading.dart';
 import 'package:tatbeeqi/features/todo/presentation/manager/todo_cubit.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/todo_list_view_widget.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/todo_empty_state.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/todo_error_widget.dart';
-import 'package:tatbeeqi/features/todo/presentation/widgets/todo_loading_widget.dart';
-import 'package:tatbeeqi/features/todo/presentation/widgets/todo_no_data_aviable_widget.dart';
+ import 'package:tatbeeqi/features/todo/presentation/widgets/todo_no_data_aviable_widget.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class TodoView extends StatefulWidget {
@@ -70,7 +70,7 @@ class _TodoViewState extends State<TodoView>
         },
         builder: (context, state) {
           if (state is ToDoLoadingState) {
-            return const TodoLoadingWidget();
+            return const AppLoading();
           } else if (state is ToDoErrorState) {
             return ToDoErrorWidget(message: state.message);
           } else if (state is ToDoLoadedState) {

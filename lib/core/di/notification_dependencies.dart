@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:tatbeeqi/core/services/database/database_service.dart';
 import 'package:tatbeeqi/features/notifications/data/datasources/notifications_local_datasource.dart';
 import 'package:tatbeeqi/features/notifications/data/datasources/notifications_remote_datasource.dart';
 import 'package:tatbeeqi/features/notifications/data/repositories/notifications_repository_implements.dart';
@@ -72,6 +73,6 @@ void initNotificationDependencies(GetIt sl) {
           localNotificationsPlugin: sl()));
 
   sl.registerLazySingleton<NotificationsLocalDatasource>(
-      () => NotificationsLocalDatasourceImplements());
+      () => NotificationsLocalDatasourceImplements(sl<DatabaseService>()));
 }
 

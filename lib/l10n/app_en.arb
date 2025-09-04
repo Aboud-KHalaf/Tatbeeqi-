@@ -477,5 +477,182 @@
   "authEmailEmpty": "Please enter your email",
   "authPasswordEmpty": "Please enter your password",
   "authConfirmPasswordEmpty": "Please confirm your password",
-  "authPasswordMismatch": "Passwords do not match"
+  "authPasswordMismatch": "Passwords do not match",
+
+  "userDataLoadError": "Error loading user data",
+  "@userDataLoadError": {
+    "description": "Error message when user data fails to load"
+  },
+  "userDataNotLoaded": "User data not loaded",
+  "@userDataNotLoaded": {
+    "description": "Message when user data is not loaded"
+  },
+  "year": "Year",
+  "@year": {
+    "description": "Label for study year"
+  },
+  "softwareEngineering": "Software Engineering",
+  "@softwareEngineering": {
+    "description": "Software Engineering department name"
+  },
+  "cyberSecurity": "Cyber Security",
+  "@cyberSecurity": {
+    "description": "Cyber Security department name"
+  },
+  "department": "Department",
+  "@department": {
+    "description": "Department label"
+  },
+  "shortcuts": "Shortcuts",
+  "@shortcuts": {
+    "description": "Shortcuts section title"
+  },
+  "comingSoonSavedPosts": "Coming Soon: Saved Posts",
+  "@comingSoonSavedPosts": {
+    "description": "Coming soon message for saved posts"
+  },
+  "savedPosts": "Saved",
+  "@savedPosts": {
+    "description": "Saved posts shortcut title"
+  },
+  "comingSoonMyReports": "Coming Soon: My Reports",
+  "@comingSoonMyReports": {
+    "description": "Coming soon message for my reports"
+  },
+  "myReports": "My Reports",
+  "@myReports": {
+    "description": "My reports shortcut title"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings section title"
+  },
+  "themeAndColors": "Theme & Colors",
+  "@themeAndColors": {
+    "description": "Theme and colors settings title"
+  },
+  "customizeAppAppearance": "Customize app appearance",
+  "@customizeAppAppearance": {
+    "description": "Subtitle for theme settings"
+  },
+  "darkMode": "Dark Mode",
+  "@darkMode": {
+    "description": "Dark mode setting label"
+  },
+  "appColor": "App Color",
+  "@appColor": {
+    "description": "App color setting label"
+  },
+  "more": "More",
+  "@more": {
+    "description": "More button text for color picker"
+  },
+  "reset": "Reset",
+  "@reset": {
+    "description": "Reset button tooltip"
+  },
+  "chooseAppColor": "Choose App Color",
+  "@chooseAppColor": {
+    "description": "Color picker dialog title"
+  },
+  "availableColors": "Available Colors",
+  "@availableColors": {
+    "description": "Available colors section title in color picker"
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "apply": "Apply",
+  "@apply": {
+    "description": "Apply button text"
+  },
+  "language": "Language",
+  "@language": {
+    "description": "Language setting label"
+  },
+  "arabic": "العربية",
+  "@arabic": {
+    "description": "Arabic language option"
+  },
+  "english": "English",
+  "@english": {
+    "description": "English language option"
+  },
+  "accountSettings": "Account Settings",
+  "@accountSettings": {
+    "description": "Account settings title"
+  },
+  "manageAccountData": "Manage your account and data",
+  "@manageAccountData": {
+    "description": "Account settings subtitle"
+  },
+  "updateData": "Update Data",
+  "@updateData": {
+    "description": "Update data option"
+  },
+  "comingSoonUpdateData": "Coming Soon: Update Data",
+  "@comingSoonUpdateData": {
+    "description": "Coming soon message for update data"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout option"
+  },
+  "logoutConfirmation": "Are you sure you want to logout?",
+  "@logoutConfirmation": {
+    "description": "Logout confirmation message"
+  },
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Notifications settings title"
+  },
+  "manageNotifications": "Manage notifications and alerts",
+  "@manageNotifications": {
+    "description": "Notifications settings subtitle"
+  },
+  "viewNotifications": "View Notifications",
+  "@viewNotifications": {
+    "description": "View notifications option"
+  },
+  "notificationSettings": "Notification Settings",
+  "@notificationSettings": {
+    "description": "Notification settings option"
+  },
+  "comingSoonNotificationSettings": "Coming Soon: Notification Settings",
+  "@comingSoonNotificationSettings": {
+    "description": "Coming soon message for notification settings"
+  },
+  "additionalSettings": "Additional Settings",
+  "@additionalSettings": {
+    "description": "Additional settings title"
+  },
+  "moreOptionsSettings": "More options and settings",
+  "@moreOptionsSettings": {
+    "description": "Additional settings subtitle"
+  },
+  "helpSupport": "Help & Support",
+  "@helpSupport": {
+    "description": "Help and support option"
+  },
+  "comingSoonHelpSupport": "Coming Soon: Help & Support",
+  "@comingSoonHelpSupport": {
+    "description": "Coming soon message for help and support"
+  },
+  "aboutApp": "About App",
+  "@aboutApp": {
+    "description": "About app option"
+  },
+  "comingSoonAboutApp": "Coming Soon: About App",
+  "@comingSoonAboutApp": {
+    "description": "Coming soon message for about app"
+  },
+  "privacySecurity": "Privacy & Security",
+  "@privacySecurity": {
+    "description": "Privacy and security option"
+  },
+  "comingSoonPrivacySecurity": "Coming Soon: Privacy & Security",
+  "@comingSoonPrivacySecurity": {
+    "description": "Coming soon message for privacy and security"
+  }
 }

@@ -67,6 +67,22 @@ const String cachedNewsColAuthor = 'author';
 const String cachedNewsColPublicationDate = 'publication_date';
 const String cachedNewsColCategory = 'category';
 const String cachedNewsColDescription = 'description';
+
+// Notifications Table (local cache)
+const String notificationsTableName = 'notifications';
+const String notificationsColLocalId = 'local_id'; // local autoincrement id
+const String notificationsColId = 'id'; // uuid from server
+const String notificationsColTitle = 'title';
+const String notificationsColBody = 'body';
+const String notificationsColImageUrl = 'image_url';
+const String notificationsColHtml = 'html';
+const String notificationsColDate = 'date'; // ISO8601 string
+const String notificationsColType = 'type';
+const String notificationsColTargetUserIds = 'target_user_ids'; // json string
+const String notificationsColTargetTopics = 'target_topics'; // json string
+const String notificationsColSentBy = 'sent_by';
+const String notificationsColCreatedAt = 'created_at';
+const String notificationsColSeen = 'seen'; // 0/1
 // Recent Courses Table
 const String recentCoursesTableName = 'recent_courses';
 const String recentCoursesColId = 'id';
@@ -102,12 +118,38 @@ const String recentCoursesColLastVisit = 'last_visit';
     }
   }
 
+  Future<void> _createNotificationsTable(Database db) async {
+    AppLogger.info('Creating database table: $notificationsTableName');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS $notificationsTableName (
+        $notificationsColLocalId INTEGER PRIMARY KEY AUTOINCREMENT,
+        $notificationsColId TEXT UNIQUE,
+        $notificationsColTitle TEXT NOT NULL,
+        $notificationsColBody TEXT,
+        $notificationsColImageUrl TEXT,
+        $notificationsColHtml TEXT,
+        $notificationsColDate TEXT NOT NULL,
+        $notificationsColType TEXT,
+        $notificationsColTargetUserIds TEXT,
+        $notificationsColTargetTopics TEXT,
+        $notificationsColSentBy TEXT,
+        $notificationsColCreatedAt TEXT,
+        $notificationsColSeen INTEGER NOT NULL DEFAULT 0
+      )
+    ''');
+    await db.execute('''
+      CREATE INDEX IF NOT EXISTS idx_notifications_date
+      ON $notificationsTableName($notificationsColDate DESC)
+    ''');
+    AppLogger.info('Table $notificationsTableName created successfully.');
+  }
+
   Future<Database> _initDB() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, _dbName);
     return await openDatabase(
       path,
-      version: 11,
+      version: 12,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -126,6 +168,7 @@ const String recentCoursesColLastVisit = 'last_visit';
     await _createCachedPostsTable(db);
     await _createRecentCoursesTable(db);
     await _createCachedNewsTable(db);
+    await _createNotificationsTable(db);
     AppLogger.info('All tables created successfully.');
   }
 
@@ -243,7 +286,9 @@ const String recentCoursesColLastVisit = 'last_visit';
   // Add migration logic for schema changes
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     AppLogger.info('Upgrading database from version $oldVersion to $newVersion');
-
+    if (oldVersion < 12) {
+      await _createNotificationsTable(db);
+    }
   }
 
   // Method to close the database connection

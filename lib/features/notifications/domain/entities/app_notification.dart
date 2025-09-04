@@ -1,92 +1,64 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
-
 class AppNotification {
-  final int id;
+  // Supabase schema fields
+  final String id; // uuid
   final String title;
-  final String? subtitle;
-  final String? html;
+  final String? body;
   final String? imageUrl;
-  final DateTime date;
+  final String? html;
+  final DateTime date; // server sent date
+  final String? type; // e.g., 'user', 'system'
+  final List<String>? targetUserIds; // uuid[]
+  final List<String>? targetTopics; // text[]
+  final String? sentBy; // uuid
+  final DateTime? createdAt; // server created_at
+
+  // Local-only helper
   final bool seen;
 
-  bool isValid() {
-    return title.isNotEmpty;
-  }
+  const AppNotification({
+    required this.id,
+    required this.title,
+    this.body,
+    this.imageUrl,
+    this.html,
+    required this.date,
+    this.type,
+    this.targetUserIds,
+    this.targetTopics,
+    this.sentBy,
+    this.createdAt,
+    this.seen = false,
+  });
+
+  bool isValid() => title.isNotEmpty;
 
   AppNotification copyWith({
-    int? id,
+    String? id,
     String? title,
-    String? subtitle,
-    String? html,
+    String? body,
     String? imageUrl,
+    String? html,
     DateTime? date,
+    String? type,
+    List<String>? targetUserIds,
+    List<String>? targetTopics,
+    String? sentBy,
+    DateTime? createdAt,
     bool? seen,
   }) {
     return AppNotification(
       id: id ?? this.id,
       title: title ?? this.title,
-      subtitle: subtitle ?? this.subtitle,
-      html: html ?? this.html,
+      body: body ?? this.body,
       imageUrl: imageUrl ?? this.imageUrl,
+      html: html ?? this.html,
       date: date ?? this.date,
+      type: type ?? this.type,
+      targetUserIds: targetUserIds ?? this.targetUserIds,
+      targetTopics: targetTopics ?? this.targetTopics,
+      sentBy: sentBy ?? this.sentBy,
+      createdAt: createdAt ?? this.createdAt,
       seen: seen ?? this.seen,
-    );
-  }
-
-  factory AppNotification.fromRemoteMessage(RemoteMessage message) {
-    DateTime date = DateTime.now();
-    if (message.data["date"] != null) {
-      date = DateTime.parse(message.data["date"]);
-    }
-    return AppNotification(
-      id: DateTime.now().millisecond,
-      title: message.data["title"] ?? '',
-      subtitle: message.data["subtitle"],
-      html: message.data["html"],
-      imageUrl: message.data["image_url"],
-      date: date,
-    );
-  }
-  factory AppNotification.empty() {
-    return AppNotification(
-      id: 0,
-      title: '',
-      subtitle: '',
-      html: '',
-      imageUrl: '',
-      date: DateTime.now(),
-    );
-  }
-
-  AppNotification({
-    required this.id,
-    required this.title,
-    this.subtitle,
-    this.html,
-    this.imageUrl,
-    this.seen = false,
-    required this.date,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      'title': title,
-      'subtitle': subtitle,
-      'imageUrl': imageUrl,
-      'html': html,
-      'date': date.toIso8601String(),
-    }..removeWhere((key, value) => value == null);
-  }
-
-  factory AppNotification.fromMap(Map<String, dynamic> map) {
-    return AppNotification(
-      id: map['id'] ?? 0,
-      title: map['title'] ?? '',
-      subtitle: map['subtitle'],
-      html: map['html'],
-      imageUrl: map['imageUrl'],
-      seen: map['seen'] ?? false,
-      date: map['date'] != null ? DateTime.parse(map['date']) : DateTime.now(),
     );
   }
 }

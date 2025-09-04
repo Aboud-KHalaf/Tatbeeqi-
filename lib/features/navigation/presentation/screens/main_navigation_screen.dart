@@ -7,7 +7,7 @@ import 'package:tatbeeqi/features/navigation/presentation/manager/navigation_cub
 import 'package:tatbeeqi/features/navigation/presentation/manager/navigation_cubit/navigation_state.dart';
 import 'package:tatbeeqi/features/navigation/presentation/widgets/material3_bottom_nav_bar.dart';
 import 'package:tatbeeqi/features/posts/presentation/views/posts_feed_view.dart';
-import 'package:tatbeeqi/features/settings/presentation/screens/settings_screen.dart';
+import 'package:tatbeeqi/features/more/presentation/views/more_view.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class MainNavigationScreen extends StatefulWidget {
@@ -25,7 +25,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     HomeView(),
     CoursesView(),
     PostsFeedView(),
-    SettingsView(),
+    MoreView(),
   ];
 
   @override

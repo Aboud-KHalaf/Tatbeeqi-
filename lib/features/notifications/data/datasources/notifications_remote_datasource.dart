@@ -8,6 +8,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tatbeeqi/core/error/exceptions.dart';
 import 'package:tatbeeqi/features/notifications/data/handlers/firebase_messaging_handlers.dart';
+import 'package:tatbeeqi/features/notifications/data/models/app_notification_model.dart';
 import 'package:tatbeeqi/features/notifications/data/models/device_token_model.dart';
 import 'package:tatbeeqi/features/notifications/data/settings/app_local_notifications_settings.dart';
 import 'package:tatbeeqi/features/notifications/data/settings/firebase_messaging_settings.dart';
@@ -43,6 +44,8 @@ abstract class NotificationsRemoteDatasource {
     required AppNotification notification,
     required List<String> userIds,
   });
+
+  Future<List<AppNotification>> getNotifications();
 }
 
 class NotificationsRemoteDatasourceImpl
@@ -133,9 +136,9 @@ class NotificationsRemoteDatasourceImpl
     if (!notification.isValid()) return unit;
 
     await localNotificationsPlugin.show(
-      notification.id,
+      notification.id.length,
       notification.title,
-      notification.subtitle,
+      notification.body,
       details ?? AppLocalNotificationsSettings.defaultNotificationsDetails(),
     );
 
@@ -144,7 +147,7 @@ class NotificationsRemoteDatasourceImpl
 
   @override
   Future<Unit> displayFirebaseNotification(RemoteMessage message) async {
-    final notification = AppNotification.fromRemoteMessage(message);
+    final notification = AppNotificationModel.fromRemoteFCM(message);
     debugPrint(notification.toString());
 
     if (message.notification?.title != null || !notification.isValid()) {
@@ -154,7 +157,7 @@ class NotificationsRemoteDatasourceImpl
     await localNotificationsPlugin.show(
       DateTime.now().millisecond,
       notification.title,
-      notification.subtitle,
+      notification.body,
       AppLocalNotificationsSettings.defaultNotificationsDetails(),
     );
 
@@ -232,19 +235,30 @@ class NotificationsRemoteDatasourceImpl
   }
 
   @override
+  Future<List<AppNotification>> getNotifications() async {
+    try {
+      final response = await supabaseClient.from('notifications').select('*');
+      return response.map((e) => AppNotificationModel.fromDatabaseJson(e)).toList();
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
   Future<Unit> sendNotificationToTopics({
     required AppNotification notification,
     required List<String> topics,
   }) async {
-    print("from noti remote send topic");
-    return _invokeNotificationFunction(
-      functionName: 'send-notifications-to-topics',
-      body: {
-        'topics': topics,
-        'notification': notification.toJson(),
-      },
-      errorContext: 'send notification to topics',
-    );
+    // print("from noti remote send topic");
+    // return _invokeNotificationFunction(
+    //   functionName: 'send-notifications-to-topics',
+    //   body: {
+    //     'topics': topics,
+    //     'notification': notification.toDatabaseJson(),
+    //   },
+    //   errorContext: 'send notification to topics',
+    // );
+    return unit;
   }
 
   @override
@@ -252,46 +266,47 @@ class NotificationsRemoteDatasourceImpl
     required AppNotification notification,
     required List<String> userIds,
   }) async {
-    return _invokeNotificationFunction(
-      functionName: 'send-notifications-to-users',
-      body: {
-        'userIds': userIds,
-        'notification': notification.toJson(),
-      },
-      errorContext: 'send notification to users',
-    );
+    // return _invokeNotificationFunction(
+    //   functionName: 'send-notifications-to-users',
+    //   body: {
+    //     'userIds': userIds,
+    //     'notification': notification.toJson(),
+    //   },
+    //   errorContext: 'send notification to users',
+    // );
+    return unit;
   }
 
   /// A reusable method for invoking Supabase edge functions.
-  Future<Unit> _invokeNotificationFunction({
-    required String functionName,
-    required Map<String, dynamic> body,
-    required String errorContext,
-  }) async {
-    try {
-      final response = await supabaseClient.functions.invoke(
-        functionName,
-        body: body,
-      );
+  // Future<Unit> _invokeNotificationFunction({
+  //   required String functionName,
+  //   required Map<String, dynamic> body,
+  //   required String errorContext,
+  // }) async {
+  //   try {
+  //     final response = await supabaseClient.functions.invoke(
+  //       functionName,
+  //       body: body,
+  //     );
 
-      if (response.status != 200) {
-        final data = response.data as Map<String, dynamic>?;
-        final errorMessage = data?['error']?['message'] ??
-            data?['message'] ??
-            'Unknown error from function';
-        print('[$functionName] Failed: $errorMessage');
-        throw Exception('Failed to $errorContext: $errorMessage');
-      }
+  //     if (response.status != 200) {
+  //       final data = response.data as Map<String, dynamic>?;
+  //       final errorMessage = data?['error']?['message'] ??
+  //           data?['message'] ??
+  //           'Unknown error from function';
+  //       print('[$functionName] Failed: $errorMessage');
+  //       throw Exception('Failed to $errorContext: $errorMessage');
+  //     }
 
-      print('[$functionName] Success: ${response.data}');
-      return unit;
-    } on FunctionException catch (e) {
-      print('[$functionName] FunctionException: ${e.toString()}');
-      print('Details: ${e.details}');
-      throw Exception('Failed to $errorContext: ${e.toString()}');
-    } catch (e) {
-      print('[$functionName] Unexpected error: $e');
-      throw Exception('Unexpected error while trying to $errorContext.');
-    }
-  }
+  //     print('[$functionName] Success: ${response.data}');
+  //     return unit;
+  //   } on FunctionException catch (e) {
+  //     print('[$functionName] FunctionException: ${e.toString()}');
+  //     print('Details: ${e.details}');
+  //     throw Exception('Failed to $errorContext: ${e.toString()}');
+  //   } catch (e) {
+  //     print('[$functionName] Unexpected error: $e');
+  //     throw Exception('Unexpected error while trying to $errorContext.');
+  //   }
+  // }
 }

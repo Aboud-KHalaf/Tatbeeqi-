@@ -79,9 +79,6 @@ class MyApp extends StatelessWidget {
           create: (_) => di.sl<InitializeNotificationsCubit>()..initialize(),
           lazy: false,
         ),
-        BlocProvider<SendNotificationBloc>(
-          create: (_) => di.sl<SendNotificationBloc>(),
-        ),
         BlocProvider(
           create: (_) => di.sl<LocaleCubit>()..getSavedLocale(),
         ),

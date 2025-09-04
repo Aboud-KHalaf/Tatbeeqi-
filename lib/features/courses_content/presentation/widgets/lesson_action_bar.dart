@@ -44,13 +44,13 @@ class LessonActionBar extends StatelessWidget {
           children: [
              _buildCompactNavButton(
               context: context,
-              icon: Icons.arrow_forward,
+              icon: Icons.arrow_back,
               onPressed: canGoNext ? onNext : null,
             ),
             const SizedBox(width: 8),
             _buildCompactNavButton(
               context: context,
-              icon: Icons.arrow_back,
+              icon: Icons.arrow_forward,
               onPressed: canGoPrevious ? onPrevious : null,
             ),
            

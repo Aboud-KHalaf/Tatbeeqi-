@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-  import 'package:tatbeeqi/features/auth/presentation/views/update_profile_page.dart';
 import 'package:tatbeeqi/features/notifications/presentation/views/notifications_view.dart';
 
 class NotificationsIconButton extends StatelessWidget {
@@ -27,7 +26,7 @@ class NotificationsIconButton extends StatelessWidget {
           ),
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const NotificationsPage()));
+                builder: (context) => const NotificationsView()));
           },
           icon: Icon(
             Icons.notifications_none_rounded,

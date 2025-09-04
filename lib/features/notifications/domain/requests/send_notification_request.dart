@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:tatbeeqi/features/notifications/domain/entities/app_notification.dart';
+ import 'package:tatbeeqi/features/notifications/domain/entities/app_notification.dart';
 import 'package:tatbeeqi/features/notifications/domain/entities/notifications_topic.dart';
 
 class SendNotificationRequest {
@@ -14,17 +13,6 @@ class SendNotificationRequest {
   });
 
   Map toBody() {
-    debugPrint("subtitle in request are : ${notification.title}");
-    return {
-      //
-      // 'user_id': userId,
-      // 'topic': topic?.id,
-      'condition': "'1' in topics || '2' in topics",
-      //
-      'title': notification.title,
-      'subtitle': notification.subtitle,
-      'html': notification.html,
-      'image_url': notification.imageUrl,
-    };
+     return {};
   }
 }

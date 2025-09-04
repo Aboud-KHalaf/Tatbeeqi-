@@ -23,7 +23,7 @@ import 'package:tatbeeqi/features/news/presentation/views/news_details_view.dart
 import 'package:tatbeeqi/features/notes/presentation/views/add_update_note_view.dart';
 import 'package:tatbeeqi/features/quiz/presentation/views/result_view.dart';
 
-import 'package:tatbeeqi/features/settings/presentation/screens/settings_screen.dart';
+import 'package:tatbeeqi/features/more/presentation/views/more_view.dart';
 // import 'package:tatbeeqi/features/quiz/presentation/views/quiz_view.dart';
 import 'package:tatbeeqi/features/streaks/presentation/views/streaks_view.dart';
 import 'package:tatbeeqi/features/todo/presentation/views/todo_view.dart';
@@ -62,7 +62,7 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: AppRoutes.settingsPath,
         builder: (BuildContext context, GoRouterState state) {
-          return const SettingsView();
+          return const MoreView();
         },
       ),
       GoRoute(

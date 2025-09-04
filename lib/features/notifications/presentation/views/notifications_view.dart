@@ -1,236 +1,146 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tatbeeqi/core/di/service_locator.dart';
- import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
+import 'package:get_it/get_it.dart';
+import 'package:tatbeeqi/core/widgets/app_error.dart';
+import 'package:tatbeeqi/core/widgets/app_loading.dart';
 import 'package:tatbeeqi/features/notifications/domain/entities/app_notification.dart';
-import 'package:tatbeeqi/features/notifications/presentation/manager/initialize_notifications_cubit/initialize_notifications_cubit.dart';
-import 'package:tatbeeqi/features/notifications/presentation/manager/notification_settings_bloc/notification_settings_bloc.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/notifications_bloc/notifications_bloc.dart';
-import 'package:tatbeeqi/features/notifications/presentation/manager/send_notification_bloc/send_notification_bloc.dart';
 
+class NotificationsView extends StatefulWidget {
+  const NotificationsView({super.key});
 
-class NotificationsPage extends StatelessWidget {
-  const NotificationsPage({Key? key}) : super(key: key);
+  @override
+  State<NotificationsView> createState() => _NotificationsViewState();
+}
+
+class _NotificationsViewState extends State<NotificationsView> {
+  late final NotificationsBloc _bloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = GetIt.instance<NotificationsBloc>();
+    _bloc.add(GetNotifications());
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<NotificationsBloc>(
-          create: (context) => sl<NotificationsBloc>()..add(GetNotifications()),
+    return BlocProvider.value(
+      value: _bloc,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('الإشعارات'),
         ),
-        BlocProvider<SendNotificationBloc>(
-          create: (context) => sl<SendNotificationBloc>(),
+        body: BlocBuilder<NotificationsBloc, NotificationsState>(
+          builder: (context, state) {
+            if (state is NotificationsLoading ||
+                state is NotificationsInitial) {
+              return const AppLoading();
+            }
+            if (state is NotificationsFailure) {
+              return AppError(onAction: () => _bloc.add(GetNotifications()));
+            }
+            if (state is NotificationsLoaded) {
+              if (state.notifications.isEmpty) {
+                return const _Empty();
+              }
+              return RefreshIndicator(
+                onRefresh: () async => _bloc.add(GetNotifications()),
+                child: ListView.separated(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  itemCount: state.notifications.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  itemBuilder: (context, index) => _NotificationTile(
+                    notification: state.notifications[index],
+                  ),
+                ),
+              );
+            }
+            return const SizedBox.shrink();
+          },
         ),
-        BlocProvider<NotificationSettingsBloc>(
-          create: (context) =>
-              sl<NotificationSettingsBloc>()..add(GetDeviceToken()),
-        ),
-      ],
-      child: const NotificationsView(),
+      ),
     );
   }
 }
 
-class NotificationsView extends StatelessWidget {
-  const NotificationsView({Key? key}) : super(key: key);
+class _Empty extends StatelessWidget {
+  const _Empty();
+  @override
+  Widget build(BuildContext context) {
+    final color = Theme.of(context).colorScheme;
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.notifications_off_outlined,
+              size: 56, color: color.outline),
+          const SizedBox(height: 12),
+          Text('لا توجد إشعارات',
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(color: color.onSurfaceVariant)),
+        ],
+      ),
+    );
+  }
+}
+
+class _NotificationTile extends StatelessWidget {
+  final AppNotification notification;
+  const _NotificationTile({required this.notification});
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<InitializeNotificationsCubit,
-        InitializeNotificationsState>(
-      listener: (context, state) {
-        if (state is InitializeNotificationsSuccess) {}
-        if (state is InitializeNotificationsFailure) {
-          SnackBarHelper.showError(
-            context: context,
-            message: state.message,
-          );
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Notifications'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.delete_sweep),
-              onPressed: () =>
-                  context.read<NotificationsBloc>().add(ClearNotifications()),
-              tooltip: 'Clear All Notifications',
+    final theme = Theme.of(context);
+    final color = theme.colorScheme;
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        leading: CircleAvatar(
+          backgroundColor: color.primaryContainer,
+          child: Icon(Icons.notifications_rounded,
+              color: color.onPrimaryContainer),
+        ),
+        title: Text(notification.title,
+            style: theme.textTheme.titleMedium
+                ?.copyWith(fontWeight: FontWeight.w600)),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if ((notification.body ?? '').isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: Text(
+                  notification.body!,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.bodyMedium
+                      ?.copyWith(color: color.onSurfaceVariant),
+                ),
+              ),
+            Padding(
+              padding: const EdgeInsets.only(top: 6.0),
+              child: Text(
+                _formatDate(notification.date),
+                style:
+                    theme.textTheme.bodySmall?.copyWith(color: color.outline),
+              ),
             ),
           ],
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _buildNotificationSettingsSection(context),
-                const SizedBox(height: 24),
-                _buildSendNotificationSection(context),
-                const SizedBox(height: 24),
-                _buildNotificationsList(context),
-              ],
-            ),
-          ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () =>
-              context.read<NotificationsBloc>().add(GetNotifications()),
-          tooltip: 'Refresh Notifications',
-          child: const Icon(Icons.refresh),
         ),
       ),
     );
   }
 
-  Widget _buildNotificationSettingsSection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Device Settings', style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 8),
-        BlocBuilder<NotificationSettingsBloc, NotificationSettingsState>(
-          builder: (context, state) {
-            if (state is NotificationSettingsLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (state is NotificationSettingsLoaded) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Device Token: ${state.deviceToken}'),
-                  const SizedBox(height: 8),
-                  Text(
-                      'Subscribed Topics: ${state.subscribedTopics.join(', ')}'),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                        onPressed: () => context
-                            .read<NotificationSettingsBloc>()
-                            .add(const SubscribeToTopic('news')),
-                        child: const Text('Subscribe to News'),
-                      ),
-                      const SizedBox(width: 8),
-                      ElevatedButton(
-                        onPressed: () => context
-                            .read<NotificationSettingsBloc>()
-                            .add(const UnsubscribeFromTopic('news')),
-                        child: const Text('Unsubscribe'),
-                      ),
-                    ],
-                  ),
-                ],
-              );
-            }
-            if (state is NotificationSettingsFailure) {
-              return Text('Error: ${state.message}',
-                  style: const TextStyle(color: Colors.red));
-            }
-            return const Text('Fetching notification settings...');
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSendNotificationSection(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Send a Test Notification',
-            style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 8),
-        ElevatedButton(
-          onPressed: () {
-            AppNotification notification = AppNotification(
-              id: 125235,
-              title: 'Hello from Tatbeeqi!',
-              subtitle: 'This is a test notification sent to all users.',
-              date: DateTime.now(),
-            );
-            context.read<SendNotificationBloc>().add(
-                  SendNotificationToTopics(
-                    topics: const ['test'],
-                    notification: notification,
-                  ),
-                );
-          },
-          child: const Text('Send to Topic: all_users'),
-        ),
-        BlocListener<SendNotificationBloc, SendNotificationState>(
-          listener: (context, state) {
-            if (state is SendNotificationSuccess) {
-              SnackBarHelper.showSuccess(
-                context: context,
-                message: "sended",
-              );
-            }
-            if (state is SendNotificationFailure) {
-              SnackBarHelper.showError(
-                context: context,
-                message: state.message,
-              );
-            }
-          },
-          child: const SizedBox.shrink(),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildNotificationsList(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Incoming Notifications',
-            style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 8),
-        BlocBuilder<NotificationsBloc, NotificationsState>(
-          builder: (context, state) {
-            if (state is NotificationsLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (state is NotificationsLoaded) {
-              if (state.notifications.isEmpty) {
-                return const Center(child: Text('No notifications yet.'));
-              }
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: state.notifications.length,
-                itemBuilder: (context, index) {
-                  final notification = state.notifications[index];
-                  return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: ListTile(
-                      title: Text(notification.title),
-                      subtitle: Text(notification.subtitle ?? 'No content'),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete, color: Colors.red),
-                        onPressed: () {
-                          context
-                              .read<NotificationsBloc>()
-                              .add(DeleteNotification(notification.id));
-                        },
-                        tooltip: 'Delete Notification',
-                      ),
-                    ),
-                  );
-                },
-              );
-            }
-            if (state is NotificationsFailure) {
-              return Text('Error: ${state.message}',
-                  style: const TextStyle(color: Colors.red));
-            }
-            return const Center(
-                child: Text('Press refresh to get notifications.'));
-          },
-        ),
-      ],
-    );
+  String _formatDate(DateTime dt) {
+    final d = dt.toLocal();
+    two(int v) => v.toString().padLeft(2, '0');
+    return '${d.year}-${two(d.month)}-${two(d.day)} ${two(d.hour)}:${two(d.minute)}';
   }
 }

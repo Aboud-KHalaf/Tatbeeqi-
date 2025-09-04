@@ -7,6 +7,7 @@ import 'package:tatbeeqi/core/error/failures.dart';
 import 'package:tatbeeqi/core/utils/app_logger.dart';
 import 'package:tatbeeqi/features/notifications/data/datasources/notifications_local_datasource.dart';
 import 'package:tatbeeqi/features/notifications/data/datasources/notifications_remote_datasource.dart';
+import 'package:tatbeeqi/features/notifications/data/models/app_notification_model.dart';
 import 'package:tatbeeqi/features/notifications/domain/entities/app_notification.dart';
 
 import '../../domain/repositories/notifications_repository.dart';
@@ -70,9 +71,9 @@ class NotificationsRepositoryImplements implements NotificationsRepository {
     try {
       final response1 =
           await _remoteDatasource.displayFirebaseNotification(message);
-      // final response2 = await _localDatasource.insertNotification(
-      //     notification: AppNotification.fromRemoteMessage(message));
-      // debugPrint("debugging num $response2");
+      await _localDatasource.insertNotification(
+        notification: AppNotificationModel.fromRemoteFCM(message),
+      );
       return right(response1);
     } on Exception catch (e) {
       debugPrint("debugging error ${e.toString()}");
@@ -92,9 +93,10 @@ class NotificationsRepositoryImplements implements NotificationsRepository {
         oneTimeNotification: oneTimeNotification,
         details: details,
       );
-      // await _localDatasource.insertNotification(
-      //   notification: notification,
-      // );
+      // Cache locally
+      await _localDatasource.insertNotification(
+        notification: notification,
+      );
       return right(response);
     } on Exception catch (e) {
       return left(ServerFailure(e.toString()));
@@ -104,9 +106,8 @@ class NotificationsRepositoryImplements implements NotificationsRepository {
   @override
   Future<Either<Failure, List<AppNotification>>> getNotifications() async {
     try {
-      //  final response = await _localDatasource.getNotifications();
-      //  return right(response);
-      return left(const ServerFailure("no impl"));
+      final response = await _remoteDatasource.getNotifications();
+      return right(response);
     } on Exception catch (e) {
       return left(ServerFailure(e.toString()));
     }
@@ -115,9 +116,8 @@ class NotificationsRepositoryImplements implements NotificationsRepository {
   @override
   Future<Either<Failure, Unit>> clearNotifications() async {
     try {
-      // final response = await _localDatasource.clearNotifications();
-      // return right(response);
-      return left(const ServerFailure("no impl"));
+      final response = await _localDatasource.clearNotifications();
+      return right(response);
     } on Exception catch (e) {
       return left(ServerFailure(e.toString()));
     }
@@ -127,9 +127,9 @@ class NotificationsRepositoryImplements implements NotificationsRepository {
   Future<Either<Failure, Unit>> deleteNotification(
       {required int notificationId}) async {
     try {
-      // final response = await _localDatasource.deleteNotification(
-      //     notificationId: notificationId);
-      // debugPrint("deleteNotification : $response");
+      final response = await _localDatasource.deleteNotification(
+          notificationId: notificationId);
+      debugPrint("deleteNotification : $response");
       return right(unit);
     } on Exception catch (e) {
       return left(ServerFailure(e.toString()));

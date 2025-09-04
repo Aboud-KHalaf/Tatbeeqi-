@@ -7,8 +7,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tatbeeqi/core/error/failures.dart';
 import 'package:tatbeeqi/core/utils/app_logger.dart';
-import 'package:tatbeeqi/features/notifications/domain/entities/app_notification.dart';
-import 'package:tatbeeqi/features/notifications/domain/repositories/notifications_repository.dart';
+import 'package:tatbeeqi/features/notifications/data/mappers/app_notification_mapper.dart';
+import 'package:tatbeeqi/features/notifications/data/models/app_notification_model.dart';
+ import 'package:tatbeeqi/features/notifications/domain/repositories/notifications_repository.dart';
 import 'package:tatbeeqi/firebase_options.dart';
 
 /// Handles FCM messages when app is in background/terminated
@@ -21,7 +22,7 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final repo = GetIt.instance<NotificationsRepository>();
 
   try {
-    final notification = AppNotification.fromRemoteMessage(message);
+    final notification = AppNotificationModel.fromRemoteFCM(message).toEntity;
     if (notification.isValid()) {
       await repo.displayNotification(
         notification: notification,
@@ -58,7 +59,7 @@ void onData(RemoteMessage message) async {
   final repo = GetIt.instance<NotificationsRepository>();
 
   try {
-    final notification = AppNotification.fromRemoteMessage(message);
+    final notification = AppNotificationModel.fromRemoteFCM(message).toEntity;
     if (notification.isValid()) {
       await repo.displayNotification(
         notification: notification,

@@ -174,6 +174,187 @@
     "description": "Label for delete button"
   },
   
+  "reportSubmittedSuccessfully": "تم إرسال البلاغ بنجاح",
+  "@reportSubmittedSuccessfully": {
+    "description": "Message shown when a report is submitted successfully"
+  },
+  
+  "userDataLoadError": "خطأ في تحميل بيانات المستخدم",
+  "@userDataLoadError": {
+    "description": "Error message when user data fails to load"
+  },
+  "userDataNotLoaded": "لم يتم تحميل بيانات المستخدم",
+  "@userDataNotLoaded": {
+    "description": "Message when user data is not loaded"
+  },
+  "year": "السنة",
+  "@year": {
+    "description": "Label for study year"
+  },
+  "softwareEngineering": "هندسة برمجيات",
+  "@softwareEngineering": {
+    "description": "Software Engineering department name"
+  },
+  "cyberSecurity": "أمن سيبراني",
+  "@cyberSecurity": {
+    "description": "Cyber Security department name"
+  },
+  "department": "قسم",
+  "@department": {
+    "description": "Department label"
+  },
+  "shortcuts": "الاختصارات",
+  "@shortcuts": {
+    "description": "Shortcuts section title"
+  },
+  "comingSoonSavedPosts": "قريباً: المنشورات المحفوظة",
+  "@comingSoonSavedPosts": {
+    "description": "Coming soon message for saved posts"
+  },
+  "savedPosts": "المحفوظات",
+  "@savedPosts": {
+    "description": "Saved posts shortcut title"
+  },
+  "comingSoonMyReports": "قريباً: تقاريري",
+  "@comingSoonMyReports": {
+    "description": "Coming soon message for my reports"
+  },
+  "myReports": "ابلاغاتي",
+  "@myReports": {
+    "description": "My reports shortcut title"
+  },
+  "settings": "الإعدادات",
+  "@settings": {
+    "description": "Settings section title"
+  },
+  "themeAndColors": "المظهر والألوان",
+  "@themeAndColors": {
+    "description": "Theme and colors settings title"
+  },
+  "customizeAppAppearance": "تخصيص شكل التطبيق",
+  "@customizeAppAppearance": {
+    "description": "Subtitle for theme settings"
+  },
+  "darkMode": "الوضع الليلي",
+  "@darkMode": {
+    "description": "Dark mode setting label"
+  },
+  "appColor": "لون التطبيق",
+  "@appColor": {
+    "description": "App color setting label"
+  },
+  "more": "المزيد",
+  "@more": {
+    "description": "More button text for color picker"
+  },
+  "reset": "إعادة تعيين",
+  "@reset": {
+    "description": "Reset button tooltip"
+  },
+  "chooseAppColor": "اختيار لون التطبيق",
+  "@chooseAppColor": {
+    "description": "Color picker dialog title"
+  },
+  "availableColors": "الألوان المتاحة",
+  "@availableColors": {
+    "description": "Available colors section title in color picker"
+  },
+  "cancel": "إلغاء",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+  "apply": "تطبيق",
+  "@apply": {
+    "description": "Apply button text"
+  },
+  "language": "اللغة",
+  "@language": {
+    "description": "Language setting label"
+  },
+  "arabic": "العربية",
+  "@arabic": {
+    "description": "Arabic language option"
+  },
+  "english": "English",
+  "@english": {
+    "description": "English language option"
+  },
+  "accountSettings": "إعدادات الحساب",
+  "@accountSettings": {
+    "description": "Account settings title"
+  },
+  "manageAccountData": "إدارة حسابك وبياناتك",
+  "@manageAccountData": {
+    "description": "Account settings subtitle"
+  },
+  "updateData": "تحديث البيانات",
+  "@updateData": {
+    "description": "Update data option"
+  },
+  "comingSoonUpdateData": "قريباً: تحديث البيانات",
+  "@comingSoonUpdateData": {
+    "description": "Coming soon message for update data"
+  },
+  "logout": "تسجيل الخروج",
+  "@logout": {
+    "description": "Logout option"
+  },
+  "logoutConfirmation": "هل أنت متأكد من رغبتك في تسجيل الخروج؟",
+  "@logoutConfirmation": {
+    "description": "Logout confirmation message"
+  },
+  "notifications": "الإشعارات",
+  "@notifications": {
+    "description": "Notifications settings title"
+  },
+  "manageNotifications": "إدارة الإشعارات والتنبيهات",
+  "@manageNotifications": {
+    "description": "Notifications settings subtitle"
+  },
+  "viewNotifications": "عرض الإشعارات",
+  "@viewNotifications": {
+    "description": "View notifications option"
+  },
+  "notificationSettings": "إعدادات الإشعارات",
+  "@notificationSettings": {
+    "description": "Notification settings option"
+  },
+  "comingSoonNotificationSettings": "قريباً: إعدادات الإشعارات",
+  "@comingSoonNotificationSettings": {
+    "description": "Coming soon message for notification settings"
+  },
+  "additionalSettings": "إعدادات إضافية",
+  "@additionalSettings": {
+    "description": "Additional settings title"
+  },
+  "moreOptionsSettings": "المزيد من الخيارات والإعدادات",
+  "@moreOptionsSettings": {
+    "description": "Additional settings subtitle"
+  },
+  "helpSupport": "المساعدة والدعم",
+  "@helpSupport": {
+    "description": "Help and support option"
+  },
+  "comingSoonHelpSupport": "قريباً: المساعدة والدعم",
+  "@comingSoonHelpSupport": {
+    "description": "Coming soon message for help and support"
+  },
+  "aboutApp": "حول التطبيق",
+  "@aboutApp": {
+    "description": "About app option"
+  },
+  "comingSoonAboutApp": "قريباً: حول التطبيق",
+  "@comingSoonAboutApp": {
+    "description": "Coming soon message for about app"
+  },
+  "privacySecurity": "الخصوصية والأمان",
+  "@privacySecurity": {
+    "description": "Privacy and security option"
+  },
+  "comingSoonPrivacySecurity": "قريباً: الخصوصية والأمان",
+  "@comingSoonPrivacySecurity": {
+    "description": "Coming soon message for privacy and security"
+  },
   "errorCouldNotLaunch": "تعذر فتح الرابط {url}",
   "@errorCouldNotLaunch": {
     "description": "Error message shown when a URL cannot be launched",
