@@ -4,7 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/core/routing/routes_args.dart';
+import 'package:tatbeeqi/core/utils/app_logger.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/manager/lesson_completion/lesson_completion_cubit.dart';
+import 'package:tatbeeqi/features/grades/domain/entities/grade.dart';
+import 'package:tatbeeqi/features/grades/presentation/manager/grades_cubit.dart';
 import 'package:tatbeeqi/features/quiz/presentation/bloc/quiz_bloc.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_empty_state.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_error_state.dart';
@@ -12,10 +15,15 @@ import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_loaded_widget.d
 
 class QuizWidget extends StatefulWidget {
   final int lessonId;
-
+  final int courseId;
+  final int lectureId;
+  final int quizId;
   const QuizWidget({
     Key? key,
     required this.lessonId,
+    required this.courseId,
+    required this.lectureId,
+    required this.quizId,
   }) : super(key: key);
 
   @override
@@ -37,7 +45,19 @@ class _QuizWidgetState extends State<QuizWidget> {
     return BlocConsumer<QuizBloc, QuizState>(
       listener: (context, state) {
         if (state is QuizCompleted) {
+          AppLogger.info("from quiz completed");
           // mark lesson as completed if passed
+          final grade = Grade(
+            id: '',
+            quizId: widget.quizId,
+            courseId: widget.courseId,
+            lectureId: widget.lectureId,
+            lessonId: widget.lessonId,
+            score: state.score.toDouble(),
+            studentId: '',
+            submissionDate: DateTime.now(),
+          );
+          context.read<GradesCubit>().insert(grade);
           if (state.score >= (state.questions.length / 2)) {
             debugPrint('Lesson completed');
             context

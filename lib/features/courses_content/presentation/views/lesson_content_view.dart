@@ -157,6 +157,9 @@ class _LessonContentViewState extends State<LessonContentView>
       case ContentType.quiz:
         return QuizWidget(
           lessonId: widget.lesson[_currentIndex].id,
+          courseId: widget.courseId,
+          lectureId: widget.lesson[_currentIndex].lectureId,
+          quizId: widget.lesson[_currentIndex].id,
         );
 
       case ContentType.voice:

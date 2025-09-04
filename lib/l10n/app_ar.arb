@@ -502,5 +502,25 @@
   "authEmailEmpty": "يرجى إدخال بريدك الإلكتروني",
   "authPasswordEmpty": "يرجى إدخال كلمة المرور الخاصة بك",
   "authConfirmPasswordEmpty": "يرجى تأكيد كلمة المرور الخاصة بك",
-  "authPasswordMismatch": "كلمات المرور غير متطابقة"
+  "authPasswordMismatch": "كلمات المرور غير متطابقة",
+  "referencesEmptyTitle": "لا توجد مراجع",
+  "@referencesEmptyTitle": {
+    "description": "العنوان لحالة عدم وجود مراجع"
+  },
+  "referencesEmptySubtitle": "لم تتم إضافة أي مراجع بعد.",
+  "@referencesEmptySubtitle": {
+    "description": "النص الفرعي لحالة عدم وجود مراجع"
+  },
+  "gradesEmptyTitle": "لا توجد درجات حتى الآن",
+  "@gradesEmptyTitle": {
+    "description": "العنوان لحالة عدم وجود درجات"
+  },
+  "gradesEmptySubtitle": "خذ الاختبارات في الدروس لعرض درجاتك.",
+  "@gradesEmptySubtitle": {
+    "description": "النص الفرعي لحالة عدم وجود درجات"
+  },
+  "lessonLabel": "الدرس",
+  "@lessonLabel": {
+    "description": "وسم عنوان الدرس في قائمة الدرجات"
+  }
 }

@@ -5,7 +5,6 @@ import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cub
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_state.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/courses_grid_widget.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/courses_shimmer_grid.dart';
-import 'package:tatbeeqi/features/courses/presentation/widgets/courses_tab_bar_shimmer.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/empty_courses_widget.dart';
 
 class AllCoursesView extends StatefulWidget {

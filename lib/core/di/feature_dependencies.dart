@@ -13,6 +13,8 @@ import 'package:tatbeeqi/core/di/notes_dependencies.dart';
 import 'package:tatbeeqi/core/di/quizes_dependencies.dart';
 import 'package:tatbeeqi/core/di/posts_dependencies.dart';
 import 'package:tatbeeqi/core/di/streaks_dependencies.dart';
+import 'package:tatbeeqi/core/di/references_dependencies.dart';
+import 'package:tatbeeqi/core/di/grades_dependencies.dart';
 
 void initFeatureDependencies(GetIt sl) {
   initThemeDependencies(sl);
@@ -29,4 +31,6 @@ void initFeatureDependencies(GetIt sl) {
   initCourseContentDependencies(sl);
   initAiAssistantDependencies(sl);
   initStreaksDependencies(sl);
+  initReferencesDependencies(sl);
+  initGradesDependencies(sl);
 }

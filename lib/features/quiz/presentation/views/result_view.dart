@@ -4,7 +4,7 @@ import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_score_summary_c
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_result_list.dart';
 import 'package:tatbeeqi/features/quiz/presentation/widgets/quiz_result_action_button.dart';
  
-class ResultView extends StatelessWidget {
+class ResultView extends StatefulWidget {
   static const String routeName = '/quiz_result';
 
   final int score;
@@ -21,10 +21,16 @@ class ResultView extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<ResultView> createState() => _ResultViewState();
+}
+
+class _ResultViewState extends State<ResultView> {
+  
+  @override
   Widget build(BuildContext context) {
  
-     final totalQuestions = questions.length;
-    final passed = score >= (totalQuestions / 2); // Example passing threshold
+     final totalQuestions = widget.questions.length;
+    final passed = widget.score >= (totalQuestions / 2); // Example passing threshold
 
     return Scaffold(
       
@@ -33,15 +39,15 @@ class ResultView extends StatelessWidget {
           slivers: [
             SliverToBoxAdapter(
               child: QuizScoreSummaryCard(
-                score: score,
+                score: widget.score,
                 totalQuestions: totalQuestions,
                 passed: passed,
               ),
             ),
             QuizResultList(
-              questions: questions,
-              results: results,
-              userAnswers: userAnswers,
+              questions: widget.questions,
+              results: widget.results,
+              userAnswers: widget.userAnswers,
             ),
             const SliverToBoxAdapter(
               child: QuizResultActionButton(),

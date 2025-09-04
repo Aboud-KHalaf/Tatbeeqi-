@@ -654,5 +654,33 @@
   "comingSoonPrivacySecurity": "Coming Soon: Privacy & Security",
   "@comingSoonPrivacySecurity": {
     "description": "Coming soon message for privacy and security"
+  },
+  "referencesEmptyTitle": "No References Found",
+  "@referencesEmptyTitle": {
+    "description": "Title for references empty state"
+  },
+  "referencesEmptySubtitle": "You haven't added any references yet.",
+  "@referencesEmptySubtitle": {
+    "description": "Subtitle for references empty state"
+  },
+  "referencesEmptyStateTitle": "No References Found",
+  "@referencesEmptyStateTitle": {
+    "description": "Title for references empty state"
+  },
+  "referencesEmptyStateSubtitle": "You haven't added any references yet.",
+  "@referencesEmptyStateSubtitle": {
+    "description": "Subtitle for references empty state"
+  },
+  "gradesEmptyTitle": "No grades yet",
+  "@gradesEmptyTitle": {
+    "description": "Title for grades empty state"
+  },
+  "gradesEmptySubtitle": "Take the quizzes in the lessons to display your grades.",
+  "@gradesEmptySubtitle": {
+    "description": "Subtitle for grades empty state"
+  },
+  "lessonLabel": "Lesson",
+  "@lessonLabel": {
+    "description": "Label for lesson prefix in grades list"
   }
 }

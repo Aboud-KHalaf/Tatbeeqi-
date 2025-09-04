@@ -490,7 +490,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get viewAndEdit => 'View and edit';
 
   @override
-  String get savedPosts => 'Saved Posts';
+  String get savedPosts => 'Saved';
 
   @override
   String get yourBookmarks => 'Your bookmarks';
@@ -1019,4 +1019,145 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authPasswordMismatch => 'Passwords do not match';
+
+  @override
+  String get userDataLoadError => 'Error loading user data';
+
+  @override
+  String get userDataNotLoaded => 'User data not loaded';
+
+  @override
+  String get year => 'Year';
+
+  @override
+  String get softwareEngineering => 'Software Engineering';
+
+  @override
+  String get cyberSecurity => 'Cyber Security';
+
+  @override
+  String get shortcuts => 'Shortcuts';
+
+  @override
+  String get comingSoonSavedPosts => 'Coming Soon: Saved Posts';
+
+  @override
+  String get comingSoonMyReports => 'Coming Soon: My Reports';
+
+  @override
+  String get myReports => 'My Reports';
+
+  @override
+  String get themeAndColors => 'Theme & Colors';
+
+  @override
+  String get customizeAppAppearance => 'Customize app appearance';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get appColor => 'App Color';
+
+  @override
+  String get more => 'More';
+
+  @override
+  String get reset => 'Reset';
+
+  @override
+  String get chooseAppColor => 'Choose App Color';
+
+  @override
+  String get availableColors => 'Available Colors';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get apply => 'Apply';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get arabic => 'العربية';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get accountSettings => 'Account Settings';
+
+  @override
+  String get manageAccountData => 'Manage your account and data';
+
+  @override
+  String get updateData => 'Update Data';
+
+  @override
+  String get comingSoonUpdateData => 'Coming Soon: Update Data';
+
+  @override
+  String get logout => 'Logout';
+
+  @override
+  String get logoutConfirmation => 'Are you sure you want to logout?';
+
+  @override
+  String get manageNotifications => 'Manage notifications and alerts';
+
+  @override
+  String get viewNotifications => 'View Notifications';
+
+  @override
+  String get notificationSettings => 'Notification Settings';
+
+  @override
+  String get comingSoonNotificationSettings => 'Coming Soon: Notification Settings';
+
+  @override
+  String get additionalSettings => 'Additional Settings';
+
+  @override
+  String get moreOptionsSettings => 'More options and settings';
+
+  @override
+  String get helpSupport => 'Help & Support';
+
+  @override
+  String get comingSoonHelpSupport => 'Coming Soon: Help & Support';
+
+  @override
+  String get aboutApp => 'About App';
+
+  @override
+  String get comingSoonAboutApp => 'Coming Soon: About App';
+
+  @override
+  String get privacySecurity => 'Privacy & Security';
+
+  @override
+  String get comingSoonPrivacySecurity => 'Coming Soon: Privacy & Security';
+
+  @override
+  String get referencesEmptyTitle => 'No References Found';
+
+  @override
+  String get referencesEmptySubtitle => 'You haven\'t added any references yet.';
+
+  @override
+  String get referencesEmptyStateTitle => 'No References Found';
+
+  @override
+  String get referencesEmptyStateSubtitle => 'You haven\'t added any references yet.';
+
+  @override
+  String get gradesEmptyTitle => 'No grades yet';
+
+  @override
+  String get gradesEmptySubtitle => 'Take the quizzes in the lessons to display your grades.';
+
+  @override
+  String get lessonLabel => 'Lesson';
 }

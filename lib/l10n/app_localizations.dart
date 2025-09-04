@@ -947,7 +947,7 @@ abstract class AppLocalizations {
   /// **'Academic year is required'**
   String get academicYearRequired;
 
-  /// No description provided for @department.
+  /// Department label
   ///
   /// In en, this message translates to:
   /// **'Department'**
@@ -1037,10 +1037,10 @@ abstract class AppLocalizations {
   /// **'View and edit'**
   String get viewAndEdit;
 
-  /// No description provided for @savedPosts.
+  /// Saved posts shortcut title
   ///
   /// In en, this message translates to:
-  /// **'Saved Posts'**
+  /// **'Saved'**
   String get savedPosts;
 
   /// No description provided for @yourBookmarks.
@@ -1061,7 +1061,7 @@ abstract class AppLocalizations {
   /// **'Upcoming tasks'**
   String get upcomingTasks;
 
-  /// No description provided for @settings.
+  /// Settings section title
   ///
   /// In en, this message translates to:
   /// **'Settings'**
@@ -1079,7 +1079,7 @@ abstract class AppLocalizations {
   /// **'Profile, password, sessions'**
   String get profilePasswordSessions;
 
-  /// No description provided for @notifications.
+  /// Notifications settings title
   ///
   /// In en, this message translates to:
   /// **'Notifications'**
@@ -2098,6 +2098,288 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Passwords do not match'**
   String get authPasswordMismatch;
+
+  /// Error message when user data fails to load
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading user data'**
+  String get userDataLoadError;
+
+  /// Message when user data is not loaded
+  ///
+  /// In en, this message translates to:
+  /// **'User data not loaded'**
+  String get userDataNotLoaded;
+
+  /// Label for study year
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get year;
+
+  /// Software Engineering department name
+  ///
+  /// In en, this message translates to:
+  /// **'Software Engineering'**
+  String get softwareEngineering;
+
+  /// Cyber Security department name
+  ///
+  /// In en, this message translates to:
+  /// **'Cyber Security'**
+  String get cyberSecurity;
+
+  /// Shortcuts section title
+  ///
+  /// In en, this message translates to:
+  /// **'Shortcuts'**
+  String get shortcuts;
+
+  /// Coming soon message for saved posts
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Soon: Saved Posts'**
+  String get comingSoonSavedPosts;
+
+  /// Coming soon message for my reports
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Soon: My Reports'**
+  String get comingSoonMyReports;
+
+  /// My reports shortcut title
+  ///
+  /// In en, this message translates to:
+  /// **'My Reports'**
+  String get myReports;
+
+  /// Theme and colors settings title
+  ///
+  /// In en, this message translates to:
+  /// **'Theme & Colors'**
+  String get themeAndColors;
+
+  /// Subtitle for theme settings
+  ///
+  /// In en, this message translates to:
+  /// **'Customize app appearance'**
+  String get customizeAppAppearance;
+
+  /// Dark mode setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Dark Mode'**
+  String get darkMode;
+
+  /// App color setting label
+  ///
+  /// In en, this message translates to:
+  /// **'App Color'**
+  String get appColor;
+
+  /// More button text for color picker
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get more;
+
+  /// Reset button tooltip
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
+
+  /// Color picker dialog title
+  ///
+  /// In en, this message translates to:
+  /// **'Choose App Color'**
+  String get chooseAppColor;
+
+  /// Available colors section title in color picker
+  ///
+  /// In en, this message translates to:
+  /// **'Available Colors'**
+  String get availableColors;
+
+  /// Cancel button text
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Apply button text
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get apply;
+
+  /// Language setting label
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// Arabic language option
+  ///
+  /// In en, this message translates to:
+  /// **'العربية'**
+  String get arabic;
+
+  /// English language option
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get english;
+
+  /// Account settings title
+  ///
+  /// In en, this message translates to:
+  /// **'Account Settings'**
+  String get accountSettings;
+
+  /// Account settings subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Manage your account and data'**
+  String get manageAccountData;
+
+  /// Update data option
+  ///
+  /// In en, this message translates to:
+  /// **'Update Data'**
+  String get updateData;
+
+  /// Coming soon message for update data
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Soon: Update Data'**
+  String get comingSoonUpdateData;
+
+  /// Logout option
+  ///
+  /// In en, this message translates to:
+  /// **'Logout'**
+  String get logout;
+
+  /// Logout confirmation message
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to logout?'**
+  String get logoutConfirmation;
+
+  /// Notifications settings subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'Manage notifications and alerts'**
+  String get manageNotifications;
+
+  /// View notifications option
+  ///
+  /// In en, this message translates to:
+  /// **'View Notifications'**
+  String get viewNotifications;
+
+  /// Notification settings option
+  ///
+  /// In en, this message translates to:
+  /// **'Notification Settings'**
+  String get notificationSettings;
+
+  /// Coming soon message for notification settings
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Soon: Notification Settings'**
+  String get comingSoonNotificationSettings;
+
+  /// Additional settings title
+  ///
+  /// In en, this message translates to:
+  /// **'Additional Settings'**
+  String get additionalSettings;
+
+  /// Additional settings subtitle
+  ///
+  /// In en, this message translates to:
+  /// **'More options and settings'**
+  String get moreOptionsSettings;
+
+  /// Help and support option
+  ///
+  /// In en, this message translates to:
+  /// **'Help & Support'**
+  String get helpSupport;
+
+  /// Coming soon message for help and support
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Soon: Help & Support'**
+  String get comingSoonHelpSupport;
+
+  /// About app option
+  ///
+  /// In en, this message translates to:
+  /// **'About App'**
+  String get aboutApp;
+
+  /// Coming soon message for about app
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Soon: About App'**
+  String get comingSoonAboutApp;
+
+  /// Privacy and security option
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy & Security'**
+  String get privacySecurity;
+
+  /// Coming soon message for privacy and security
+  ///
+  /// In en, this message translates to:
+  /// **'Coming Soon: Privacy & Security'**
+  String get comingSoonPrivacySecurity;
+
+  /// Title for references empty state
+  ///
+  /// In en, this message translates to:
+  /// **'No References Found'**
+  String get referencesEmptyTitle;
+
+  /// Subtitle for references empty state
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t added any references yet.'**
+  String get referencesEmptySubtitle;
+
+  /// Title for references empty state
+  ///
+  /// In en, this message translates to:
+  /// **'No References Found'**
+  String get referencesEmptyStateTitle;
+
+  /// Subtitle for references empty state
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t added any references yet.'**
+  String get referencesEmptyStateSubtitle;
+
+  /// Title for grades empty state
+  ///
+  /// In en, this message translates to:
+  /// **'No grades yet'**
+  String get gradesEmptyTitle;
+
+  /// Subtitle for grades empty state
+  ///
+  /// In en, this message translates to:
+  /// **'Take the quizzes in the lessons to display your grades.'**
+  String get gradesEmptySubtitle;
+
+  /// Label for lesson prefix in grades list
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson'**
+  String get lessonLabel;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

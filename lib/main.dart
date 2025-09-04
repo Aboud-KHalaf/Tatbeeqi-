@@ -16,6 +16,7 @@ import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cu
 import 'package:tatbeeqi/features/courses_content/presentation/manager/lectures/lectures_cubit.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/manager/lesson_completion/lesson_completion_cubit.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/manager/lessons/lessons_cubit.dart';
+import 'package:tatbeeqi/features/grades/presentation/manager/grades_cubit.dart';
 import 'package:tatbeeqi/features/localization/presentation/manager/locale_cubit/locale_cubit.dart';
 import 'package:tatbeeqi/features/localization/presentation/manager/locale_cubit/locale_state.dart';
 import 'package:tatbeeqi/features/news/presentation/manager/news_cubit.dart';
@@ -23,7 +24,6 @@ import 'package:tatbeeqi/features/notes/presentation/bloc/notes_bloc.dart';
 import 'package:tatbeeqi/features/navigation/presentation/manager/navigation_cubit/navigation_cubit.dart';
 import 'package:tatbeeqi/features/notifications/data/handlers/firebase_messaging_handlers.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/initialize_notifications_cubit/initialize_notifications_cubit.dart';
-import 'package:tatbeeqi/features/notifications/presentation/manager/send_notification_bloc/send_notification_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
@@ -137,6 +137,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => di.sl<UserCubit>()..loadCurrentUser(),
+        ),
+        BlocProvider(
+          create: (_) => di.sl<GradesCubit>(),
         ),
       ],
       child: BlocBuilder<LocaleCubit, LocaleState>(

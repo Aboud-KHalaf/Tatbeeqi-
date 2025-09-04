@@ -445,7 +445,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get academicYearRequired => 'Academic year is required';
 
   @override
-  String get department => 'Department';
+  String get department => 'قسم';
 
   @override
   String get departmentRequired => 'يرجى اختيار القسم';
@@ -490,7 +490,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get viewAndEdit => 'View and edit';
 
   @override
-  String get savedPosts => 'Saved Posts';
+  String get savedPosts => 'المحفوظات';
 
   @override
   String get yourBookmarks => 'Your bookmarks';
@@ -502,7 +502,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get upcomingTasks => 'Upcoming tasks';
 
   @override
-  String get settings => 'Settings';
+  String get settings => 'الإعدادات';
 
   @override
   String get accountAndSecurity => 'Account & Security';
@@ -511,7 +511,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profilePasswordSessions => 'Profile, password, sessions';
 
   @override
-  String get notifications => 'Notifications';
+  String get notifications => 'الإشعارات';
 
   @override
   String get manageNotificationPreferences => 'Manage notification preferences';
@@ -1019,4 +1019,145 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get authPasswordMismatch => 'كلمات المرور غير متطابقة';
+
+  @override
+  String get userDataLoadError => 'خطأ في تحميل بيانات المستخدم';
+
+  @override
+  String get userDataNotLoaded => 'لم يتم تحميل بيانات المستخدم';
+
+  @override
+  String get year => 'السنة';
+
+  @override
+  String get softwareEngineering => 'هندسة برمجيات';
+
+  @override
+  String get cyberSecurity => 'أمن سيبراني';
+
+  @override
+  String get shortcuts => 'الاختصارات';
+
+  @override
+  String get comingSoonSavedPosts => 'قريباً: المنشورات المحفوظة';
+
+  @override
+  String get comingSoonMyReports => 'قريباً: تقاريري';
+
+  @override
+  String get myReports => 'ابلاغاتي';
+
+  @override
+  String get themeAndColors => 'المظهر والألوان';
+
+  @override
+  String get customizeAppAppearance => 'تخصيص شكل التطبيق';
+
+  @override
+  String get darkMode => 'الوضع الليلي';
+
+  @override
+  String get appColor => 'لون التطبيق';
+
+  @override
+  String get more => 'المزيد';
+
+  @override
+  String get reset => 'إعادة تعيين';
+
+  @override
+  String get chooseAppColor => 'اختيار لون التطبيق';
+
+  @override
+  String get availableColors => 'الألوان المتاحة';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get apply => 'تطبيق';
+
+  @override
+  String get language => 'اللغة';
+
+  @override
+  String get arabic => 'العربية';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get accountSettings => 'إعدادات الحساب';
+
+  @override
+  String get manageAccountData => 'إدارة حسابك وبياناتك';
+
+  @override
+  String get updateData => 'تحديث البيانات';
+
+  @override
+  String get comingSoonUpdateData => 'قريباً: تحديث البيانات';
+
+  @override
+  String get logout => 'تسجيل الخروج';
+
+  @override
+  String get logoutConfirmation => 'هل أنت متأكد من رغبتك في تسجيل الخروج؟';
+
+  @override
+  String get manageNotifications => 'إدارة الإشعارات والتنبيهات';
+
+  @override
+  String get viewNotifications => 'عرض الإشعارات';
+
+  @override
+  String get notificationSettings => 'إعدادات الإشعارات';
+
+  @override
+  String get comingSoonNotificationSettings => 'قريباً: إعدادات الإشعارات';
+
+  @override
+  String get additionalSettings => 'إعدادات إضافية';
+
+  @override
+  String get moreOptionsSettings => 'المزيد من الخيارات والإعدادات';
+
+  @override
+  String get helpSupport => 'المساعدة والدعم';
+
+  @override
+  String get comingSoonHelpSupport => 'قريباً: المساعدة والدعم';
+
+  @override
+  String get aboutApp => 'حول التطبيق';
+
+  @override
+  String get comingSoonAboutApp => 'قريباً: حول التطبيق';
+
+  @override
+  String get privacySecurity => 'الخصوصية والأمان';
+
+  @override
+  String get comingSoonPrivacySecurity => 'قريباً: الخصوصية والأمان';
+
+  @override
+  String get referencesEmptyTitle => 'لا توجد مراجع';
+
+  @override
+  String get referencesEmptySubtitle => 'لم تتم إضافة أي مراجع بعد.';
+
+  @override
+  String get referencesEmptyStateTitle => 'No References Found';
+
+  @override
+  String get referencesEmptyStateSubtitle => 'You haven\'t added any references yet.';
+
+  @override
+  String get gradesEmptyTitle => 'لا توجد درجات حتى الآن';
+
+  @override
+  String get gradesEmptySubtitle => 'خذ الاختبارات في الدروس لعرض درجاتك.';
+
+  @override
+  String get lessonLabel => 'الدرس';
 }

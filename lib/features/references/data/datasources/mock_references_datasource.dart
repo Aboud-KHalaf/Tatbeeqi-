@@ -1,27 +1,30 @@
 import 'package:tatbeeqi/features/references/data/models/reference_model.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tatbeeqi/core/error/exceptions.dart';
 
-class ReferencesDataSource {
-  final List<ReferenceModel> references = [
-    const ReferenceModel(
-      id: '1',
-      courseId: '1',
-      title: 'Official Flutter Documentation',
-      url: 'https://flutter.dev/docs',
-      type: 'documentation',
-    ),
-    const ReferenceModel(
-      id: '2',
-      courseId: '1',
-      title: 'Dart Language Tour',
-      url: 'https://dart.dev/guides/language/language-tour',
-      type: 'documentation',
-    ),
-    const ReferenceModel(
-      id: '3',
-      courseId: '1',
-      title: 'Flutter Crash Course for Beginners',
-      url: 'https://www.youtube.com/watch?v=x0uinJqfVic',
-      type: 'video',
-    ),
-  ];
+abstract class ReferencesRemoteDataSource {
+  Future<List<ReferenceModel>> fetchReferencesByCourseId(int courseId);
+}
+
+class ReferencesRemoteDataSourceImpl implements ReferencesRemoteDataSource {
+  final SupabaseClient supabaseClient;
+
+  ReferencesRemoteDataSourceImpl({required this.supabaseClient});
+
+  @override
+  Future<List<ReferenceModel>> fetchReferencesByCourseId(int courseId) async {
+    try {
+      final response = await supabaseClient
+          .from('course_references')
+          .select()
+          .eq('course_id', courseId)
+          .order('created_at', ascending: false);
+
+      return (response as List)
+          .map((e) => ReferenceModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      throw ServerException('Error fetching course references: $e');
+    }
+  }
 }
