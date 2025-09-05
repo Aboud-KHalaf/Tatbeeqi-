@@ -1356,4 +1356,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get coursesContentExcellentCompletion => 'Excellent! You have completed this lecture with distinction';
+
+  @override
+  String get categoryInputAddCategory => 'Add Category';
+
+  @override
+  String get postCardTextCopied => 'Text copied to clipboard';
 }

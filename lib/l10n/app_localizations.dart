@@ -2752,6 +2752,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Excellent! You have completed this lecture with distinction'**
   String get coursesContentExcellentCompletion;
+
+  /// Add category label
+  ///
+  /// In en, this message translates to:
+  /// **'Add Category'**
+  String get categoryInputAddCategory;
+
+  /// Text copied confirmation message
+  ///
+  /// In en, this message translates to:
+  /// **'Text copied to clipboard'**
+  String get postCardTextCopied;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

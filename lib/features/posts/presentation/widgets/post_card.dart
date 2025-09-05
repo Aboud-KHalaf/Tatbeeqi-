@@ -8,6 +8,7 @@ import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_categorie
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_header.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_image_section.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_text.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class PostCard extends StatelessWidget {
   final Post post;
@@ -72,10 +73,11 @@ class PostCard extends StatelessWidget {
   }
 
   void handelLongPress(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     Clipboard.setData(ClipboardData(text: post.text));
     SnackBarHelper.showInfo(
       context: context,
-      message: 'Text copied to clipboard',
+      message: l10n.postCardTextCopied,
     );
   }
 }

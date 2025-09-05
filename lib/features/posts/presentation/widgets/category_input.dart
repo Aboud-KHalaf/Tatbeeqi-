@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CategoryInput extends StatelessWidget {
   final TextEditingController controller;
   final List<String> categories;
-  final Function(String) onAddCategory;
-  final Function(String) onRemoveCategory;
-  final List<String> existingCategories;
+  final void Function(String) onAddCategory;
+  final void Function(String) onRemoveCategory;
 
   const CategoryInput({
     super.key,
@@ -13,14 +13,35 @@ class CategoryInput extends StatelessWidget {
     required this.categories,
     required this.onAddCategory,
     required this.onRemoveCategory,
-    required this.existingCategories,
   });
+
+  // Sample existing categories for autocomplete
+  static const List<String> existingCategories = [
+    'Technology',
+    'Science',
+    'Health',
+    'Education',
+    'Sports',
+    'Travel',
+    'Food',
+    'Art',
+    'Music',
+    'Business',
+  ];
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Text(
+          l10n.categoryInputAddCategory,
+          style: theme.textTheme.titleMedium
+              ?.copyWith(fontWeight: FontWeight.bold),
+        ),
         Autocomplete<String>(
           optionsBuilder: (TextEditingValue textEditingValue) {
             if (textEditingValue.text.isEmpty) {
@@ -34,11 +55,13 @@ class CategoryInput extends StatelessWidget {
             onAddCategory(selection);
             controller.clear();
           },
-          fieldViewBuilder: (context, textEditingController, focusNode, onFieldSubmitted) {
+          fieldViewBuilder:
+              (context, textEditingController, focusNode, onFieldSubmitted) {
             return TextField(
               controller: textEditingController,
               focusNode: focusNode,
-              decoration: const InputDecoration(labelText: 'Add Category'),
+              decoration:
+                  InputDecoration(labelText: l10n.categoryInputAddCategory),
               onSubmitted: (value) {
                 if (value.trim().isNotEmpty) {
                   onAddCategory(value.trim());

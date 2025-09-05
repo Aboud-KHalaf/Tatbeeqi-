@@ -1355,5 +1355,11 @@ class AppLocalizationsAr extends AppLocalizations {
   String get coursesContentContinueLearning => 'استمر في التعلم لإكمال المحاضرة';
 
   @override
-  String get coursesContentExcellentCompletion => 'أحسنت! لقد أكملت هذه المحاضرة بامتياز';
+  String get coursesContentExcellentCompletion => 'ممتاز! لقد أكملت هذه المحاضرة بامتياز';
+
+  @override
+  String get categoryInputAddCategory => 'إضافة فئة';
+
+  @override
+  String get postCardTextCopied => 'تم نسخ النص إلى الحافظة';
 }

@@ -796,8 +796,16 @@
   "@coursesContentContinueLearning": {
     "description": "رسالة الاستمرار في التعلم"
   },
-  "coursesContentExcellentCompletion": "أحسنت! لقد أكملت هذه المحاضرة بامتياز",
+  "coursesContentExcellentCompletion": "ممتاز! لقد أكملت هذه المحاضرة بامتياز",
   "@coursesContentExcellentCompletion": {
     "description": "رسالة إكمال المحاضرة بامتياز"
+  },
+  "categoryInputAddCategory": "إضافة فئة",
+  "@categoryInputAddCategory": {
+    "description": "تسمية إضافة فئة"
+  },
+  "postCardTextCopied": "تم نسخ النص إلى الحافظة",
+  "@postCardTextCopied": {
+    "description": "رسالة تأكيد نسخ النص"
   }
 }

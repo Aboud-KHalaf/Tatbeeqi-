@@ -959,5 +959,13 @@
   "coursesContentExcellentCompletion": "Excellent! You have completed this lecture with distinction",
   "@coursesContentExcellentCompletion": {
     "description": "Excellent completion message"
+  },
+  "categoryInputAddCategory": "Add Category",
+  "@categoryInputAddCategory": {
+    "description": "Add category label"
+  },
+  "postCardTextCopied": "Text copied to clipboard",
+  "@postCardTextCopied": {
+    "description": "Text copied confirmation message"
   }
 }
