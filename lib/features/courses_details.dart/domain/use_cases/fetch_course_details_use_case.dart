@@ -6,7 +6,7 @@ class FetchCourseDetailsUseCase {
 
   FetchCourseDetailsUseCase(this.repository);
 
-  Future<CourseDetails> call(String courseId) {
+  Future<CourseDetails> call(int courseId) {
     return repository.fetchCourseDetails(courseId);
   }
 }

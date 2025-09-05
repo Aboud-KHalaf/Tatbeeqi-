@@ -2764,6 +2764,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Text copied to clipboard'**
   String get postCardTextCopied;
+
+  /// No description provided for @privacyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'🔒 Privacy & Security'**
+  String get privacyTitle;
+
+  /// No description provided for @privacyDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'At Tatbeeqi, we place the highest importance on protecting your data and ensuring your privacy. Your personal information is handled with the utmost care according to industry best practices.\n\n- All communications between the app and server are secured with HTTPS/TLS.\n- Passwords are stored in encrypted form using industry-standard hashing and salting.\n- The database enforces Row-Level Security (RLS) to safeguard each user\'s data.\n- Sensitive data stored locally is encrypted using Hive and Secure Storage.\n- Authentication tokens and FCM notification keys are never shared with external parties.\n\nOur goal is to provide a safe educational environment that respects your privacy and ensures a reliable, transparent user experience.'**
+  String get privacyDescription;
+
+  /// No description provided for @helpTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'🛠️ Help & Support'**
+  String get helpTitle;
+
+  /// No description provided for @helpDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'We’re always here to help! Tatbeeqi provides a Help & Support section to answer your questions and solve any issues you may face while using the app.\n\n- Browse FAQs for quick answers to common questions.\n- Contact our support team directly via email or through the app.\n- Share your feedback and suggestions to improve the experience.\n- Access updates and guides to get the most out of all features.\n\nOur goal is to make your Tatbeeqi experience smooth, enjoyable, and fully supported whenever you need assistance.'**
+  String get helpDescription;
+
+  /// No description provided for @aboutAppTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'✨ About Tatbeeqi App'**
+  String get aboutAppTitle;
+
+  /// No description provided for @aboutAppDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Tatbeeqi, your interactive university platform designed to support students throughout their learning journey. The app brings together academic content and the student community in one place, where learners are not just passive receivers, but active contributors to knowledge.\n\nWith Tatbeeqi, you can easily access:\n- Micro-lessons with multiple formats (text, video, audio, PDF).\n- An AI assistant for summarization, note generation, and quick answers.\n- A collaborative community for sharing ideas, comments, and discussions.\n- Organizational tools like notes management, progress tracking, and smart reminders.\n\nWe believe that effective learning happens not only in classrooms, but also through experience, participation, and practice. That’s why Tatbeeqi is built as a bridge between traditional teaching methods and the needs of the digital generation.\n\nOur mission is to move learning from passive reception to active contribution, empowering every student to create, share, and enhance knowledge.\n\nTatbeeqi is more than just an app; it is a step towards a fully integrated digital learning environment that supports you today and opens wider opportunities for tomorrow.'**
+  String get aboutAppDescription;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

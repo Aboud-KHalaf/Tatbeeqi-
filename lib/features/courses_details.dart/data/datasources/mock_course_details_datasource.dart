@@ -2,14 +2,17 @@ import 'package:tatbeeqi/features/courses_details.dart/data/models/course_detail
 
 class MockCourseDetailsDataSource {
   final CourseDetailsModel courseDetails = CourseDetailsModel(
-    id: '1',
-    title: 'Introduction to Flutter Development',
+    id: 'uuid-1234-5678-9012',
+    courseId: 1,
+    name: 'Introduction to Flutter Development',
     description: 'This course covers the fundamentals of Flutter development, including widgets, state management, and UI design principles.',
-    instructorName: 'Dr. Jane Smith',
-    instructorImageUrl: 'https://i.pravatar.cc/150?u=jane_smith',
-    instructorTitle: 'Professor of Computer Science',
-    credits: 3,
-    duration: '12 weeks',
-    startDate: DateTime(2023, 9, 1),
+    professor: 'Dr. Jane Smith',
+    contributors: ['Dr. Jane Smith', 'Prof. John Doe'],
+    schedule: {
+      'days': ['Monday', 'Wednesday', 'Friday'],
+      'time': '10:00 AM - 11:30 AM',
+      'duration': '12 weeks'
+    },
+    createdAt: DateTime(2023, 9, 1),
   );
 }

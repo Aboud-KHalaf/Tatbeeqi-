@@ -3,41 +3,40 @@ import 'package:tatbeeqi/features/courses_details.dart/domain/entities/course_de
 class CourseDetailsModel extends CourseDetails {
   const CourseDetailsModel({
     required super.id,
-    required super.title,
-    required super.description,
-    required super.instructorName,
-    required super.instructorImageUrl,
-    required super.instructorTitle,
-    required super.credits,
-    required super.duration,
-    required super.startDate,
+    required super.courseId,
+    required super.name,
+    super.description,
+    super.professor,
+    super.contributors,
+    super.schedule,
+    required super.createdAt,
   });
 
   factory CourseDetailsModel.fromJson(Map<String, dynamic> json) {
     return CourseDetailsModel(
-      id: json['id'],
-      title: json['title'],
-      description: json['description'],
-      instructorName: json['instructorName'],
-      instructorImageUrl: json['instructorImageUrl'],
-      instructorTitle: json['instructorTitle'],
-      credits: json['credits'],
-      duration: json['duration'],
-      startDate: DateTime.parse(json['startDate']),
+      id: json['id'] as String,
+      courseId: json['course_id'] as int,
+      name: json['name'] as String,
+      description: json['description'] as String?,
+      professor: json['professor'] as String?,
+      contributors: json['contributors'] != null 
+          ? List<String>.from(json['contributors'] as List)
+          : null,
+      schedule: json['schedule'] as Map<String, dynamic>?,
+      createdAt: DateTime.parse(json['created_at'] as String),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'title': title,
+      'course_id': courseId,
+      'name': name,
       'description': description,
-      'instructorName': instructorName,
-      'instructorImageUrl': instructorImageUrl,
-      'instructorTitle': instructorTitle,
-      'credits': credits,
-      'duration': duration,
-      'startDate': startDate.toIso8601String(),
+      'professor': professor,
+      'contributors': contributors,
+      'schedule': schedule,
+      'created_at': createdAt.toIso8601String(),
     };
   }
 }

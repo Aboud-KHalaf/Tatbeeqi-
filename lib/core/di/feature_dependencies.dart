@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:tatbeeqi/core/di/ai_assistant_dependencies.dart';
 import 'package:tatbeeqi/core/di/auth_dependencies.dart';
 import 'package:tatbeeqi/core/di/course_content_dependencies.dart';
+import 'package:tatbeeqi/core/di/course_details_dependencies.dart';
 import 'package:tatbeeqi/core/di/localization_dependencies.dart';
 import 'package:tatbeeqi/core/di/navigation_dependencies.dart';
 import 'package:tatbeeqi/core/di/news_dependencies.dart';
@@ -33,4 +34,5 @@ void initFeatureDependencies(GetIt sl) {
   initStreaksDependencies(sl);
   initReferencesDependencies(sl);
   initGradesDependencies(sl);
+  initCourseDetailsDependencies(sl);
 }

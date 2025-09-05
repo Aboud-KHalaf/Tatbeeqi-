@@ -8,6 +8,9 @@ import 'package:tatbeeqi/features/auth/presentation/manager/user_cubit/user_cubi
 import 'package:tatbeeqi/features/auth/presentation/manager/user_cubit/user_state.dart';
 import 'package:tatbeeqi/features/localization/presentation/manager/locale_cubit/locale_cubit.dart';
 import 'package:tatbeeqi/features/localization/presentation/manager/locale_cubit/locale_state.dart';
+import 'package:tatbeeqi/features/more/presentation/views/about_app_view.dart';
+import 'package:tatbeeqi/features/more/presentation/views/help_suppurt_view.dart';
+import 'package:tatbeeqi/features/more/presentation/views/privacy_view.dart';
 import 'package:tatbeeqi/features/theme/presentation/manager/theme_cubit/theme_cubit.dart';
 import 'package:tatbeeqi/features/notifications/presentation/views/notifications_view.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
@@ -854,8 +857,8 @@ class _AccountSettingsCard extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.logout, color: colorScheme.error),
-            title: Text(l10n.logout,
-                style: TextStyle(color: colorScheme.error)),
+            title:
+                Text(l10n.logout, style: TextStyle(color: colorScheme.error)),
             onTap: () => _showLogoutDialog(context),
           ),
         ],
@@ -976,9 +979,11 @@ class _AdditionalSettingsCard extends StatelessWidget {
             title: Text(l10n.helpSupport),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.comingSoonHelpSupport)),
-              );
+               Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const HelpSupportScreen(),
+                  ));
             },
           ),
           ListTile(
@@ -986,9 +991,11 @@ class _AdditionalSettingsCard extends StatelessWidget {
             title: Text(l10n.aboutApp),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.comingSoonAboutApp)),
-              );
+               Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AboutAppScreen(),
+                  ));
             },
           ),
           ListTile(
@@ -996,9 +1003,11 @@ class _AdditionalSettingsCard extends StatelessWidget {
             title: Text(l10n.privacySecurity),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.comingSoonPrivacySecurity)),
-              );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PrivacyScreen(),
+                  ));
             },
           ),
         ],
