@@ -47,7 +47,7 @@ class _CoursesViewState extends State<AllCoursesView>
   @override
   Widget build(BuildContext context) {
     final bool isTablet = MediaQuery.of(context).size.width > 600;
-
+  
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.coursesTitle)),
       body: BlocBuilder<FetchCoursesCubit, FetchCoursesState>(

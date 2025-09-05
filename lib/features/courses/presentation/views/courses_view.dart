@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/widgets/app_error.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_state.dart';
@@ -55,7 +56,7 @@ class _CoursesViewState extends State<CoursesView>
       body: BlocBuilder<FetchCoursesCubit, FetchCoursesState>(
         builder: (context, state) {
           if (state is CoursesError) {
-            return const Center(child: Text('Error loading courses'));
+            return const AppError();
           } else if (state is CoursesLoaded) {
             return _buildCoursesContent(state.courseEntities, isTablet);
           } else {

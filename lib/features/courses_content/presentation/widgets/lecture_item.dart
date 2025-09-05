@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class LectureItem extends StatefulWidget {
   final int moduleNumber;
@@ -50,8 +51,8 @@ class _LectureItemState extends State<LectureItem>
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final theme = Theme.of(context);
-
-    // Define colors based on state
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
+    // Define colors based  on state
     Color backgroundColor;
     Color borderColor;
     Color textColor;
@@ -142,9 +143,9 @@ class _LectureItemState extends State<LectureItem>
                   // Status text
                   Text(
                     widget.isCompleted
-                        ? 'مكتمل'
+                        ? l10n.coursesContentLectureCompleted
                         : widget.isActive
-                            ? 'الحالي'
+                            ? l10n.coursesContentLectureCurrent
                             : '',
                     style: theme.textTheme.labelSmall?.copyWith(
                       color: textColor.withValues(alpha: 0.8),

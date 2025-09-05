@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class EmptyCoursesWidget extends StatelessWidget {
   const EmptyCoursesWidget({
@@ -7,6 +8,7 @@ class EmptyCoursesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -29,7 +31,7 @@ class EmptyCoursesWidget extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            'No courses available for this term.',
+            l10n.coursesEmptyMessage,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w500,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/features/courses_content/domain/entities/lesson_entity.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/manager/lesson_completion/lesson_completion_cubit.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class LessonActionBar extends StatelessWidget {
   final bool canGoPrevious;
@@ -151,11 +152,11 @@ class LessonActionBar extends StatelessWidget {
 class _CompletionButton extends StatelessWidget {
   final Lesson lesson;
   const _CompletionButton({required this.lesson});
-
+ 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
     return BlocConsumer<LessonCompletionCubit, LessonCompletionState>(
       listenWhen: (prev, curr) =>
           curr is LessonCompletionError || curr is LessonCompletionSuccess,
@@ -167,7 +168,7 @@ class _CompletionButton extends StatelessWidget {
         }
         if (state is LessonCompletionSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('تم تعليم الدرس كمكتمل')),
+            SnackBar(content: Text(l10n.coursesContentLessonCompletedMessage)),
           );
         }
       },
@@ -197,7 +198,7 @@ class _CompletionButton extends StatelessWidget {
         }
 
         return Tooltip(
-          message: isDone ? 'مكتمل' : 'تعليم كمكتمل',
+          message: isDone ? l10n.coursesContentCompletedTooltip : l10n.coursesContentLessonCompletedMessage,
           child: InkWell(
             onTap: isDone
                 ? null

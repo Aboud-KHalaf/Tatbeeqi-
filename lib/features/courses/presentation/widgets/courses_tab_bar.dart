@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'course_tab_item.dart'; // Import the new widget
 
 class CoursesTabBar extends StatelessWidget {
@@ -17,7 +18,7 @@ class CoursesTabBar extends StatelessWidget {
     // final isNarrow = screenWidth < 360;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8),
       decoration: BoxDecoration(
@@ -73,9 +74,9 @@ class CoursesTabBar extends StatelessWidget {
             },
           ),
           tabs: [
-            _buildTab(context, 'الفصل الأول', 0),
-            _buildTab(context, 'الفصل الثاني', 1),
-            _buildTab(context, "اخرى", 2),
+            _buildTab(context, l10n.coursesFirstSemester, 0),
+            _buildTab(context, l10n.coursesSecondSemester, 1),
+            _buildTab(context, l10n.coursesOther, 2),
           ],
         ),
       ),

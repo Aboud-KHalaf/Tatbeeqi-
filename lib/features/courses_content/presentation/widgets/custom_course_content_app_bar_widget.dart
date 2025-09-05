@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Course course;
@@ -21,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
     return AppBar(
       leading: Container(
         margin: const EdgeInsets.all(8),
@@ -38,7 +39,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             HapticFeedback.lightImpact();
             Navigator.of(context).pop();
           },
-          tooltip: 'رجوع',
+          tooltip: l10n.coursesContentBackTooltip,
           style: IconButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -73,7 +74,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               SnackBarHelper.showInfo(
                   context: context, message: 'المواعيد والتذكيرات');
             },
-            tooltip: 'المواعيد والتذكيرات',
+            tooltip: l10n.coursesContentScheduleReminders,
             style: IconButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
@@ -120,12 +121,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               },
             ),
             tabs: [
-              _buildTab('المحاضرات', Icons.school_outlined),
-              _buildTab('الدرجات', Icons.grade_outlined),
-              // _buildTab('المنتديات', Icons.forum_outlined),
-              _buildTab('الملاحظات', Icons.note_outlined),
-              _buildTab('المراجع', Icons.library_books_outlined),
-              _buildTab('عن المقرر', Icons.info_outline),
+              _buildTab(l10n.coursesContentLectures, Icons.school_outlined),
+              _buildTab(l10n.coursesContentTabGrades, Icons.grade_outlined),
+             // _buildTab(l10n.coursesContentTabForum, Icons.forum_outlined),
+              _buildTab(l10n.coursesContentTabNotes, Icons.note_outlined),
+              _buildTab(l10n.coursesContentTabReferences, Icons.library_books_outlined),
+              _buildTab(l10n.coursesContentTabAboutCourse, Icons.info_outline),
             ],
           ),
         ),

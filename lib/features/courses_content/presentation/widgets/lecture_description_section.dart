@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/features/courses_content/domain/entities/lecture_entity.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class LectureDescriptionSection extends StatefulWidget {
   final Lecture lecture;
@@ -24,7 +25,7 @@ class _LectureDescriptionSectionState extends State<LectureDescriptionSection> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-
+    final AppLocalizations l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       decoration: BoxDecoration(
@@ -57,7 +58,7 @@ class _LectureDescriptionSectionState extends State<LectureDescriptionSection> {
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  'وصف المحاضرة',
+                  l10n.coursesContentLectureDescription,
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontWeight: FontWeight.w600,
                     color: colorScheme.onSurface,
@@ -108,7 +109,7 @@ class _LectureDescriptionSectionState extends State<LectureDescriptionSection> {
                   size: 16,
                 ),
               ),
-              label: Text(_isExpanded ? 'عرض أقل' : 'عرض المزيد'),
+              label: Text(_isExpanded ? l10n.coursesContentShowLess : l10n.coursesContentShowMore),
               style: TextButton.styleFrom(
                 foregroundColor: colorScheme.primary,
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
