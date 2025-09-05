@@ -2500,6 +2500,258 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Search courses...'**
   String get retakeCoursesSearchHint;
+
+  /// Message when no lectures are available for the course
+  ///
+  /// In en, this message translates to:
+  /// **'No lectures available for this course'**
+  String get coursesContentNoLecturesAvailable;
+
+  /// Download feature coming soon message
+  ///
+  /// In en, this message translates to:
+  /// **'Download feature coming soon'**
+  String get coursesContentDownloadFeatureComingSoon;
+
+  /// Download button tooltip
+  ///
+  /// In en, this message translates to:
+  /// **'Download'**
+  String get coursesContentDownloadTooltip;
+
+  /// Minutes unit
+  ///
+  /// In en, this message translates to:
+  /// **'minutes'**
+  String get coursesContentDurationMinutes;
+
+  /// Lectures title
+  ///
+  /// In en, this message translates to:
+  /// **'Lectures'**
+  String get coursesContentLectures;
+
+  /// Number of lectures
+  ///
+  /// In en, this message translates to:
+  /// **'{count} lectures'**
+  String coursesContentLecturesCount(int count);
+
+  /// Progress text
+  ///
+  /// In en, this message translates to:
+  /// **'Progress: '**
+  String get coursesContentProgress;
+
+  /// Progress current of total
+  ///
+  /// In en, this message translates to:
+  /// **'{current} of {total}'**
+  String coursesContentProgressOf(int current, int total);
+
+  /// Lecture clicked message
+  ///
+  /// In en, this message translates to:
+  /// **'Lecture {number} clicked'**
+  String coursesContentLectureClicked(int number);
+
+  /// Course resources title
+  ///
+  /// In en, this message translates to:
+  /// **'Course Resources'**
+  String get coursesContentCourseResources;
+
+  /// Back button tooltip
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get coursesContentBackTooltip;
+
+  /// Schedule and reminders
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule & Reminders'**
+  String get coursesContentScheduleReminders;
+
+  /// Lectures tab
+  ///
+  /// In en, this message translates to:
+  /// **'Lectures'**
+  String get coursesContentTabLectures;
+
+  /// Grades tab
+  ///
+  /// In en, this message translates to:
+  /// **'Grades'**
+  String get coursesContentTabGrades;
+
+  /// Notes tab
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get coursesContentTabNotes;
+
+  /// References tab
+  ///
+  /// In en, this message translates to:
+  /// **'References'**
+  String get coursesContentTabReferences;
+
+  /// About course tab
+  ///
+  /// In en, this message translates to:
+  /// **'About Course'**
+  String get coursesContentTabAboutCourse;
+
+  /// Lecture description title
+  ///
+  /// In en, this message translates to:
+  /// **'Lecture Description'**
+  String get coursesContentLectureDescription;
+
+  /// Show more button
+  ///
+  /// In en, this message translates to:
+  /// **'Show More'**
+  String get coursesContentShowMore;
+
+  /// Show less button
+  ///
+  /// In en, this message translates to:
+  /// **'Show Less'**
+  String get coursesContentShowLess;
+
+  /// Completed status
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get coursesContentLectureCompleted;
+
+  /// Current status
+  ///
+  /// In en, this message translates to:
+  /// **'Current'**
+  String get coursesContentLectureCurrent;
+
+  /// Lesson marked as completed message
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson marked as completed'**
+  String get coursesContentLessonCompletedMessage;
+
+  /// Completed tooltip
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get coursesContentCompletedTooltip;
+
+  /// Mark as completed tooltip
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as completed'**
+  String get coursesContentMarkAsCompletedTooltip;
+
+  /// Duration in lesson info
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get coursesContentLessonInfoDuration;
+
+  /// Status in lesson info
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get coursesContentLessonInfoStatus;
+
+  /// Completed status in lesson info
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get coursesContentLessonInfoStatusCompleted;
+
+  /// Not completed status in lesson info
+  ///
+  /// In en, this message translates to:
+  /// **'Not completed'**
+  String get coursesContentLessonInfoStatusNotCompleted;
+
+  /// Lesson summary
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson Summary'**
+  String get coursesContentLessonSummary;
+
+  /// Tags
+  ///
+  /// In en, this message translates to:
+  /// **'Tags'**
+  String get coursesContentLessonTags;
+
+  /// Additional information
+  ///
+  /// In en, this message translates to:
+  /// **'Additional Information'**
+  String get coursesContentAdditionalInfo;
+
+  /// Downloadable
+  ///
+  /// In en, this message translates to:
+  /// **'Downloadable'**
+  String get coursesContentDownloadable;
+
+  /// Yes
+  ///
+  /// In en, this message translates to:
+  /// **'Yes'**
+  String get coursesContentYes;
+
+  /// No
+  ///
+  /// In en, this message translates to:
+  /// **'No'**
+  String get coursesContentNo;
+
+  /// Creator
+  ///
+  /// In en, this message translates to:
+  /// **'Creator'**
+  String get coursesContentCreator;
+
+  /// Published date
+  ///
+  /// In en, this message translates to:
+  /// **'Published Date'**
+  String get coursesContentPublishedDate;
+
+  /// Last updated
+  ///
+  /// In en, this message translates to:
+  /// **'Last Updated'**
+  String get coursesContentLastUpdated;
+
+  /// Lecture progress
+  ///
+  /// In en, this message translates to:
+  /// **'Lecture Progress'**
+  String get coursesContentModuleProgress;
+
+  /// All lessons completed message
+  ///
+  /// In en, this message translates to:
+  /// **'All lessons completed successfully! 🎉'**
+  String get coursesContentAllLessonsCompleted;
+
+  /// Continue learning message
+  ///
+  /// In en, this message translates to:
+  /// **'Continue learning to complete the lecture'**
+  String get coursesContentContinueLearning;
+
+  /// Excellent completion message
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent! You have completed this lecture with distinction'**
+  String get coursesContentExcellentCompletion;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

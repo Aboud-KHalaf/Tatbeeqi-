@@ -1224,4 +1224,136 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get retakeCoursesSearchHint => 'Search courses...';
+
+  @override
+  String get coursesContentNoLecturesAvailable => 'No lectures available for this course';
+
+  @override
+  String get coursesContentDownloadFeatureComingSoon => 'Download feature coming soon';
+
+  @override
+  String get coursesContentDownloadTooltip => 'Download';
+
+  @override
+  String get coursesContentDurationMinutes => 'minutes';
+
+  @override
+  String get coursesContentLectures => 'Lectures';
+
+  @override
+  String coursesContentLecturesCount(int count) {
+    return '$count lectures';
+  }
+
+  @override
+  String get coursesContentProgress => 'Progress: ';
+
+  @override
+  String coursesContentProgressOf(int current, int total) {
+    return '$current of $total';
+  }
+
+  @override
+  String coursesContentLectureClicked(int number) {
+    return 'Lecture $number clicked';
+  }
+
+  @override
+  String get coursesContentCourseResources => 'Course Resources';
+
+  @override
+  String get coursesContentBackTooltip => 'Back';
+
+  @override
+  String get coursesContentScheduleReminders => 'Schedule & Reminders';
+
+  @override
+  String get coursesContentTabLectures => 'Lectures';
+
+  @override
+  String get coursesContentTabGrades => 'Grades';
+
+  @override
+  String get coursesContentTabNotes => 'Notes';
+
+  @override
+  String get coursesContentTabReferences => 'References';
+
+  @override
+  String get coursesContentTabAboutCourse => 'About Course';
+
+  @override
+  String get coursesContentLectureDescription => 'Lecture Description';
+
+  @override
+  String get coursesContentShowMore => 'Show More';
+
+  @override
+  String get coursesContentShowLess => 'Show Less';
+
+  @override
+  String get coursesContentLectureCompleted => 'Completed';
+
+  @override
+  String get coursesContentLectureCurrent => 'Current';
+
+  @override
+  String get coursesContentLessonCompletedMessage => 'Lesson marked as completed';
+
+  @override
+  String get coursesContentCompletedTooltip => 'Completed';
+
+  @override
+  String get coursesContentMarkAsCompletedTooltip => 'Mark as completed';
+
+  @override
+  String get coursesContentLessonInfoDuration => 'Duration';
+
+  @override
+  String get coursesContentLessonInfoStatus => 'Status';
+
+  @override
+  String get coursesContentLessonInfoStatusCompleted => 'Completed';
+
+  @override
+  String get coursesContentLessonInfoStatusNotCompleted => 'Not completed';
+
+  @override
+  String get coursesContentLessonSummary => 'Lesson Summary';
+
+  @override
+  String get coursesContentLessonTags => 'Tags';
+
+  @override
+  String get coursesContentAdditionalInfo => 'Additional Information';
+
+  @override
+  String get coursesContentDownloadable => 'Downloadable';
+
+  @override
+  String get coursesContentYes => 'Yes';
+
+  @override
+  String get coursesContentNo => 'No';
+
+  @override
+  String get coursesContentCreator => 'Creator';
+
+  @override
+  String get coursesContentPublishedDate => 'Published Date';
+
+  @override
+  String get coursesContentLastUpdated => 'Last Updated';
+
+  @override
+  String get coursesContentModuleProgress => 'Lecture Progress';
+
+  @override
+  String get coursesContentAllLessonsCompleted => 'All lessons completed successfully! 🎉';
+
+  @override
+  String get coursesContentContinueLearning => 'Continue learning to complete the lecture';
+
+  @override
+  String get coursesContentExcellentCompletion => 'Excellent! You have completed this lecture with distinction';
 }

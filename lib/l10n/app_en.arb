@@ -773,5 +773,191 @@
   "retakeCoursesSearchHint": "Search courses...",
   "@retakeCoursesSearchHint": {
     "description": "Search courses hint text"
+  },
+  "coursesContentNoLecturesAvailable": "No lectures available for this course",
+  "@coursesContentNoLecturesAvailable": {
+    "description": "Message when no lectures are available for the course"
+  },
+  "coursesContentDownloadFeatureComingSoon": "Download feature coming soon",
+  "@coursesContentDownloadFeatureComingSoon": {
+    "description": "Download feature coming soon message"
+  },
+  "coursesContentDownloadTooltip": "Download",
+  "@coursesContentDownloadTooltip": {
+    "description": "Download button tooltip"
+  },
+  "coursesContentDurationMinutes": "minutes",
+  "@coursesContentDurationMinutes": {
+    "description": "Minutes unit"
+  },
+  "coursesContentLectures": "Lectures",
+  "@coursesContentLectures": {
+    "description": "Lectures title"
+  },
+  "coursesContentLecturesCount": "{count} lectures",
+  "@coursesContentLecturesCount": {
+    "description": "Number of lectures",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "coursesContentProgress": "Progress: ",
+  "@coursesContentProgress": {
+    "description": "Progress text"
+  },
+  "coursesContentProgressOf": "{current} of {total}",
+  "@coursesContentProgressOf": {
+    "description": "Progress current of total",
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "coursesContentLectureClicked": "Lecture {number} clicked",
+  "@coursesContentLectureClicked": {
+    "description": "Lecture clicked message",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      }
+    }
+  },
+  "coursesContentCourseResources": "Course Resources",
+  "@coursesContentCourseResources": {
+    "description": "Course resources title"
+  },
+  "coursesContentBackTooltip": "Back",
+  "@coursesContentBackTooltip": {
+    "description": "Back button tooltip"
+  },
+  "coursesContentScheduleReminders": "Schedule & Reminders",
+  "@coursesContentScheduleReminders": {
+    "description": "Schedule and reminders"
+  },
+  "coursesContentTabLectures": "Lectures",
+  "@coursesContentTabLectures": {
+    "description": "Lectures tab"
+  },
+  "coursesContentTabGrades": "Grades",
+  "@coursesContentTabGrades": {
+    "description": "Grades tab"
+  },
+  "coursesContentTabNotes": "Notes",
+  "@coursesContentTabNotes": {
+    "description": "Notes tab"
+  },
+  "coursesContentTabReferences": "References",
+  "@coursesContentTabReferences": {
+    "description": "References tab"
+  },
+  "coursesContentTabAboutCourse": "About Course",
+  "@coursesContentTabAboutCourse": {
+    "description": "About course tab"
+  },
+  "coursesContentLectureDescription": "Lecture Description",
+  "@coursesContentLectureDescription": {
+    "description": "Lecture description title"
+  },
+  "coursesContentShowMore": "Show More",
+  "@coursesContentShowMore": {
+    "description": "Show more button"
+  },
+  "coursesContentShowLess": "Show Less",
+  "@coursesContentShowLess": {
+    "description": "Show less button"
+  },
+  "coursesContentLectureCompleted": "Completed",
+  "@coursesContentLectureCompleted": {
+    "description": "Completed status"
+  },
+  "coursesContentLectureCurrent": "Current",
+  "@coursesContentLectureCurrent": {
+    "description": "Current status"
+  },
+  "coursesContentLessonCompletedMessage": "Lesson marked as completed",
+  "@coursesContentLessonCompletedMessage": {
+    "description": "Lesson marked as completed message"
+  },
+  "coursesContentCompletedTooltip": "Completed",
+  "@coursesContentCompletedTooltip": {
+    "description": "Completed tooltip"
+  },
+  "coursesContentMarkAsCompletedTooltip": "Mark as completed",
+  "@coursesContentMarkAsCompletedTooltip": {
+    "description": "Mark as completed tooltip"
+  },
+  "coursesContentLessonInfoDuration": "Duration",
+  "@coursesContentLessonInfoDuration": {
+    "description": "Duration in lesson info"
+  },
+  "coursesContentLessonInfoStatus": "Status",
+  "@coursesContentLessonInfoStatus": {
+    "description": "Status in lesson info"
+  },
+  "coursesContentLessonInfoStatusCompleted": "Completed",
+  "@coursesContentLessonInfoStatusCompleted": {
+    "description": "Completed status in lesson info"
+  },
+  "coursesContentLessonInfoStatusNotCompleted": "Not completed",
+  "@coursesContentLessonInfoStatusNotCompleted": {
+    "description": "Not completed status in lesson info"
+  },
+  "coursesContentLessonSummary": "Lesson Summary",
+  "@coursesContentLessonSummary": {
+    "description": "Lesson summary"
+  },
+  "coursesContentLessonTags": "Tags",
+  "@coursesContentLessonTags": {
+    "description": "Tags"
+  },
+  "coursesContentAdditionalInfo": "Additional Information",
+  "@coursesContentAdditionalInfo": {
+    "description": "Additional information"
+  },
+  "coursesContentDownloadable": "Downloadable",
+  "@coursesContentDownloadable": {
+    "description": "Downloadable"
+  },
+  "coursesContentYes": "Yes",
+  "@coursesContentYes": {
+    "description": "Yes"
+  },
+  "coursesContentNo": "No",
+  "@coursesContentNo": {
+    "description": "No"
+  },
+  "coursesContentCreator": "Creator",
+  "@coursesContentCreator": {
+    "description": "Creator"
+  },
+  "coursesContentPublishedDate": "Published Date",
+  "@coursesContentPublishedDate": {
+    "description": "Published date"
+  },
+  "coursesContentLastUpdated": "Last Updated",
+  "@coursesContentLastUpdated": {
+    "description": "Last updated"
+  },
+  "coursesContentModuleProgress": "Lecture Progress",
+  "@coursesContentModuleProgress": {
+    "description": "Lecture progress"
+  },
+  "coursesContentAllLessonsCompleted": "All lessons completed successfully! 🎉",
+  "@coursesContentAllLessonsCompleted": {
+    "description": "All lessons completed message"
+  },
+  "coursesContentContinueLearning": "Continue learning to complete the lecture",
+  "@coursesContentContinueLearning": {
+    "description": "Continue learning message"
+  },
+  "coursesContentExcellentCompletion": "Excellent! You have completed this lecture with distinction",
+  "@coursesContentExcellentCompletion": {
+    "description": "Excellent completion message"
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:tatbeeqi/core/constants/constants.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/lecture_item.dart';
 
@@ -90,7 +91,7 @@ class _CourseLecturesListState extends State<CourseLecturesList>
               ),
               const SizedBox(width: 8),
               Text(
-                'المحاضرات',
+                AppLocalizations.of(context)!.coursesContentLectures,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.w700,
                   color: colorScheme.onSurface,
@@ -104,7 +105,7 @@ class _CourseLecturesListState extends State<CourseLecturesList>
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  '10 محاضرات',
+                  AppLocalizations.of(context)!.coursesContentLecturesCount(10),
                   style: theme.textTheme.labelSmall?.copyWith(
                     color: colorScheme.primary,
                     fontWeight: FontWeight.w600,
@@ -119,14 +120,14 @@ class _CourseLecturesListState extends State<CourseLecturesList>
           Row(
             children: [
               Text(
-                'التقدم: ',
+                AppLocalizations.of(context)!.coursesContentProgress,
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
-                '1 من 10',
+                AppLocalizations.of(context)!.coursesContentProgressOf(1, 10),
                 style: theme.textTheme.bodySmall?.copyWith(
                   color: colorScheme.primary,
                   fontWeight: FontWeight.w600,
@@ -178,7 +179,7 @@ class _CourseLecturesListState extends State<CourseLecturesList>
                           isCompleted: index + 1 < 2,
                           onTap: () {
                             // TODO: Navigate to lecture
-                            print('المحاضرة ${index + 1} تم الضغط عليها');
+                            print(AppLocalizations.of(context)!.coursesContentLectureClicked(index + 1));
                           },
                         ),
                       ),

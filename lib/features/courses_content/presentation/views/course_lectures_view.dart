@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
@@ -95,7 +96,7 @@ class _EmptyState extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             Text(
-              'لا يوجد محاضرات متاحة لهذا المقرر',
+              AppLocalizations.of(context)!.coursesContentNoLecturesAvailable,
               style: theme.textTheme.headlineSmall?.copyWith(
                 color: colorScheme.onSurface,
               ),

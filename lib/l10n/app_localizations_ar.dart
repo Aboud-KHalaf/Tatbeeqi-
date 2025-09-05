@@ -1224,4 +1224,136 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get retakeCoursesSearchHint => 'البحث في المقررات...';
+
+  @override
+  String get coursesContentNoLecturesAvailable => 'لا يوجد محاضرات متاحة لهذا المقرر';
+
+  @override
+  String get coursesContentDownloadFeatureComingSoon => 'ستضاف ميزة التحميل قريبا';
+
+  @override
+  String get coursesContentDownloadTooltip => 'تحميل';
+
+  @override
+  String get coursesContentDurationMinutes => 'دقيقة';
+
+  @override
+  String get coursesContentLectures => 'المحاضرات';
+
+  @override
+  String coursesContentLecturesCount(int count) {
+    return '$count محاضرات';
+  }
+
+  @override
+  String get coursesContentProgress => 'التقدم: ';
+
+  @override
+  String coursesContentProgressOf(int current, int total) {
+    return '$current من $total';
+  }
+
+  @override
+  String coursesContentLectureClicked(int number) {
+    return 'المحاضرة $number تم الضغط عليها';
+  }
+
+  @override
+  String get coursesContentCourseResources => 'موارد الدورة';
+
+  @override
+  String get coursesContentBackTooltip => 'رجوع';
+
+  @override
+  String get coursesContentScheduleReminders => 'المواعيد والتذكيرات';
+
+  @override
+  String get coursesContentTabLectures => 'المحاضرات';
+
+  @override
+  String get coursesContentTabGrades => 'الدرجات';
+
+  @override
+  String get coursesContentTabNotes => 'الملاحظات';
+
+  @override
+  String get coursesContentTabReferences => 'المراجع';
+
+  @override
+  String get coursesContentTabAboutCourse => 'عن المقرر';
+
+  @override
+  String get coursesContentLectureDescription => 'وصف المحاضرة';
+
+  @override
+  String get coursesContentShowMore => 'عرض المزيد';
+
+  @override
+  String get coursesContentShowLess => 'عرض أقل';
+
+  @override
+  String get coursesContentLectureCompleted => 'مكتمل';
+
+  @override
+  String get coursesContentLectureCurrent => 'الحالي';
+
+  @override
+  String get coursesContentLessonCompletedMessage => 'تم تعليم الدرس كمكتمل';
+
+  @override
+  String get coursesContentCompletedTooltip => 'مكتمل';
+
+  @override
+  String get coursesContentMarkAsCompletedTooltip => 'تعليم كمكتمل';
+
+  @override
+  String get coursesContentLessonInfoDuration => 'المدة';
+
+  @override
+  String get coursesContentLessonInfoStatus => 'الحالة';
+
+  @override
+  String get coursesContentLessonInfoStatusCompleted => 'مكتمل';
+
+  @override
+  String get coursesContentLessonInfoStatusNotCompleted => 'غير مكتمل';
+
+  @override
+  String get coursesContentLessonSummary => 'ملخص الدرس';
+
+  @override
+  String get coursesContentLessonTags => 'العلامات';
+
+  @override
+  String get coursesContentAdditionalInfo => 'معلومات إضافية';
+
+  @override
+  String get coursesContentDownloadable => 'قابل للتحميل';
+
+  @override
+  String get coursesContentYes => 'نعم';
+
+  @override
+  String get coursesContentNo => 'لا';
+
+  @override
+  String get coursesContentCreator => 'المنشئ';
+
+  @override
+  String get coursesContentPublishedDate => 'تاريخ النشر';
+
+  @override
+  String get coursesContentLastUpdated => 'آخر تحديث';
+
+  @override
+  String get coursesContentModuleProgress => 'تقدم المحاضرة';
+
+  @override
+  String get coursesContentAllLessonsCompleted => 'تم إنجاز جميع دروس المحاضرة بنجاح! 🎉';
+
+  @override
+  String get coursesContentContinueLearning => 'استمر في التعلم لإكمال المحاضرة';
+
+  @override
+  String get coursesContentExcellentCompletion => 'أحسنت! لقد أكملت هذه المحاضرة بامتياز';
 }

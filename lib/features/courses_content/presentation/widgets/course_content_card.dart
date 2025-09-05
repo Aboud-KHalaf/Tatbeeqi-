@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:tatbeeqi/core/helpers/lesson_helper.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
@@ -216,7 +217,7 @@ class _CourseContentCardState extends State<CourseContentCard>
                                     ),
                                     const SizedBox(width: 4),
                                     Text(
-                                      '${widget.lessonItem.durationMinutes} دقيقة',
+                                      '${widget.lessonItem.durationMinutes} ${AppLocalizations.of(context)!.coursesContentDurationMinutes}',
                                       style:
                                           theme.textTheme.labelSmall?.copyWith(
                                         color: colorScheme.onSurfaceVariant,
@@ -245,9 +246,9 @@ class _CourseContentCardState extends State<CourseContentCard>
                             HapticFeedback.lightImpact();
                             SnackBarHelper.showInfo(
                                 context: context,
-                                message: "ستضاف ميزة التحميل قريبا");
+                                message: AppLocalizations.of(context)!.coursesContentDownloadFeatureComingSoon);
                           },
-                          tooltip: 'تحميل',
+                          tooltip: AppLocalizations.of(context)!.coursesContentDownloadTooltip,
                           style: IconButton.styleFrom(
                             backgroundColor: colorScheme.primaryContainer
                                 .withValues(alpha: 0.1),
