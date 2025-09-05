@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_state.dart';
@@ -48,11 +49,11 @@ class _CoursesViewState extends State<AllCoursesView>
     final bool isTablet = MediaQuery.of(context).size.width > 600;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("المقررات الدراسية")),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.coursesTitle)),
       body: BlocBuilder<FetchCoursesCubit, FetchCoursesState>(
         builder: (context, state) {
           if (state is CoursesError) {
-            return const Center(child: Text('Error loading courses'));
+            return Center(child: Text(AppLocalizations.of(context)!.coursesErrorLoading));
           } else if (state is CoursesLoaded) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),

@@ -522,5 +522,96 @@
   "lessonLabel": "الدرس",
   "@lessonLabel": {
     "description": "وسم عنوان الدرس في قائمة الدرجات"
+  },
+
+  "coursesTitle": "المقررات الدراسية",
+  "@coursesTitle": {
+    "description": "عنوان صفحة المقررات"
+  },
+  "coursesErrorLoading": "خطأ في تحميل المقررات",
+  "@coursesErrorLoading": {
+    "description": "رسالة خطأ عند فشل تحميل المقررات"
+  },
+  "coursesFirstSemester": "الفصل الأول",
+  "@coursesFirstSemester": {
+    "description": "تبويب الفصل الأول"
+  },
+  "coursesSecondSemester": "الفصل الثاني",
+  "@coursesSecondSemester": {
+    "description": "تبويب الفصل الثاني"
+  },
+  "coursesOther": "اخرى",
+  "@coursesOther": {
+    "description": "تبويب المقررات الأخرى"
+  },
+  "coursesEmptyMessage": "لا توجد مقررات متاحة لهذا الفصل.",
+  "@coursesEmptyMessage": {
+    "description": "رسالة عدم وجود مقررات"
+  },
+  "retakeCoursesTitle": "اضافة مقررات للاعادة",
+  "@retakeCoursesTitle": {
+    "description": "عنوان صفحة إضافة مقررات للإعادة"
+  },
+  "retakeCoursesSubtitle": "اختر المقررات التي تريد ان تعيدها",
+  "@retakeCoursesSubtitle": {
+    "description": "وصف صفحة إضافة مقررات للإعادة"
+  },
+  "retakeCoursesYear": "السنة:",
+  "@retakeCoursesYear": {
+    "description": "تسمية السنة الدراسية في بطاقة المقرر"
+  },
+  "retakeCoursesSemester": "الفصل:",
+  "@retakeCoursesSemester": {
+    "description": "تسمية الفصل الدراسي في بطاقة المقرر"
+  },
+  "retakeCoursesSelectPrompt": "اختر المقررات للإعادة",
+  "@retakeCoursesSelectPrompt": {
+    "description": "رسالة اختيار المقررات للإعادة"
+  },
+  "retakeCoursesRetakeCount": "اعادة {count} مقررات",
+  "@retakeCoursesRetakeCount": {
+    "description": "نص زر إعادة المقررات مع العدد",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "retakeCoursesSavedSuccess": "تم حفظ المقررات بنجاح!",
+  "@retakeCoursesSavedSuccess": {
+    "description": "رسالة نجاح حفظ المقررات"
+  },
+  "retakeCoursesError": "خطأ: {message}",
+  "@retakeCoursesError": {
+    "description": "رسالة خطأ مع التفاصيل",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "retakeCoursesLoading": "جاري تحميل المقررات...",
+  "@retakeCoursesLoading": {
+    "description": "رسالة تحميل المقررات"
+  },
+  "retakeCoursesErrorGeneral": "حدث خطأ ما",
+  "@retakeCoursesErrorGeneral": {
+    "description": "رسالة خطأ عامة"
+  },
+  "retakeCoursesClose": "إغلاق",
+  "@retakeCoursesClose": {
+    "description": "زر الإغلاق"
+  },
+  "retakeCoursesNoAvailable": "لا توجد مقررات متاحة",
+  "@retakeCoursesNoAvailable": {
+    "description": "رسالة عدم وجود مقررات متاحة"
+  },
+  "retakeCoursesNoAvailableDescription": "لا توجد مقررات متاحة للإعادة في الوقت الحالي.",
+  "@retakeCoursesNoAvailableDescription": {
+    "description": "وصف عدم وجود مقررات متاحة للإعادة"
+  },
+  "retakeCoursesSearchHint": "البحث في المقررات...",
+  "@retakeCoursesSearchHint": {
+    "description": "نص البحث في المقررات"
   }
 }

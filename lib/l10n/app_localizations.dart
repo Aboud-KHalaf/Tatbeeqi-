@@ -2380,6 +2380,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Lesson'**
   String get lessonLabel;
+
+  /// Title for courses page
+  ///
+  /// In en, this message translates to:
+  /// **'Courses'**
+  String get coursesTitle;
+
+  /// Error message when courses fail to load
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading courses'**
+  String get coursesErrorLoading;
+
+  /// First semester tab
+  ///
+  /// In en, this message translates to:
+  /// **'First Semester'**
+  String get coursesFirstSemester;
+
+  /// Second semester tab
+  ///
+  /// In en, this message translates to:
+  /// **'Second Semester'**
+  String get coursesSecondSemester;
+
+  /// Other courses tab
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get coursesOther;
+
+  /// Message when no courses are available
+  ///
+  /// In en, this message translates to:
+  /// **'No courses available for this term.'**
+  String get coursesEmptyMessage;
+
+  /// Title for add retake courses page
+  ///
+  /// In en, this message translates to:
+  /// **'Add Courses to Retake'**
+  String get retakeCoursesTitle;
+
+  /// Subtitle for add retake courses page
+  ///
+  /// In en, this message translates to:
+  /// **'Select the courses you want to retake'**
+  String get retakeCoursesSubtitle;
+
+  /// Year label in course card
+  ///
+  /// In en, this message translates to:
+  /// **'Year:'**
+  String get retakeCoursesYear;
+
+  /// Semester label in course card
+  ///
+  /// In en, this message translates to:
+  /// **'Semester:'**
+  String get retakeCoursesSemester;
+
+  /// Prompt to select courses for retake
+  ///
+  /// In en, this message translates to:
+  /// **'Select courses to retake'**
+  String get retakeCoursesSelectPrompt;
+
+  /// Retake button text with count
+  ///
+  /// In en, this message translates to:
+  /// **'Retake {count} courses'**
+  String retakeCoursesRetakeCount(int count);
+
+  /// Success message for saving courses
+  ///
+  /// In en, this message translates to:
+  /// **'Courses saved successfully!'**
+  String get retakeCoursesSavedSuccess;
+
+  /// Error message with details
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {message}'**
+  String retakeCoursesError(String message);
+
+  /// Loading courses message
+  ///
+  /// In en, this message translates to:
+  /// **'Loading courses...'**
+  String get retakeCoursesLoading;
+
+  /// General error message
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get retakeCoursesErrorGeneral;
+
+  /// Close button
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get retakeCoursesClose;
+
+  /// Message when no courses are available
+  ///
+  /// In en, this message translates to:
+  /// **'No courses available'**
+  String get retakeCoursesNoAvailable;
+
+  /// Description when no courses are available for retake
+  ///
+  /// In en, this message translates to:
+  /// **'There are no courses available for retake at this time.'**
+  String get retakeCoursesNoAvailableDescription;
+
+  /// Search courses hint text
+  ///
+  /// In en, this message translates to:
+  /// **'Search courses...'**
+  String get retakeCoursesSearchHint;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

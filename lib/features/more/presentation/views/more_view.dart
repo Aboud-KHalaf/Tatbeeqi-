@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:tatbeeqi/core/theme/app_colors.dart';
 import 'package:tatbeeqi/features/auth/domain/entities/user.dart';
 import 'package:tatbeeqi/features/auth/presentation/manager/bloc/auth_bloc.dart';
@@ -51,6 +50,7 @@ class _UserDetailsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return BlocBuilder<UserCubit, UserState>(
       builder: (context, state) {
@@ -72,7 +72,7 @@ class _UserDetailsSection extends StatelessWidget {
                           color: colorScheme.error, size: 48),
                       const SizedBox(height: 8),
                       Text(
-                        'خطأ في تحميل بيانات المستخدم',
+                        l10n.userDataLoadError,
                         style: theme.textTheme.bodyMedium
                             ?.copyWith(color: colorScheme.error),
                       ),
@@ -87,7 +87,7 @@ class _UserDetailsSection extends StatelessWidget {
                           color: colorScheme.outline, size: 48),
                       const SizedBox(height: 8),
                       Text(
-                        'لم يتم تحميل بيانات المستخدم',
+                        l10n.userDataNotLoaded,
                         style: theme.textTheme.bodyMedium
                             ?.copyWith(color: colorScheme.outline),
                       ),
@@ -111,6 +111,7 @@ class _UserInfoDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       children: [
@@ -146,12 +147,12 @@ class _UserInfoDisplay extends StatelessWidget {
           children: [
             _InfoChip(
               icon: Icons.school_outlined,
-              label: 'السنة ${user.studyYear}',
+              label: '${l10n.year} ${user.studyYear}',
               colorScheme: colorScheme,
             ),
             _InfoChip(
               icon: Icons.business_outlined,
-              label: _getDepartmentName(user.department),
+              label: _getDepartmentName(context, user.department),
               colorScheme: colorScheme,
             ),
           ],
@@ -160,14 +161,15 @@ class _UserInfoDisplay extends StatelessWidget {
     );
   }
 
-  String _getDepartmentName(int department) {
+  String _getDepartmentName(BuildContext context, int department) {
+    final l10n = AppLocalizations.of(context)!;
     switch (department) {
       case 1:
-        return 'هندسة برمجيات';
+        return l10n.softwareEngineering;
       case 2:
-        return 'أمن سيبراني';
+        return l10n.cyberSecurity;
       default:
-        return 'قسم $department';
+        return '${l10n.department} $department';
     }
   }
 }
@@ -213,11 +215,12 @@ class _InfoChip extends StatelessWidget {
 class _ShortcutsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'الاختصارات',
+          l10n.shortcuts,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -240,6 +243,7 @@ class _SavedPostsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Card(
       elevation: 0,
@@ -248,7 +252,7 @@ class _SavedPostsCard extends StatelessWidget {
         onTap: () {
           HapticFeedback.selectionClick();
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('قريباً: المنشورات المحفوظة')),
+            SnackBar(content: Text(l10n.comingSoonSavedPosts)),
           );
         },
         borderRadius: BorderRadius.circular(16),
@@ -270,7 +274,7 @@ class _SavedPostsCard extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'المحفوظات',
+                l10n.savedPosts,
                 style: theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -289,6 +293,7 @@ class _MyReportsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Card(
       elevation: 0,
@@ -297,7 +302,7 @@ class _MyReportsCard extends StatelessWidget {
         onTap: () {
           HapticFeedback.selectionClick();
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('قريباً: تقاريري')),
+            SnackBar(content: Text(l10n.comingSoonMyReports)),
           );
         },
         borderRadius: BorderRadius.circular(16),
@@ -319,7 +324,7 @@ class _MyReportsCard extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(
-                'ابلاغاتي',
+                l10n.myReports,
                 style: theme.textTheme.titleSmall?.copyWith(
                   fontWeight: FontWeight.w600,
                 ),
@@ -336,11 +341,12 @@ class _MyReportsCard extends StatelessWidget {
 class _SettingsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'الإعدادات',
+          l10n.settings,
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -365,6 +371,7 @@ class _ThemeSettingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return BlocBuilder<ThemeCubit, ThemeData>(
       builder: (context, themeData) {
@@ -399,13 +406,13 @@ class _ThemeSettingsCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'المظهر والألوان',
+                            l10n.themeAndColors,
                             style: theme.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                           Text(
-                            'تخصيص شكل التطبيق',
+                            l10n.customizeAppAppearance,
                             style: theme.textTheme.bodySmall?.copyWith(
                               color: colorScheme.onSurfaceVariant,
                             ),
@@ -438,6 +445,7 @@ class _ThemeModeToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Row(
       children: [
@@ -449,7 +457,7 @@ class _ThemeModeToggle extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: Text(
-            'الوضع الليلي',
+            l10n.darkMode,
             style: theme.textTheme.bodyMedium,
           ),
         ),
@@ -480,6 +488,7 @@ class _ColorPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -493,7 +502,7 @@ class _ColorPicker extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              'لون التطبيق',
+              l10n.appColor,
               style: theme.textTheme.bodyMedium?.copyWith(
                 fontWeight: FontWeight.w500,
               ),
@@ -501,7 +510,7 @@ class _ColorPicker extends StatelessWidget {
             const Spacer(),
             TextButton(
               onPressed: () => _showColorPickerDialog(context, themeCubit),
-              child: const Text('المزيد'),
+              child: Text(l10n.more),
             ),
           ],
         ),
@@ -538,7 +547,7 @@ class _ColorGrid extends StatelessWidget {
 
         return GestureDetector(
           onTap: () {
-             themeCubit.setSeedColor(color);
+            themeCubit.setSeedColor(color);
           },
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 200),
@@ -592,6 +601,7 @@ class _CurrentColorInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Container(
       padding: const EdgeInsets.all(12),
@@ -638,7 +648,7 @@ class _CurrentColorInfo extends StatelessWidget {
                 themeCubit.setSeedColor(AppColors.defaultSeedColor);
               },
               icon: const Icon(Icons.refresh),
-              tooltip: 'إعادة تعيين',
+              tooltip: l10n.reset,
               iconSize: 18,
             ),
         ],
@@ -668,16 +678,17 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return AlertDialog(
-      title: const Text('اختيار لون التطبيق'),
+      title: Text(l10n.chooseAppColor),
       content: SizedBox(
         width: double.maxFinite,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'الألوان المتاحة',
+              l10n.availableColors,
               style: theme.textTheme.titleSmall,
             ),
             const SizedBox(height: 16),
@@ -734,14 +745,14 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('إلغاء'),
+          child: Text(l10n.cancel),
         ),
         FilledButton(
           onPressed: () {
             widget.themeCubit.setSeedColor(_selectedColor);
             Navigator.of(context).pop();
           },
-          child: const Text('تطبيق'),
+          child: Text(l10n.apply),
         ),
       ],
     );
@@ -759,6 +770,7 @@ class _LanguageSettingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return BlocBuilder<LocaleCubit, LocaleState>(
       builder: (context, state) {
@@ -780,14 +792,14 @@ class _LanguageSettingsCard extends StatelessWidget {
                 color: colorScheme.onSecondaryContainer,
               ),
             ),
-            title: const Text('اللغة'),
-            subtitle: Text(isArabic ? 'العربية' : 'English'),
+            title: Text(l10n.language),
+            subtitle: Text(isArabic ? l10n.arabic : l10n.english),
             trailing: DropdownButton<String>(
               value: state.locale.languageCode,
               underline: const SizedBox(),
-              items: const [
-                DropdownMenuItem(value: 'ar', child: Text('العربية')),
-                DropdownMenuItem(value: 'en', child: Text('English')),
+              items: [
+                DropdownMenuItem(value: 'ar', child: Text(l10n.arabic)),
+                DropdownMenuItem(value: 'en', child: Text(l10n.english)),
               ],
               onChanged: (value) {
                 if (value != null) {
@@ -807,6 +819,7 @@ class _AccountSettingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Card(
       elevation: 0,
@@ -825,23 +838,23 @@ class _AccountSettingsCard extends StatelessWidget {
                 color: colorScheme.onTertiaryContainer,
               ),
             ),
-            title: const Text('إعدادات الحساب'),
-            subtitle: const Text('إدارة حسابك وبياناتك'),
+            title: Text(l10n.accountSettings),
+            subtitle: Text(l10n.manageAccountData),
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.edit_outlined),
-            title: const Text('تحديث البيانات'),
+            title: Text(l10n.updateData),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('قريباً: تحديث البيانات')),
+                SnackBar(content: Text(l10n.comingSoonUpdateData)),
               );
             },
           ),
           ListTile(
             leading: Icon(Icons.logout, color: colorScheme.error),
-            title: Text('تسجيل الخروج',
+            title: Text(l10n.logout,
                 style: TextStyle(color: colorScheme.error)),
             onTap: () => _showLogoutDialog(context),
           ),
@@ -851,22 +864,23 @@ class _AccountSettingsCard extends StatelessWidget {
   }
 
   void _showLogoutDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     showDialog(
       context: context,
       builder: (dialogContext) => AlertDialog(
-        title: const Text('تسجيل الخروج'),
-        content: const Text('هل أنت متأكد من رغبتك في تسجيل الخروج؟'),
+        title: Text(l10n.logout),
+        content: Text(l10n.logoutConfirmation),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
-            child: const Text('إلغاء'),
+            child: Text(l10n.cancel),
           ),
           FilledButton(
             onPressed: () {
               Navigator.pop(dialogContext);
               context.read<AuthBloc>().add(SignOutEvent());
             },
-            child: const Text('تسجيل الخروج'),
+            child: Text(l10n.logout),
           ),
         ],
       ),
@@ -879,6 +893,7 @@ class _NotificationsSettingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Card(
       elevation: 0,
@@ -897,13 +912,13 @@ class _NotificationsSettingsCard extends StatelessWidget {
                 color: colorScheme.onPrimaryContainer,
               ),
             ),
-            title: const Text('الإشعارات'),
-            subtitle: const Text('إدارة الإشعارات والتنبيهات'),
+            title: Text(l10n.notifications),
+            subtitle: Text(l10n.manageNotifications),
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.list_alt_outlined),
-            title: const Text('عرض الإشعارات'),
+            title: Text(l10n.viewNotifications),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () {
               Navigator.push(
@@ -914,11 +929,11 @@ class _NotificationsSettingsCard extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.settings_outlined),
-            title: const Text('إعدادات الإشعارات'),
+            title: Text(l10n.notificationSettings),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('قريباً: إعدادات الإشعارات')),
+                SnackBar(content: Text(l10n.comingSoonNotificationSettings)),
               );
             },
           ),
@@ -933,6 +948,7 @@ class _AdditionalSettingsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Card(
       elevation: 0,
@@ -951,37 +967,37 @@ class _AdditionalSettingsCard extends StatelessWidget {
                 color: colorScheme.onSecondaryContainer,
               ),
             ),
-            title: const Text('إعدادات إضافية'),
-            subtitle: const Text('المزيد من الخيارات والإعدادات'),
+            title: Text(l10n.additionalSettings),
+            subtitle: Text(l10n.moreOptionsSettings),
           ),
           const Divider(height: 1),
           ListTile(
             leading: const Icon(Icons.help_outline),
-            title: const Text('المساعدة والدعم'),
+            title: Text(l10n.helpSupport),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('قريباً: المساعدة والدعم')),
+                SnackBar(content: Text(l10n.comingSoonHelpSupport)),
               );
             },
           ),
           ListTile(
             leading: const Icon(Icons.info_outline),
-            title: const Text('حول التطبيق'),
+            title: Text(l10n.aboutApp),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('قريباً: حول التطبيق')),
+                SnackBar(content: Text(l10n.comingSoonAboutApp)),
               );
             },
           ),
           ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),
-            title: const Text('الخصوصية والأمان'),
+            title: Text(l10n.privacySecurity),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('قريباً: الخصوصية والأمان')),
+                SnackBar(content: Text(l10n.comingSoonPrivacySecurity)),
               );
             },
           ),

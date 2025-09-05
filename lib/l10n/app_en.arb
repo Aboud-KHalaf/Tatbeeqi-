@@ -682,5 +682,96 @@
   "lessonLabel": "Lesson",
   "@lessonLabel": {
     "description": "Label for lesson prefix in grades list"
+  },
+
+  "coursesTitle": "Courses",
+  "@coursesTitle": {
+    "description": "Title for courses page"
+  },
+  "coursesErrorLoading": "Error loading courses",
+  "@coursesErrorLoading": {
+    "description": "Error message when courses fail to load"
+  },
+  "coursesFirstSemester": "First Semester",
+  "@coursesFirstSemester": {
+    "description": "First semester tab"
+  },
+  "coursesSecondSemester": "Second Semester",
+  "@coursesSecondSemester": {
+    "description": "Second semester tab"
+  },
+  "coursesOther": "Other",
+  "@coursesOther": {
+    "description": "Other courses tab"
+  },
+  "coursesEmptyMessage": "No courses available for this term.",
+  "@coursesEmptyMessage": {
+    "description": "Message when no courses are available"
+  },
+  "retakeCoursesTitle": "Add Courses to Retake",
+  "@retakeCoursesTitle": {
+    "description": "Title for add retake courses page"
+  },
+  "retakeCoursesSubtitle": "Select the courses you want to retake",
+  "@retakeCoursesSubtitle": {
+    "description": "Subtitle for add retake courses page"
+  },
+  "retakeCoursesYear": "Year:",
+  "@retakeCoursesYear": {
+    "description": "Year label in course card"
+  },
+  "retakeCoursesSemester": "Semester:",
+  "@retakeCoursesSemester": {
+    "description": "Semester label in course card"
+  },
+  "retakeCoursesSelectPrompt": "Select courses to retake",
+  "@retakeCoursesSelectPrompt": {
+    "description": "Prompt to select courses for retake"
+  },
+  "retakeCoursesRetakeCount": "Retake {count} courses",
+  "@retakeCoursesRetakeCount": {
+    "description": "Retake button text with count",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "retakeCoursesSavedSuccess": "Courses saved successfully!",
+  "@retakeCoursesSavedSuccess": {
+    "description": "Success message for saving courses"
+  },
+  "retakeCoursesError": "Error: {message}",
+  "@retakeCoursesError": {
+    "description": "Error message with details",
+    "placeholders": {
+      "message": {
+        "type": "String"
+      }
+    }
+  },
+  "retakeCoursesLoading": "Loading courses...",
+  "@retakeCoursesLoading": {
+    "description": "Loading courses message"
+  },
+  "retakeCoursesErrorGeneral": "Something went wrong",
+  "@retakeCoursesErrorGeneral": {
+    "description": "General error message"
+  },
+  "retakeCoursesClose": "Close",
+  "@retakeCoursesClose": {
+    "description": "Close button"
+  },
+  "retakeCoursesNoAvailable": "No courses available",
+  "@retakeCoursesNoAvailable": {
+    "description": "Message when no courses are available"
+  },
+  "retakeCoursesNoAvailableDescription": "There are no courses available for retake at this time.",
+  "@retakeCoursesNoAvailableDescription": {
+    "description": "Description when no courses are available for retake"
+  },
+  "retakeCoursesSearchHint": "Search courses...",
+  "@retakeCoursesSearchHint": {
+    "description": "Search courses hint text"
   }
 }

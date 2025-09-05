@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/manager/lectures/lectures_cubit.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/views/course_lectures_view.dart';
-import 'package:tatbeeqi/features/courses_details.dart/presentation/about_course_page.dart';
+import 'package:tatbeeqi/features/courses_details.dart/presentation/views/about_course_view.dart';
 import 'package:tatbeeqi/features/references/presentation/views/references_view.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/custom_course_content_app_bar_widget.dart';
 import 'package:tatbeeqi/features/grades/presentation/views/grades_page.dart';

@@ -1160,4 +1160,68 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get lessonLabel => 'الدرس';
+
+  @override
+  String get coursesTitle => 'المقررات الدراسية';
+
+  @override
+  String get coursesErrorLoading => 'خطأ في تحميل المقررات';
+
+  @override
+  String get coursesFirstSemester => 'الفصل الأول';
+
+  @override
+  String get coursesSecondSemester => 'الفصل الثاني';
+
+  @override
+  String get coursesOther => 'اخرى';
+
+  @override
+  String get coursesEmptyMessage => 'لا توجد مقررات متاحة لهذا الفصل.';
+
+  @override
+  String get retakeCoursesTitle => 'اضافة مقررات للاعادة';
+
+  @override
+  String get retakeCoursesSubtitle => 'اختر المقررات التي تريد ان تعيدها';
+
+  @override
+  String get retakeCoursesYear => 'السنة:';
+
+  @override
+  String get retakeCoursesSemester => 'الفصل:';
+
+  @override
+  String get retakeCoursesSelectPrompt => 'اختر المقررات للإعادة';
+
+  @override
+  String retakeCoursesRetakeCount(int count) {
+    return 'اعادة $count مقررات';
+  }
+
+  @override
+  String get retakeCoursesSavedSuccess => 'تم حفظ المقررات بنجاح!';
+
+  @override
+  String retakeCoursesError(String message) {
+    return 'خطأ: $message';
+  }
+
+  @override
+  String get retakeCoursesLoading => 'جاري تحميل المقررات...';
+
+  @override
+  String get retakeCoursesErrorGeneral => 'حدث خطأ ما';
+
+  @override
+  String get retakeCoursesClose => 'إغلاق';
+
+  @override
+  String get retakeCoursesNoAvailable => 'لا توجد مقررات متاحة';
+
+  @override
+  String get retakeCoursesNoAvailableDescription => 'لا توجد مقررات متاحة للإعادة في الوقت الحالي.';
+
+  @override
+  String get retakeCoursesSearchHint => 'البحث في المقررات...';
 }

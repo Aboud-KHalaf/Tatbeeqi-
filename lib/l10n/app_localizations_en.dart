@@ -1160,4 +1160,68 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get lessonLabel => 'Lesson';
+
+  @override
+  String get coursesTitle => 'Courses';
+
+  @override
+  String get coursesErrorLoading => 'Error loading courses';
+
+  @override
+  String get coursesFirstSemester => 'First Semester';
+
+  @override
+  String get coursesSecondSemester => 'Second Semester';
+
+  @override
+  String get coursesOther => 'Other';
+
+  @override
+  String get coursesEmptyMessage => 'No courses available for this term.';
+
+  @override
+  String get retakeCoursesTitle => 'Add Courses to Retake';
+
+  @override
+  String get retakeCoursesSubtitle => 'Select the courses you want to retake';
+
+  @override
+  String get retakeCoursesYear => 'Year:';
+
+  @override
+  String get retakeCoursesSemester => 'Semester:';
+
+  @override
+  String get retakeCoursesSelectPrompt => 'Select courses to retake';
+
+  @override
+  String retakeCoursesRetakeCount(int count) {
+    return 'Retake $count courses';
+  }
+
+  @override
+  String get retakeCoursesSavedSuccess => 'Courses saved successfully!';
+
+  @override
+  String retakeCoursesError(String message) {
+    return 'Error: $message';
+  }
+
+  @override
+  String get retakeCoursesLoading => 'Loading courses...';
+
+  @override
+  String get retakeCoursesErrorGeneral => 'Something went wrong';
+
+  @override
+  String get retakeCoursesClose => 'Close';
+
+  @override
+  String get retakeCoursesNoAvailable => 'No courses available';
+
+  @override
+  String get retakeCoursesNoAvailableDescription => 'There are no courses available for retake at this time.';
+
+  @override
+  String get retakeCoursesSearchHint => 'Search courses...';
 }
