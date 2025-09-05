@@ -18,11 +18,13 @@ class InitializeNotificationsCubit extends Cubit<InitializeNotificationsState> {
         super(InitializeNotificationsInitial());
 
   Future<void> initialize() async {
+    print('initialize');
     emit(InitializeNotificationsLoading());
     final localResult = await _initializeLocalNotifications.call();
     if (localResult.isLeft()) {
       final failure = localResult.fold((f) => f, (_) => null);
       emit(InitializeNotificationsFailure(failure!.message));
+      print('localResult: ${failure.message}');
     }
     final firebaseResult = await _initializeFirebaseNotifications.call();
     if (firebaseResult.isLeft()) {

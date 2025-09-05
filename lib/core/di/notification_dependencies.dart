@@ -15,11 +15,15 @@ import 'package:tatbeeqi/features/notifications/domain/usecases/send_notificatio
 import 'package:tatbeeqi/features/notifications/domain/usecases/send_notification_by_users_usecase.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/subscribe_to_topic_usecase.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/unsubscribe_to_topic_usecase.dart';
+import 'package:tatbeeqi/features/notifications/domain/usecases/schedule_reminder_use_case.dart';
+import 'package:tatbeeqi/features/notifications/domain/usecases/cancel_reminder_use_case.dart';
+import 'package:tatbeeqi/features/notifications/domain/usecases/get_reminders_use_case.dart';
 
 import 'package:tatbeeqi/features/notifications/presentation/manager/initialize_notifications_cubit/initialize_notifications_cubit.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/notification_settings_bloc/notification_settings_bloc.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/notifications_bloc/notifications_bloc.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/send_notification_bloc/send_notification_bloc.dart';
+import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_cubit.dart';
 
 void initNotificationDependencies(GetIt sl) {
   // Blocs
@@ -44,6 +48,15 @@ void initNotificationDependencies(GetIt sl) {
         deleteNotificationUsecase: sl(),
       ));
 
+  // Reminders Cubit
+  sl.registerFactory<RemindersCubit>(
+    () => RemindersCubit(
+      scheduleReminderUseCase: sl<ScheduleReminderUseCase>(),
+      cancelReminderUseCase: sl<CancelReminderUseCase>(),
+      getRemindersUseCase: sl<GetRemindersUseCase>(),
+    ),
+  );
+
   // Use cases
   sl.registerLazySingleton(() => GetNotificationsUsecase(repository: sl()));
   sl.registerLazySingleton(() => ClearNotificationsUsecase(repository: sl()));
@@ -61,6 +74,17 @@ void initNotificationDependencies(GetIt sl) {
   sl.registerLazySingleton(() => UnsubscribeToTopicUsecase(repository: sl()));
   sl.registerLazySingleton(() => RegisterDeviceTokenUseCase(repository: sl()));
 
+  // Reminders Use Cases
+  sl.registerLazySingleton<ScheduleReminderUseCase>(
+    () => ScheduleReminderUseCase(sl<NotificationsRepository>()),
+  );
+  sl.registerLazySingleton<CancelReminderUseCase>(
+    () => CancelReminderUseCase(sl<NotificationsRepository>()),
+  );
+  sl.registerLazySingleton<GetRemindersUseCase>(
+    () => GetRemindersUseCase(sl<NotificationsRepository>()),
+  );
+
   // Repository
   sl.registerLazySingleton<NotificationsRepository>(
       () => NotificationsRepositoryImplements(sl(), sl()));
@@ -73,6 +97,9 @@ void initNotificationDependencies(GetIt sl) {
           localNotificationsPlugin: sl()));
 
   sl.registerLazySingleton<NotificationsLocalDatasource>(
-      () => NotificationsLocalDatasourceImplements(sl<DatabaseService>()));
+      () => NotificationsLocalDatasourceImplements(
+        sl<DatabaseService>(),
+        sl(),
+      ));
 }
 

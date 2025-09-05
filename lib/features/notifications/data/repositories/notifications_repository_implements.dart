@@ -9,6 +9,7 @@ import 'package:tatbeeqi/features/notifications/data/datasources/notifications_l
 import 'package:tatbeeqi/features/notifications/data/datasources/notifications_remote_datasource.dart';
 import 'package:tatbeeqi/features/notifications/data/models/app_notification_model.dart';
 import 'package:tatbeeqi/features/notifications/domain/entities/app_notification.dart';
+import 'package:tatbeeqi/features/notifications/domain/entities/reminder.dart';
 
 import '../../domain/repositories/notifications_repository.dart';
 
@@ -228,6 +229,47 @@ class NotificationsRepositoryImplements implements NotificationsRepository {
     } on Exception catch (e) {
       debugPrint(e.toString());
       return left(ServerFailure(e.toString()));
+    }
+  }
+
+  // Reminder methods implementation
+  @override
+  Future<void> scheduleReminder(Reminder reminder) async {
+    try {
+      await _localDatasource.scheduleReminder(reminder);
+    } catch (e) {
+      AppLogger.error('scheduleReminder repository error: $e');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> cancelReminder(String reminderId) async {
+    try {
+      await _localDatasource.cancelReminder(reminderId);
+    } catch (e) {
+      AppLogger.error('cancelReminder repository error: $e');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<Reminder>> getReminders({String? courseId}) async {
+    try {
+      return await _localDatasource.getReminders(courseId: courseId);
+    } catch (e) {
+      AppLogger.error('getReminders repository error: $e');
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> updateReminder(Reminder reminder) async {
+    try {
+      await _localDatasource.updateReminder(reminder);
+    } catch (e) {
+      AppLogger.error('updateReminder repository error: $e');
+      rethrow;
     }
   }
 }

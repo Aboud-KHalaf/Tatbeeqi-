@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
-import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
+ import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
+import 'package:tatbeeqi/features/notifications/presentation/widgets/reminder_dialog.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -71,8 +71,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             onPressed: () {
               HapticFeedback.lightImpact();
-              SnackBarHelper.showInfo(
-                  context: context, message: 'المواعيد والتذكيرات');
+              showDialog(
+                context: context,
+                builder: (context) => ReminderDialog(
+                  courseId: course.id.toString(),
+                  courseName: course.courseName,
+                ),
+              );
             },
             tooltip: l10n.coursesContentScheduleReminders,
             style: IconButton.styleFrom(

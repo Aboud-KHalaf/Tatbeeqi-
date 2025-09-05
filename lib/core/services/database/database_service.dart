@@ -83,6 +83,19 @@ const String notificationsColTargetTopics = 'target_topics'; // json string
 const String notificationsColSentBy = 'sent_by';
 const String notificationsColCreatedAt = 'created_at';
 const String notificationsColSeen = 'seen'; // 0/1
+
+// Reminders Table
+const String remindersTableName = 'reminders';
+const String remindersColId = 'id';
+const String remindersColDays = 'days'; // comma-separated string
+const String remindersColHour = 'hour';
+const String remindersColMinute = 'minute';
+const String remindersColTitle = 'title';
+const String remindersColBody = 'body';
+const String remindersColIsActive = 'isActive'; // 0/1
+const String remindersColCourseId = 'courseId';
+const String remindersColCreatedAt = 'createdAt';
+
 // Recent Courses Table
 const String recentCoursesTableName = 'recent_courses';
 const String recentCoursesColId = 'id';
@@ -149,7 +162,7 @@ const String recentCoursesColLastVisit = 'last_visit';
     final path = join(dbPath, _dbName);
     return await openDatabase(
       path,
-      version: 12,
+      version: 13,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -169,6 +182,7 @@ const String recentCoursesColLastVisit = 'last_visit';
     await _createRecentCoursesTable(db);
     await _createCachedNewsTable(db);
     await _createNotificationsTable(db);
+    await _createRemindersTable(db);
     AppLogger.info('All tables created successfully.');
   }
 
@@ -283,11 +297,40 @@ const String recentCoursesColLastVisit = 'last_visit';
     AppLogger.info('Table $recentCoursesTableName created successfully.');
   }
 
+  Future<void> _createRemindersTable(Database db) async {
+    AppLogger.info('Creating database table: $remindersTableName');
+    await db.execute('''
+      CREATE TABLE IF NOT EXISTS $remindersTableName (
+        $remindersColId TEXT PRIMARY KEY,
+        $remindersColDays TEXT NOT NULL,
+        $remindersColHour INTEGER NOT NULL,
+        $remindersColMinute INTEGER NOT NULL,
+        $remindersColTitle TEXT NOT NULL,
+        $remindersColBody TEXT NOT NULL,
+        $remindersColIsActive INTEGER NOT NULL DEFAULT 1,
+        $remindersColCourseId TEXT,
+        $remindersColCreatedAt TEXT NOT NULL
+      )
+    ''');
+    await db.execute('''
+      CREATE INDEX IF NOT EXISTS idx_reminders_course
+      ON $remindersTableName($remindersColCourseId)
+    ''');
+    await db.execute('''
+      CREATE INDEX IF NOT EXISTS idx_reminders_active
+      ON $remindersTableName($remindersColIsActive)
+    ''');
+    AppLogger.info('Table $remindersTableName created successfully.');
+  }
+
   // Add migration logic for schema changes
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     AppLogger.info('Upgrading database from version $oldVersion to $newVersion');
     if (oldVersion < 12) {
       await _createNotificationsTable(db);
+    }
+    if (oldVersion < 13) {
+      await _createRemindersTable(db);
     }
   }
 

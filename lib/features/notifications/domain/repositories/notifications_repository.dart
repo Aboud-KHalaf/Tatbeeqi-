@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:tatbeeqi/core/error/failures.dart';
 import 'package:tatbeeqi/features/notifications/domain/entities/app_notification.dart';
+import 'package:tatbeeqi/features/notifications/domain/entities/reminder.dart';
 
 abstract class NotificationsRepository {
   Future<Either<Failure, Unit>> initializeLocalNotification();
@@ -38,4 +39,10 @@ abstract class NotificationsRepository {
     required AppNotification notification,
     required List<String> userIds,
   });
+  
+  // Reminder methods
+  Future<void> scheduleReminder(Reminder reminder);
+  Future<void> cancelReminder(String reminderId);
+  Future<List<Reminder>> getReminders({String? courseId});
+  Future<void> updateReminder(Reminder reminder);
 }
