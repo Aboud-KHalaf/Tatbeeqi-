@@ -12,9 +12,10 @@ abstract class PostRemoteDataSource {
   Future<PostModel> createPost(PostModel post);
   Future<PostModel> updatePost(PostModel post);
   Future<void> deletePost(String postId);
-
+  
   // Reads
   Future<List<PostModel>> fetchPosts({int start = 0, int limit = 10});
+  Future<List<PostModel>> fetchMyPosts({int start = 0, int limit = 10});
   Future<PostModel> fetchPostById(String postId);
   Future<List<PostModel>> fetchPostsByCategories(
     List<String> categories, {
@@ -88,6 +89,64 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
   Future<void> deletePost(String postId) async {
     try {
       await supabase.from('posts').delete().eq('id', postId);
+    } catch (e) {
+      if (e is PostgrestException) {
+        throw ServerException(e.message);
+      }
+      throw ServerException('An unexpected error occurred');
+    }
+  }
+
+  @override
+  Future<List<PostModel>> fetchMyPosts({int start = 0, int limit = 10}) async {
+    try {
+      final userId = supabase.auth.currentUser?.id;
+      if (userId == null) {
+        throw ServerException('User ID not available');
+      }
+
+      final response = await supabase
+          .from('posts')
+          .select('*, likes(count), comments(count)')
+          .eq('author_id', userId)
+          .order('created_at', ascending: false)
+          .range(start, start + limit);
+
+      final posts = <PostModel>[];
+
+      for (final e in response as List) {
+        final postId = e['id'] as String;
+
+        // Count likes
+        final likesCount = (e['likes'] is List && e['likes'].isNotEmpty)
+            ? e['likes'][0]['count'] as int
+            : 0;
+
+        // Count comments
+        final commentsCount =
+            (e['comments'] is List && e['comments'].isNotEmpty)
+                ? e['comments'][0]['count'] as int
+                : 0;
+
+        // Check if current user liked the post
+        final likeResponse = await supabase
+            .from('likes')
+            .select('id')
+            .eq('post_id', postId)
+            .eq('user_id', userId)
+            .maybeSingle();
+
+        final isLiked = likeResponse != null;
+
+        // Prepare final map
+        final postMap = Map<String, dynamic>.from(e)
+          ..['likes_count'] = likesCount
+          ..['comments_count'] = commentsCount
+          ..['is_liked'] = isLiked;
+
+        posts.add(PostModel.fromMap(postMap));
+      }
+      return posts;
     } catch (e) {
       if (e is PostgrestException) {
         throw ServerException(e.message);

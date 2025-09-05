@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
+import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_event.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_state.dart';
@@ -15,11 +16,13 @@ import 'package:tatbeeqi/l10n/app_localizations.dart';
 class CreatePostView extends StatefulWidget {
   final File? imageFile;
   final bool isArticle;
+  final Post? postToEdit;
 
   const CreatePostView({
     super.key,
     this.imageFile,
     this.isArticle = false,
+    this.postToEdit,
   });
 
   @override
@@ -40,12 +43,28 @@ class _CreatePostViewState extends State<CreatePostView> {
   File? _image;
   bool _hasUnsavedChanges = false;
 
+  // Getter to determine if we're in edit mode
+  bool get _isEditMode => widget.postToEdit != null;
+
   @override
   void initState() {
     super.initState();
-    _image = widget.imageFile;
-    _isArticle = widget.isArticle;
+    _initializeFormData();
     _textController.addListener(_onContentChanged);
+  }
+
+  void _initializeFormData() {
+    if (_isEditMode) {
+      final post = widget.postToEdit!;
+      _textController.text = post.text;
+      _categories.addAll(post.categories);
+      _isArticle = post.isArticle;
+      // Note: We can't populate image from URL, only from File
+      // If needed, you could implement image loading from URL
+    } else {
+      _image = widget.imageFile;
+      _isArticle = widget.isArticle;
+    }
   }
 
   @override
@@ -102,6 +121,7 @@ class _CreatePostViewState extends State<CreatePostView> {
       child: Scaffold(
         appBar: CreatePostAppBar(
           isArticle: _isArticle,
+          isEditMode: _isEditMode,
           hasUnsavedChanges: _hasUnsavedChanges,
           canPreview: _canPreview,
           onClose: () async {
@@ -164,20 +184,25 @@ class _CreatePostViewState extends State<CreatePostView> {
   }
 
   void _handleBlocState(BuildContext context, PostCrudState state) {
-    if (state is CreatePostSuccess) {
+    if (state is CreatePostSuccess || state is UpdatePostSuccess) {
       HapticFeedback.lightImpact();
       final l10n = AppLocalizations.of(context)!;
+      String message;
+      if (_isEditMode) {
+        message = _isArticle ? 'تم تحديث المقال بنجاح' : 'تم تحديث المنشور بنجاح';
+      } else {
+        message = _isArticle ? l10n.createPostSuccessArticle : l10n.createPostSuccessPost;
+      }
       SnackBarHelper.showSuccess(
         context: context,
-        message:
-            _isArticle ? l10n.createPostSuccessArticle : l10n.createPostSuccessPost,
+        message: message,
       );
       Navigator.pop(context, true);
-    } else if (state is CreatePostFailure) {
+    } else if (state is CreatePostFailure || state is UpdatePostFailure) {
       HapticFeedback.lightImpact();
       SnackBarHelper.showError(
         context: context,
-        message: state.message,
+        message: state is CreatePostFailure ? state.message : (state as UpdatePostFailure).message,
       );
     }
   }
@@ -256,15 +281,30 @@ class _CreatePostViewState extends State<CreatePostView> {
       return;
     }
 
-    Provider.of<PostCrudBloc>(context, listen: false).add(
-      CreatePostEvent(
-        topics: _topics,
-        text: _textController.text.trim(),
-        categories: _categories,
-        image: _image,
-        isArticle: _isArticle,
-      ),
-    );
+    final bloc = Provider.of<PostCrudBloc>(context, listen: false);
+    
+    if (_isEditMode) {
+      bloc.add(
+        UpdatePostEvent(
+          postId: widget.postToEdit!.id,
+          topics: _topics,
+          text: _textController.text.trim(),
+          categories: _categories,
+          imagePath: _image?.path,
+          isArticle: _isArticle,
+        ),
+      );
+    } else {
+      bloc.add(
+        CreatePostEvent(
+          topics: _topics,
+          text: _textController.text.trim(),
+          categories: _categories,
+          image: _image,
+          isArticle: _isArticle,
+        ),
+      );
+    }
   }
 }
 

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/features/reports/presentation/manager/reports_cubit.dart';
+import 'package:tatbeeqi/features/reports/presentation/widgets/post_report_dialog.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 
@@ -27,7 +31,6 @@ class _PostCardHeaderState extends State<PostCardHeader>
     _scaleAnim = Tween<double>(begin: 1.0, end: 0.98).animate(
       CurvedAnimation(parent: _hoverController, curve: Curves.easeOut),
     );
-
   }
 
   @override
@@ -121,7 +124,7 @@ class _PostCardHeaderState extends State<PostCardHeader>
               ),
             ),
             const SizedBox(width: 8),
-            MoreMenuButton(isHovered: _isHovered),
+            MoreMenuButton(isHovered: _isHovered, post: widget.post),
           ],
         ),
       ),
@@ -172,8 +175,9 @@ class _Avatar extends StatelessWidget {
 }
 
 class MoreMenuButton extends StatelessWidget {
-  const MoreMenuButton({super.key, required this.isHovered});
+  const MoreMenuButton({super.key, required this.isHovered, required this.post});
   final bool isHovered;
+  final Post post;
 
   @override
   Widget build(BuildContext context) {
@@ -183,69 +187,71 @@ class MoreMenuButton extends StatelessWidget {
     return Tooltip(
       message: 'خيارات',
       waitDuration: const Duration(milliseconds: 400),
-      child: Material(
-        type: MaterialType.transparency,
-        child: InkResponse(
-          onTap: () async {
-            // Simple menu with common actions; wire up callbacks as needed.
-            await showMenu<int>(
-              context: context,
-              position: const RelativeRect.fromLTRB(1, 1, 0, 0),
-              items: [
-                PopupMenuItem<int>(
-                  value: 0,
-                  child: Row(
-                    children: [
-                      Icon(Icons.link_rounded, color: cs.onSurfaceVariant),
-                      const SizedBox(width: 8),
-                      const Text('نسخ الرابط'),
-                    ],
-                  ),
-                ),
-                PopupMenuItem<int>(
-                  value: 1,
-                  child: Row(
-                    children: [
-                      Icon(Icons.flag_outlined, color: cs.onSurfaceVariant),
-                      const SizedBox(width: 8),
-                      const Text('إبلاغ'),
-                    ],
-                  ),
-                ),
-                const PopupMenuDivider(),
-                PopupMenuItem<int>(
-                  value: 2,
-                  child: Row(
-                    children: [
-                      Icon(Icons.share_outlined, color: cs.onSurfaceVariant),
-                      const SizedBox(width: 8),
-                      const Text('مشاركة'),
-                    ],
-                  ),
-                ),
+      child: PopupMenuButton<int>(
+        tooltip: '',
+        onSelected: (value) {
+          switch (value) {
+            case 0:
+              // TODO: implement save post
+              break;
+            case 1:
+              _showReportDialog(context);
+              break;
+          }
+        },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        color: cs.surface,
+        elevation: 4,
+        itemBuilder: (context) => [
+          PopupMenuItem<int>(
+            value: 0,
+            child: Row(
+              children: [
+                Icon(Icons.save, color: cs.primary, size: 20),
+                const SizedBox(width: 10),
+                Text('حفظ', style: theme.textTheme.bodyMedium),
               ],
-            );
-          },
-          radius: 24,
-          containedInkWell: true,
-          customBorder: const CircleBorder(),
-          splashColor: cs.primary.withOpacity(0.12),
-          highlightColor: cs.primary.withOpacity(0.06),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 150),
-            curve: Curves.easeOut,
-            padding: const EdgeInsets.all(6),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: isHovered
-                  ? cs.surfaceContainerHighest.withValues(alpha: 0.8)
-                  : Colors.transparent,
-            ),
-            child: Icon(
-              Icons.more_horiz,
-              color: cs.onSurfaceVariant,
             ),
           ),
+          PopupMenuItem<int>(
+            value: 1,
+            child: Row(
+              children: [
+                Icon(Icons.flag_outlined, color: cs.error, size: 20),
+                const SizedBox(width: 10),
+                Text('إبلاغ', style: theme.textTheme.bodyMedium),
+              ],
+            ),
+          ),
+        ],
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          curve: Curves.easeOut,
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: isHovered
+                ? cs.surfaceContainerHighest.withValues(alpha: 0.8)
+                : Colors.transparent,
+          ),
+          child: Icon(
+            Icons.more_horiz,
+            color: cs.onSurfaceVariant,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showReportDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => BlocProvider.value(
+        value: context.read<ReportsCubit>(),
+        child: PostReportDialog(
+          postId: post.id,
         ),
       ),
     );

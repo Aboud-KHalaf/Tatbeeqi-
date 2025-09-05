@@ -95,6 +95,20 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
+  Future<Either<Failure, List<Post>>> getMyPosts({int start = 0, int limit = 10}) async {
+    if (await networkInfo.isConnected()) {
+      try {
+        final posts = await remoteDataSource.fetchMyPosts(start: start, limit: limit);
+        return Right(posts);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      }
+    } else {
+      return const Left(NetworkFailure());
+    }
+  }
+
+  @override
   Future<Either<Failure, Post>> getPostById(String postId) async {
     if (await networkInfo.isConnected()) {
       try {

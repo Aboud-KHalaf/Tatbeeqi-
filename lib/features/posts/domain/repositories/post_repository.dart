@@ -14,6 +14,7 @@ abstract class PostRepository {
 
   // Reads
   Future<Either<Failure, List<Post>>> getPosts({int start = 0, int limit = 10});
+  Future<Either<Failure, List<Post>>> getMyPosts({int start = 0, int limit = 10});
   Future<Either<Failure, Post>> getPostById(String postId);
   Future<Either<Failure, List<Post>>> getPostsByCategories(
       List<String> categories,

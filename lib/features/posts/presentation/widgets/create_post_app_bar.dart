@@ -3,6 +3,7 @@ import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class CreatePostAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isArticle;
+  final bool isEditMode;
   final bool hasUnsavedChanges;
   final bool canPreview;
   final VoidCallback onClose;
@@ -11,6 +12,7 @@ class CreatePostAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CreatePostAppBar({
     super.key,
     required this.isArticle,
+    this.isEditMode = false,
     required this.hasUnsavedChanges,
     required this.canPreview,
     required this.onClose,
@@ -23,7 +25,7 @@ class CreatePostAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       centerTitle: false,
       title: Text(
-        isArticle ? l10n.createPostAppBarTitleArticle : l10n.createPostAppBarTitlePost,
+        _getAppBarTitle(l10n),
       ),
       leading: IconButton(
         icon: const Icon(Icons.close),
@@ -38,6 +40,14 @@ class CreatePostAppBar extends StatelessWidget implements PreferredSizeWidget {
         const SizedBox(width: 8),
       ],
     );
+  }
+
+  String _getAppBarTitle(AppLocalizations l10n) {
+    if (isEditMode) {
+      return isArticle ? 'تعديل المقال' : 'تعديل المنشور';
+    } else {
+      return isArticle ? l10n.createPostAppBarTitleArticle : l10n.createPostAppBarTitlePost;
+    }
   }
 
   @override

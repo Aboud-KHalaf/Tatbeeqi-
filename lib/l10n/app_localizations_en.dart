@@ -1364,20 +1364,182 @@ class AppLocalizationsEn extends AppLocalizations {
   String get postCardTextCopied => 'Text copied to clipboard';
 
   @override
+  String get myPosts => 'My Posts';
+
+  @override
+  String get myReminders => 'My Reminders';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get editPost => 'Edit Post';
+
+  @override
+  String get deletePost => 'Delete Post';
+
+  @override
+  String get deletePostConfirmation => 'Are you sure you want to delete this post? This action cannot be undone.';
+
+  @override
+  String get postContent => 'Post content...';
+
+  @override
+  String get postUpdated => 'Post updated successfully';
+
+  @override
+  String get postDeleted => 'Post deleted successfully';
+
+  @override
   String get privacyTitle => '🔒 Privacy & Security';
 
   @override
   String get privacyDescription => 'At Tatbeeqi, we place the highest importance on protecting your data and ensuring your privacy. Your personal information is handled with the utmost care according to industry best practices.\n\n- All communications between the app and server are secured with HTTPS/TLS.\n- Passwords are stored in encrypted form using industry-standard hashing and salting.\n- The database enforces Row-Level Security (RLS) to safeguard each user\'s data.\n- Sensitive data stored locally is encrypted using Hive and Secure Storage.\n- Authentication tokens and FCM notification keys are never shared with external parties.\n\nOur goal is to provide a safe educational environment that respects your privacy and ensures a reliable, transparent user experience.';
 
   @override
-  String get helpTitle => '🛠️ Help & Support';
+  String get helpTitle => ' Help & Support';
 
   @override
   String get helpDescription => 'We’re always here to help! Tatbeeqi provides a Help & Support section to answer your questions and solve any issues you may face while using the app.\n\n- Browse FAQs for quick answers to common questions.\n- Contact our support team directly via email or through the app.\n- Share your feedback and suggestions to improve the experience.\n- Access updates and guides to get the most out of all features.\n\nOur goal is to make your Tatbeeqi experience smooth, enjoyable, and fully supported whenever you need assistance.';
 
   @override
-  String get aboutAppTitle => '✨ About Tatbeeqi App';
+  String get aboutAppTitle => ' About Tatbeeqi App';
 
   @override
   String get aboutAppDescription => 'Welcome to Tatbeeqi, your interactive university platform designed to support students throughout their learning journey. The app brings together academic content and the student community in one place, where learners are not just passive receivers, but active contributors to knowledge.\n\nWith Tatbeeqi, you can easily access:\n- Micro-lessons with multiple formats (text, video, audio, PDF).\n- An AI assistant for summarization, note generation, and quick answers.\n- A collaborative community for sharing ideas, comments, and discussions.\n- Organizational tools like notes management, progress tracking, and smart reminders.\n\nWe believe that effective learning happens not only in classrooms, but also through experience, participation, and practice. That’s why Tatbeeqi is built as a bridge between traditional teaching methods and the needs of the digital generation.\n\nOur mission is to move learning from passive reception to active contribution, empowering every student to create, share, and enhance knowledge.\n\nTatbeeqi is more than just an app; it is a step towards a fully integrated digital learning environment that supports you today and opens wider opportunities for tomorrow.';
+
+  @override
+  String get addReport => 'Add Report';
+
+  @override
+  String get reportSubmitted => 'Report submitted successfully';
+
+  @override
+  String get noReportsYet => 'No Reports Yet';
+
+  @override
+  String get noReportsDescription => 'You haven\'t submitted any reports yet. Tap the button below to create your first report.';
+
+  @override
+  String get createFirstReport => 'Create First Report';
+
+  @override
+  String get errorLoadingReports => 'Error Loading Reports';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get submitReport => 'Submit Report';
+
+  @override
+  String get reportType => 'Report Type';
+
+  @override
+  String get postId => 'Post ID';
+
+  @override
+  String get enterPostId => 'Enter post ID';
+
+  @override
+  String get postIdRequired => 'Post ID is required';
+
+  @override
+  String get lessonId => 'Lesson ID';
+
+  @override
+  String get enterLessonId => 'Enter lesson ID';
+
+  @override
+  String get lessonIdRequired => 'Lesson ID is required';
+
+  @override
+  String get invalidLessonId => 'Invalid lesson ID';
+
+  @override
+  String get reason => 'Reason';
+
+  @override
+  String get describeIssue => 'Describe the issue you want to report';
+
+  @override
+  String get reasonRequired => 'Reason is required';
+
+  @override
+  String get reasonTooShort => 'Reason must be at least 10 characters';
+
+  @override
+  String get submit => 'Submit';
+
+  @override
+  String get post => 'Post';
+
+  @override
+  String get lesson => 'Lesson';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get reviewed => 'Reviewed';
+
+  @override
+  String get dismissed => 'Dismissed';
+
+  @override
+  String get reportPost => 'Report Post';
+
+  @override
+  String get reportPostDescription => 'Help us maintain a safe community by reporting inappropriate content';
+
+  @override
+  String get whyReporting => 'Why are you reporting this post?';
+
+  @override
+  String get selectReason => 'Select a reason';
+
+  @override
+  String get spam => 'Spam';
+
+  @override
+  String get harassment => 'Harassment';
+
+  @override
+  String get inappropriateContent => 'Inappropriate Content';
+
+  @override
+  String get falseInformation => 'False Information';
+
+  @override
+  String get copyrightViolation => 'Copyright Violation';
+
+  @override
+  String get other => 'Other';
+
+  @override
+  String get additionalDetails => 'Additional Details (Optional)';
+
+  @override
+  String get provideMoreContext => 'Provide more context about the issue';
+
+  @override
+  String get reportSubmitting => 'Submitting Report...';
+
+  @override
+  String get reportSuccess => 'Report Submitted Successfully';
+
+  @override
+  String get reportSuccessMessage => 'Thank you for helping us maintain a safe community. We\'ll review your report shortly.';
+
+  @override
+  String get reportError => 'Failed to Submit Report';
+
+  @override
+  String get reportErrorMessage => 'Something went wrong while submitting your report. Please try again.';
+
+  @override
+  String get close => 'Close';
 }

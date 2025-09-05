@@ -463,7 +463,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get bio => 'Bio';
 
   @override
-  String get save => 'Save';
+  String get save => 'حفظ';
 
   @override
   String get profileUpdatedSuccessfully => 'Profile updated successfully';
@@ -1364,6 +1364,36 @@ class AppLocalizationsAr extends AppLocalizations {
   String get postCardTextCopied => 'تم نسخ النص إلى الحافظة';
 
   @override
+  String get myPosts => 'منشوراتي';
+
+  @override
+  String get myReminders => 'تذكيراتي';
+
+  @override
+  String get edit => 'تعديل';
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get editPost => 'تعديل المنشور';
+
+  @override
+  String get deletePost => 'حذف المنشور';
+
+  @override
+  String get deletePostConfirmation => 'هل أنت متأكد من حذف هذا المنشور؟ لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get postContent => 'محتوى المنشور...';
+
+  @override
+  String get postUpdated => 'تم تحديث المنشور بنجاح';
+
+  @override
+  String get postDeleted => 'تم حذف المنشور بنجاح';
+
+  @override
   String get privacyTitle => '🔒 الخصوصية والأمان';
 
   @override
@@ -1380,4 +1410,136 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get aboutAppDescription => 'مرحبًا بك في تطبيق تطبيقي، منصتك الجامعية التفاعلية المصممة خصيصًا لدعم الطلبة في رحلتهم التعليمية. يهدف التطبيق إلى الجمع بين المحتوى الأكاديمي والمجتمع الطلابي في مكان واحد متكامل، بحيث لا يقتصر دور الطالب على التلقّي فقط، بل يمتد ليصبح مساهمًا فاعلًا في صناعة المعرفة.\n\nمن خلال تطبيقي يمكنك الوصول بسهولة إلى:\n- دروس مصغّرة متعددة الوسائط (نصوص، فيديو، صوت، PDF).\n- مساعد ذكاء اصطناعي للتلخيص وصياغة الملاحظات والإجابة على الأسئلة.\n- مجتمع تفاعلي لمشاركة الأفكار والتعليقات وبناء بيئة تعليمية مشتركة.\n- أدوات تنظيمية مثل إدارة الملاحظات، تتبّع التقدّم، والتذكيرات الذكية.\n\nنحن نؤمن أن التعلم الفعّال لا يحدث فقط في قاعة المحاضرات، بل عبر التجربة والمشاركة والتطبيق العملي. لذلك صُمم تطبيقي ليكون جسرًا بين أساليب التدريس التقليدية واحتياجات الجيل الرقمي.\n\nرسالتنا هي الانتقال بالتعليم من مرحلة التلقي السلبي إلى مرحلة الإسهام الفاعل، بحيث يكون كل طالب قادرًا على المشاركة في إنتاج المعرفة وتبادل الخبرات.\n\nتطبيقي ليس مجرد تطبيق، بل هو خطوة نحو بيئة تعلم رقمية متكاملة، تدعمك اليوم وتفتح لك آفاقًا واسعة للغد.';
+
+  @override
+  String get addReport => 'Add Report';
+
+  @override
+  String get reportSubmitted => 'Report submitted successfully';
+
+  @override
+  String get noReportsYet => 'No Reports Yet';
+
+  @override
+  String get noReportsDescription => 'You haven\'t submitted any reports yet. Tap the button below to create your first report.';
+
+  @override
+  String get createFirstReport => 'Create First Report';
+
+  @override
+  String get errorLoadingReports => 'Error Loading Reports';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get submitReport => 'Submit Report';
+
+  @override
+  String get reportType => 'Report Type';
+
+  @override
+  String get postId => 'Post ID';
+
+  @override
+  String get enterPostId => 'Enter post ID';
+
+  @override
+  String get postIdRequired => 'Post ID is required';
+
+  @override
+  String get lessonId => 'Lesson ID';
+
+  @override
+  String get enterLessonId => 'Enter lesson ID';
+
+  @override
+  String get lessonIdRequired => 'Lesson ID is required';
+
+  @override
+  String get invalidLessonId => 'Invalid lesson ID';
+
+  @override
+  String get reason => 'Reason';
+
+  @override
+  String get describeIssue => 'Describe the issue you want to report';
+
+  @override
+  String get reasonRequired => 'Reason is required';
+
+  @override
+  String get reasonTooShort => 'Reason must be at least 10 characters';
+
+  @override
+  String get submit => 'Submit';
+
+  @override
+  String get post => 'Post';
+
+  @override
+  String get lesson => 'Lesson';
+
+  @override
+  String get pending => 'Pending';
+
+  @override
+  String get reviewed => 'Reviewed';
+
+  @override
+  String get dismissed => 'Dismissed';
+
+  @override
+  String get reportPost => 'إبلاغ عن منشور';
+
+  @override
+  String get reportPostDescription => 'ساعدنا في الحفاظ على مجتمع آمن من خلال الإبلاغ عن المحتوى غير المناسب';
+
+  @override
+  String get whyReporting => 'لماذا تبلغ عن هذا المنشور؟';
+
+  @override
+  String get selectReason => 'اختر السبب';
+
+  @override
+  String get spam => 'رسائل مزعجة';
+
+  @override
+  String get harassment => 'تحرش';
+
+  @override
+  String get inappropriateContent => 'محتوى غير مناسب';
+
+  @override
+  String get falseInformation => 'معلومات خاطئة';
+
+  @override
+  String get copyrightViolation => 'انتهاك حقوق الطبع والنشر';
+
+  @override
+  String get other => 'أخرى';
+
+  @override
+  String get additionalDetails => 'تفاصيل إضافية (اختياري)';
+
+  @override
+  String get provideMoreContext => 'قدم المزيد من السياق حول المشكلة';
+
+  @override
+  String get reportSubmitting => 'جاري إرسال البلاغ...';
+
+  @override
+  String get reportSuccess => 'تم إرسال البلاغ بنجاح';
+
+  @override
+  String get reportSuccessMessage => 'شكرًا لمساعدتنا في الحفاظ على مجتمع آمن. سنراجع بلاغك قريبًا.';
+
+  @override
+  String get reportError => 'فشل في إرسال البلاغ';
+
+  @override
+  String get reportErrorMessage => 'حدث خطأ أثناء إرسال بلاغك. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get close => 'إغلاق';
 }

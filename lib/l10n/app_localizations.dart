@@ -2765,6 +2765,66 @@ abstract class AppLocalizations {
   /// **'Text copied to clipboard'**
   String get postCardTextCopied;
 
+  /// No description provided for @myPosts.
+  ///
+  /// In en, this message translates to:
+  /// **'My Posts'**
+  String get myPosts;
+
+  /// No description provided for @myReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'My Reminders'**
+  String get myReminders;
+
+  /// No description provided for @edit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get edit;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @editPost.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Post'**
+  String get editPost;
+
+  /// No description provided for @deletePost.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Post'**
+  String get deletePost;
+
+  /// No description provided for @deletePostConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this post? This action cannot be undone.'**
+  String get deletePostConfirmation;
+
+  /// No description provided for @postContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Post content...'**
+  String get postContent;
+
+  /// No description provided for @postUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Post updated successfully'**
+  String get postUpdated;
+
+  /// No description provided for @postDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Post deleted successfully'**
+  String get postDeleted;
+
   /// No description provided for @privacyTitle.
   ///
   /// In en, this message translates to:
@@ -2780,7 +2840,7 @@ abstract class AppLocalizations {
   /// No description provided for @helpTitle.
   ///
   /// In en, this message translates to:
-  /// **'🛠️ Help & Support'**
+  /// **' Help & Support'**
   String get helpTitle;
 
   /// No description provided for @helpDescription.
@@ -2792,7 +2852,7 @@ abstract class AppLocalizations {
   /// No description provided for @aboutAppTitle.
   ///
   /// In en, this message translates to:
-  /// **'✨ About Tatbeeqi App'**
+  /// **' About Tatbeeqi App'**
   String get aboutAppTitle;
 
   /// No description provided for @aboutAppDescription.
@@ -2800,6 +2860,270 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Welcome to Tatbeeqi, your interactive university platform designed to support students throughout their learning journey. The app brings together academic content and the student community in one place, where learners are not just passive receivers, but active contributors to knowledge.\n\nWith Tatbeeqi, you can easily access:\n- Micro-lessons with multiple formats (text, video, audio, PDF).\n- An AI assistant for summarization, note generation, and quick answers.\n- A collaborative community for sharing ideas, comments, and discussions.\n- Organizational tools like notes management, progress tracking, and smart reminders.\n\nWe believe that effective learning happens not only in classrooms, but also through experience, participation, and practice. That’s why Tatbeeqi is built as a bridge between traditional teaching methods and the needs of the digital generation.\n\nOur mission is to move learning from passive reception to active contribution, empowering every student to create, share, and enhance knowledge.\n\nTatbeeqi is more than just an app; it is a step towards a fully integrated digital learning environment that supports you today and opens wider opportunities for tomorrow.'**
   String get aboutAppDescription;
+
+  /// No description provided for @addReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Report'**
+  String get addReport;
+
+  /// No description provided for @reportSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Report submitted successfully'**
+  String get reportSubmitted;
+
+  /// No description provided for @noReportsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No Reports Yet'**
+  String get noReportsYet;
+
+  /// No description provided for @noReportsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'You haven\'t submitted any reports yet. Tap the button below to create your first report.'**
+  String get noReportsDescription;
+
+  /// No description provided for @createFirstReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Create First Report'**
+  String get createFirstReport;
+
+  /// No description provided for @errorLoadingReports.
+  ///
+  /// In en, this message translates to:
+  /// **'Error Loading Reports'**
+  String get errorLoadingReports;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @submitReport.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Report'**
+  String get submitReport;
+
+  /// No description provided for @reportType.
+  ///
+  /// In en, this message translates to:
+  /// **'Report Type'**
+  String get reportType;
+
+  /// No description provided for @postId.
+  ///
+  /// In en, this message translates to:
+  /// **'Post ID'**
+  String get postId;
+
+  /// No description provided for @enterPostId.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter post ID'**
+  String get enterPostId;
+
+  /// No description provided for @postIdRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Post ID is required'**
+  String get postIdRequired;
+
+  /// No description provided for @lessonId.
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson ID'**
+  String get lessonId;
+
+  /// No description provided for @enterLessonId.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter lesson ID'**
+  String get enterLessonId;
+
+  /// No description provided for @lessonIdRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson ID is required'**
+  String get lessonIdRequired;
+
+  /// No description provided for @invalidLessonId.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid lesson ID'**
+  String get invalidLessonId;
+
+  /// No description provided for @reason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason'**
+  String get reason;
+
+  /// No description provided for @describeIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the issue you want to report'**
+  String get describeIssue;
+
+  /// No description provided for @reasonRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason is required'**
+  String get reasonRequired;
+
+  /// No description provided for @reasonTooShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason must be at least 10 characters'**
+  String get reasonTooShort;
+
+  /// No description provided for @submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit'**
+  String get submit;
+
+  /// No description provided for @post.
+  ///
+  /// In en, this message translates to:
+  /// **'Post'**
+  String get post;
+
+  /// No description provided for @lesson.
+  ///
+  /// In en, this message translates to:
+  /// **'Lesson'**
+  String get lesson;
+
+  /// No description provided for @pending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get pending;
+
+  /// No description provided for @reviewed.
+  ///
+  /// In en, this message translates to:
+  /// **'Reviewed'**
+  String get reviewed;
+
+  /// No description provided for @dismissed.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismissed'**
+  String get dismissed;
+
+  /// No description provided for @reportPost.
+  ///
+  /// In en, this message translates to:
+  /// **'Report Post'**
+  String get reportPost;
+
+  /// No description provided for @reportPostDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Help us maintain a safe community by reporting inappropriate content'**
+  String get reportPostDescription;
+
+  /// No description provided for @whyReporting.
+  ///
+  /// In en, this message translates to:
+  /// **'Why are you reporting this post?'**
+  String get whyReporting;
+
+  /// No description provided for @selectReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a reason'**
+  String get selectReason;
+
+  /// No description provided for @spam.
+  ///
+  /// In en, this message translates to:
+  /// **'Spam'**
+  String get spam;
+
+  /// No description provided for @harassment.
+  ///
+  /// In en, this message translates to:
+  /// **'Harassment'**
+  String get harassment;
+
+  /// No description provided for @inappropriateContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Inappropriate Content'**
+  String get inappropriateContent;
+
+  /// No description provided for @falseInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'False Information'**
+  String get falseInformation;
+
+  /// No description provided for @copyrightViolation.
+  ///
+  /// In en, this message translates to:
+  /// **'Copyright Violation'**
+  String get copyrightViolation;
+
+  /// No description provided for @other.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get other;
+
+  /// No description provided for @additionalDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Additional Details (Optional)'**
+  String get additionalDetails;
+
+  /// No description provided for @provideMoreContext.
+  ///
+  /// In en, this message translates to:
+  /// **'Provide more context about the issue'**
+  String get provideMoreContext;
+
+  /// No description provided for @reportSubmitting.
+  ///
+  /// In en, this message translates to:
+  /// **'Submitting Report...'**
+  String get reportSubmitting;
+
+  /// No description provided for @reportSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Report Submitted Successfully'**
+  String get reportSuccess;
+
+  /// No description provided for @reportSuccessMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Thank you for helping us maintain a safe community. We\'ll review your report shortly.'**
+  String get reportSuccessMessage;
+
+  /// No description provided for @reportError.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to Submit Report'**
+  String get reportError;
+
+  /// No description provided for @reportErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong while submitting your report. Please try again.'**
+  String get reportErrorMessage;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
