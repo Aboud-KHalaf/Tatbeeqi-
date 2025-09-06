@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/features/notifications/presentation/views/notifications_view.dart';
+import 'package:tatbeeqi/features/notifications/presentation/views/notifications_settings_view.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class NotificationsSettingsCard extends StatelessWidget {
@@ -48,8 +49,9 @@ class NotificationsSettingsCard extends StatelessWidget {
             title: Text(l10n.notificationSettings),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.comingSoonNotificationSettings)),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const NotificationsSettingsView()),
               );
             },
           ),

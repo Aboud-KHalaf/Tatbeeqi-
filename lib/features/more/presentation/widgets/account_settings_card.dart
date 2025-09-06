@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/features/auth/presentation/manager/bloc/auth_bloc.dart';
+import 'package:tatbeeqi/features/auth/presentation/views/update_profile_page.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class AccountSettingsCard extends StatelessWidget {
@@ -38,14 +39,14 @@ class AccountSettingsCard extends StatelessWidget {
             title: Text(l10n.updateData),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
             onTap: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(l10n.comingSoonUpdateData)),
-              );
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const UpdateProfilePage()));
             },
           ),
           ListTile(
             leading: Icon(Icons.logout, color: colorScheme.error),
-            title: Text(l10n.logout, style: TextStyle(color: colorScheme.error)),
+            title:
+                Text(l10n.logout, style: TextStyle(color: colorScheme.error)),
             onTap: () => _showLogoutDialog(context),
           ),
         ],
