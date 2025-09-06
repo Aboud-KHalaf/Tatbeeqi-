@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tatbeeqi/core/di/service_locator.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
-import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/my_posts/my_posts_cubit.dart';
 import 'package:tatbeeqi/features/posts/presentation/views/create_post_view.dart';
 import 'package:tatbeeqi/features/posts/presentation/views/post_details_view.dart';

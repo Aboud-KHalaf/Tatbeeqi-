@@ -40,6 +40,7 @@ import 'package:tatbeeqi/core/observers/auth_observer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:tatbeeqi/features/feedbacks/presentation/widgets/feedback_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -158,21 +159,23 @@ class MyApp extends StatelessWidget {
                 builder: (context) {
                   final authBloc = BlocProvider.of<AuthBloc>(context);
                   final router = createRouter(authBloc);
-                  return MaterialApp.router(
-                    routerConfig: router,
-                    debugShowCheckedModeBanner: false,
-                    locale: currentLocale,
-                    theme: currentThemeData,
-                    localizationsDelegates: const [
-                      AppLocalizations.delegate,
-                      GlobalMaterialLocalizations.delegate,
-                      GlobalWidgetsLocalizations.delegate,
-                      GlobalCupertinoLocalizations.delegate,
-                    ],
-                    supportedLocales: const [
-                      Locale('ar'),
-                      Locale('en'),
-                    ],
+                  return FeedbackWrapper(
+                    child: MaterialApp.router(
+                      routerConfig: router,
+                      debugShowCheckedModeBanner: false,
+                      locale: currentLocale,
+                      theme: currentThemeData,
+                      localizationsDelegates: const [
+                        AppLocalizations.delegate,
+                        GlobalMaterialLocalizations.delegate,
+                        GlobalWidgetsLocalizations.delegate,
+                        GlobalCupertinoLocalizations.delegate,
+                      ],
+                      supportedLocales: const [
+                        Locale('ar'),
+                        Locale('en'),
+                      ],
+                    ),
                   );
                 },
               );

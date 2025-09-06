@@ -3,6 +3,7 @@ import 'package:tatbeeqi/core/di/ai_assistant_dependencies.dart';
 import 'package:tatbeeqi/core/di/auth_dependencies.dart';
 import 'package:tatbeeqi/core/di/course_content_dependencies.dart';
 import 'package:tatbeeqi/core/di/course_details_dependencies.dart';
+import 'package:tatbeeqi/core/di/feedbacks_dependencies.dart';
 import 'package:tatbeeqi/core/di/localization_dependencies.dart';
 import 'package:tatbeeqi/core/di/navigation_dependencies.dart';
 import 'package:tatbeeqi/core/di/news_dependencies.dart';
@@ -17,7 +18,7 @@ import 'package:tatbeeqi/core/di/streaks_dependencies.dart';
 import 'package:tatbeeqi/core/di/references_dependencies.dart';
 import 'package:tatbeeqi/core/di/grades_dependencies.dart';
 import 'package:tatbeeqi/core/di/reports_dependencies.dart';
- 
+  
 void initFeatureDependencies(GetIt sl) {
   initThemeDependencies(sl);
   initLocalizationDependencies(sl);
@@ -37,4 +38,5 @@ void initFeatureDependencies(GetIt sl) {
   initGradesDependencies(sl);
   initCourseDetailsDependencies(sl);
   initReportsDependencies(sl);
+  initFeedbackDependencies(sl);
 }

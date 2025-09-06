@@ -31,16 +31,7 @@ class _MyReportsViewState extends State<MyReportsView> {
       backgroundColor: colorScheme.surface,
       appBar: AppBar(
         title: Text(l10n.myReports),
-        backgroundColor: colorScheme.surface,
-        elevation: 0,
-        scrolledUnderElevation: 1,
-        actions: [
-          IconButton(
-            onPressed: () => _showReportDialog(context),
-            icon: const Icon(Icons.add_rounded),
-            tooltip: l10n.addReport,
-          ),
-        ],
+       
       ),
       body: BlocConsumer<ReportsCubit, ReportsState>(
         listener: (context, state) {
