@@ -37,7 +37,7 @@ class _RetakeCoursesConfirmButtonState extends State<RetakeCoursesConfirmButton>
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  'Courses saved successfully!',
+                  'تم حفظ المقررات بنجاح!',
                   style: TextStyle(color: colorScheme.onInverseSurface),
                 ),
                 backgroundColor: colorScheme.inverseSurface,
@@ -52,7 +52,7 @@ class _RetakeCoursesConfirmButtonState extends State<RetakeCoursesConfirmButton>
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
-                  'Error: ${state.message}',
+                  'حدث خطأ: ${state.message}',
                   style: TextStyle(color: colorScheme.onErrorContainer),
                 ),
                 backgroundColor: colorScheme.errorContainer,
@@ -70,7 +70,7 @@ class _RetakeCoursesConfirmButtonState extends State<RetakeCoursesConfirmButton>
         builder: (_, selectedCoursesList, __) {
           final isEnabled = selectedCoursesList.isNotEmpty && !_isLoading;
           final buttonText = selectedCoursesList.isEmpty
-              ? 'Select courses to retake'
+              ? ' اختر المقررات'
               : 'اعادة ${selectedCoursesList.length} مقررات${selectedCoursesList.length == 1 ? '' : ''}';
 
           return SizedBox(

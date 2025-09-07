@@ -48,7 +48,8 @@ class _RemindersListViewState extends State<RemindersListView>
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<RemindersCubit>()..loadReminders(courseId: widget.courseId),
+      create: (context) =>
+          sl<RemindersCubit>()..loadReminders(courseId: widget.courseId),
       child: Scaffold(
         appBar: _buildAppBar(context),
         body: FadeTransition(
@@ -76,7 +77,7 @@ class _RemindersListViewState extends State<RemindersListView>
 
     return AppBar(
       title: Text(
-        widget.courseName != null 
+        widget.courseName != null
             ? 'تذكيرات ${widget.courseName}'
             : 'جميع التذكيرات',
         style: theme.textTheme.titleLarge?.copyWith(
@@ -239,7 +240,9 @@ class _RemindersListViewState extends State<RemindersListView>
             ElevatedButton.icon(
               onPressed: () {
                 HapticFeedback.lightImpact();
-                context.read<RemindersCubit>().loadReminders(courseId: widget.courseId);
+                context
+                    .read<RemindersCubit>()
+                    .loadReminders(courseId: widget.courseId);
               },
               icon: const Icon(Icons.refresh),
               label: const Text('إعادة المحاولة'),
@@ -276,9 +279,9 @@ class _RemindersListViewState extends State<RemindersListView>
             onPressed: () {
               Navigator.of(dialogContext).pop();
               context.read<RemindersCubit>().cancelReminder(
-                reminderId,
-                courseId: widget.courseId,
-              );
+                    reminderId,
+                    courseId: widget.courseId,
+                  );
               HapticFeedback.lightImpact();
             },
             style: ElevatedButton.styleFrom(
@@ -306,23 +309,11 @@ class _ReminderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: colorScheme.surface,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: colorScheme.outline.withOpacity(0.2),
-          width: 1,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
+        color: colorScheme.primaryContainer.withValues(alpha: 0.5),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -417,7 +408,7 @@ class _ReminderCard extends StatelessWidget {
   String _formatDays(List<int> days) {
     const dayNames = [
       'الإثنين',
-      'الثلاثاء', 
+      'الثلاثاء',
       'الأربعاء',
       'الخميس',
       'الجمعة',

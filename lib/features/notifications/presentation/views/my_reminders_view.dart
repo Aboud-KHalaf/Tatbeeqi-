@@ -38,7 +38,7 @@ class _MyRemindersViewState extends State<MyRemindersView> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    final colorScheme = theme.colorScheme;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -72,13 +72,15 @@ class _MyRemindersViewState extends State<MyRemindersView> {
                 final reminder = reminders[index];
 
                 return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  color: reminder.isActive
-                      ? theme.colorScheme.surface
-                      : theme.colorScheme.surfaceVariant,
-                  elevation: 2,
+      margin: const EdgeInsets.only(bottom: 12),
+      elevation: 0,
+      color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: colorScheme.outline.withValues(alpha: 0.1),
+        ),
+      ),
                   child: ListTile(
                     contentPadding: const EdgeInsets.all(16),
                     leading: Icon(

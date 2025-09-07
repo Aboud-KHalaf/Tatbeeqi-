@@ -1412,31 +1412,31 @@ class AppLocalizationsAr extends AppLocalizations {
   String get aboutAppDescription => 'مرحبًا بك في تطبيق تطبيقي، منصتك الجامعية التفاعلية المصممة خصيصًا لدعم الطلبة في رحلتهم التعليمية. يهدف التطبيق إلى الجمع بين المحتوى الأكاديمي والمجتمع الطلابي في مكان واحد متكامل، بحيث لا يقتصر دور الطالب على التلقّي فقط، بل يمتد ليصبح مساهمًا فاعلًا في صناعة المعرفة.\n\nمن خلال تطبيقي يمكنك الوصول بسهولة إلى:\n- دروس مصغّرة متعددة الوسائط (نصوص، فيديو، صوت، PDF).\n- مساعد ذكاء اصطناعي للتلخيص وصياغة الملاحظات والإجابة على الأسئلة.\n- مجتمع تفاعلي لمشاركة الأفكار والتعليقات وبناء بيئة تعليمية مشتركة.\n- أدوات تنظيمية مثل إدارة الملاحظات، تتبّع التقدّم، والتذكيرات الذكية.\n\nنحن نؤمن أن التعلم الفعّال لا يحدث فقط في قاعة المحاضرات، بل عبر التجربة والمشاركة والتطبيق العملي. لذلك صُمم تطبيقي ليكون جسرًا بين أساليب التدريس التقليدية واحتياجات الجيل الرقمي.\n\nرسالتنا هي الانتقال بالتعليم من مرحلة التلقي السلبي إلى مرحلة الإسهام الفاعل، بحيث يكون كل طالب قادرًا على المشاركة في إنتاج المعرفة وتبادل الخبرات.\n\nتطبيقي ليس مجرد تطبيق، بل هو خطوة نحو بيئة تعلم رقمية متكاملة، تدعمك اليوم وتفتح لك آفاقًا واسعة للغد.';
 
   @override
-  String get addReport => 'Add Report';
+  String get addReport => 'اضافة بلاغ';
 
   @override
-  String get reportSubmitted => 'Report submitted successfully';
+  String get reportSubmitted => 'تم إرسال البلاغ بنجاح';
 
   @override
-  String get noReportsYet => 'No Reports Yet';
+  String get noReportsYet => 'لا يوجد بلاغات';
 
   @override
-  String get noReportsDescription => 'You haven\'t submitted any reports yet. Tap the button below to create your first report.';
+  String get noReportsDescription => 'لم تقم بعد بإرسال أي بلاغات. اضغط على زر التسجيل أدناه لإرسال أول بلاغ.';
 
   @override
-  String get createFirstReport => 'Create First Report';
+  String get createFirstReport => 'إنشاء أول بلاغ';
 
   @override
   String get errorLoadingReports => 'Error Loading Reports';
 
   @override
-  String get retry => 'Retry';
+  String get retry => 'إعادة المحاولة';
 
   @override
-  String get submitReport => 'Submit Report';
+  String get submitReport => 'إرسال';
 
   @override
-  String get reportType => 'Report Type';
+  String get reportType => 'نوع البلاغ';
 
   @override
   String get postId => 'Post ID';

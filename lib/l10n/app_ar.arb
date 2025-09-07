@@ -852,6 +852,16 @@
   "reportSuccessMessage": "شكرًا لمساعدتنا في الحفاظ على مجتمع آمن. سنراجع بلاغك قريبًا.",
   "reportError": "فشل في إرسال البلاغ",
   "reportErrorMessage": "حدث خطأ أثناء إرسال بلاغك. يرجى المحاولة مرة أخرى.",
-  "close": "إغلاق"
+  "close": "إغلاق",
+  
+  "addReport": "اضافة بلاغ",
+  "reportSubmitted": "تم إرسال البلاغ بنجاح",
+  "noReportsYet": "لا يوجد بلاغات",
+  "noReportsDescription": "لم تقم بعد بإرسال أي بلاغات. اضغط على زر التسجيل أدناه لإرسال أول بلاغ.",
+  "createFirstReport": "إنشاء أول بلاغ",
+  "errorLoadingReports": "Error Loading Reports",
+  "retry": "إعادة المحاولة",
+  "submitReport": "إرسال",
+  "reportType": "نوع البلاغ"
 
 }

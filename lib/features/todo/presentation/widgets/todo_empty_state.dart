@@ -13,13 +13,6 @@ class TodoEmptyState extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            'assets/images/coding.png',
-            width: 200,
-            height: 200,
-            fit: BoxFit.contain,
-          ),
-          const SizedBox(height: 24.0),
           Text(
             l10n.todoNoTasks,
             style: theme.textTheme.headlineSmall?.copyWith(

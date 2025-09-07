@@ -25,32 +25,34 @@ class CourseLocalDataSourceImpl implements CourseLocalDataSource {
 
   CourseLocalDataSourceImpl({required this.databaseService});
 
-  @override
-  Future<void> cacheCourses(
-      {required List<CourseModel> courses,
-      required int studyYear,
-      required int departmentId}) async {
-    try {
-      final db = await databaseService.database;
-      await db.transaction((txn) async {
-        // Clear old courses for this study year before caching new ones
-        await txn.delete(
+@override
+Future<void> cacheCourses({
+  required List<CourseModel> courses,
+  required int studyYear,
+  required int departmentId,
+}) async {
+  try {
+    final db = await databaseService.database;
+    await db.transaction((txn) async {
+      // ⚡️ فقط احذف الكورسات الأصلية (ليست semester = 3)
+      await txn.delete(
+        coursesTableName,
+        where: '$coursesColStudyYear = ? AND $coursesColDepartmentId = ? AND $coursesColSemester != ?',
+        whereArgs: [studyYear, departmentId, 3],
+      );
+
+      for (final course in courses) {
+        await txn.insert(
           coursesTableName,
-          where: '$coursesColStudyYear = ? AND $coursesColDepartmentId = ?',
-          whereArgs: [studyYear, departmentId],
+          course.toJson(),
+          conflictAlgorithm: ConflictAlgorithm.replace,
         );
-        for (final course in courses) {
-          await txn.insert(
-            coursesTableName,
-            course.toJson(),
-            conflictAlgorithm: ConflictAlgorithm.replace,
-          );
-        }
-      });
-    } catch (e) {
-      throw CacheException('Failed to cache courses: ${e.toString()}');
-    }
+      }
+    });
+  } catch (e) {
+    throw CacheException('Failed to cache courses: ${e.toString()}');
   }
+}
 
   @override
   Future<List<CourseModel>> getCoursesByStudyYearAndDepartmentId(

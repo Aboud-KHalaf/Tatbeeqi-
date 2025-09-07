@@ -20,44 +20,55 @@ class CourseRepositoryImpl implements CourseRepository {
   });
 
   @override
-  Future<Either<Failure, List<Course>>> getCoursesByStudyYearAndDepartmentId(
-      {required int studyYear, required int departmentId}) async {
-    try {
-      if (await networkInfo.isConnected()) {
+Future<Either<Failure, List<Course>>> getCoursesByStudyYearAndDepartmentId({
+  required int studyYear,
+  required int departmentId,
+}) async {
+  try {
+    // 1. Always try to load from local storage first
+    final hasLocalData =
+        await localDataSource.hasCoursesForStudyYearAndDepartmentId(
+            studyYear: studyYear, departmentId: departmentId);
+
+    List<Course> localCourses = [];
+    if (hasLocalData) {
+      localCourses =
+          await localDataSource.getCoursesByStudyYearAndDepartmentId(
+              studyYear: studyYear, departmentId: departmentId);
+    }
+
+    // 2. If internet is available, update local storage in background
+    if (await networkInfo.isConnected()) {
+      try {
         final remoteCourseModels =
             await remoteDataSource.getCoursesByStudyYearAndDepartmentId(
                 studyYear: studyYear, departmentId: departmentId);
 
-        // Cache the fetched data
+        // Update cache without blocking local return
         await localDataSource.cacheCourses(
-            courses: remoteCourseModels,
-            studyYear: studyYear,
-            departmentId: departmentId);
-
-        return Right(remoteCourseModels.cast<Course>());
-      } else {
-        final hasLocalData =
-            await localDataSource.hasCoursesForStudyYearAndDepartmentId(
-                studyYear: studyYear, departmentId: departmentId);
-        if (hasLocalData) {
-          final localCourses =
-              await localDataSource.getCoursesByStudyYearAndDepartmentId(
-                  studyYear: studyYear, departmentId: departmentId);
-          if (localCourses.isNotEmpty) {
-            return Right(localCourses.cast<Course>());
-          }
-        }
-        return const Left(ServerFailure("no interent connection"));
+          courses: remoteCourseModels,
+          studyYear: studyYear,
+          departmentId: departmentId,
+        );
+      } catch (_) {
+        // Ignore remote errors since local data is priority
       }
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
-    } on CacheException catch (e) {
-      return Left(CacheFailure(e.message));
-    } catch (e) {
-      return Left(
-          ServerFailure('An unexpected error occurred: ${e.toString()}'));
     }
+
+    // 3. Return local data if available, otherwise error
+    if (localCourses.isNotEmpty) {
+      return Right(localCourses.cast<Course>());
+    } else {
+      return const Left(CacheFailure("No local data available"));
+    }
+  } on CacheException catch (e) {
+    return Left(CacheFailure(e.message));
+  } catch (e) {
+    return Left(
+        ServerFailure('An unexpected error occurred: ${e.toString()}'));
   }
+}
+
 
   @override
   Future<Either<Failure, List<Course>>> getAllCoursesForReatake(

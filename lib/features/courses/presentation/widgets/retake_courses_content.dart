@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tatbeeqi/core/widgets/app_error.dart';
+import 'package:tatbeeqi/core/widgets/app_loading.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cubit/retake_courses_cubit.dart';
 import 'retake_course_card.dart'; // Import the new card widget
@@ -31,77 +33,11 @@ class _RetakeCoursesContentState extends State<RetakeCoursesContent> {
     return BlocBuilder<RetakeCoursesCubit, RetakeCoursesState>(
       builder: (context, state) {
         if (state is CoursesRetakeLoading) {
-          return SizedBox(
-            height: 300,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(
-                    color: theme.colorScheme.primary,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Loading courses...',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
+          return const AppLoading();
         }
 
         if (state is CoursesRetakeError) {
-          return SizedBox(
-            height: 300,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: theme.colorScheme.errorContainer
-                          .withValues(alpha: 0.1),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.error_outline_rounded,
-                      color: theme.colorScheme.error,
-                      size: 32,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Something went wrong',
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      color: theme.colorScheme.onSurface,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    state.message,
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: theme.colorScheme.onSurfaceVariant,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
-                  FilledButton.tonal(
-                    onPressed: () {
-                      // Note: This would need proper studyYear and departmentId parameters
-                      // For now, we'll just pop the dialog since we can't retry without proper context
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Close'),
-                  ),
-                ],
-              ),
-            ),
-          );
+          return const AppError();
         }
 
         if (state is CoursesRetakeLoaded) {
@@ -128,19 +64,11 @@ class _RetakeCoursesContentState extends State<RetakeCoursesContent> {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      'No courses available',
+                      'لا يوجد مقررات متاحة حالياً',
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: theme.colorScheme.onSurface,
                         fontWeight: FontWeight.w600,
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'There are no courses available for retake at this time.',
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
@@ -158,7 +86,7 @@ class _RetakeCoursesContentState extends State<RetakeCoursesContent> {
             children: [
               SearchBar(
                 controller: _searchController,
-                hintText: 'Search courses...',
+                hintText: 'بحث عن مقررات...',
                 leading: const Icon(Icons.search_rounded),
                 trailing: _searchQuery.isNotEmpty
                     ? [
