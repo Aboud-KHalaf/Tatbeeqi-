@@ -38,13 +38,13 @@ class _NotesViewState extends State<NotesView> {
             return const Center(child: CircularProgressIndicator());
           } else if (state is NotesLoaded) {
             if (state.notes.isEmpty) {
-              return const Center(child: Text('No notes yet. Add one!'));
+              return const Center(child: Text('لا بوجد ملاحظات محفوظة بعد'));
             }
             return NotesList(notes: state.notes);
           } else if (state is NotesError) {
-            return Center(child: Text('Error: ${state.message}'));
+            return Center(child: Text('خطا: ${state.message}'));
           } else {
-            return const Center(child: Text('Welcome to Notes!'));
+            return const Center(child: Text('اهلا'));
           }
         },
       ),

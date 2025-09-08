@@ -90,7 +90,7 @@ class _AddOrUpdateNoteViewState extends State<AddOrUpdateNoteView> {
       backgroundColor: currentNoteColors[_selectedColorIndex],
       appBar: AppBar(
         backgroundColor: currentNoteColors[_selectedColorIndex],
-        title: Text(isNewNote ? 'New Note' : 'Edit Note'),
+        title: Text(isNewNote ? 'ملاحظة جديدة' : 'تعديل'),
         actions: [
           IconButton(
             icon: Icon(_isPreview ? Icons.visibility_off : Icons.visibility),
@@ -159,7 +159,6 @@ class _AddOrUpdateNoteViewState extends State<AddOrUpdateNoteView> {
                       )
                     else
                       TextField(
-                        
                         controller: _contentController,
                         decoration: const InputDecoration(
                           fillColor: Colors.transparent,
@@ -179,8 +178,11 @@ class _AddOrUpdateNoteViewState extends State<AddOrUpdateNoteView> {
                             color: colorScheme.primaryContainer,
                           ),
                           child: Text(
-                            'Last edited: ${DateFormat.yMMMd().add_jm().format(widget.note!.lastModified)}',
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            'اخر تعديل: ${DateFormat.yMMMd().add_jm().format(widget.note!.lastModified)}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
                                   color: Theme.of(context).colorScheme.outline,
                                 ),
                           ),

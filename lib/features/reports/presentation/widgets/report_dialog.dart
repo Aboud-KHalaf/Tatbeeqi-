@@ -34,12 +34,12 @@ class _ReportDialogState extends State<ReportDialog> {
   void initState() {
     super.initState();
     _selectedReportType = widget.initialReportType ?? ReportType.post;
-    
+
     if (widget.postId != null) {
       _postIdController.text = widget.postId!;
       _selectedReportType = ReportType.post;
     }
-    
+
     if (widget.lessonId != null) {
       _lessonIdController.text = widget.lessonId.toString();
       _selectedReportType = ReportType.lesson;
@@ -205,7 +205,7 @@ class _ReportDialogState extends State<ReportDialog> {
                       ),
                     ),
                   )
-                : Text(l10n.submit),
+                : Text(l10n.submitReport),
           ),
         ],
       ),
@@ -252,19 +252,19 @@ class _ReportDialogState extends State<ReportDialog> {
       _isSubmitting = true;
     });
 
-    final String? postId = _selectedReportType == ReportType.post 
+    final String? postId = _selectedReportType == ReportType.post
         ? _postIdController.text.trim()
         : null;
-    
-    final int? lessonId = _selectedReportType == ReportType.lesson 
+
+    final int? lessonId = _selectedReportType == ReportType.lesson
         ? int.tryParse(_lessonIdController.text.trim())
         : null;
 
     context.read<ReportsCubit>().addReport(
-      reportType: _selectedReportType,
-      postId: postId,
-      lessonId: lessonId,
-      reason: _reasonController.text.trim(),
-    );
+          reportType: _selectedReportType,
+          postId: postId,
+          lessonId: lessonId,
+          reason: _reasonController.text.trim(),
+        );
   }
 }

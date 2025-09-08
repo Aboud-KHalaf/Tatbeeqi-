@@ -56,7 +56,9 @@ class _CoursesViewState extends State<CoursesView>
       body: BlocBuilder<FetchCoursesCubit, FetchCoursesState>(
         builder: (context, state) {
           if (state is CoursesError) {
-            return const AppError();
+            return AppError(
+                onAction: () =>
+                    context.read<FetchCoursesCubit>()..fetchCourses());
           } else if (state is CoursesLoaded) {
             return _buildCoursesContent(state.courseEntities, isTablet);
           } else {
