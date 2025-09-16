@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:tatbeeqi/core/error/exceptions.dart';
 import 'package:tatbeeqi/core/services/database/database_service.dart';
+import 'package:tatbeeqi/core/services/database/tables/cached_news_table.dart';
 import 'package:tatbeeqi/features/news/data/models/news_item_model.dart';
 
 abstract class NewsLocalDataSource {
@@ -19,7 +20,7 @@ class NewsLocalDataSourceImpl implements NewsLocalDataSource {
       final db = await dbService.database;
       await db.transaction((txn) async {
         await txn.delete(cachedNewsTableName);
-        
+
         final batch = txn.batch();
         for (final newsItem in news) {
           print(newsItem.title);

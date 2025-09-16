@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:tatbeeqi/core/error/exceptions.dart';
 import 'package:tatbeeqi/core/services/database/database_service.dart';
+import 'package:tatbeeqi/core/services/database/tables/courses_table.dart';
 import 'package:tatbeeqi/features/courses/data/models/course_data_model.dart';
 
 abstract class CourseLocalDataSource {
@@ -25,34 +26,35 @@ class CourseLocalDataSourceImpl implements CourseLocalDataSource {
 
   CourseLocalDataSourceImpl({required this.databaseService});
 
-@override
-Future<void> cacheCourses({
-  required List<CourseModel> courses,
-  required int studyYear,
-  required int departmentId,
-}) async {
-  try {
-    final db = await databaseService.database;
-    await db.transaction((txn) async {
-      // ⚡️ فقط احذف الكورسات الأصلية (ليست semester = 3)
-      await txn.delete(
-        coursesTableName,
-        where: '$coursesColStudyYear = ? AND $coursesColDepartmentId = ? AND $coursesColSemester != ?',
-        whereArgs: [studyYear, departmentId, 3],
-      );
-
-      for (final course in courses) {
-        await txn.insert(
+  @override
+  Future<void> cacheCourses({
+    required List<CourseModel> courses,
+    required int studyYear,
+    required int departmentId,
+  }) async {
+    try {
+      final db = await databaseService.database;
+      await db.transaction((txn) async {
+        // ⚡️ فقط احذف الكورسات الأصلية (ليست semester = 3)
+        await txn.delete(
           coursesTableName,
-          course.toJson(),
-          conflictAlgorithm: ConflictAlgorithm.replace,
+          where:
+              '$coursesColStudyYear = ? AND $coursesColDepartmentId = ? AND $coursesColSemester != ?',
+          whereArgs: [studyYear, departmentId, 3],
         );
-      }
-    });
-  } catch (e) {
-    throw CacheException('Failed to cache courses: ${e.toString()}');
+
+        for (final course in courses) {
+          await txn.insert(
+            coursesTableName,
+            course.toJson(),
+            conflictAlgorithm: ConflictAlgorithm.replace,
+          );
+        }
+      });
+    } catch (e) {
+      throw CacheException('Failed to cache courses: ${e.toString()}');
+    }
   }
-}
 
   @override
   Future<List<CourseModel>> getCoursesByStudyYearAndDepartmentId(

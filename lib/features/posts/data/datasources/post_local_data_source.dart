@@ -2,6 +2,7 @@ import 'package:tatbeeqi/features/posts/data/models/post_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tatbeeqi/core/error/exceptions.dart';
 import 'package:tatbeeqi/core/services/database/database_service.dart';
+import 'package:tatbeeqi/core/services/database/tables/cached_posts_table.dart';
 
 abstract class PostLocalDataSource {
   Future<void> cachePosts(List<PostModel> posts); // keep ≤10 newest

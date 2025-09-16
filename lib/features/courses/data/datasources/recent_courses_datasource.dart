@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:tatbeeqi/core/services/database/database_service.dart';
+import 'package:tatbeeqi/core/services/database/tables/recent_courses_table.dart';
 
 abstract class RecentCoursesDataSource {
   Future<void> upsertVisit(String userId, int courseId, int lastVisit);

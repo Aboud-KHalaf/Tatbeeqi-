@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tatbeeqi/core/services/database/database_service.dart';
+import 'package:tatbeeqi/core/services/database/tables/notifications_table.dart';
 import 'package:tatbeeqi/core/utils/app_logger.dart';
 import 'package:tatbeeqi/features/notifications/data/models/app_notification_model.dart';
 import 'package:tatbeeqi/features/notifications/data/models/reminder_model.dart';
@@ -22,7 +23,7 @@ abstract class NotificationsLocalDatasource {
 
   ///
   Future<int> deleteNotification({required int notificationId});
-  
+
   // Reminder methods
   Future<void> scheduleReminder(Reminder reminder);
   Future<void> cancelReminder(String reminderId);
@@ -120,7 +121,7 @@ class NotificationsLocalDatasourceImplements
   Future<void> scheduleReminder(Reminder reminder) async {
     final Database db = await _dbService.database;
     final model = ReminderModel.fromEntity(reminder);
-    
+
     try {
       // Save reminder to database
       await db.insert(
@@ -128,12 +129,12 @@ class NotificationsLocalDatasourceImplements
         model.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
-      
+
       // Schedule local notifications for each day
-      
+
       for (int day in reminder.days) {
         final notificationId = _generateNotificationId(reminder.id, day);
-        
+
         await _localNotificationsPlugin.zonedSchedule(
           notificationId,
           reminder.title,
@@ -166,7 +167,7 @@ class NotificationsLocalDatasourceImplements
   @override
   Future<void> cancelReminder(String reminderId) async {
     final Database db = await _dbService.database;
-    
+
     try {
       // Get reminder to cancel all its notifications
       final reminderData = await db.query(
@@ -174,17 +175,17 @@ class NotificationsLocalDatasourceImplements
         where: 'id = ?',
         whereArgs: [reminderId],
       );
-      
+
       if (reminderData.isNotEmpty) {
         final reminder = ReminderModel.fromJson(reminderData.first);
-        
+
         // Cancel all scheduled notifications for this reminder
         for (int day in reminder.days) {
           final notificationId = _generateNotificationId(reminderId, day);
           await _localNotificationsPlugin.cancel(notificationId);
         }
       }
-      
+
       // Delete from database
       await db.delete(
         'reminders',
@@ -200,10 +201,10 @@ class NotificationsLocalDatasourceImplements
   @override
   Future<List<Reminder>> getReminders({String? courseId}) async {
     final Database db = await _dbService.database;
-    
+
     try {
       final List<Map<String, dynamic>> rows;
-      
+
       if (courseId != null) {
         rows = await db.query(
           'reminders',
@@ -217,7 +218,7 @@ class NotificationsLocalDatasourceImplements
           orderBy: 'createdAt DESC',
         );
       }
-      
+
       return rows.map((row) => ReminderModel.fromJson(row)).toList();
     } catch (e) {
       AppLogger.error('getReminders error: $e');
@@ -240,18 +241,19 @@ class NotificationsLocalDatasourceImplements
 
   tz.TZDateTime _nextInstanceOfWeekday(int weekday, int hour, int minute) {
     final now = tz.TZDateTime.now(tz.local);
-    var scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
-    
+    var scheduledDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
+
     // Adjust weekday (1-7 Monday to Sunday) to DateTime weekday (1-7 Monday to Sunday)
     while (scheduledDate.weekday != weekday) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
-    
+
     // If the scheduled time has passed today, schedule for next week
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 7));
     }
-    
+
     return scheduledDate;
   }
 }

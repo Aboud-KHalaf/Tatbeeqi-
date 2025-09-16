@@ -1,4 +1,4 @@
-import 'package:tatbeeqi/core/services/database/database_service.dart';
+import 'package:tatbeeqi/core/services/database/tables/cached_news_table.dart';
 import 'package:tatbeeqi/features/news/domain/entities/news_item_entity.dart';
 
 class NewsItemModel extends NewsItemEntity {
@@ -38,17 +38,17 @@ class NewsItemModel extends NewsItemEntity {
       'category': category,
     };
   }
-  
+
   factory NewsItemModel.fromDbMap(Map<String, dynamic> map) {
     return NewsItemModel(
       id: map[cachedNewsColId] as String,
       title: map[cachedNewsColTitle] as String,
-      description: map[cachedNewsColDescription] as String,  
+      description: map[cachedNewsColDescription] as String,
       body: map[cachedNewsColContent] as String,
       date: DateTime.parse(map[cachedNewsColPublicationDate] as String),
       imageUrl: map[cachedNewsColImageUrl] as String? ?? '',
       category: map[cachedNewsColCategory] as String? ?? '',
-     );
+    );
   }
 
   Map<String, dynamic> toDbMap() {
@@ -64,15 +64,15 @@ class NewsItemModel extends NewsItemEntity {
     };
   }
 
-    factory NewsItemModel.fromEntity(NewsItemEntity entity) {
+  factory NewsItemModel.fromEntity(NewsItemEntity entity) {
     return NewsItemModel(
-        id: entity.id,
-        title: entity.title,
-        description: entity.description,
-        body: entity.body,
-        date: entity.date,
-        imageUrl: entity.imageUrl,
-        category: entity.category,
-         );
+      id: entity.id,
+      title: entity.title,
+      description: entity.description,
+      body: entity.body,
+      date: entity.date,
+      imageUrl: entity.imageUrl,
+      category: entity.category,
+    );
   }
 }
