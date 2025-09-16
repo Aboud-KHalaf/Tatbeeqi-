@@ -9,6 +9,6 @@ class InitializeLocalNotificationsUsecase {
   InitializeLocalNotificationsUsecase({required this.repository});
 
   Future<Either<Failure, Unit>> call() async {
-    return await repository.initializeLocalNotification();
+    return await repository.initializeLocalNotifications();
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_cubit.dart';
-import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_state.dart';
- 
+import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_cubit/reminders_cubit.dart';
+import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_cubit/reminders_state.dart';
+
 class MyRemindersView extends StatefulWidget {
   const MyRemindersView({super.key});
 
@@ -72,15 +72,16 @@ class _MyRemindersViewState extends State<MyRemindersView> {
                 final reminder = reminders[index];
 
                 return Card(
-      margin: const EdgeInsets.only(bottom: 12),
-      elevation: 0,
-      color: colorScheme.surfaceContainerHighest.withValues(alpha: 0.3),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: BorderSide(
-          color: colorScheme.outline.withValues(alpha: 0.1),
-        ),
-      ),
+                  margin: const EdgeInsets.only(bottom: 12),
+                  elevation: 0,
+                  color: colorScheme.surfaceContainerHighest
+                      .withValues(alpha: 0.3),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(
+                      color: colorScheme.outline.withValues(alpha: 0.1),
+                    ),
+                  ),
                   child: ListTile(
                     contentPadding: const EdgeInsets.all(16),
                     leading: Icon(

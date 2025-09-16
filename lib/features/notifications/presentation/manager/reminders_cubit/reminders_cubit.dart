@@ -3,7 +3,7 @@ import 'package:tatbeeqi/features/notifications/domain/entities/reminder.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/cancel_reminder_use_case.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/get_reminders_use_case.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/schedule_reminder_use_case.dart';
-import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_state.dart';
+import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_cubit/reminders_state.dart';
 
 class RemindersCubit extends Cubit<RemindersState> {
   final ScheduleReminderUseCase scheduleReminderUseCase;

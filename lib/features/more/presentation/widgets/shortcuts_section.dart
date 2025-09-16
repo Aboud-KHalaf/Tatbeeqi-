@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/di/service_locator.dart';
-import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_cubit.dart';
+import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_cubit/reminders_cubit.dart';
 import 'package:tatbeeqi/features/notifications/presentation/views/my_reminders_view.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/my_posts/my_posts_cubit.dart';
 import 'package:tatbeeqi/features/posts/presentation/views/my_posts_view.dart';

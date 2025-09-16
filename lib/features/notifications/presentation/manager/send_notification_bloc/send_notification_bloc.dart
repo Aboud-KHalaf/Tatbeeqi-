@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/features/notifications/domain/entities/app_notification.dart';
-import 'package:tatbeeqi/features/notifications/domain/usecases/send_notification_by_topics_usecase.dart';
-import 'package:tatbeeqi/features/notifications/domain/usecases/send_notification_by_users_usecase.dart';
+import 'package:tatbeeqi/features/notifications/domain/usecases/send_notification_to_topics_usecase.dart';
+import 'package:tatbeeqi/features/notifications/domain/usecases/send_notification_to_users_usecase.dart';
 
 part 'send_notification_event.dart';
 part 'send_notification_state.dart';

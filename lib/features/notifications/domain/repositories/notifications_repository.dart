@@ -6,15 +6,29 @@ import 'package:tatbeeqi/features/notifications/domain/entities/app_notification
 import 'package:tatbeeqi/features/notifications/domain/entities/reminder.dart';
 
 abstract class NotificationsRepository {
-  Future<Either<Failure, Unit>> initializeLocalNotification();
-  Future<Either<Failure, Unit>> initializeFirebaseNotification();
+  // 1️⃣ Initialization / Setup
+  Future<Either<Failure, Unit>> initializeLocalNotifications();
+  Future<Either<Failure, Unit>> initializeFirebaseNotifications();
+  Future<Either<Failure, Unit>> createNotificationChannel({
+    required AndroidNotificationChannel channel,
+  });
+
+  // 2️⃣ Device Token Management
   Future<Either<Failure, String>> getDeviceToken();
   Future<Either<Failure, String>> refreshDeviceToken();
   Future<Either<Failure, Unit>> deleteDeviceToken();
+  Future<Either<Failure, Unit>> registerDeviceToken({
+    required String deviceToken,
+    required String platform,
+  });
+
+  // 3️⃣ Topic Subscription
+  Future<Either<Failure, Unit>> subscribeToTopic({required String topic});
+  Future<Either<Failure, Unit>> unsubscribeFromTopic({required String topic});
+
+  // 4️⃣ Notifications Management
   Future<Either<Failure, List<AppNotification>>> getNotifications();
   Future<Either<Failure, Unit>> clearNotifications();
-  Future<Either<Failure, Unit>> subscribeToTopic({required String topic});
-  Future<Either<Failure, Unit>> unsubscribeToTopic({required String topic});
   Future<Either<Failure, Unit>> displayNotification({
     required AppNotification notification,
     bool oneTimeNotification = false,
@@ -22,27 +36,24 @@ abstract class NotificationsRepository {
   });
   Future<Either<Failure, Unit>> deleteNotification(
       {required int notificationId});
-  Future<Either<Failure, Unit>> displayFirebaseNotification(
-      {required RemoteMessage message});
   Future<Either<Failure, Unit>> cancelNotification({required int id});
-  Future<Either<Failure, Unit>> createNotificationsChannel(
-      {required AndroidNotificationChannel channel});
-  Future<Either<Failure, Unit>> registerDeviceToken({
-    required String deviceToken,
-    required String platform,
+  Future<Either<Failure, Unit>> displayFirebaseNotification({
+    required RemoteMessage message,
   });
-  Future<Either<Failure, Unit>> sendNotificationByTopics({
+
+  // 5️⃣ Sending Notifications
+  Future<Either<Failure, Unit>> sendNotificationToTopics({
     required AppNotification notification,
     required List<String> topics,
   });
-  Future<Either<Failure, Unit>> sendNotificationByUsers({
+  Future<Either<Failure, Unit>> sendNotificationToUsers({
     required AppNotification notification,
     required List<String> userIds,
   });
-  
-  // Reminder methods
+
+  // 6️⃣ Reminders Management
   Future<void> scheduleReminder(Reminder reminder);
   Future<void> cancelReminder(String reminderId);
-  Future<List<Reminder>> getReminders({String? courseId});
   Future<void> updateReminder(Reminder reminder);
+  Future<List<Reminder>> getReminders({String? courseId});
 }

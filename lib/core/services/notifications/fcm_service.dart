@@ -3,13 +3,16 @@ import 'dart:io';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tatbeeqi/core/di/service_locator.dart';
 import 'package:tatbeeqi/core/error/failures.dart';
 import 'package:tatbeeqi/core/utils/app_logger.dart';
-import 'package:tatbeeqi/features/notifications/data/mappers/app_notification_mapper.dart';
 import 'package:tatbeeqi/features/notifications/data/models/app_notification_model.dart';
- import 'package:tatbeeqi/features/notifications/domain/repositories/notifications_repository.dart';
+import 'package:tatbeeqi/features/notifications/domain/repositories/notifications_repository.dart';
+import 'package:tatbeeqi/features/notifications/domain/usecases/display_firebase_notification_usecase.dart';
 import 'package:tatbeeqi/firebase_options.dart';
 
 /// Handles FCM messages when app is in background/terminated
@@ -19,10 +22,20 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  await Supabase.initialize(
+    url: dotenv.env['SUPABASE_URL']!,
+    anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
+  );
+
+  if (!sl.isRegistered<DisplayFirebaseNotificationUsecase>()) {
+    await init();
+  }
+
   final repo = GetIt.instance<NotificationsRepository>();
 
   try {
-    final notification = AppNotificationModel.fromRemoteFCM(message).toEntity;
+    final notification = AppNotificationModel.fromEntity(
+        AppNotificationModel.fromRemoteFCM(message));
     if (notification.isValid()) {
       await repo.displayNotification(
         notification: notification,
@@ -59,7 +72,8 @@ void onData(RemoteMessage message) async {
   final repo = GetIt.instance<NotificationsRepository>();
 
   try {
-    final notification = AppNotificationModel.fromRemoteFCM(message).toEntity;
+    final notification = AppNotificationModel.fromEntity(
+        AppNotificationModel.fromRemoteFCM(message));
     if (notification.isValid()) {
       await repo.displayNotification(
         notification: notification,

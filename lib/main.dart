@@ -22,7 +22,7 @@ import 'package:tatbeeqi/features/localization/presentation/manager/locale_cubit
 import 'package:tatbeeqi/features/news/presentation/manager/news_cubit.dart';
 import 'package:tatbeeqi/features/notes/presentation/bloc/notes_bloc.dart';
 import 'package:tatbeeqi/features/navigation/presentation/manager/navigation_cubit/navigation_cubit.dart';
-import 'package:tatbeeqi/features/notifications/data/handlers/firebase_messaging_handlers.dart';
+import 'package:tatbeeqi/features/notifications/data/notifications/firebase_messaging_handlers.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/initialize_notifications_cubit/initialize_notifications_cubit.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/comments/comments_bloc.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/create_post/create_post_bloc.dart';
@@ -143,7 +143,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (_) => di.sl<GradesCubit>(),
         ),
-      BlocProvider(
+        BlocProvider(
           create: (_) => di.sl<ReportsCubit>(),
         ),
       ],

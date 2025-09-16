@@ -1,30 +1,42 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:timezone/timezone.dart' as tz;
+
 import 'package:tatbeeqi/core/services/database/database_service.dart';
 import 'package:tatbeeqi/core/services/database/tables/notifications_table.dart';
 import 'package:tatbeeqi/core/utils/app_logger.dart';
 import 'package:tatbeeqi/features/notifications/data/models/app_notification_model.dart';
 import 'package:tatbeeqi/features/notifications/data/models/reminder_model.dart';
+import 'package:tatbeeqi/core/services/notifications/local_notifications_service.dart';
+import 'package:tatbeeqi/features/notifications/domain/entities/app_notification.dart';
 import 'package:tatbeeqi/features/notifications/domain/entities/reminder.dart';
-import 'package:timezone/timezone.dart' as tz;
-
-import '../../domain/entities/app_notification.dart';
 
 abstract class NotificationsLocalDatasource {
-  ///
+  // =========================
+  // Local notifications init & controls
+  // =========================
+  Future<Unit> initializeLocalNotifications();
+  Future<Unit> createNotificationChannel(AndroidNotificationChannel channel);
+  Future<Unit> cancelNotification(int id);
+  Future<Unit> showLocalNotification({
+    required AppNotificationModel notification,
+    bool oneTimeNotification,
+    NotificationDetails? details,
+  });
+
+  // =========================
+  // Notifications
+  // =========================
   Future<List<AppNotification>> getNotifications();
-
-  ///
   Future<Unit> clearNotifications();
-
-  ///
   Future<int> insertNotification({required AppNotification notification});
-
-  ///
   Future<int> deleteNotification({required int notificationId});
 
-  // Reminder methods
+  // =========================
+  // Reminders
+  // =========================
   Future<void> scheduleReminder(Reminder reminder);
   Future<void> cancelReminder(String reminderId);
   Future<List<Reminder>> getReminders({String? courseId});
@@ -40,30 +52,76 @@ class NotificationsLocalDatasourceImplements
     this._dbService,
     this._localNotificationsPlugin,
   );
+
+  // =========================
+  // Local notifications init & controls
+  // =========================
+  @override
+  Future<Unit> initializeLocalNotifications() async {
+    await _ensureNotificationPermission();
+    await _createAllNotificationChannels();
+
+    await _localNotificationsPlugin.initialize(
+      AppLocalNotificationsService.settings,
+      onDidReceiveNotificationResponse: (response) {},
+      onDidReceiveBackgroundNotificationResponse: (response) {},
+    );
+
+    AppLogger.info("Local notifications initialized (local datasource).");
+    return unit;
+  }
+
+  @override
+  Future<Unit> createNotificationChannel(
+      AndroidNotificationChannel channel) async {
+    final androidImpl =
+        _localNotificationsPlugin.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+    await androidImpl?.createNotificationChannel(channel);
+    AppLogger.info("Notification channel created (local): ${channel.id}");
+    return unit;
+  }
+
+  @override
+  Future<Unit> cancelNotification(int id) async {
+    await _localNotificationsPlugin.cancel(id);
+    AppLogger.info("Notification canceled (local): $id");
+    return unit;
+  }
+
+  @override
+  Future<Unit> showLocalNotification({
+    required AppNotificationModel notification,
+    bool oneTimeNotification = true,
+    NotificationDetails? details,
+  }) async {
+    if (!notification.isValid()) return unit;
+
+    await _localNotificationsPlugin.show(
+      notification.id.hashCode,
+      notification.title,
+      notification.body,
+      details ?? AppLocalNotificationsService.defaultNotificationsDetails(),
+    );
+
+    AppLogger.info(
+        "Local notification shown (local datasource): ${notification.title}");
+    return unit;
+  }
+
+  // =========================
+  // Notifications methods
+  // =========================
   @override
   Future<int> insertNotification(
       {required AppNotification notification}) async {
-    final Database db = await _dbService.database;
-    final model = AppNotificationModel(
-      id: notification.id,
-      title: notification.title,
-      body: notification.body,
-      imageUrl: notification.imageUrl,
-      html: notification.html,
-      date: notification.date,
-      type: notification.type,
-      targetUserIds: notification.targetUserIds,
-      targetTopics: notification.targetTopics,
-      sentBy: notification.sentBy,
-      createdAt: notification.createdAt,
-      seen: notification.seen,
-    );
-    final map = model.toDatabaseJson();
+    final db = await _dbService.database;
+    final model = AppNotificationModel.fromEntity(notification);
+
     try {
-      // Use conflictAlgorithm replace to avoid duplicates by server id
       return await db.insert(
         notificationsTableName,
-        map,
+        model.toDatabaseJson(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
     } catch (e) {
@@ -74,7 +132,7 @@ class NotificationsLocalDatasourceImplements
 
   @override
   Future<int> deleteNotification({required int notificationId}) async {
-    final Database db = await _dbService.database;
+    final db = await _dbService.database;
     try {
       return await db.delete(
         notificationsTableName,
@@ -89,14 +147,14 @@ class NotificationsLocalDatasourceImplements
 
   @override
   Future<List<AppNotification>> getNotifications() async {
-    final Database db = await _dbService.database;
+    final db = await _dbService.database;
     try {
       final rows = await db.query(
         notificationsTableName,
         orderBy: '$notificationsColDate DESC',
       );
       return rows
-          .map((m) => AppNotificationModel.fromDatabaseJson(m).copyWith())
+          .map((row) => AppNotificationModel.fromDatabaseJson(row).copyWith())
           .toList();
     } catch (e) {
       AppLogger.error('getNotifications error: $e');
@@ -106,7 +164,7 @@ class NotificationsLocalDatasourceImplements
 
   @override
   Future<Unit> clearNotifications() async {
-    final Database db = await _dbService.database;
+    final db = await _dbService.database;
     try {
       await db.delete(notificationsTableName);
       return unit;
@@ -116,14 +174,16 @@ class NotificationsLocalDatasourceImplements
     }
   }
 
-  // Reminder implementations
+  // =========================
+  // Reminders methods
+  // =========================
   @override
   Future<void> scheduleReminder(Reminder reminder) async {
-    final Database db = await _dbService.database;
+    final db = await _dbService.database;
     final model = ReminderModel.fromEntity(reminder);
 
     try {
-      // Save reminder to database
+      // Save reminder to DB
       await db.insert(
         'reminders',
         model.toJson(),
@@ -131,7 +191,6 @@ class NotificationsLocalDatasourceImplements
       );
 
       // Schedule local notifications for each day
-
       for (int day in reminder.days) {
         final notificationId = _generateNotificationId(reminder.id, day);
 
@@ -166,10 +225,8 @@ class NotificationsLocalDatasourceImplements
 
   @override
   Future<void> cancelReminder(String reminderId) async {
-    final Database db = await _dbService.database;
-
+    final db = await _dbService.database;
     try {
-      // Get reminder to cancel all its notifications
       final reminderData = await db.query(
         'reminders',
         where: 'id = ?',
@@ -179,14 +236,13 @@ class NotificationsLocalDatasourceImplements
       if (reminderData.isNotEmpty) {
         final reminder = ReminderModel.fromJson(reminderData.first);
 
-        // Cancel all scheduled notifications for this reminder
         for (int day in reminder.days) {
-          final notificationId = _generateNotificationId(reminderId, day);
-          await _localNotificationsPlugin.cancel(notificationId);
+          await _localNotificationsPlugin.cancel(
+            _generateNotificationId(reminderId, day),
+          );
         }
       }
 
-      // Delete from database
       await db.delete(
         'reminders',
         where: 'id = ?',
@@ -200,24 +256,19 @@ class NotificationsLocalDatasourceImplements
 
   @override
   Future<List<Reminder>> getReminders({String? courseId}) async {
-    final Database db = await _dbService.database;
-
+    final db = await _dbService.database;
     try {
-      final List<Map<String, dynamic>> rows;
-
-      if (courseId != null) {
-        rows = await db.query(
-          'reminders',
-          where: 'courseId = ?',
-          whereArgs: [courseId],
-          orderBy: 'createdAt DESC',
-        );
-      } else {
-        rows = await db.query(
-          'reminders',
-          orderBy: 'createdAt DESC',
-        );
-      }
+      final List<Map<String, dynamic>> rows = courseId != null
+          ? await db.query(
+              'reminders',
+              where: 'courseId = ?',
+              whereArgs: [courseId],
+              orderBy: 'createdAt DESC',
+            )
+          : await db.query(
+              'reminders',
+              orderBy: 'createdAt DESC',
+            );
 
       return rows.map((row) => ReminderModel.fromJson(row)).toList();
     } catch (e) {
@@ -228,13 +279,28 @@ class NotificationsLocalDatasourceImplements
 
   @override
   Future<void> updateReminder(Reminder reminder) async {
-    // Cancel existing reminder first
     await cancelReminder(reminder.id);
-    // Schedule updated reminder
     await scheduleReminder(reminder);
   }
 
+  // =========================
   // Helper methods
+  // =========================
+  Future<void> _ensureNotificationPermission() async {
+    var status = await Permission.notification.status;
+    if (status.isDenied) {
+      await Permission.notification.request();
+    } else if (status.isPermanentlyDenied) {
+      await openAppSettings();
+    }
+  }
+
+  Future<void> _createAllNotificationChannels() async {
+    for (var channel in AppLocalNotificationsService.channels) {
+      await createNotificationChannel(channel);
+    }
+  }
+
   int _generateNotificationId(String reminderId, int day) {
     return '${reminderId.hashCode}$day'.hashCode.abs() % 2147483647;
   }
@@ -244,12 +310,10 @@ class NotificationsLocalDatasourceImplements
     var scheduledDate =
         tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
 
-    // Adjust weekday (1-7 Monday to Sunday) to DateTime weekday (1-7 Monday to Sunday)
     while (scheduledDate.weekday != weekday) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
 
-    // If the scheduled time has passed today, schedule for next week
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 7));
     }

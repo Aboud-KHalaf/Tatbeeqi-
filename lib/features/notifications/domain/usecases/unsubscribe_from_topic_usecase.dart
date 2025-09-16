@@ -9,6 +9,6 @@ class UnsubscribeToTopicUsecase {
   UnsubscribeToTopicUsecase({required this.repository});
 
   Future<Either<Failure, Unit>> call({required String topic}) async {
-    return await repository.unsubscribeToTopic(topic: topic);
+    return await repository.unsubscribeFromTopic(topic: topic);
   }
 }

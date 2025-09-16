@@ -11,10 +11,10 @@ import 'package:tatbeeqi/features/notifications/domain/usecases/get_notification
 import 'package:tatbeeqi/features/notifications/domain/usecases/initialize_firebase_notifications_usecase.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/initialize_local_notifications_usecase.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/register_device_token_usecase.dart';
-import 'package:tatbeeqi/features/notifications/domain/usecases/send_notification_by_topics_usecase.dart';
-import 'package:tatbeeqi/features/notifications/domain/usecases/send_notification_by_users_usecase.dart';
+import 'package:tatbeeqi/features/notifications/domain/usecases/send_notification_to_topics_usecase.dart';
+import 'package:tatbeeqi/features/notifications/domain/usecases/send_notification_to_users_usecase.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/subscribe_to_topic_usecase.dart';
-import 'package:tatbeeqi/features/notifications/domain/usecases/unsubscribe_to_topic_usecase.dart';
+import 'package:tatbeeqi/features/notifications/domain/usecases/unsubscribe_from_topic_usecase.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/schedule_reminder_use_case.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/cancel_reminder_use_case.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/get_reminders_use_case.dart';
@@ -23,7 +23,7 @@ import 'package:tatbeeqi/features/notifications/presentation/manager/initialize_
 import 'package:tatbeeqi/features/notifications/presentation/manager/notification_settings_bloc/notification_settings_bloc.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/notifications_bloc/notifications_bloc.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/send_notification_bloc/send_notification_bloc.dart';
-import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_cubit.dart';
+import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_cubit/reminders_cubit.dart';
 
 void initNotificationDependencies(GetIt sl) {
   // Blocs
@@ -98,8 +98,7 @@ void initNotificationDependencies(GetIt sl) {
 
   sl.registerLazySingleton<NotificationsLocalDatasource>(
       () => NotificationsLocalDatasourceImplements(
-        sl<DatabaseService>(),
-        sl(),
-      ));
+            sl<DatabaseService>(),
+            sl(),
+          ));
 }
-

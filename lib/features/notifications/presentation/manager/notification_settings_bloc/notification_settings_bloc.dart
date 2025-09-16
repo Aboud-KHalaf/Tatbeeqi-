@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/get_device_token_usecase.dart';
 import 'package:tatbeeqi/features/notifications/domain/usecases/subscribe_to_topic_usecase.dart';
-import 'package:tatbeeqi/features/notifications/domain/usecases/unsubscribe_to_topic_usecase.dart';
+import 'package:tatbeeqi/features/notifications/domain/usecases/unsubscribe_from_topic_usecase.dart';
 
 part 'notification_settings_event.dart';
 part 'notification_settings_state.dart';

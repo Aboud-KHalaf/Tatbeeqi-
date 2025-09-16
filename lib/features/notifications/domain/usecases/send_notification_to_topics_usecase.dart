@@ -11,7 +11,7 @@ class SendNotificationByTopicsUsecase {
     required AppNotification notification,
     required List<String> topics,
   }) async {
-    return repository.sendNotificationByTopics(
+    return repository.sendNotificationToTopics(
       notification: notification,
       topics: topics,
     );

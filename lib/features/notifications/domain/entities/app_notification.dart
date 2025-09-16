@@ -1,5 +1,4 @@
 class AppNotification {
-   
   final String id; // uuid
   final String title;
   final String? body;

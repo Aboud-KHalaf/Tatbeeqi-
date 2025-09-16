@@ -12,7 +12,7 @@ class SendNotificationByUsersUsecase {
     required AppNotification notification,
     required List<String> userIds,
   }) async {
-    return repository.sendNotificationByUsers(
+    return repository.sendNotificationToUsers(
       notification: notification,
       userIds: userIds,
     );

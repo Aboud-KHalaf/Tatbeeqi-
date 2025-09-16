@@ -11,6 +11,6 @@ class CreateNotificationsChannelUsecase {
 
   Future<Either<Failure, Unit>> call(
       {required AndroidNotificationChannel channel}) async {
-    return await repository.createNotificationsChannel(channel: channel);
+    return await repository.createNotificationChannel(channel: channel);
   }
 }

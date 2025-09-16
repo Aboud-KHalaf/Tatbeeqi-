@@ -9,6 +9,6 @@ class InitializeFirebaseNotificationsUsecase {
   InitializeFirebaseNotificationsUsecase({required this.repository});
 
   Future<Either<Failure, Unit>> call() async {
-    return await repository.initializeFirebaseNotification();
+    return await repository.initializeFirebaseNotifications();
   }
 }

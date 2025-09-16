@@ -75,4 +75,21 @@ class AppNotificationModel extends AppNotification {
       'seen': seen ? 1 : 0,
     };
   }
+
+  factory AppNotificationModel.fromEntity(AppNotification notification) {
+    return AppNotificationModel(
+      id: notification.id,
+      title: notification.title,
+      body: notification.body,
+      imageUrl: notification.imageUrl,
+      html: notification.html,
+      date: notification.date,
+      type: notification.type,
+      targetUserIds: notification.targetUserIds,
+      targetTopics: notification.targetTopics,
+      sentBy: notification.sentBy,
+      createdAt: notification.createdAt,
+      seen: notification.seen,
+    );
+  }
 }
