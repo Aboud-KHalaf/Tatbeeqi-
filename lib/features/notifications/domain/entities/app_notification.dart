@@ -1,5 +1,5 @@
 class AppNotification {
-  // Supabase schema fields
+   
   final String id; // uuid
   final String title;
   final String? body;
