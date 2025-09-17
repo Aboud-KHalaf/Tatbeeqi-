@@ -36,9 +36,12 @@ import 'package:tatbeeqi/core/observers/recent_courses_observer.dart';
 import 'package:tatbeeqi/core/observers/multi_bloc_observer.dart';
 import 'package:tatbeeqi/core/observers/auth_observer.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:timezone/data/latest.dart';
+import 'package:timezone/timezone.dart';
 import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:tatbeeqi/features/feedbacks/presentation/widgets/feedback_wrapper.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -65,6 +68,9 @@ void main() async {
   ]);
   timeago.setLocaleMessages('ar', timeago.ArMessages());
   timeago.setLocaleMessages('en', timeago.EnMessages());
+  initializeTimeZones();
+  final String localName = await FlutterTimezone.getLocalTimezone();
+  setLocalLocation(getLocation(localName));
   runApp(const MyApp());
 }
 
@@ -77,7 +83,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<InitializeNotificationsCubit>(
           create: (_) => di.sl<InitializeNotificationsCubit>()..initialize(),
-          lazy: false,
+       //   lazy: false,
         ),
         BlocProvider(
           create: (_) => di.sl<LocaleCubit>()..getSavedLocale(),

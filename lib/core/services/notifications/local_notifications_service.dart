@@ -17,9 +17,21 @@ class AppLocalNotificationsService {
     enableLights: false,
   );
 
+  /// Reminders channel
+  static const remindersChannel = AndroidNotificationChannel(
+    "reminders_channel",
+    "Study Reminders",
+    description: "Notifications for study reminders",
+    importance: Importance.high,
+    playSound: true,
+    enableVibration: true,
+    enableLights: true,
+  );
+
   /// default
   static const List<AndroidNotificationChannel> channels = [
     defaultChannel,
+    remindersChannel,
   ];
 
   ///
@@ -77,6 +89,27 @@ class AppLocalNotificationsService {
   }
 
   ///
+  static NotificationDetails remindersNotificationDetails() {
+    return NotificationDetails(
+      android: AndroidNotificationDetails(
+        remindersChannel.id,
+        remindersChannel.name,
+        channelDescription: remindersChannel.description,
+        importance: Importance.high,
+        priority: Priority.high,
+        playSound: true,
+        enableVibration: true,
+        enableLights: true,
+      ),
+      iOS: const DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+      ),
+    );
+  }
+
+  ///
   static NotificationDetails progressNotificationsDetails({
     required int sent,
     required int total,
@@ -106,3 +139,16 @@ class AppLocalNotificationsService {
     );
   }
 }
+
+/// Top-level handlers required by flutter_local_notifications
+/// The background handler MUST be a top-level or static function and marked as an entry-point.
+@pragma('vm:entry-point')
+void notificationTapBackground(NotificationResponse response) {
+  // Handle background notification tap if needed.
+  // Keep minimal work here; you can queue work to run when app resumes.
+}
+
+void notificationTapForeground(NotificationResponse response) {
+  // Handle foreground notification tap if needed.
+}
+

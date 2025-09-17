@@ -3,6 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter/services.dart';
 
 import 'package:tatbeeqi/core/services/database/database_service.dart';
 import 'package:tatbeeqi/core/services/database/tables/notifications_table.dart';
@@ -63,8 +64,8 @@ class NotificationsLocalDatasourceImplements
 
     await _localNotificationsPlugin.initialize(
       AppLocalNotificationsService.settings,
-      onDidReceiveNotificationResponse: (response) {},
-      onDidReceiveBackgroundNotificationResponse: (response) {},
+      onDidReceiveNotificationResponse: notificationTapForeground,
+      onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
     );
 
     AppLogger.info("Local notifications initialized (local datasource).");
@@ -177,8 +178,70 @@ class NotificationsLocalDatasourceImplements
   // =========================
   // Reminders methods
   // =========================
+  // Test method to verify notifications work
+  Future<void> testNotification() async {
+    try {
+      AppLogger.info('=== TESTING NOTIFICATION ===');
+      await _ensureNotificationPermission();
+
+      final testTime = tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5));
+
+      await _localNotificationsPlugin.zonedSchedule(
+        929899, // Test notification ID
+        'Test Notification',
+        'This is a test notification to verify the system works',
+        testTime,
+        AppLocalNotificationsService.remindersNotificationDetails(),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      );
+
+      AppLogger.info('✅ Test notification scheduled for: $testTime');
+
+      // Log pending notifications to verify it is scheduled with the plugin
+      await _logPendingNotifications();
+    } catch (e) {
+      AppLogger.error('❌ Test notification failed: $e');
+    }
+  }
+
+  // Immediate notification to rule out scheduling issues
+  Future<void> showImmediateTestNotification() async {
+    try {
+      AppLogger.info('=== SHOW IMMEDIATE TEST NOTIFICATION ===');
+      await _ensureNotificationPermission();
+      await _localNotificationsPlugin.show(
+        777001,
+        'Immediate Test',
+        'This should appear immediately',
+        AppLocalNotificationsService.remindersNotificationDetails(),
+      );
+      AppLogger.info('✅ Immediate test notification requested');
+    } catch (e) {
+      AppLogger.error('❌ Immediate test notification failed: $e');
+    }
+  }
+
+  // Debug helper to list pending scheduled notifications
+  Future<void> _logPendingNotifications() async {
+    try {
+      final pending = await _localNotificationsPlugin.pendingNotificationRequests();
+      AppLogger.info('📋 Pending notifications count: ${pending.length}');
+      for (final p in pending) {
+        AppLogger.info('• Pending -> id: ${p.id}, title: ${p.title}, body: ${p.body}, payload: ${p.payload}');
+      }
+    } catch (e) {
+      AppLogger.error('❌ Failed to fetch pending notifications: $e');
+    }
+  }
+
   @override
   Future<void> scheduleReminder(Reminder reminder) async {
+    AppLogger.info('=== SCHEDULING REMINDER START ===');
+    AppLogger.info('Reminder ID: ${reminder.id}');
+    AppLogger.info('Title: ${reminder.title}');
+    AppLogger.info('Days: ${reminder.days}');
+    AppLogger.info('Time: ${reminder.hour}:${reminder.minute}');
+
     final db = await _dbService.database;
     final model = ReminderModel.fromEntity(reminder);
 
@@ -189,36 +252,60 @@ class NotificationsLocalDatasourceImplements
         model.toJson(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
+      AppLogger.info('✅ Reminder saved to database');
 
       // Schedule local notifications for each day
       for (int day in reminder.days) {
         final notificationId = _generateNotificationId(reminder.id, day);
+        final scheduledTime =
+            _nextInstanceOfWeekday(day, reminder.hour, reminder.minute);
 
-        await _localNotificationsPlugin.zonedSchedule(
-          notificationId,
-          reminder.title,
-          reminder.body,
-          _nextInstanceOfWeekday(day, reminder.hour, reminder.minute),
-          const NotificationDetails(
-            android: AndroidNotificationDetails(
-              'reminders_channel',
-              'Study Reminders',
-              channelDescription: 'Notifications for study reminders',
-              importance: Importance.high,
-              priority: Priority.high,
-            ),
-            iOS: DarwinNotificationDetails(
-              presentAlert: true,
-              presentBadge: true,
-              presentSound: true,
-            ),
-          ),
-          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-          matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
-        );
+        AppLogger.info('--- Scheduling for day $day ---');
+        AppLogger.info('Notification ID: $notificationId');
+        AppLogger.info('Scheduled time: $scheduledTime');
+        AppLogger.info('Current time: ${tz.TZDateTime.now(tz.local)}');
+
+        try {
+          await _localNotificationsPlugin.zonedSchedule(
+            notificationId,
+            reminder.title,
+            reminder.body,
+            scheduledTime,
+            AppLocalNotificationsService.remindersNotificationDetails(),
+            androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+            matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+          );
+          AppLogger.info('✅ Notification scheduled successfully for day $day');
+        } on PlatformException catch (e) {
+          // Android 12+ may block exact alarms unless user grants permission.
+          if (e.code == 'exact_alarms_not_permitted') {
+            AppLogger.error(
+                'Exact alarms not permitted. Falling back to inexact for notificationId=$notificationId');
+            // Fallback: schedule as inexact so the reminder still works.
+            await _localNotificationsPlugin.zonedSchedule(
+              notificationId,
+              reminder.title,
+              reminder.body,
+              scheduledTime,
+              AppLocalNotificationsService.remindersNotificationDetails(),
+              androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+              matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime,
+            );
+            AppLogger.info('✅ Fallback notification scheduled for day $day');
+          } else {
+            AppLogger.error(
+                '❌ scheduleReminder platform error: ${e.code} ${e.message}');
+            rethrow;
+          }
+        } catch (e) {
+          AppLogger.error(
+              '❌ Unexpected error scheduling notification for day $day: $e');
+          rethrow;
+        }
       }
+      AppLogger.info('=== SCHEDULING REMINDER COMPLETED ===');
     } catch (e) {
-      AppLogger.error('scheduleReminder error: $e');
+      AppLogger.error('❌ scheduleReminder error: $e');
       rethrow;
     }
   }
@@ -287,11 +374,53 @@ class NotificationsLocalDatasourceImplements
   // Helper methods
   // =========================
   Future<void> _ensureNotificationPermission() async {
+    AppLogger.info('Checking notification permissions...');
     var status = await Permission.notification.status;
+    AppLogger.info('Notification permission status: $status');
+
     if (status.isDenied) {
-      await Permission.notification.request();
+      AppLogger.info('Requesting notification permission...');
+      final result = await Permission.notification.request();
+      AppLogger.info('Notification permission request result: $result');
     } else if (status.isPermanentlyDenied) {
+      AppLogger.error(
+          'Notification permission permanently denied, opening settings');
       await openAppSettings();
+    }
+
+    // Check exact alarm permission for Android 12+
+    if (await _isAndroid12OrHigher()) {
+      await _ensureExactAlarmPermission();
+    }
+  }
+
+  Future<bool> _isAndroid12OrHigher() async {
+    try {
+      // This is a simple check - in a real app you might want to use device_info_plus
+      return true; // Assume Android 12+ for safety
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<void> _ensureExactAlarmPermission() async {
+    AppLogger.info('Checking exact alarm permissions...');
+    try {
+      final status = await Permission.scheduleExactAlarm.status;
+      AppLogger.info('Exact alarm permission status: $status');
+
+      if (status.isDenied) {
+        AppLogger.info('Requesting exact alarm permission...');
+        final result = await Permission.scheduleExactAlarm.request();
+        AppLogger.info('Exact alarm permission request result: $result');
+
+        if (result.isDenied || result.isPermanentlyDenied) {
+          AppLogger.error(
+              'Exact alarm permission denied - notifications may not work reliably');
+        }
+      }
+    } catch (e) {
+      AppLogger.error('Error checking exact alarm permission: $e');
     }
   }
 

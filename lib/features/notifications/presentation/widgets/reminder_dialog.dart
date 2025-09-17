@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/di/service_locator.dart';
+import 'package:tatbeeqi/features/notifications/data/datasources/notifications_local_datasource.dart';
 import 'package:tatbeeqi/features/notifications/domain/entities/reminder.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_cubit/reminders_cubit.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_cubit/reminders_state.dart';
@@ -97,6 +98,30 @@ class _ReminderDialogState extends State<ReminderDialog>
     );
 
     context.read<RemindersCubit>().scheduleReminder(reminder);
+  }
+
+  void _testNotification(BuildContext context) async {
+    try {
+      print("testNotification");
+      final datasource = sl<NotificationsLocalDatasource>();
+      if (datasource is NotificationsLocalDatasourceImplements) {
+        print("testNotification");
+        await datasource.testNotification();
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('تم إرسال إشعار تجريبي - سيظهر خلال 10 ثوانٍ'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('خطأ في الإشعار التجريبي: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   @override
@@ -290,7 +315,20 @@ class _ReminderDialogState extends State<ReminderDialog>
                 child: const Text('إلغاء'),
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 8),
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () => _testNotification(context),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text('اختبار'),
+              ),
+            ),
+            const SizedBox(width: 8),
             Expanded(
               child: ElevatedButton(
                 onPressed: isLoading ? null : () => _scheduleReminder(context),
@@ -313,7 +351,7 @@ class _ReminderDialogState extends State<ReminderDialog>
                           ),
                         ),
                       )
-                    : const Text('جدولة التذكير'),
+                    : const Text('جدولة'),
               ),
             ),
           ],
