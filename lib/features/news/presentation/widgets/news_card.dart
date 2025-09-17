@@ -25,7 +25,7 @@ class NewsCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.push(
-          AppRoutes.newsDetailsPath,
+          AppRoutes.newsDetails,
           extra: NewsDetailsArgs(newsItem: item, heroTag: 'someTag'),
         );
       },

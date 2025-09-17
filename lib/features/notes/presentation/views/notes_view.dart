@@ -49,7 +49,7 @@ class _NotesViewState extends State<NotesView> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           context.push(
-            AppRoutes.addUpdateNotePath,
+            AppRoutes.addUpdateNote,
             extra: AddUpdateNoteArgs(courseId: widget.course.id.toString()),
           );
         },

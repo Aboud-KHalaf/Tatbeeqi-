@@ -95,7 +95,7 @@ class _CourseCardState extends State<CourseCard>
               onLongPress: _handleLongPress,
               onTap: () {
                 context.push(
-                  AppRoutes.courseOverviewPath,
+                  AppRoutes.courseOverview,
                   extra: CourseOverviewArgs(
                     course: widget.course,
                   ),

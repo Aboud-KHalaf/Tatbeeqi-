@@ -31,7 +31,7 @@ class HomeView extends StatelessWidget {
                   delay: const Duration(milliseconds: 0),
                   child: _SectionTitle(
                     title: l10n.homeLatestNewsAndEvents,
-                    onPressed: () => context.push(AppRoutes.allNewsPath),
+                    onPressed: () => context.push(AppRoutes.allNews),
                   ),
                 ),
                 const SizedBox(height: 12.0),
@@ -45,7 +45,7 @@ class HomeView extends StatelessWidget {
                   child: _SectionTitle(
                       title: l10n.homeTodayTasks,
                       onPressed: () async {
-                        context.push(AppRoutes.todoPath);
+                        context.push(AppRoutes.todo);
                       }),
                 ),
                 const SizedBox(height: 12.0),

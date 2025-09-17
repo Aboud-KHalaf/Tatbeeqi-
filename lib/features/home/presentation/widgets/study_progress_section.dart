@@ -62,7 +62,7 @@ class _StudyProgressSectionState extends State<StudyProgressSection> {
     final textTheme = theme.textTheme;
     final colorScheme = theme.colorScheme;
     final rawProgress = course.progressPercent ?? 0;
-    final progress = rawProgress.clamp(0.0, 1.0); 
+    final progress = rawProgress.clamp(0.0, 1.0);
     final progressText = '${(progress * 100).toInt()}%';
     return Container(
       width: 110,
@@ -70,7 +70,7 @@ class _StudyProgressSectionState extends State<StudyProgressSection> {
       child: GestureDetector(
         onTap: () {
           context.push(
-            AppRoutes.courseOverviewPath,
+            AppRoutes.courseOverview,
             extra: CourseOverviewArgs(
               course: course,
             ),

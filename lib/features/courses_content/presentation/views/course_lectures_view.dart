@@ -63,7 +63,7 @@ class LecturesList extends StatelessWidget {
           lecture: lectures[index],
           onTap: () {
             context.push(
-              AppRoutes.lectureLessonsPath,
+              AppRoutes.lectureLessons,
               extra: LectureLessonsArgs(
                 course: course,
                 lecture: lectures[index],

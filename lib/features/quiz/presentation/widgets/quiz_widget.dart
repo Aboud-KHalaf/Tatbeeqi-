@@ -66,7 +66,7 @@ class _QuizWidgetState extends State<QuizWidget> {
           }
           HapticFeedback.lightImpact();
           context.pushReplacement(
-            AppRoutes.quizResultPath,
+            AppRoutes.quizResult,
             extra: QuizResultArgs(
               score: state.score,
               results: state.results,

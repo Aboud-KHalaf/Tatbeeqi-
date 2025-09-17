@@ -69,7 +69,7 @@ class LectureContent extends StatelessWidget {
                     lesson: upNextItem,
                     onPressed: () {
                       context.push(
-                        AppRoutes.lessonContentPath,
+                        AppRoutes.lessonContent,
                         extra: LessonContentArgs(
                           lesson: lessons,
                           index: lessons.indexOf(upNextItem),

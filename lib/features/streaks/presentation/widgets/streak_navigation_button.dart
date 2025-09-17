@@ -62,15 +62,21 @@ class _StreakNavigationButtonState extends State<StreakNavigationButton>
           child: GestureDetector(
             onTap: () {
               HapticFeedback.selectionClick();
-              context.push(AppRoutes.streaksPath);
+              context.push(AppRoutes.streaks);
             },
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: widget.isStreakActive
-                      ? [Colors.orange.withOpacity(0.2), Colors.red.withOpacity(0.1)]
-                      : [colorScheme.primary.withOpacity(0.1), colorScheme.secondary.withOpacity(0.05)],
+                      ? [
+                          Colors.orange.withOpacity(0.2),
+                          Colors.red.withOpacity(0.1)
+                        ]
+                      : [
+                          colorScheme.primary.withOpacity(0.1),
+                          colorScheme.secondary.withOpacity(0.05)
+                        ],
                 ),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
@@ -85,14 +91,18 @@ class _StreakNavigationButtonState extends State<StreakNavigationButton>
                 children: [
                   Icon(
                     Icons.local_fire_department,
-                    color: widget.isStreakActive ? Colors.orange : colorScheme.primary,
+                    color: widget.isStreakActive
+                        ? Colors.orange
+                        : colorScheme.primary,
                     size: 20,
                   ),
                   const SizedBox(width: 6),
                   Text(
                     '${widget.currentStreak}',
                     style: theme.textTheme.labelLarge?.copyWith(
-                      color: widget.isStreakActive ? Colors.orange : colorScheme.primary,
+                      color: widget.isStreakActive
+                          ? Colors.orange
+                          : colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
