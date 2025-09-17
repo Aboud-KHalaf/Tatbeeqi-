@@ -48,7 +48,7 @@ GoRouter createRouter(AuthBloc authBloc) {
     redirect: (context, state) {
       final loggedIn = authBloc.state is AuthAuthenticated;
       final goingToAuth = state.uri.path.startsWith('/auth');
-      if (!loggedIn && !goingToAuth) return AppRoutes.signInPath;
+      if (!loggedIn && !goingToAuth) return AppRoutes.signIn;
       if (loggedIn && goingToAuth) return AppRoutes.home;
       return null;
     },
@@ -60,43 +60,43 @@ GoRouter createRouter(AuthBloc authBloc) {
         },
       ),
       GoRoute(
-        path: AppRoutes.settingsPath,
+        path: AppRoutes.settings,
         builder: (BuildContext context, GoRouterState state) {
           return const MoreView();
         },
       ),
       GoRoute(
-        path: AppRoutes.allNewsPath,
+        path: AppRoutes.allNews,
         builder: (BuildContext context, GoRouterState state) {
           return const AllNewsView();
         },
       ),
       GoRoute(
-        path: AppRoutes.todoPath,
+        path: AppRoutes.todo,
         builder: (BuildContext context, GoRouterState state) {
           return const TodoView();
         },
       ),
       GoRoute(
-        path: AppRoutes.signInPath,
+        path: AppRoutes.signIn,
         builder: (BuildContext context, GoRouterState state) {
           return const SignInPage();
         },
       ),
       GoRoute(
-        path: AppRoutes.signUpPath,
+        path: AppRoutes.signUp,
         builder: (BuildContext context, GoRouterState state) {
           return const SignUpPage();
         },
       ),
       GoRoute(
-        path: AppRoutes.forgetPasswordPath,
+        path: AppRoutes.forgetPassword,
         builder: (BuildContext context, GoRouterState state) {
           return const ForgetPasswordPage();
         },
       ),
       GoRoute(
-        path: AppRoutes.courseOverviewPath,
+        path: AppRoutes.courseOverview,
         builder: (BuildContext context, GoRouterState state) {
           final args = state.extra as CourseOverviewArgs?;
           if (args == null) {
@@ -113,7 +113,7 @@ GoRouter createRouter(AuthBloc authBloc) {
         },
       ),
       GoRoute(
-        path: AppRoutes.lectureLessonsPath,
+        path: AppRoutes.lectureLessons,
         builder: (BuildContext context, GoRouterState state) {
           final args = state.extra as LectureLessonsArgs?;
           if (args == null) {
@@ -130,7 +130,7 @@ GoRouter createRouter(AuthBloc authBloc) {
         },
       ),
       GoRoute(
-        path: AppRoutes.courseLecturesPath,
+        path: AppRoutes.courseLectures,
         builder: (BuildContext context, GoRouterState state) {
           final args = state.extra as Course?;
           if (args == null) {
@@ -144,7 +144,7 @@ GoRouter createRouter(AuthBloc authBloc) {
         },
       ),
       GoRoute(
-        path: AppRoutes.lessonContentPath,
+        path: AppRoutes.lessonContent,
         pageBuilder: (context, state) {
           final args = state.extra as LessonContentArgs?;
           if (args == null) {
@@ -181,7 +181,7 @@ GoRouter createRouter(AuthBloc authBloc) {
         },
       ),
       GoRoute(
-        path: AppRoutes.newsDetailsPath,
+        path: AppRoutes.newsDetails,
         name: 'newsDetails',
         builder: (context, state) {
           final args = state.extra as NewsDetailsArgs?;
@@ -197,7 +197,7 @@ GoRouter createRouter(AuthBloc authBloc) {
         },
       ),
       GoRoute(
-        path: AppRoutes.addUpdateNotePath,
+        path: AppRoutes.addUpdateNote,
         builder: (context, state) {
           final args = state.extra as AddUpdateNoteArgs?;
           if (args == null) {
@@ -223,7 +223,7 @@ GoRouter createRouter(AuthBloc authBloc) {
       //   },
       // ),
       GoRoute(
-        path: AppRoutes.quizResultPath,
+        path: AppRoutes.quizResult,
         builder: (BuildContext context, GoRouterState state) {
           final args = state.extra as QuizResultArgs?;
           if (args == null) {
@@ -242,7 +242,7 @@ GoRouter createRouter(AuthBloc authBloc) {
         },
       ),
       GoRoute(
-        path: AppRoutes.streaksPath,
+        path: AppRoutes.streaks,
         builder: (BuildContext context, GoRouterState state) {
           return const StreaksView();
         },

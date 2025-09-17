@@ -8,7 +8,6 @@ import 'package:tatbeeqi/features/courses_content/presentation/manager/lessons/l
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/lecture_content.dart';
 
 class LectureLessonsView extends StatefulWidget {
-  static const String routePath = '/lectureLessonsView';
   final Course course;
   final Lecture lecture;
   const LectureLessonsView(

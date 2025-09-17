@@ -5,12 +5,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 import 'package:tatbeeqi/core/error/exceptions.dart';
+import 'package:tatbeeqi/core/services/notifications/fcm_service.dart';
+import 'package:tatbeeqi/core/services/notifications/local_notifications_service.dart';
 import 'package:tatbeeqi/core/utils/app_logger.dart';
-import 'package:tatbeeqi/features/notifications/data/notifications/firebase_messaging_handlers.dart';
 import 'package:tatbeeqi/features/notifications/data/models/app_notification_model.dart';
 import 'package:tatbeeqi/features/notifications/data/models/device_token_model.dart';
-import 'package:tatbeeqi/core/services/notifications/local_notifications_service.dart';
+
 import '../../domain/entities/app_notification.dart';
 
 abstract class NotificationsRemoteDatasource {

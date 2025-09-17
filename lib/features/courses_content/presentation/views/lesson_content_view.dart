@@ -16,7 +16,6 @@ import 'package:tatbeeqi/features/ai_assistant/presentation/cubit/ai_assistant_c
 import 'package:tatbeeqi/features/courses_content/presentation/widgets/lesson_action_bar.dart';
 
 class LessonContentView extends StatefulWidget {
-  static const String routePath = '/lesson-content';
   final List<Lesson> lesson;
   final int courseId;
   final int index;
@@ -89,7 +88,7 @@ class _LessonContentViewState extends State<LessonContentView>
             SlideTransition(
               position: _slideAnimation,
               child: LessonActionBar(
-                lesson : widget.lesson[_currentIndex],
+                lesson: widget.lesson[_currentIndex],
                 canGoPrevious: _currentIndex > 0,
                 canGoNext: _currentIndex < widget.lesson.length - 1,
                 onPrevious: _goToPreviousLesson,
@@ -220,15 +219,16 @@ class _LessonContentViewState extends State<LessonContentView>
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (context) => BlocProvider.value(
-        value: context.read<AiAssistantCubit>(),
-        child:AiAssistantBottomSheet(
-  lessonContext: widget.lesson[_currentIndex].content, // Only for reading type
-  lessonTitle: widget.lesson[_currentIndex].title,
-  lessonType: widget.lesson[_currentIndex].lessonType.toString(), // or "voice", "video", "pdf", "quiz"
-  courseId: widget.courseId.toString(),
-  lessonId: widget.lesson[_currentIndex].id,
-)
-      ),
+          value: context.read<AiAssistantCubit>(),
+          child: AiAssistantBottomSheet(
+            lessonContext:
+                widget.lesson[_currentIndex].content, // Only for reading type
+            lessonTitle: widget.lesson[_currentIndex].title,
+            lessonType: widget.lesson[_currentIndex].lessonType
+                .toString(), // or "voice", "video", "pdf", "quiz"
+            courseId: widget.courseId.toString(),
+            lessonId: widget.lesson[_currentIndex].id,
+          )),
     );
   }
 }

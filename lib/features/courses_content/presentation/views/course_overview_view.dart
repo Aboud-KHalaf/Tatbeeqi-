@@ -12,7 +12,6 @@ import 'package:tatbeeqi/features/notes/presentation/views/notes_view.dart';
 class CourseOverviewView extends StatefulWidget {
   final Course course;
   const CourseOverviewView({super.key, required this.course});
-  static const String routePath = '/courseOverviewView';
 
   @override
   State<CourseOverviewView> createState() => _CourseOverviewViewState();

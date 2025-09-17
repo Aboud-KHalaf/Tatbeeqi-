@@ -12,7 +12,6 @@ import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:tatbeeqi/core/widgets/animations/staggered_fade_slide.dart';
 
 class HomeView extends StatelessWidget {
-  static const String routePath = '/homeView';
   const HomeView({super.key});
 
   @override

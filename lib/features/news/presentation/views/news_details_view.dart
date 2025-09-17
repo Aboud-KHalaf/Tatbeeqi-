@@ -4,8 +4,6 @@ import 'package:tatbeeqi/core/widgets/custom_markdown_body_widget.dart';
 import 'package:tatbeeqi/features/news/domain/entities/news_item_entity.dart';
 
 class NewsDetailsView extends StatelessWidget {
-  static const String routeId = '/newsDetailsView';
-
   final NewsItemEntity newsItem;
   final String heroTag;
 

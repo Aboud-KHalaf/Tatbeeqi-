@@ -9,7 +9,6 @@ import 'package:tatbeeqi/features/notes/domain/entities/note.dart';
 import 'package:tatbeeqi/features/notes/presentation/bloc/notes_bloc.dart';
 
 class AddOrUpdateNoteView extends StatefulWidget {
-  static const String routePath = '/addOrUpdateNoteView';
   final Note? note;
   final String courseId;
 

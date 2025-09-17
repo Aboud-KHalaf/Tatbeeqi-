@@ -4,8 +4,6 @@ import 'package:tatbeeqi/features/more/presentation/widgets/shortcuts_section.da
 import 'package:tatbeeqi/features/more/presentation/widgets/settings_section.dart';
 
 class MoreView extends StatefulWidget {
-  static const String routePath = '/MoreView';
-
   const MoreView({super.key});
 
   @override

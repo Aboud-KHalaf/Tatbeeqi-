@@ -8,8 +8,6 @@ import 'package:tatbeeqi/features/news/presentation/widgets/all_news_shimmer_loa
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class AllNewsView extends StatelessWidget {
-  static const String routeId = '/allNewsView';
-
   const AllNewsView({super.key});
 
   @override
@@ -21,41 +19,41 @@ class AllNewsView extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(
-          title: Text(
-        l10n.homeLatestNewsAndEvents,
-      )),
-      body: RefreshIndicator(
-        onRefresh: () => context.read<NewsCubit>().fetchNews(),
-        child: BlocBuilder<NewsCubit, NewsState>(
-        builder: (context, state) {
-          if (state is NewsLoadedState) {
-            if (state.newsItems.isEmpty) {
-              return Center(child: Text(l10n.newsNoNewsAvailable));
-            }
-            return AllNewsListViewWidget(
-                news: state.newsItems,
-                isSmallScreen: isSmallScreen,
-                colorScheme: colorScheme);
-          } else if (state is NewsErrorState) {
-            AppLogger.error(state.message);
-            return ListView(children: [
-              SizedBox(height: size.height / 3),
-              Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    state.message,
-                    textAlign: TextAlign.center,
+        appBar: AppBar(
+            title: Text(
+          l10n.homeLatestNewsAndEvents,
+        )),
+        body: RefreshIndicator(
+          onRefresh: () => context.read<NewsCubit>().fetchNews(),
+          child: BlocBuilder<NewsCubit, NewsState>(
+            builder: (context, state) {
+              if (state is NewsLoadedState) {
+                if (state.newsItems.isEmpty) {
+                  return Center(child: Text(l10n.newsNoNewsAvailable));
+                }
+                return AllNewsListViewWidget(
+                    news: state.newsItems,
+                    isSmallScreen: isSmallScreen,
+                    colorScheme: colorScheme);
+              } else if (state is NewsErrorState) {
+                AppLogger.error(state.message);
+                return ListView(children: [
+                  SizedBox(height: size.height / 3),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        state.message,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ]);
-          } else {
-            return AllNewsShimmerLoaderList(isSmallScreen: isSmallScreen);
-          }
-        },
-      ),)
-    );
+                ]);
+              } else {
+                return AllNewsShimmerLoaderList(isSmallScreen: isSmallScreen);
+              }
+            },
+          ),
+        ));
   }
 }

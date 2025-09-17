@@ -7,12 +7,10 @@ import 'package:tatbeeqi/features/todo/presentation/manager/todo_cubit.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/todo_list_view_widget.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/todo_empty_state.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/todo_error_widget.dart';
- import 'package:tatbeeqi/features/todo/presentation/widgets/todo_no_data_aviable_widget.dart';
+import 'package:tatbeeqi/features/todo/presentation/widgets/todo_no_data_aviable_widget.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class TodoView extends StatefulWidget {
-  static const String routePath = '/todoView';
-
   const TodoView({super.key});
 
   @override

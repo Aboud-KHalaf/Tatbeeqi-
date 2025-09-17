@@ -8,8 +8,6 @@ import 'package:tatbeeqi/features/notes/presentation/bloc/notes_bloc.dart';
 import 'package:tatbeeqi/features/notes/presentation/widgets/notes_list.dart';
 
 class NotesView extends StatefulWidget {
-  static const String routePath = '/notesView';
-
   final Course course;
 
   const NotesView({super.key, required this.course});
