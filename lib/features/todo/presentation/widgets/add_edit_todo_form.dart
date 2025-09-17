@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/features/todo/domain/entities/todo_entity.dart';
 import 'package:tatbeeqi/features/todo/presentation/manager/todo_cubit.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/add_edit_todo_form_content_widget.dart';
@@ -102,14 +103,15 @@ class _AddEditToDoFormState extends State<AddEditToDoForm>
       description: _descriptionController.text.trim(),
       importance: _selectedImportance,
       dueDate: _selectedDueDate,
-      isCompleted: _isCompleted, orderIndex: 0,
+      isCompleted: _isCompleted,
+      orderIndex: 0,
     );
 
     _isEditing
         ? context.read<ToDoCubit>().updateToDo(todo)
         : context.read<ToDoCubit>().addToDo(todo);
 
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   @override

@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tatbeeqi/core/widgets/app_error.dart';
 import 'package:tatbeeqi/core/widgets/app_loading.dart';
-import 'package:tatbeeqi/features/feedbacks/domain/entities/feedback.dart' as feedback_entity;
+import 'package:tatbeeqi/features/feedbacks/domain/entities/feedback.dart'
+    as feedback_entity;
 import 'package:tatbeeqi/features/feedbacks/presentation/manager/feedback_cubit/feedback_cubit.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -37,18 +38,18 @@ class _MyFeedbacksViewState extends State<MyFeedbacksView> {
             if (state is FeedbackLoading) {
               return const AppLoading();
             }
-            
+
             if (state is FeedbackError) {
               return AppError(
                 onAction: () => _cubit.getUserFeedbacks(),
               );
             }
-            
+
             if (state is FeedbacksLoaded) {
               if (state.feedbacks.isEmpty) {
                 return const _EmptyFeedbacks();
               }
-              
+
               return RefreshIndicator(
                 onRefresh: () async => _cubit.getUserFeedbacks(),
                 child: ListView.separated(
@@ -61,7 +62,7 @@ class _MyFeedbacksViewState extends State<MyFeedbacksView> {
                 ),
               );
             }
-            
+
             return const SizedBox.shrink();
           },
         ),
@@ -171,7 +172,7 @@ class _TypeChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    
+
     String label;
     Color backgroundColor;
     Color textColor;
@@ -189,7 +190,7 @@ class _TypeChip extends StatelessWidget {
         break;
       case feedback_entity.FeedbackType.general:
         label = 'عام';
-        backgroundColor = colors.surfaceVariant;
+        backgroundColor = colors.surfaceContainerHighest;
         textColor = colors.onSurfaceVariant;
         break;
     }
@@ -220,7 +221,7 @@ class _StatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    
+
     String label;
     Color backgroundColor;
     Color textColor;
@@ -228,7 +229,7 @@ class _StatusChip extends StatelessWidget {
     switch (status) {
       case feedback_entity.FeedbackStatus.pending:
         label = 'قيد الانتظار';
-        backgroundColor = colors.surfaceVariant;
+        backgroundColor = colors.surfaceContainerHighest;
         textColor = colors.onSurfaceVariant;
         break;
       case feedback_entity.FeedbackStatus.inProgress:

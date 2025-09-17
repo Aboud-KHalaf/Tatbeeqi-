@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/theme/app_colors.dart';
 import 'package:tatbeeqi/features/theme/presentation/manager/theme_cubit/theme_cubit.dart';
 
@@ -8,10 +9,10 @@ import 'package:tatbeeqi/features/theme/presentation/manager/theme_cubit/theme_c
 class ThemeToggleWidget extends StatelessWidget {
   /// Whether to show the color picker section
   final bool showColorPicker;
-  
+
   /// Whether to show the theme mode toggle
   final bool showThemeToggle;
-  
+
   /// Custom title for the widget
   final String? title;
 
@@ -26,11 +27,11 @@ class ThemeToggleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final themeCubit = context.read<ThemeCubit>();
-    
+
     return BlocBuilder<ThemeCubit, ThemeData>(
       builder: (context, themeData) {
         final isDarkMode = themeCubit.currentBrightness == Brightness.dark;
-        
+
         return Card(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
@@ -45,12 +46,10 @@ class ThemeToggleWidget extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                 ],
-                
                 if (showThemeToggle) ...[
                   _buildThemeModeToggle(context, theme, themeCubit, isDarkMode),
                   if (showColorPicker) const SizedBox(height: 16),
                 ],
-                
                 if (showColorPicker) ...[
                   _buildColorPicker(context, theme, themeCubit),
                 ],
@@ -72,7 +71,9 @@ class ThemeToggleWidget extends StatelessWidget {
       children: [
         Icon(
           Icons.light_mode,
-          color: !isDarkMode ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant,
+          color: !isDarkMode
+              ? theme.colorScheme.primary
+              : theme.colorScheme.onSurfaceVariant,
           size: 20,
         ),
         const SizedBox(width: 8),
@@ -94,7 +95,9 @@ class ThemeToggleWidget extends StatelessWidget {
         const SizedBox(width: 8),
         Icon(
           Icons.dark_mode,
-          color: isDarkMode ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant,
+          color: isDarkMode
+              ? theme.colorScheme.primary
+              : theme.colorScheme.onSurfaceVariant,
           size: 20,
         ),
       ],
@@ -146,7 +149,7 @@ class ThemeToggleWidget extends StatelessWidget {
       runSpacing: 8,
       children: AppColors.seedColors.map((color) {
         final isSelected = themeCubit.currentSeedColor.value == color.value;
-        
+
         return GestureDetector(
           onTap: () {
             HapticFeedback.selectionClick();
@@ -160,18 +163,20 @@ class ThemeToggleWidget extends StatelessWidget {
               color: color,
               shape: BoxShape.circle,
               border: Border.all(
-                color: isSelected 
+                color: isSelected
                     ? theme.colorScheme.onSurface
                     : theme.colorScheme.outline,
                 width: isSelected ? 3 : 1,
               ),
-              boxShadow: isSelected ? [
-                BoxShadow(
-                  color: color.withValues(alpha: 0.3),
-                  blurRadius: 8,
-                  spreadRadius: 2,
-                ),
-              ] : null,
+              boxShadow: isSelected
+                  ? [
+                      BoxShadow(
+                        color: color.withValues(alpha: 0.3),
+                        blurRadius: 8,
+                        spreadRadius: 2,
+                      ),
+                    ]
+                  : null,
             ),
             child: isSelected
                 ? Icon(
@@ -253,7 +258,8 @@ class ThemeToggleWidget extends StatelessWidget {
 
   Color _getContrastColor(Color color) {
     // Simple contrast calculation
-    final luminance = (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
+    final luminance =
+        (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
     return luminance > 0.5 ? Colors.black : Colors.white;
   }
 }
@@ -280,7 +286,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    
+
     return AlertDialog(
       title: const Text('اختيار لون التطبيق'),
       content: SizedBox(
@@ -299,7 +305,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
               runSpacing: 12,
               children: AppColors.seedColors.map((color) {
                 final isSelected = _selectedColor.value == color.value;
-                
+
                 return GestureDetector(
                   onTap: () {
                     HapticFeedback.selectionClick();
@@ -315,18 +321,20 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
                       color: color,
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: isSelected 
+                        color: isSelected
                             ? theme.colorScheme.onSurface
                             : theme.colorScheme.outline,
                         width: isSelected ? 3 : 1,
                       ),
-                      boxShadow: isSelected ? [
-                        BoxShadow(
-                          color: color.withValues(alpha: 0.3),
-                          blurRadius: 8,
-                          spreadRadius: 2,
-                        ),
-                      ] : null,
+                      boxShadow: isSelected
+                          ? [
+                              BoxShadow(
+                                color: color.withValues(alpha: 0.3),
+                                blurRadius: 8,
+                                spreadRadius: 2,
+                              ),
+                            ]
+                          : null,
                     ),
                     child: isSelected
                         ? Icon(
@@ -340,7 +348,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
               }).toList(),
             ),
             const SizedBox(height: 24),
-            
+
             // Preview section
             Container(
               padding: const EdgeInsets.all(16),
@@ -365,13 +373,13 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
           child: const Text('إلغاء'),
         ),
         FilledButton(
           onPressed: () {
             widget.themeCubit.setSeedColor(_selectedColor);
-            Navigator.of(context).pop();
+            context.pop();
           },
           child: const Text('تطبيق'),
         ),
@@ -381,7 +389,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
 
   Widget _buildColorPreview(BuildContext context, Color seedColor) {
     final previewTheme = widget.themeCubit.getPreviewTheme(seedColor);
-    
+
     return Theme(
       data: previewTheme,
       child: Container(
@@ -433,7 +441,8 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
   }
 
   Color _getContrastColor(Color color) {
-    final luminance = (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
+    final luminance =
+        (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
     return luminance > 0.5 ? Colors.black : Colors.white;
   }
 }

@@ -5,6 +5,8 @@ import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/core/routing/routes_args.dart';
 
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
+import 'package:tatbeeqi/features/courses/presentation/views/all_courses_view.dart';
+import 'package:tatbeeqi/features/courses_content/presentation/views/all_lessons_view.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/views/course_lectures_view.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/views/course_overview_view.dart';
 import 'package:tatbeeqi/features/courses_content/presentation/views/lecture_lessons_view.dart';
@@ -92,6 +94,18 @@ final List<GoRoute> coursesRoutes = <GoRoute>[
         },
         transitionDuration: const Duration(milliseconds: 300),
       );
+    },
+  ),
+  GoRoute(
+    path: AppRoutes.allCourses,
+    builder: (BuildContext context, GoRouterState state) {
+      return const AllCoursesView();
+    },
+  ),
+  GoRoute(
+    path: AppRoutes.allLessons,
+    builder: (BuildContext context, GoRouterState state) {
+      return const AllLessonsView();
     },
   ),
 ];

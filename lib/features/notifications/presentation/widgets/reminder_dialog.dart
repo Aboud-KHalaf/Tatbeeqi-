@@ -8,6 +8,7 @@ import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_c
 import 'package:tatbeeqi/features/notifications/presentation/widgets/reminder_time_picker.dart';
 import 'package:tatbeeqi/features/notifications/presentation/widgets/weekdays_selector.dart';
 import 'package:uuid/uuid.dart';
+import 'package:go_router/go_router.dart';
 
 class ReminderDialog extends StatefulWidget {
   final String? courseId;
@@ -109,7 +110,7 @@ class _ReminderDialogState extends State<ReminderDialog>
         listener: (context, state) {
           if (state is ReminderScheduled) {
             HapticFeedback.lightImpact();
-            Navigator.of(context).pop();
+            context.pop();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: const Text('تم جدولة التذكير بنجاح'),
@@ -279,7 +280,7 @@ class _ReminderDialogState extends State<ReminderDialog>
           children: [
             Expanded(
               child: OutlinedButton(
-                onPressed: isLoading ? null : () => Navigator.of(context).pop(),
+                onPressed: isLoading ? null : () => context.pop(),
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(

@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/constants/constants.dart';
 import 'package:tatbeeqi/core/routing/app_routes.dart';
-import 'package:tatbeeqi/features/courses/presentation/views/all_courses_view.dart';
-import 'package:tatbeeqi/features/home/presentation/widgets/all_lessons_view.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/recently_added_section.dart';
 import 'package:tatbeeqi/features/home/presentation/widgets/study_progress_section.dart';
 import 'package:tatbeeqi/features/news/presentation/widgets/news_section.dart';
@@ -57,11 +55,9 @@ class HomeView extends StatelessWidget {
                 StaggeredFadeSlide(
                   delay: const Duration(milliseconds: 400),
                   child: _SectionTitle(
-                      title: l10n.homeContinueStudying,
-                      onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const AllCoursesView()))),
+                    title: l10n.homeContinueStudying,
+                    onPressed: () => context.push(AppRoutes.allCourses),
+                  ),
                 ),
                 const SizedBox(height: 12.0),
                 const StaggeredFadeSlide(
@@ -73,10 +69,7 @@ class HomeView extends StatelessWidget {
                   delay: const Duration(milliseconds: 600),
                   child: _SectionTitle(
                     title: l10n.homeRecentlyAdded,
-                    onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const AllLessonsView())),
+                    onPressed: () => context.push(AppRoutes.allLessons),
                   ),
                 ),
                 const SizedBox(height: 12.0),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/features/todo/domain/entities/todo_entity.dart';
 import 'package:tatbeeqi/features/todo/presentation/widgets/add_edit_todo_form.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
-
 
 void showAddEditTodoBottomSheet(BuildContext context, {ToDoEntity? todo}) {
   showModalBottomSheet(
@@ -27,11 +27,11 @@ Future<bool> showDeleteConfirmation(BuildContext context) async {
             ),
             actions: <Widget>[
               TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
+                onPressed: () => context.pop(false),
                 child: Text(l10n.todoCancel),
               ),
               TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
+                onPressed: () => context.pop(true),
                 child: Text(
                   l10n.todoDelete,
                   style: const TextStyle(color: Colors.red),

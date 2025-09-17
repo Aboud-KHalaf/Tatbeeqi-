@@ -19,6 +19,8 @@ class AppRoutes {
   static const String lectureLessons = '/courses/lessons';
   static const String lessonContent = '/courses/lesson-content';
   static const String quizResult = '/courses/quiz-result';
+  static const String allCourses = '/courses/all';
+  static const String allLessons = '/courses/lessons/all';
 
   // Auth
   static const String signIn = '/auth/signin';
@@ -29,4 +31,7 @@ class AppRoutes {
   static const String posts = '/posts';
   static const String postDetails = '/posts/details';
   static const String createOrEditPost = '/posts/create-edit';
+
+  // AI Assistant
+  static const String labebAiAssistant = '/ai-assistant/labeb';
 }

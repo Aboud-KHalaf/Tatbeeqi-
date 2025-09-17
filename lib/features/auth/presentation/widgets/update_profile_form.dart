@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/services.dart';
@@ -72,8 +73,9 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
         if (state is AuthError) {
           SnackBarHelper.showError(context: context, message: state.message);
         } else if (state is AuthAuthenticated) {
-          SnackBarHelper.showInfo(context: context, message: l10n.profileUpdatedSuccessfully);
-          Navigator.of(context).pop();
+          SnackBarHelper.showInfo(
+              context: context, message: l10n.profileUpdatedSuccessfully);
+          context.pop();
         }
       },
       child: Form(
@@ -84,7 +86,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
             AuthTextField(
               controller: _nameController,
               label: l10n.authFullNameLabel,
-              validator: (v) => (v == null || v.isEmpty) ? l10n.authEnterName : null,
+              validator: (v) =>
+                  (v == null || v.isEmpty) ? l10n.authEnterName : null,
             ),
             const SizedBox(height: 12),
             StudyYearDropdown(
@@ -97,7 +100,8 @@ class _UpdateProfileFormState extends State<UpdateProfileForm> {
               controller: _emailController,
               label: l10n.authEmailLabel,
               keyboardType: TextInputType.emailAddress,
-              validator: (v) => (v == null || v.isEmpty) ? l10n.authEnterEmail : null,
+              validator: (v) =>
+                  (v == null || v.isEmpty) ? l10n.authEnterEmail : null,
             ),
             const SizedBox(height: 12),
             AuthTextField(

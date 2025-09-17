@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 
 class StreaksActionButton extends StatelessWidget {
   const StreaksActionButton({super.key});
@@ -55,7 +56,7 @@ class StreaksActionButton extends StatelessWidget {
             onPressed: () {
               HapticFeedback.selectionClick();
               // Navigate to courses or lessons
-              Navigator.of(context).pop();
+              context.pop();
             },
             icon: const Icon(Icons.play_arrow),
             label: const Text('ابدأ التعلم'),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
- import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
+import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/notifications/presentation/widgets/reminder_dialog.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Course course;
@@ -37,7 +38,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           onPressed: () {
             HapticFeedback.lightImpact();
-            Navigator.of(context).pop();
+            context.pop();
           },
           tooltip: l10n.coursesContentBackTooltip,
           style: IconButton.styleFrom(
@@ -128,9 +129,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             tabs: [
               _buildTab(l10n.coursesContentLectures, Icons.school_outlined),
               _buildTab(l10n.coursesContentTabGrades, Icons.grade_outlined),
-             // _buildTab(l10n.coursesContentTabForum, Icons.forum_outlined),
+              // _buildTab(l10n.coursesContentTabForum, Icons.forum_outlined),
               _buildTab(l10n.coursesContentTabNotes, Icons.note_outlined),
-              _buildTab(l10n.coursesContentTabReferences, Icons.library_books_outlined),
+              _buildTab(l10n.coursesContentTabReferences,
+                  Icons.library_books_outlined),
               _buildTab(l10n.coursesContentTabAboutCourse, Icons.info_outline),
             ],
           ),

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/fetch_courses_cubit/fetch_courses_cubit.dart';
 import 'package:tatbeeqi/features/courses/presentation/manager/retake_courses_cubit/retake_courses_cubit.dart';
+import 'package:go_router/go_router.dart';
 
 class RetakeCoursesConfirmButton extends StatefulWidget {
   final ValueNotifier<List<Course>> selectedCoursesNotifier;
@@ -17,7 +18,8 @@ class RetakeCoursesConfirmButton extends StatefulWidget {
       _RetakeCoursesConfirmButtonState();
 }
 
-class _RetakeCoursesConfirmButtonState extends State<RetakeCoursesConfirmButton> {
+class _RetakeCoursesConfirmButtonState
+    extends State<RetakeCoursesConfirmButton> {
   bool _isLoading = false;
 
   @override
@@ -33,7 +35,7 @@ class _RetakeCoursesConfirmButtonState extends State<RetakeCoursesConfirmButton>
           setState(() => _isLoading = false);
           if (state is RetakeCoursesSaved) {
             HapticFeedback.lightImpact();
-            Navigator.of(context).pop();
+            context.pop();
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
@@ -80,7 +82,9 @@ class _RetakeCoursesConfirmButtonState extends State<RetakeCoursesConfirmButton>
               onPressed: isEnabled
                   ? () {
                       HapticFeedback.mediumImpact();
-                      context.read<RetakeCoursesCubit>().saveRetakeCourses(selectedCoursesList);
+                      context
+                          .read<RetakeCoursesCubit>()
+                          .saveRetakeCourses(selectedCoursesList);
                       context.read<FetchCoursesCubit>().fetchCourses();
                     }
                   : null,
@@ -103,7 +107,8 @@ class _RetakeCoursesConfirmButtonState extends State<RetakeCoursesConfirmButton>
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         if (selectedCoursesList.isNotEmpty) ...[
-                          Icon(Icons.school_rounded, color: colorScheme.onPrimary, size: 20),
+                          Icon(Icons.school_rounded,
+                              color: colorScheme.onPrimary, size: 20),
                           const SizedBox(width: 8),
                         ],
                         Text(

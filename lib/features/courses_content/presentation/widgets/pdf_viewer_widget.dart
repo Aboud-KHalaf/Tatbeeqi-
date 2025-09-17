@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
+import 'package:go_router/go_router.dart';
 
 class PDFViewerWidget extends StatefulWidget {
   final String pdfUrl;
@@ -107,11 +108,14 @@ class _PDFViewerWidgetState extends State<PDFViewerWidget>
       return 'Network connection was interrupted. Please check your internet connection and try again.';
     } else if (error.toLowerCase().contains('timeout')) {
       return 'Connection timed out. Please check your internet connection and try again.';
-    } else if (error.toLowerCase().contains('404') || error.toLowerCase().contains('not found')) {
+    } else if (error.toLowerCase().contains('404') ||
+        error.toLowerCase().contains('not found')) {
       return 'PDF file not found. The document may have been moved or deleted.';
-    } else if (error.toLowerCase().contains('403') || error.toLowerCase().contains('forbidden')) {
+    } else if (error.toLowerCase().contains('403') ||
+        error.toLowerCase().contains('forbidden')) {
       return 'Access denied. You don\'t have permission to view this document.';
-    } else if (error.toLowerCase().contains('500') || error.toLowerCase().contains('server error')) {
+    } else if (error.toLowerCase().contains('500') ||
+        error.toLowerCase().contains('server error')) {
       return 'Server error occurred. Please try again later.';
     } else {
       return 'Failed to load PDF document. Please try again.';
@@ -583,15 +587,17 @@ class _PDFNavigationButtons extends StatelessWidget {
         // Previous Page
         FloatingActionButton.small(
           heroTag: "previous",
-          onPressed: currentPage > 1 ? () {
-            HapticFeedback.lightImpact();
-            onPreviousPage();
-          } : null,
-          backgroundColor: currentPage > 1 
-              ? colorScheme.tertiaryContainer 
+          onPressed: currentPage > 1
+              ? () {
+                  HapticFeedback.lightImpact();
+                  onPreviousPage();
+                }
+              : null,
+          backgroundColor: currentPage > 1
+              ? colorScheme.tertiaryContainer
               : colorScheme.surfaceContainerHighest,
-          foregroundColor: currentPage > 1 
-              ? colorScheme.onTertiaryContainer 
+          foregroundColor: currentPage > 1
+              ? colorScheme.onTertiaryContainer
               : colorScheme.onSurfaceVariant,
           child: const Icon(Icons.keyboard_arrow_up),
         ),
@@ -599,15 +605,17 @@ class _PDFNavigationButtons extends StatelessWidget {
         // Next Page
         FloatingActionButton.small(
           heroTag: "next",
-          onPressed: currentPage < totalPages ? () {
-            HapticFeedback.lightImpact();
-            onNextPage();
-          } : null,
-          backgroundColor: currentPage < totalPages 
-              ? colorScheme.tertiaryContainer 
+          onPressed: currentPage < totalPages
+              ? () {
+                  HapticFeedback.lightImpact();
+                  onNextPage();
+                }
+              : null,
+          backgroundColor: currentPage < totalPages
+              ? colorScheme.tertiaryContainer
               : colorScheme.surfaceContainerHighest,
-          foregroundColor: currentPage < totalPages 
-              ? colorScheme.onTertiaryContainer 
+          foregroundColor: currentPage < totalPages
+              ? colorScheme.onTertiaryContainer
               : colorScheme.onSurfaceVariant,
           child: const Icon(Icons.keyboard_arrow_down),
         ),
@@ -699,13 +707,13 @@ class _PageNavigationDialogState extends State<_PageNavigationDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
           child: const Text('Cancel'),
         ),
         FilledButton(
           onPressed: () {
             widget.onPageSelected(_selectedPage);
-            Navigator.of(context).pop();
+            context.pop();
           },
           child: const Text('Go'),
         ),
@@ -819,7 +827,7 @@ class _ZoomControlDialogState extends State<_ZoomControlDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
           child: const Text('Close'),
         ),
       ],

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:go_router/go_router.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +47,7 @@ class _AddOrUpdateNoteViewState extends State<AddOrUpdateNoteView> {
     final content = _contentController.text;
 
     if (title.isEmpty && content.isEmpty) {
-      Navigator.of(context).pop();
+      context.pop();
       return;
     }
 
@@ -65,7 +66,7 @@ class _AddOrUpdateNoteViewState extends State<AddOrUpdateNoteView> {
       context.read<NotesBloc>().add(UpdateNoteEvent(noteToSave));
     }
 
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   void _deleteNote() {
@@ -74,7 +75,7 @@ class _AddOrUpdateNoteViewState extends State<AddOrUpdateNoteView> {
             noteId: widget.note!.id!,
             courseId: widget.note!.courseId,
           ));
-      Navigator.of(context).pop();
+      context.pop();
     }
   }
 

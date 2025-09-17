@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/di/service_locator.dart';
 import 'package:tatbeeqi/features/notifications/domain/entities/reminder.dart';
 import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_cubit/reminders_cubit.dart';
@@ -94,7 +95,7 @@ class _RemindersListViewState extends State<RemindersListView>
         ),
         onPressed: () {
           HapticFeedback.lightImpact();
-          Navigator.of(context).pop();
+          context.pop();
         },
       ),
     );

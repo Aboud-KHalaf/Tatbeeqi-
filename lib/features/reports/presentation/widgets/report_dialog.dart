@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/features/reports/domain/entities/report.dart';
 import 'package:tatbeeqi/features/reports/presentation/manager/reports_cubit.dart';
 import 'package:tatbeeqi/features/reports/presentation/manager/reports_state.dart';
@@ -63,7 +64,7 @@ class _ReportDialogState extends State<ReportDialog> {
     return BlocListener<ReportsCubit, ReportsState>(
       listener: (context, state) {
         if (state is ReportAdded) {
-          Navigator.of(context).pop();
+          context.pop();
         } else if (state is ReportsError) {
           setState(() {
             _isSubmitting = false;
@@ -189,7 +190,7 @@ class _ReportDialogState extends State<ReportDialog> {
         ),
         actions: [
           TextButton(
-            onPressed: _isSubmitting ? null : () => Navigator.of(context).pop(),
+            onPressed: _isSubmitting ? null : () => context.pop(),
             child: Text(l10n.cancel),
           ),
           FilledButton(

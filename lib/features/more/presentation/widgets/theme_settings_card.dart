@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/theme/app_colors.dart';
 import 'package:tatbeeqi/features/theme/presentation/manager/theme_cubit/theme_cubit.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 
 class ThemeSettingsCard extends StatelessWidget {
   const ThemeSettingsCard({super.key});
@@ -21,7 +22,8 @@ class ThemeSettingsCard extends StatelessWidget {
 
         return Card(
           elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -79,7 +81,8 @@ class ThemeModeToggle extends StatelessWidget {
   final ThemeCubit themeCubit;
   final bool isDark;
 
-  const ThemeModeToggle({super.key, required this.themeCubit, required this.isDark});
+  const ThemeModeToggle(
+      {super.key, required this.themeCubit, required this.isDark});
 
   @override
   Widget build(BuildContext context) {
@@ -226,7 +229,8 @@ class ColorGrid extends StatelessWidget {
   }
 
   Color _getContrastColor(Color color) {
-    final luminance = (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
+    final luminance =
+        (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
     return luminance > 0.5 ? Colors.black : Colors.white;
   }
 }
@@ -383,13 +387,13 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
           child: Text(l10n.cancel),
         ),
         FilledButton(
           onPressed: () {
             widget.themeCubit.setSeedColor(_selectedColor);
-            Navigator.of(context).pop();
+            context.pop();
           },
           child: Text(l10n.apply),
         ),
@@ -398,7 +402,8 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
   }
 
   Color _getContrastColor(Color color) {
-    final luminance = (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
+    final luminance =
+        (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
     return luminance > 0.5 ? Colors.black : Colors.white;
   }
 }

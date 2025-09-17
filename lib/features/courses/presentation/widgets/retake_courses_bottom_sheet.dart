@@ -5,16 +5,19 @@ import 'package:tatbeeqi/features/courses/presentation/widgets/drag_handle.dart'
 import 'package:tatbeeqi/features/courses/presentation/widgets/retake_courses_confirm_button.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/retake_courses_content.dart';
 import 'package:tatbeeqi/features/courses/presentation/widgets/retake_courses_title.dart';
+import 'package:go_router/go_router.dart';
 
 class RetakeCoursesBottomSheet extends StatefulWidget {
   const RetakeCoursesBottomSheet({super.key});
 
   @override
-  State<RetakeCoursesBottomSheet> createState() => _RetakeCoursesBottomSheetState();
+  State<RetakeCoursesBottomSheet> createState() =>
+      _RetakeCoursesBottomSheetState();
 }
 
 class _RetakeCoursesBottomSheetState extends State<RetakeCoursesBottomSheet> {
-  final ValueNotifier<List<Course>> _selectedCoursesNotifier = ValueNotifier([]);
+  final ValueNotifier<List<Course>> _selectedCoursesNotifier =
+      ValueNotifier([]);
 
   @override
   void dispose() {
@@ -39,7 +42,7 @@ class _RetakeCoursesBottomSheetState extends State<RetakeCoursesBottomSheet> {
             GestureDetector(
               onTap: () {
                 HapticFeedback.lightImpact();
-                Navigator.of(context).pop();
+                context.pop();
               },
               child: Container(
                 width: double.infinity,

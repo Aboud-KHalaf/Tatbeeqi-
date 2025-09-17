@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/features/notes/domain/entities/note.dart';
 
 typedef OnSaveCallback = void Function(Note note);
@@ -44,7 +45,7 @@ class _AddEditNoteDialogState extends State<AddEditNoteDialog> {
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
       HapticFeedback.lightImpact();
-      
+
       final note = Note(
         id: widget.note?.id,
         courseId: widget.courseId,
@@ -52,24 +53,24 @@ class _AddEditNoteDialogState extends State<AddEditNoteDialog> {
         content: _contentController.text.trim(),
         lastModified: DateTime.now(),
       );
-      
+
       widget.onSave(note);
-      
+
       if (mounted) {
-        Navigator.of(context).pop();
+        context.pop();
       }
     }
   }
 
   void _onCancel() {
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Dialog(
@@ -172,7 +173,7 @@ class _AddEditNoteDialogState extends State<AddEditNoteDialog> {
             },
           ),
           const SizedBox(height: 16),
-          
+
           // Content Field
           Text(
             'المحتوى',
