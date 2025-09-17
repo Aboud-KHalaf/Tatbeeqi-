@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../cubit/ai_assistant_cubit.dart';
 import '../cubit/ai_assistant_state.dart';
 import '../../../notes/presentation/bloc/notes_bloc.dart';
@@ -41,7 +42,7 @@ class _AiAssistantBottomSheetState extends State<AiAssistantBottomSheet>
   final ScrollController _scrollController = ScrollController();
   late AnimationController _animationController;
   late Animation<double> _fadeAnimation;
-  
+
   // Chat conversation history
   final List<ChatMessage> _conversation = [];
 
@@ -95,11 +96,13 @@ class _AiAssistantBottomSheetState extends State<AiAssistantBottomSheet>
       if (widget.lessonTitle != null) {
         if (normalizedType == 'reading' && widget.lessonContext != null) {
           // For reading lessons, pass the content as context
-          contextualQuestion = 'Regarding the lesson "${widget.lessonTitle}": $question';
+          contextualQuestion =
+              'Regarding the lesson "${widget.lessonTitle}": $question';
           contextToPass = widget.lessonContext;
         } else {
           // For other lesson types (voice, video, pdf, quiz), just mention the lesson
-          contextualQuestion = 'Regarding the ${normalizedType ?? 'lesson'} "${widget.lessonTitle}": $question';
+          contextualQuestion =
+              'Regarding the ${normalizedType ?? 'lesson'} "${widget.lessonTitle}": $question';
           contextToPass = null; // No content context for multimedia
         }
       }
@@ -129,7 +132,7 @@ class _AiAssistantBottomSheetState extends State<AiAssistantBottomSheet>
     setState(() {
       _conversation.clear();
     });
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   void _onQuestionSelected(String question) {
@@ -183,7 +186,7 @@ class _AiAssistantBottomSheetState extends State<AiAssistantBottomSheet>
               aiResponse: state.response,
             ));
           });
-          
+
           // Auto-scroll to bottom
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (_scrollController.hasClients) {
@@ -211,38 +214,42 @@ class _AiAssistantBottomSheetState extends State<AiAssistantBottomSheet>
       AiAssistantState state, ColorScheme colorScheme, TextTheme textTheme) {
     return ListView.builder(
       controller: _scrollController,
-      itemCount: _conversation.length + 
+      itemCount: _conversation.length +
           (_conversation.isEmpty ? 1 : 0) + // Initial state
           (state is AiAssistantLoading ? 1 : 0) + // Loading message
           (state is AiAssistantError ? 1 : 0), // Error message
       itemBuilder: (context, index) {
         // Show initial state if no conversation
-        if (_conversation.isEmpty && index == 0 && state is! AiAssistantLoading && state is! AiAssistantError) {
+        if (_conversation.isEmpty &&
+            index == 0 &&
+            state is! AiAssistantLoading &&
+            state is! AiAssistantError) {
           return WelcomeMessage(
             lessonTitle: widget.lessonTitle,
             lessonType: widget.lessonType,
             onQuestionSelected: _onQuestionSelected,
           );
         }
-        
+
         // Show conversation messages
         if (index < _conversation.length) {
           return ChatBubble(
             message: _conversation[index],
-            onSaveNote: (response) => _saveResponseAsNote(response, colorScheme),
+            onSaveNote: (response) =>
+                _saveResponseAsNote(response, colorScheme),
           );
         }
-        
+
         // Show loading indicator
         if (state is AiAssistantLoading) {
           return const LoadingMessage();
         }
-        
+
         // Show error message
         if (state is AiAssistantError) {
           return ErrorMessage(message: state.message);
         }
-        
+
         return const SizedBox.shrink();
       },
     );
@@ -252,7 +259,8 @@ class _AiAssistantBottomSheetState extends State<AiAssistantBottomSheet>
     if (widget.courseId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Cannot save note: Course information not available'),
+          content:
+              const Text('Cannot save note: Course information not available'),
           backgroundColor: colorScheme.error,
         ),
       );

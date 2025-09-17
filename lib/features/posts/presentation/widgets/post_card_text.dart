@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes_args.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
-import 'package:tatbeeqi/features/posts/presentation/views/post_details_view.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class PostText extends StatefulWidget {
@@ -42,8 +44,10 @@ class _PostTextState extends State<PostText> with TickerProviderStateMixin {
           if (_isLongText || isArticle)
             InkWell(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => PostDetailsView(post: widget.post)));
+                context.push(
+                  AppRoutes.postDetails,
+                  extra: PostDetailsArgs(post: widget.post),
+                );
               },
               child: Row(
                 children: [
@@ -53,7 +57,9 @@ class _PostTextState extends State<PostText> with TickerProviderStateMixin {
                   Padding(
                     padding: const EdgeInsets.only(top: 6.0),
                     child: Text(
-                      isArticle ? l10n.postCardShowDetails : l10n.postCardReadMore,
+                      isArticle
+                          ? l10n.postCardShowDetails
+                          : l10n.postCardReadMore,
                       style: TextStyle(
                         color: theme.colorScheme.primary,
                         fontWeight: FontWeight.bold,

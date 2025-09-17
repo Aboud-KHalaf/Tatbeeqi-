@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/my_posts/my_posts_cubit.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/my_posts/my_posts_state.dart';
@@ -101,7 +102,7 @@ class _MyPostsViewState extends State<MyPostsView> {
             ),
             const SizedBox(height: 32),
             FilledButton.icon(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => context.pop(),
               icon: const Icon(Icons.add),
               label: const Text('إنشاء منشور'),
             ),

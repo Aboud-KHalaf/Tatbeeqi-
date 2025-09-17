@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/utils/app_functions.dart';
 import 'package:tatbeeqi/core/widgets/colorful_background_painter.dart';
 import 'package:tatbeeqi/core/widgets/custom_markdown_body_widget.dart';
@@ -101,7 +102,7 @@ class _PostDetailsViewState extends State<PostDetailsView>
                 backgroundColor: Colors.black.withValues(alpha: 0.5),
                 child: IconButton(
                   icon: const Icon(Icons.close, color: Colors.white),
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () => context.pop(),
                 ),
               ),
             ),

@@ -15,6 +15,7 @@ import 'package:tatbeeqi/core/routing/routes/quiz_routes.dart';
 import 'package:tatbeeqi/core/routing/routes/streaks_routes.dart';
 import 'package:tatbeeqi/core/routing/routes/todo_routes.dart';
 import 'package:tatbeeqi/core/routing/routes/navigation_routes.dart';
+import 'package:tatbeeqi/core/routing/routes/posts_routes.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
@@ -49,6 +50,7 @@ GoRouter createRouter(AuthBloc authBloc) {
       ...notesRoutes,
       ...quizRoutes,
       ...streaksRoutes,
+      ...postsRoutes,
     ],
     errorBuilder: (context, state) => Scaffold(
       appBar: AppBar(title: const Text('Page Not Found')),

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
-import 'package:tatbeeqi/features/posts/presentation/views/post_details_view.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_action_buttons.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes_args.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_categories.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_header.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_image_section.dart';
@@ -62,12 +64,10 @@ class PostCard extends StatelessWidget {
   }
 
   void handelTap(BuildContext context) {
-    // TODO add go router navigation
     if (post.imageUrl != null && post.imageUrl!.isNotEmpty) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => PostDetailsView(post: post, showMore: false),
-        ),
+      context.push(
+        AppRoutes.postDetails,
+        extra: PostDetailsArgs(post: post, showMore: false),
       );
     }
   }

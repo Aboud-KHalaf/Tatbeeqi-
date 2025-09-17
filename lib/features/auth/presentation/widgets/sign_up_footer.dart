@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
-import '../views/sign_in_page.dart';
 
 class SignUpFooter extends StatelessWidget {
   const SignUpFooter({super.key});
@@ -31,21 +32,7 @@ class SignUpFooter extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           TextButton(
-            onPressed: () => Navigator.of(context).push(
-              PageRouteBuilder(
-                pageBuilder: (context, a, b) => const SignInPage(),
-                transitionsBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  return SlideTransition(
-                    position: animation.drive(
-                      Tween(begin: const Offset(-1.0, 0.0), end: Offset.zero)
-                          .chain(CurveTween(curve: Curves.easeInOut)),
-                    ),
-                    child: child,
-                  );
-                },
-              ),
-            ),
+            onPressed: () => context.push(AppRoutes.signIn),
             style: TextButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               minimumSize: Size.zero,

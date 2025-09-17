@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/features/reports/domain/entities/report.dart';
 import 'package:tatbeeqi/features/reports/presentation/manager/reports_cubit.dart';
 import 'package:tatbeeqi/features/reports/presentation/manager/reports_state.dart';
@@ -150,12 +151,11 @@ class _PostReportDialogState extends State<PostReportDialog>
                   fontWeight: FontWeight.bold,
                 ),
               ),
-           
             ],
           ),
         ),
         IconButton(
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => context.pop(),
           icon: const Icon(Icons.close),
           style: IconButton.styleFrom(
             backgroundColor: colorScheme.surfaceContainerHighest,
@@ -314,7 +314,7 @@ class _PostReportDialogState extends State<PostReportDialog>
       children: [
         Expanded(
           child: OutlinedButton(
-            onPressed: _isSubmitting ? null : () => Navigator.of(context).pop(),
+            onPressed: _isSubmitting ? null : () => context.pop(),
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
@@ -367,8 +367,7 @@ class _PostReportDialogState extends State<PostReportDialog>
 
   IconData _getReasonIcon(PostReportReason reason) {
     switch (reason) {
- 
-       case PostReportReason.inappropriateContent:
+      case PostReportReason.inappropriateContent:
         return Icons.visibility_off;
       case PostReportReason.falseInformation:
         return Icons.fact_check;
@@ -381,7 +380,6 @@ class _PostReportDialogState extends State<PostReportDialog>
 
   String _getReasonText(PostReportReason reason, AppLocalizations l10n) {
     switch (reason) {
-  
       case PostReportReason.inappropriateContent:
         return l10n.inappropriateContent;
       case PostReportReason.falseInformation:
@@ -414,7 +412,7 @@ class _PostReportDialogState extends State<PostReportDialog>
   void _showSuccessDialog(BuildContext context, AppLocalizations l10n) {
     if (!mounted) return;
 
-    Navigator.of(context).pop(); // Close report dialog
+    context.pop(); // Close report dialog
 
     showDialog(
       context: context,
@@ -459,7 +457,7 @@ class _PostReportDialogState extends State<PostReportDialog>
         ),
         actions: [
           FilledButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => context.pop(),
             child: Text(l10n.close),
           ),
         ],
@@ -513,12 +511,12 @@ class _PostReportDialogState extends State<PostReportDialog>
         ),
         actions: [
           OutlinedButton(
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => context.pop(),
             child: Text(l10n.cancel),
           ),
           FilledButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              context.pop();
               _submitReport();
             },
             child: Text(l10n.retry),

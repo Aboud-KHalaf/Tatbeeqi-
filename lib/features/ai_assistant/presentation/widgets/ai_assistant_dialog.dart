@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../cubit/ai_assistant_cubit.dart';
 import '../cubit/ai_assistant_state.dart';
 
@@ -67,18 +68,19 @@ class _AiAssistantDialogState extends State<AiAssistantDialog>
     final question = _questionController.text.trim();
     if (question.isNotEmpty) {
       HapticFeedback.selectionClick();
-      
+
       String contextualQuestion = question;
       if (widget.lessonContext != null && widget.lessonTitle != null) {
-        contextualQuestion = 'Regarding the lesson "${widget.lessonTitle}": $question';
+        contextualQuestion =
+            'Regarding the lesson "${widget.lessonTitle}": $question';
       }
-      
+
       context.read<AiAssistantCubit>().askQuestion(
-        contextualQuestion,
-        context: widget.lessonContext,
-      );
+            contextualQuestion,
+            context: widget.lessonContext,
+          );
       _questionController.clear();
-      
+
       // Auto-scroll to bottom when asking a question
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (_scrollController.hasClients) {
@@ -95,7 +97,7 @@ class _AiAssistantDialogState extends State<AiAssistantDialog>
   void _onClose() {
     HapticFeedback.lightImpact();
     context.read<AiAssistantCubit>().reset();
-    Navigator.of(context).pop();
+    context.pop();
   }
 
   @override
@@ -227,7 +229,8 @@ class _AiAssistantDialogState extends State<AiAssistantDialog>
     );
   }
 
-  Widget _buildStateContent(AiAssistantState state, ColorScheme colorScheme, TextTheme textTheme) {
+  Widget _buildStateContent(
+      AiAssistantState state, ColorScheme colorScheme, TextTheme textTheme) {
     if (state is AiAssistantInitial) {
       return _buildInitialState(colorScheme, textTheme);
     } else if (state is AiAssistantLoading) {
@@ -278,7 +281,8 @@ class _AiAssistantDialogState extends State<AiAssistantDialog>
     );
   }
 
-  Widget _buildSuggestedQuestions(ColorScheme colorScheme, TextTheme textTheme) {
+  Widget _buildSuggestedQuestions(
+      ColorScheme colorScheme, TextTheme textTheme) {
     final suggestions = [
       'Explain this concept in simple terms',
       'What are the key points to remember?',
@@ -336,7 +340,8 @@ class _AiAssistantDialogState extends State<AiAssistantDialog>
                 height: 48,
                 child: CircularProgressIndicator(
                   strokeWidth: 3,
-                  valueColor: AlwaysStoppedAnimation<Color>(colorScheme.primary),
+                  valueColor:
+                      AlwaysStoppedAnimation<Color>(colorScheme.primary),
                 ),
               ),
               const SizedBox(height: 16),
@@ -362,7 +367,8 @@ class _AiAssistantDialogState extends State<AiAssistantDialog>
     );
   }
 
-  Widget _buildSuccessState(dynamic response, ColorScheme colorScheme, TextTheme textTheme) {
+  Widget _buildSuccessState(
+      dynamic response, ColorScheme colorScheme, TextTheme textTheme) {
     return SingleChildScrollView(
       controller: _scrollController,
       child: Column(
@@ -443,7 +449,8 @@ class _AiAssistantDialogState extends State<AiAssistantDialog>
     );
   }
 
-  Widget _buildErrorState(String message, ColorScheme colorScheme, TextTheme textTheme) {
+  Widget _buildErrorState(
+      String message, ColorScheme colorScheme, TextTheme textTheme) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -505,7 +512,7 @@ class _AiAssistantDialogState extends State<AiAssistantDialog>
       child: BlocBuilder<AiAssistantCubit, AiAssistantState>(
         builder: (context, state) {
           final isLoading = state is AiAssistantLoading;
-          
+
           return Row(
             children: [
               Expanded(

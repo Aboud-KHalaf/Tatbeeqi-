@@ -24,4 +24,9 @@ class AppRoutes {
   static const String signIn = '/auth/signin';
   static const String signUp = '/auth/signup';
   static const String forgetPassword = '/auth/forget-password';
+
+  // Posts
+  static const String posts = '/posts';
+  static const String postDetails = '/posts/details';
+  static const String createOrEditPost = '/posts/create-edit';
 }

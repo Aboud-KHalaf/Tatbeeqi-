@@ -4,6 +4,7 @@ import 'package:tatbeeqi/features/courses_content/domain/entities/lesson_entity.
 import 'package:tatbeeqi/features/news/domain/entities/news_item_entity.dart';
 import 'package:tatbeeqi/features/notes/domain/entities/note.dart';
 import 'package:tatbeeqi/features/quiz/domain/entities/quiz_question.dart';
+import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 
 class NewsDetailsArgs {
   final NewsItemEntity newsItem;
@@ -50,5 +51,19 @@ class LessonContentArgs {
   final List<Lesson> lesson;
   final int index;
   final int courseId;
-  LessonContentArgs({required this.lesson, required this.index, required this.courseId});
+  LessonContentArgs(
+      {required this.lesson, required this.index, required this.courseId});
+}
+
+class PostDetailsArgs {
+  final Post post;
+  final bool showMore;
+
+  PostDetailsArgs({required this.post, this.showMore = true});
+}
+
+class CreateOrEditPostArgs {
+  final Post? postToEdit;
+
+  CreateOrEditPostArgs({this.postToEdit});
 }

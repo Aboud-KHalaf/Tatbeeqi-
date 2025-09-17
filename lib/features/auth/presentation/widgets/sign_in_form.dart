@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
-import 'package:tatbeeqi/features/auth/presentation/views/forget_password_page.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/features/auth/presentation/widgets/auth_form_wrapper.dart';
 import 'package:tatbeeqi/features/auth/presentation/widgets/google_sign_in_button.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
@@ -121,7 +122,8 @@ class _SignInFormState extends State<SignInForm>
               obscureText: true,
               textInputAction: TextInputAction.done,
               validator: (value) {
-                if (value == null || value.isEmpty) return l10n.authEnterPassword;
+                if (value == null || value.isEmpty)
+                  return l10n.authEnterPassword;
                 if (value.length < 6) return l10n.authPasswordTooShort;
                 return null;
               },
@@ -130,11 +132,7 @@ class _SignInFormState extends State<SignInForm>
             Align(
               alignment: Alignment.centerLeft,
               child: TextButton(
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const ForgetPasswordPage(),
-                  ),
-                ),
+                onPressed: () => context.push(AppRoutes.forgetPassword),
                 child: Text(
                   l10n.authForgotPasswordLink,
                   style: theme.textTheme.bodyMedium?.copyWith(
@@ -165,11 +163,10 @@ class _SignInFormState extends State<SignInForm>
             GoogleSignInButton(
               onPressed: _handleGoogleSignIn,
               isLoading: _isGoogleLoading,
-             ),
+            ),
           ],
         ),
       ),
     );
   }
 }
-

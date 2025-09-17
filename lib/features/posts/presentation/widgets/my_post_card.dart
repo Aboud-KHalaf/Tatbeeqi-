@@ -4,14 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/my_posts/my_posts_cubit.dart';
-import 'package:tatbeeqi/features/posts/presentation/views/create_post_view.dart';
-import 'package:tatbeeqi/features/posts/presentation/views/post_details_view.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_action_buttons.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_categories.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_header.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_image_section.dart';
 import 'package:tatbeeqi/features/posts/presentation/widgets/post_card_text.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes_args.dart';
 
 class MyPostCard extends StatefulWidget {
   final Post post;
@@ -208,10 +209,9 @@ class _MyPostCardState extends State<MyPostCard>
   }
 
   void _showEditDialog(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => CreatePostView(postToEdit: widget.post),
-      ),
+    context.push(
+      AppRoutes.createOrEditPost,
+      extra: CreateOrEditPostArgs(postToEdit: widget.post),
     );
   }
 
@@ -249,11 +249,9 @@ class _MyPostCardState extends State<MyPostCard>
 
   void _handleTap(BuildContext context) {
     if (widget.post.imageUrl != null && widget.post.imageUrl!.isNotEmpty) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) =>
-              PostDetailsView(post: widget.post, showMore: false),
-        ),
+      context.push(
+        AppRoutes.postDetails,
+        extra: PostDetailsArgs(post: widget.post, showMore: false),
       );
     }
   }
