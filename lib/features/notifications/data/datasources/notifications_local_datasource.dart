@@ -204,23 +204,6 @@ class NotificationsLocalDatasourceImplements
     }
   }
 
-  // Immediate notification to rule out scheduling issues
-  Future<void> showImmediateTestNotification() async {
-    try {
-      AppLogger.info('=== SHOW IMMEDIATE TEST NOTIFICATION ===');
-      await _ensureNotificationPermission();
-      await _localNotificationsPlugin.show(
-        777001,
-        'Immediate Test',
-        'This should appear immediately',
-        AppLocalNotificationsService.remindersNotificationDetails(),
-      );
-      AppLogger.info('✅ Immediate test notification requested');
-    } catch (e) {
-      AppLogger.error('❌ Immediate test notification failed: $e');
-    }
-  }
-
   // Debug helper to list pending scheduled notifications
   Future<void> _logPendingNotifications() async {
     try {
@@ -236,11 +219,7 @@ class NotificationsLocalDatasourceImplements
 
   @override
   Future<void> scheduleReminder(Reminder reminder) async {
-    AppLogger.info('=== SCHEDULING REMINDER START ===');
-    AppLogger.info('Reminder ID: ${reminder.id}');
-    AppLogger.info('Title: ${reminder.title}');
-    AppLogger.info('Days: ${reminder.days}');
-    AppLogger.info('Time: ${reminder.hour}:${reminder.minute}');
+
 
     final db = await _dbService.database;
     final model = ReminderModel.fromEntity(reminder);
@@ -260,10 +239,6 @@ class NotificationsLocalDatasourceImplements
         final scheduledTime =
             _nextInstanceOfWeekday(day, reminder.hour, reminder.minute);
 
-        AppLogger.info('--- Scheduling for day $day ---');
-        AppLogger.info('Notification ID: $notificationId');
-        AppLogger.info('Scheduled time: $scheduledTime');
-        AppLogger.info('Current time: ${tz.TZDateTime.now(tz.local)}');
 
         try {
           await _localNotificationsPlugin.zonedSchedule(
