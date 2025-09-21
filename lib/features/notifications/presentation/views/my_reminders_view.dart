@@ -121,9 +121,13 @@ class _MyRemindersViewState extends State<MyRemindersView> {
                               color: theme.colorScheme.primary,
                             ),
                             const SizedBox(width: 4),
-                            Text(
-                              _formatDays(reminder.days),
-                              style: theme.textTheme.bodySmall,
+                            Expanded(
+                              child: Text(
+                                _formatDays(reminder.days),
+                                style: theme.textTheme.bodySmall,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             const SizedBox(width: 12),
                             Icon(

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
@@ -28,12 +29,12 @@ class ImageSection extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.camera_alt),
               title: Text(AppLocalizations.of(context)!.imageSectionCamera),
-              onTap: () => Navigator.pop(context, ImageSource.camera),
+              onTap: () => context.pop(ImageSource.camera),
             ),
             ListTile(
               leading: const Icon(Icons.photo_library),
               title: Text(AppLocalizations.of(context)!.imageSectionGallery),
-              onTap: () => Navigator.pop(context, ImageSource.gallery),
+              onTap: () => context.pop(ImageSource.gallery),
             ),
           ],
         ),

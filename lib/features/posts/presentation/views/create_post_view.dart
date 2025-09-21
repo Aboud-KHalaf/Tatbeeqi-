@@ -201,7 +201,7 @@ class _CreatePostViewState extends State<CreatePostView> {
         context: context,
         message: message,
       );
-      Navigator.pop(context, true);
+      context.pop(true);
     } else if (state is CreatePostFailure || state is UpdatePostFailure) {
       HapticFeedback.lightImpact();
       SnackBarHelper.showError(
@@ -330,11 +330,11 @@ class UnsavedChangesDialog {
           content: Text(l10n.unsavedChangesBody),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context, false),
+              onPressed: () => context.pop(false),
               child: Text(l10n.unsavedChangesKeepEditing),
             ),
             FilledButton(
-              onPressed: () => Navigator.pop(context, true),
+              onPressed: () => context.pop(true),
               style: FilledButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.error,
                 foregroundColor: Theme.of(context).colorScheme.onError,

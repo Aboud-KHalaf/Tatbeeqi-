@@ -38,7 +38,6 @@ class ThemeCubit extends Cubit<ThemeData> {
 
     result.fold(
       (failure) {
-        AppLogger.error('Error loading theme preference', failure);
         _currentThemeMode = ThemeMode.light;
         _currentSeedColor = AppColors.defaultSeedColor;
         emit(_generateTheme());

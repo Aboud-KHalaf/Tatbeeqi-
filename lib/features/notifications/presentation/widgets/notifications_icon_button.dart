@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tatbeeqi/features/notifications/presentation/views/notifications_view.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
 
 class NotificationsIconButton extends StatelessWidget {
   const NotificationsIconButton({
@@ -25,8 +26,7 @@ class NotificationsIconButton extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const NotificationsView()));
+            context.push(AppRoutes.notifications);
           },
           icon: Icon(
             Icons.notifications_none_rounded,

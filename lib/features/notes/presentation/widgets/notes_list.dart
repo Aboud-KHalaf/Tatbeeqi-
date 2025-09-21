@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes_args.dart';
 import 'package:tatbeeqi/features/notes/domain/entities/note.dart';
 import 'package:tatbeeqi/features/notes/presentation/bloc/notes_bloc.dart';
 import 'package:tatbeeqi/features/notes/presentation/widgets/note_list_item.dart';
@@ -48,14 +51,9 @@ class NotesList extends StatelessWidget {
           return NoteListItem(
             note: note,
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => AddOrUpdateNoteView(
-                    note: note,
-                    courseId: note.courseId,
-                  ),
-                ),
-              );
+              context.push(AppRoutes.addUpdateNote,
+                  extra:
+                      AddUpdateNoteArgs(note: note, courseId: note.courseId));
             },
             onDelete: () {
               context.read<NotesBloc>().add(

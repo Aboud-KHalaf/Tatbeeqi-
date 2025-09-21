@@ -273,12 +273,12 @@ class _RemindersListViewState extends State<RemindersListView>
         content: const Text('هل أنت متأكد من حذف هذا التذكير؟'),
         actions: [
           TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
+            onPressed: () => context.pop(),
             child: const Text('إلغاء'),
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(dialogContext).pop();
+              context.pop();
               context.read<RemindersCubit>().cancelReminder(
                     reminderId,
                     courseId: widget.courseId,

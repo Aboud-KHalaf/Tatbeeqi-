@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tatbeeqi/features/notifications/presentation/views/notifications_view.dart';
-import 'package:tatbeeqi/features/notifications/presentation/views/notifications_settings_view.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
+// No direct imports for views; navigation is via GoRouter AppRoutes
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class NotificationsSettingsCard extends StatelessWidget {
@@ -37,23 +38,13 @@ class NotificationsSettingsCard extends StatelessWidget {
             leading: const Icon(Icons.list_alt_outlined),
             title: Text(l10n.viewNotifications),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const NotificationsView()),
-              );
-            },
+            onTap: () => context.push(AppRoutes.notifications),
           ),
           ListTile(
             leading: const Icon(Icons.settings_outlined),
             title: Text(l10n.notificationSettings),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const NotificationsSettingsView()),
-              );
-            },
+            onTap: () => context.push(AppRoutes.notificationSettings),
           ),
         ],
       ),

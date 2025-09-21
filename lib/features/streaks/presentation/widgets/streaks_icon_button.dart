@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tatbeeqi/features/streaks/presentation/views/streaks_view.dart';
-
+import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
+ 
 class StreaksIconButton extends StatelessWidget {
   const StreaksIconButton({
     super.key,
@@ -20,9 +21,7 @@ class StreaksIconButton extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const StreaksView(),
-        ));
+        context.push(AppRoutes.streaks);
       },
       icon: Icon(
         Icons.local_fire_department_rounded,

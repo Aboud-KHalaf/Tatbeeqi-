@@ -2,7 +2,6 @@ class AppRoutes {
   // Home & Core
   static const String home = '/';
   static const String settings = '/settings';
-  static const String streaks = '/streaks';
 
   // News
   static const String allNews = '/news/all';
@@ -31,12 +30,28 @@ class AppRoutes {
   static const String posts = '/posts';
   static const String postDetails = '/posts/details';
   static const String createOrEditPost = '/posts/create-edit';
-
+  static const String myPosts = '/posts/my-posts';
   // AI Assistant
   static const String labebAiAssistant = '/ai-assistant/labeb';
 
   // feedback
-
   static const String feedback = '/feedback';
   static const String myFeedbacks = '/feedback/my-feedback';
+
+  // notifications
+  static const String notifications = '/notifications';
+
+  // streaks
+  static const String streaks = '/streaks';
+
+  // more / settings subroutes
+  static const String updateProfile = '/settings/update-profile';
+  static const String helpSupport = '/settings/help-support';
+  static const String aboutApp = '/settings/about';
+  static const String privacy = '/settings/privacy';
+
+  // shortcuts routes
+  static const String myReports = '/reports/my-reports';
+  static const String myReminders = '/notifications/my-reminders';
+  static const String notificationSettings = '/notifications/settings';
 }

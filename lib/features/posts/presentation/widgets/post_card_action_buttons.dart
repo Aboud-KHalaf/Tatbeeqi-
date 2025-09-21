@@ -280,7 +280,7 @@ class _ShareSheet extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   title: Text(l10n.postCardShareVia),
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => context.pop(),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

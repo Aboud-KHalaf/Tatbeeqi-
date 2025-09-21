@@ -32,7 +32,11 @@ final List<GoRoute> postsRoutes = <GoRoute>[
     path: AppRoutes.createOrEditPost,
     builder: (BuildContext context, GoRouterState state) {
       final args = state.extra as CreateOrEditPostArgs?;
-      return CreatePostView(postToEdit: args?.postToEdit);
+      return CreatePostView(
+        postToEdit: args?.postToEdit,
+        imageFile: args?.imageFile,
+        isArticle: args?.isArticle ?? false,
+      );
     },
   ),
 ];

@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tatbeeqi/features/posts/presentation/views/create_post_view.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes_args.dart';
 
 class CreatePostBar extends StatefulWidget {
   const CreatePostBar({super.key});
@@ -41,25 +43,11 @@ class _CreatePostBarState extends State<CreatePostBar>
   }
 
   void _navigateToCreatePost({bool isArticle = false, File? imageFile}) {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) {
-          return CreatePostView(imageFile: imageFile, isArticle: isArticle);
-        },
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return SlideTransition(
-            position: Tween<Offset>(
-              begin: const Offset(0.0, 1.0),
-              end: Offset.zero,
-            ).animate(CurvedAnimation(
-              parent: animation,
-              curve: Curves.easeOutCubic,
-            )),
-            child: child,
-          );
-        },
-        transitionDuration: const Duration(milliseconds: 300),
+    context.push(
+      AppRoutes.createOrEditPost,
+      extra: CreateOrEditPostArgs(
+        imageFile: imageFile,
+        isArticle: isArticle,
       ),
     );
   }

@@ -58,13 +58,7 @@ void onDidReceiveBackgroundNotificationResponse(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // final payload = _parseNotificationPayload(response!.payload!);
-  // if (payload != null) {
-  //   Navigator.of(GetIt.instance.get<GlobalKey<NavigatorState>>().currentContext!).pushNamed(
-  //     payload.route,
-  //     queryParameters: payload.parameters,
-  //   );
-  // }
+
 }
 
 /// Handles foreground FCM messages

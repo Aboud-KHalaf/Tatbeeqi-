@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class NotificationsSettingsView extends StatefulWidget {
   const NotificationsSettingsView({super.key});
@@ -69,7 +70,7 @@ class _NotificationsSettingsViewState extends State<NotificationsSettingsView> {
                     content: const Text('هذا نموذج عرض فقط. يمكنك تنفيذ منتقي الوقت لاحقاً.'),
                     actions: [
                       TextButton(
-                        onPressed: () => Navigator.pop(context),
+                        onPressed: () => context.pop(),
                         child: const Text('حسناً'),
                       ),
                     ],

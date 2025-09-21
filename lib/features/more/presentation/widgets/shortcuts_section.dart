@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tatbeeqi/core/di/service_locator.dart';
-import 'package:tatbeeqi/features/notifications/presentation/manager/reminders_cubit/reminders_cubit.dart';
-import 'package:tatbeeqi/features/notifications/presentation/views/my_reminders_view.dart';
-import 'package:tatbeeqi/features/posts/presentation/manager/my_posts/my_posts_cubit.dart';
-import 'package:tatbeeqi/features/posts/presentation/views/my_posts_view.dart';
-import 'package:tatbeeqi/features/reports/presentation/views/my_reports_view.dart';
-import 'package:tatbeeqi/features/feedbacks/presentation/views/my_feedbacks_view.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/features/feedbacks/presentation/widgets/feedback_wrapper.dart';
-import 'package:tatbeeqi/l10n/app_localizations.dart';
+ import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class ShortcutsSection extends StatelessWidget {
   const ShortcutsSection({super.key});
@@ -42,15 +36,7 @@ class ShortcutsSection extends StatelessWidget {
                     iconColor: colorScheme.onPrimaryContainer,
                     onTap: () {
                       HapticFeedback.selectionClick();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BlocProvider(
-                            create: (context) => sl<MyPostsCubit>(),
-                            child: const MyPostsView(),
-                          ),
-                        ),
-                      );
+                      context.push(AppRoutes.myPosts);
                     },
                   ),
                 ),
@@ -63,12 +49,7 @@ class ShortcutsSection extends StatelessWidget {
                     iconColor: colorScheme.onSecondaryContainer,
                     onTap: () {
                       HapticFeedback.selectionClick();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MyReportsView(),
-                        ),
-                      );
+                      context.push(AppRoutes.myReports);
                     },
                   ),
                 ),
@@ -85,15 +66,7 @@ class ShortcutsSection extends StatelessWidget {
                     iconColor: colorScheme.onTertiaryContainer,
                     onTap: () {
                       HapticFeedback.selectionClick();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BlocProvider(
-                            create: (context) => sl<MyPostsCubit>(),
-                            child: const MyPostsView(),
-                          ),
-                        ),
-                      );
+                      context.push(AppRoutes.myPosts);
                     },
                   ),
                 ),
@@ -106,13 +79,7 @@ class ShortcutsSection extends StatelessWidget {
                     iconColor: colorScheme.onErrorContainer,
                     onTap: () {
                       HapticFeedback.selectionClick();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BlocProvider(
-                                    create: (context) => sl<RemindersCubit>(),
-                                    child: const MyRemindersView(),
-                                  )));
+                      context.push(AppRoutes.myReminders);
                     },
                   ),
                 ),
@@ -129,12 +96,7 @@ class ShortcutsSection extends StatelessWidget {
                     iconColor: colorScheme.onPrimaryContainer,
                     onTap: () {
                       HapticFeedback.selectionClick();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MyFeedbacksView(),
-                        ),
-                      );
+                      context.push(AppRoutes.myFeedbacks);
                     },
                   ),
                 ),

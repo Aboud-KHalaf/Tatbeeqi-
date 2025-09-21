@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:tatbeeqi/features/courses/domain/entities/course_entity.dart';
 import 'package:tatbeeqi/features/courses_content/domain/entities/lecture_entity.dart';
 import 'package:tatbeeqi/features/courses_content/domain/entities/lesson_entity.dart';
@@ -64,6 +65,8 @@ class PostDetailsArgs {
 
 class CreateOrEditPostArgs {
   final Post? postToEdit;
+  final File? imageFile;
+  final bool? isArticle;
 
-  CreateOrEditPostArgs({this.postToEdit});
+  CreateOrEditPostArgs({this.postToEdit, this.imageFile, this.isArticle});
 }

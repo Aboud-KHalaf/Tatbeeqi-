@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 
 // Core
 import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes/ai_assistant_routes.dart';
 import 'package:tatbeeqi/core/routing/routes/feedback_routes.dart';
+import 'package:tatbeeqi/core/routing/routes/notifications_routes.dart';
 import 'package:tatbeeqi/features/auth/presentation/manager/bloc/auth_bloc.dart';
 
 // Modular route lists
@@ -17,6 +19,7 @@ import 'package:tatbeeqi/core/routing/routes/streaks_routes.dart';
 import 'package:tatbeeqi/core/routing/routes/todo_routes.dart';
 import 'package:tatbeeqi/core/routing/routes/navigation_routes.dart';
 import 'package:tatbeeqi/core/routing/routes/posts_routes.dart';
+import 'package:tatbeeqi/core/routing/routes/more_routes.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<dynamic> stream) {
@@ -53,6 +56,9 @@ GoRouter createRouter(AuthBloc authBloc) {
       ...streaksRoutes,
       ...postsRoutes,
       ...feedbackRoutes,
+      ...notificationsRoutes,
+      ...aiAssistantRoutes,
+      ...moreRoutes,
     ],
     errorBuilder: (context, state) => Scaffold(
       appBar: AppBar(title: const Text('Page Not Found')),

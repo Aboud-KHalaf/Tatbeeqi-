@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tatbeeqi/features/more/presentation/views/about_app_view.dart';
-import 'package:tatbeeqi/features/more/presentation/views/help_suppurt_view.dart';
-import 'package:tatbeeqi/features/more/presentation/views/privacy_view.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class AdditionalSettingsCard extends StatelessWidget {
@@ -38,37 +37,19 @@ class AdditionalSettingsCard extends StatelessWidget {
             leading: const Icon(Icons.help_outline),
             title: Text(l10n.helpSupport),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const HelpSupportScreen(),
-                  ));
-            },
+            onTap: () => context.push(AppRoutes.helpSupport),
           ),
           ListTile(
             leading: const Icon(Icons.info_outline),
             title: Text(l10n.aboutApp),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AboutAppScreen(),
-                  ));
-            },
+            onTap: () => context.push(AppRoutes.aboutApp),
           ),
           ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),
             title: Text(l10n.privacySecurity),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const PrivacyScreen(),
-                  ));
-            },
+            onTap: () => context.push(AppRoutes.privacy),
           ),
         ],
       ),

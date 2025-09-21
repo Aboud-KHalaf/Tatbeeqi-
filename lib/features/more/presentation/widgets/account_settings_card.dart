@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tatbeeqi/features/auth/presentation/manager/bloc/auth_bloc.dart';
-import 'package:tatbeeqi/features/auth/presentation/views/update_profile_page.dart';
+import 'package:tatbeeqi/core/routing/app_routes.dart';
 import 'package:tatbeeqi/l10n/app_localizations.dart';
 
 class AccountSettingsCard extends StatelessWidget {
@@ -38,10 +39,7 @@ class AccountSettingsCard extends StatelessWidget {
             leading: const Icon(Icons.edit_outlined),
             title: Text(l10n.updateData),
             trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const UpdateProfilePage()));
-            },
+            onTap: () => context.push(AppRoutes.updateProfile),
           ),
           ListTile(
             leading: Icon(Icons.logout, color: colorScheme.error),
@@ -63,12 +61,12 @@ class AccountSettingsCard extends StatelessWidget {
         content: Text(l10n.logoutConfirmation),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(dialogContext),
+            onPressed: () => context.pop(),
             child: Text(l10n.cancel),
           ),
           FilledButton(
             onPressed: () {
-              Navigator.pop(dialogContext);
+              context.pop();
               context.read<AuthBloc>().add(SignOutEvent());
             },
             child: Text(l10n.logout),
