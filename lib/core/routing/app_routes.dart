@@ -34,4 +34,9 @@ class AppRoutes {
 
   // AI Assistant
   static const String labebAiAssistant = '/ai-assistant/labeb';
+
+  // feedback
+
+  static const String feedback = '/feedback';
+  static const String myFeedbacks = '/feedback/my-feedback';
 }

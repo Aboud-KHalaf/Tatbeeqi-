@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
@@ -114,7 +115,7 @@ class _CreatePostViewState extends State<CreatePostView> {
         if (!didPop && _hasUnsavedChanges) {
           final shouldPop = await _onWillPop();
           if (shouldPop && context.mounted) {
-            Navigator.pop(context);
+            context.pop();
           }
         }
       },
@@ -128,10 +129,10 @@ class _CreatePostViewState extends State<CreatePostView> {
             if (_hasUnsavedChanges) {
               final shouldClose = await _onWillPop();
               if (shouldClose && context.mounted) {
-                Navigator.pop(context);
+                context.pop();
               }
             } else {
-              Navigator.pop(context);
+              context.pop();
             }
           },
           onPreview: _showPreview,
@@ -189,9 +190,12 @@ class _CreatePostViewState extends State<CreatePostView> {
       final l10n = AppLocalizations.of(context)!;
       String message;
       if (_isEditMode) {
-        message = _isArticle ? 'تم تحديث المقال بنجاح' : 'تم تحديث المنشور بنجاح';
+        message =
+            _isArticle ? 'تم تحديث المقال بنجاح' : 'تم تحديث المنشور بنجاح';
       } else {
-        message = _isArticle ? l10n.createPostSuccessArticle : l10n.createPostSuccessPost;
+        message = _isArticle
+            ? l10n.createPostSuccessArticle
+            : l10n.createPostSuccessPost;
       }
       SnackBarHelper.showSuccess(
         context: context,
@@ -202,7 +206,9 @@ class _CreatePostViewState extends State<CreatePostView> {
       HapticFeedback.lightImpact();
       SnackBarHelper.showError(
         context: context,
-        message: state is CreatePostFailure ? state.message : (state as UpdatePostFailure).message,
+        message: state is CreatePostFailure
+            ? state.message
+            : (state as UpdatePostFailure).message,
       );
     }
   }
@@ -282,7 +288,7 @@ class _CreatePostViewState extends State<CreatePostView> {
     }
 
     final bloc = Provider.of<PostCrudBloc>(context, listen: false);
-    
+
     if (_isEditMode) {
       bloc.add(
         UpdatePostEvent(

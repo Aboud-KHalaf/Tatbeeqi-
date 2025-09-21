@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tatbeeqi/core/helpers/snack_bar_helper.dart';
 import 'package:tatbeeqi/features/posts/domain/entities/post.dart';
 import 'package:tatbeeqi/features/posts/presentation/manager/post_feed/post_feed_bloc.dart';
@@ -263,7 +264,7 @@ class _ShareSheet extends StatelessWidget {
                   ),
                   title: Text(l10n.postCardCopyLink),
                   onTap: () {
-                    Navigator.pop(context);
+                    context.pop();
                     SnackBarHelper.showInfo(
                       context: context,
                       message: l10n.postCardLinkCopied,

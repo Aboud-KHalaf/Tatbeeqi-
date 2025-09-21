@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 // Core
 import 'package:tatbeeqi/core/routing/app_routes.dart';
+import 'package:tatbeeqi/core/routing/routes/feedback_routes.dart';
 import 'package:tatbeeqi/features/auth/presentation/manager/bloc/auth_bloc.dart';
 
 // Modular route lists
@@ -51,6 +52,7 @@ GoRouter createRouter(AuthBloc authBloc) {
       ...quizRoutes,
       ...streaksRoutes,
       ...postsRoutes,
+      ...feedbackRoutes,
     ],
     errorBuilder: (context, state) => Scaffold(
       appBar: AppBar(title: const Text('Page Not Found')),
